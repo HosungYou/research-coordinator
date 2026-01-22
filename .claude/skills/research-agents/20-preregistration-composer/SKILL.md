@@ -1,7 +1,8 @@
 ---
 name: preregistration-composer
 description: |
-  사전등록 문서 작성자 - OSF, AsPredicted 등 플랫폼에 제출할 사전등록 문서 작성
+  VS-Enhanced 사전등록 문서 작성자 - Mode Collapse 방지 및 포괄적 사전계획
+  Light VS 적용: 형식적 등록 회피 + 실질적 연구 투명성 확보
   Use when: creating preregistration documents, planning confirmatory research, writing registered reports
   트리거: 사전등록, registered report, OSF, AsPredicted, 연구 계획 등록
 ---
@@ -10,12 +11,29 @@ description: |
 
 **Agent ID**: 20
 **Category**: E - 출판 및 커뮤니케이션
+**VS Level**: Light (모달 인식)
 **Icon**: 🗂️
 
 ## 개요
 
 OSF, AsPredicted 등 플랫폼에 제출할 사전등록 문서를 작성합니다.
 가설, 분석 계획, 시나리오별 결정 규칙을 명확히 문서화합니다.
+
+**VS-Research 방법론** (Light)을 적용하여 형식적 사전등록을 넘어
+실질적인 연구 투명성과 재현성을 확보하는 포괄적 계획을 수립합니다.
+
+## VS 모달 인식 (Light)
+
+⚠️ **모달 사전등록**: 다음은 가장 예측 가능한 접근입니다:
+
+| 영역 | 모달 접근 (T>0.8) | 포괄적 접근 (T<0.5) |
+|------|------------------|------------------|
+| 가설 | "H1: X는 Y에 영향을 미친다" | 방향성 + 효과크기 예측 + 검증 기준 |
+| 분석 | "회귀분석 수행" | 분석 코드 사전 작성 + 가정 점검 절차 |
+| 시나리오 | "가정 위반 시 비모수 검정" | 전체 결정 트리 + 분기별 대응 |
+| 탐색적 | "추가 분석 수행 가능" | 확인적/탐색적 명확 구분 + 조건 명시 |
+
+**포괄 원칙**: 사전등록 = 연구 결정의 사전 구속력 있는 계약서
 
 ## 사용 시점
 

@@ -1,0 +1,120 @@
+{
+  "name": "research-coordinator-skills",
+  "owner": {
+    "name": "Hosung You",
+    "github": "HosungYou"
+  },
+  "metadata": {
+    "description": "20 specialized AI agents for social science research workflow with VS (Verbalized Sampling) methodology to prevent mode collapse in research recommendations",
+    "version": "2.0.0",
+    "keywords": [
+      "social-science",
+      "research",
+      "meta-analysis",
+      "systematic-review",
+      "statistics",
+      "academic-writing",
+      "PRISMA",
+      "verbalized-sampling"
+    ],
+    "repository": "https://github.com/HosungYou/research-coordinator",
+    "license": "MIT",
+    "references": [
+      "arXiv:2510.01171 (Verbalized Sampling)"
+    ]
+  },
+  "plugins": [
+    {
+      "name": "research-coordinator",
+      "description": "Master coordinator with context-aware auto-dispatch for 20 research agents. Analyzes conversation to automatically activate appropriate agents with VS methodology.",
+      "skills": [".claude/skills/research-coordinator"]
+    },
+    {
+      "name": "research-design-agents",
+      "description": "Theory & research design agents (01-04) with VS-enhanced theory discovery and research question refinement",
+      "skills": [
+        ".claude/skills/research-agents/01-research-question-refiner",
+        ".claude/skills/research-agents/02-theoretical-framework-architect",
+        ".claude/skills/research-agents/03-devils-advocate",
+        ".claude/skills/research-agents/04-research-ethics-advisor"
+      ]
+    },
+    {
+      "name": "literature-evidence-agents",
+      "description": "Literature review agents (05-08) with VS-enhanced search strategies and evidence synthesis",
+      "skills": [
+        ".claude/skills/research-agents/05-systematic-literature-scout",
+        ".claude/skills/research-agents/06-evidence-quality-appraiser",
+        ".claude/skills/research-agents/07-effect-size-extractor",
+        ".claude/skills/research-agents/08-research-radar"
+      ]
+    },
+    {
+      "name": "methodology-analysis-agents",
+      "description": "Methodology & analysis agents (09-12) with methodological diversity options beyond standard approaches",
+      "skills": [
+        ".claude/skills/research-agents/09-research-design-consultant",
+        ".claude/skills/research-agents/10-statistical-analysis-guide",
+        ".claude/skills/research-agents/11-analysis-code-generator",
+        ".claude/skills/research-agents/12-sensitivity-analysis-designer"
+      ]
+    },
+    {
+      "name": "quality-validation-agents",
+      "description": "Quality & validation agents (13-16) with context-adaptive bias detection and reproducibility assessment",
+      "skills": [
+        ".claude/skills/research-agents/13-internal-consistency-checker",
+        ".claude/skills/research-agents/14-checklist-manager",
+        ".claude/skills/research-agents/15-reproducibility-auditor",
+        ".claude/skills/research-agents/16-bias-detector"
+      ]
+    },
+    {
+      "name": "publication-communication-agents",
+      "description": "Publication & communication agents (17-20) for journal matching, academic communication, and peer review strategy",
+      "skills": [
+        ".claude/skills/research-agents/17-journal-matcher",
+        ".claude/skills/research-agents/18-academic-communicator",
+        ".claude/skills/research-agents/19-peer-review-strategist",
+        ".claude/skills/research-agents/20-preregistration-composer"
+      ]
+    }
+  ],
+  "vs_methodology": {
+    "description": "Verbalized Sampling (VS) methodology integrated to prevent mode collapse in AI research recommendations",
+    "levels": {
+      "full": {
+        "agents": ["02", "03", "05", "10", "16"],
+        "phases": 5,
+        "description": "Complete 5-phase VS process with T-Score based alternatives"
+      },
+      "enhanced": {
+        "agents": ["01", "04", "06", "07", "08", "09"],
+        "phases": 3,
+        "description": "3-phase simplified VS (Modal ID → Alternatives → Execution)"
+      },
+      "light": {
+        "agents": ["11", "12", "13", "14", "15", "17", "18", "19", "20"],
+        "phases": 1,
+        "description": "Modal awareness with alternative presentation"
+      }
+    },
+    "typicality_score": {
+      "description": "T-Score measures predictability of recommendations (0-1 scale)",
+      "ranges": {
+        "modal": "T > 0.8 (most common, avoid)",
+        "established": "T 0.5-0.8 (safe differentiation)",
+        "emerging": "T 0.3-0.5 (innovative, justified)",
+        "creative": "T < 0.3 (experimental, requires strong rationale)"
+      }
+    }
+  },
+  "installation": {
+    "marketplace": "claude plugin add HosungYou/research-coordinator",
+    "manual": "./scripts/install.sh"
+  },
+  "compatibility": {
+    "claude_code": ">=1.0.0",
+    "platforms": ["macos", "linux"]
+  }
+}

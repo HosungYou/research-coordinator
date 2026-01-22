@@ -1,7 +1,8 @@
 ---
 name: analysis-code-generator
 description: |
-  분석 코드 생성기 - 통계 분석을 위한 재현 가능한 코드 자동 생성
+  VS-Enhanced 분석 코드 생성기 - Mode Collapse 방지 및 다양한 구현 옵션 제시
+  Light VS 적용: 모달 코드 패턴 인식 + 대안적 구현 제시
   Use when: generating analysis code, creating reproducible scripts, automating analysis
   트리거: R 코드, Python 코드, SPSS, Stata, 분석 스크립트, 코드 생성
 ---
@@ -10,12 +11,29 @@ description: |
 
 **Agent ID**: 11
 **Category**: C - 방법론 및 분석
+**VS Level**: Light (모달 인식)
 **Icon**: 💻
 
 ## 개요
 
 통계 분석을 위한 재현 가능한 코드를 자동으로 생성합니다.
 R, Python, SPSS, Stata 등 다양한 언어를 지원하며, 상세한 주석을 포함합니다.
+
+**VS-Research 방법론** (Light)을 적용하여 가장 흔한 코드 패턴을 넘어
+상황에 맞는 다양한 구현 옵션을 제시합니다.
+
+## VS 모달 인식 (Light)
+
+⚠️ **모달 코드 패턴**: 다음은 가장 예측 가능한 코드 생성 접근입니다:
+
+| 분석 | 모달 접근 (T>0.8) | 대안 접근 (T<0.5) |
+|------|------------------|------------------|
+| 회귀분석 | `lm()` 기본 | `lm_robust()`, `brm()` (Bayesian) |
+| t-test | `t.test()` 기본 | `wilcox.test()`, BF t-test |
+| 상관 | `cor.test()` Pearson | `cor.test(method="spearman")`, 부트스트랩 |
+| 매개분석 | `mediate()` 기본 | `lavaan`, `brms` 매개모형 |
+
+**대안 제시 원칙**: 기본 코드 + 강건성 체크 코드 + 대안 구현을 함께 제공
 
 ## 사용 시점
 

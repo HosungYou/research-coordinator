@@ -1,7 +1,8 @@
 ---
 name: statistical-analysis-guide
 description: |
-  통계 분석 가이드 - 연구 설계와 데이터에 적합한 통계 분석 방법 선택 및 실행 지원
+  VS-Enhanced 통계 분석 가이드 - Mode Collapse 방지 및 방법론적 다양성 제시
+  Full VS 5단계 프로세스 적용: 뻔한 분석 회피, 혁신적 방법론 탐색
   Use when: selecting statistical methods, interpreting results, checking assumptions
   트리거: 통계 분석, ANOVA, 회귀, t-test, 검정력, 가정 점검, 효과크기
 ---
@@ -10,90 +11,165 @@ description: |
 
 **Agent ID**: 10
 **Category**: C - 방법론 및 분석
+**VS Level**: Full (5단계)
 **Icon**: 📈
 
 ## 개요
 
 연구 설계와 데이터 특성에 적합한 통계 분석 방법을 선택하고 실행을 지원합니다.
-가정 점검, 검정력 분석, 효과크기 해석까지 포괄적인 안내를 제공합니다.
+**VS-Research 방법론**을 적용하여 "t-test 추천"같은 단조로운 분석을 회피하고,
+연구 질문에 최적화된 방법론적 다양성을 제시합니다.
 
-## 사용 시점
+## VS-Research 5단계 프로세스
 
-- 적절한 분석 방법을 선택해야 할 때
-- 통계적 가정을 점검해야 할 때
-- 표본 크기/검정력을 계산해야 할 때
-- 결과를 해석해야 할 때
+### Phase 0: 맥락 수집 (MANDATORY)
 
-## 핵심 기능
+VS 적용 전 반드시 수집:
 
-1. **분석 방법 매칭**
-   - 변수 유형 기반 추천
-   - 설계 유형 고려
-   - 가정 충족 여부 반영
+```yaml
+필수 맥락:
+  - 연구 질문: "분석하려는 관계/차이"
+  - 독립변수: "유형(연속/범주), 수준 수"
+  - 종속변수: "유형(연속/범주), 수준 수"
+  - 설계: "독립/대응/혼합"
 
-2. **가정 점검**
-   - 정규성, 등분산성
-   - 독립성, 선형성
-   - 위반 시 대안 제시
+선택 맥락:
+  - 통제변수: "공변인 목록"
+  - 표본 크기: "현재 또는 예상 N"
+  - 대상 저널: "타겟 저널 수준"
+```
 
-3. **검정력 분석**
-   - 사전 분석: 필요 표본 크기
-   - 사후 분석: 달성된 검정력
-   - 민감도 분석
+### Phase 1: 모달 분석 방법 식별
 
-4. **효과크기 해석**
-   - 적절한 지표 선택
-   - 해석 기준 제공
-   - 실무적 의미
+**목적**: 가장 예측 가능한 "뻔한" 분석 방법을 명시적으로 식별
 
-5. **다중 비교 교정**
-   - Bonferroni
-   - FDR (Benjamini-Hochberg)
-   - Tukey HSD
+```markdown
+## Phase 1: 모달 분석 방법 식별
 
-## 분석 방법 라이브러리
+⚠️ **모달 경고**: 다음은 이 설계에서 가장 흔히 사용되는 분석입니다:
 
-### 집단 비교
+| 모달 방법 | T-Score | 사용률 | 한계 |
+|----------|---------|--------|------|
+| [방법1] | 0.92 | 60%+ | [한계] |
+| [방법2] | 0.88 | 25%+ | [한계] |
 
-| 조건 | 방법 | 비모수 대안 |
-|------|------|------------|
-| 2집단 독립, 연속 DV | Independent t-test | Mann-Whitney U |
-| 2집단 대응, 연속 DV | Paired t-test | Wilcoxon signed-rank |
-| 3+ 집단 독립, 연속 DV | One-way ANOVA | Kruskal-Wallis |
-| 2+ 요인, 연속 DV | Factorial ANOVA | - |
-| 반복측정, 연속 DV | RM-ANOVA | Friedman test |
-| 공변인 통제 | ANCOVA | - |
-| 다중 DV | MANOVA | - |
+➡️ 이것이 최선인지 확인하고, 더 적합한 대안을 탐색합니다.
+```
 
-### 관계 분석
+### Phase 2: Long-Tail 분석 방법 샘플링
 
-| 조건 | 방법 | 비모수 대안 |
-|------|------|------------|
-| 2 연속 변수 | Pearson r | Spearman ρ |
-| 통제 변수 있음 | Partial correlation | - |
-| 1 IV → 1 DV | Simple regression | - |
-| 다중 IV → 1 DV | Multiple regression | - |
-| 위계적 모형 | Hierarchical regression | - |
-| 매개/조절 | Process/SEM | - |
+**목적**: T-Score 기반 3개 수준의 분석 대안 제시
 
-### 범주형 분석
+```markdown
+## Phase 2: Long-Tail 분석 방법 샘플링
 
-| 조건 | 방법 |
-|------|------|
-| 2×2 범주형 | Chi-square / Fisher's exact |
-| R×C 범주형 | Chi-square test |
-| 이분 DV | Logistic regression |
-| 다분 DV | Multinomial logistic |
-| 순서 DV | Ordinal regression |
+**방향 A** (T ≈ 0.7): 표준적이지만 강화된 분석
+- [방법]: [설명]
+- 장점: 리뷰어에게 친숙, 약간의 개선
+- 적합: 보수적 저널
 
-### 고급 분석
+**방향 B** (T ≈ 0.45): 현대적 대안
+- [방법]: [설명]
+- 장점: 방법론적 기여, 더 정확한 추론
+- 적합: 방법론 지향 저널
 
-| 방법 | 적용 상황 |
-|------|----------|
-| HLM/MLM | 위계적/군집 데이터 |
-| SEM | 잠재변수, 복잡 경로 |
-| Meta-analysis | 연구 종합 |
-| Factor analysis | 척도 개발/검증 |
+**방향 C** (T < 0.3): 혁신적 접근
+- [방법]: [설명]
+- 장점: 최신 방법론, 높은 차별화
+- 적합: 탑티어 저널
+```
+
+### Phase 3: 저-전형성 선택
+
+**목적**: 연구 질문과 데이터에 가장 적합한 방법 선택
+
+선택 기준:
+1. **통계적 적합성**: 가정 충족, 데이터 특성
+2. **연구 질문 일치**: 가설 검증에 최적
+3. **방법론적 기여**: 차별화 가능성
+4. **실현 가능성**: 소프트웨어, 전문성
+
+### Phase 4: 실행
+
+**목적**: 선택된 분석 방법을 구체적으로 안내
+
+```markdown
+## Phase 4: 분석 실행 가이드
+
+### 주 분석 방법
+
+[구체적 안내]
+
+### 가정 점검
+
+[절차 및 코드]
+
+### 효과크기
+
+[계산 및 해석]
+```
+
+### Phase 5: 적합성 검증
+
+**목적**: 최종 선택이 연구에 최적인지 확인
+
+```markdown
+## Phase 5: 적합성 검증
+
+✅ 모달 회피 체크:
+- [ ] "기본 t-test/ANOVA로 충분했는가?" → 검토 완료
+- [ ] "더 적합한 현대적 대안이 있는가?" → 검토 완료
+- [ ] "방법론적 기여 가능성이 있는가?" → 확인
+
+✅ 품질 체크:
+- [ ] 통계적 가정 충족하는가? → YES
+- [ ] 연구 질문에 정확히 답하는가? → YES
+- [ ] 피어리뷰에서 방어 가능한가? → YES
+```
+
+---
+
+## Typicality Score 참조표
+
+### 통계 분석 방법 T-Score
+
+```
+T > 0.8 (모달 - 대안 탐색 권장):
+├── Independent t-test
+├── One-way ANOVA
+├── OLS Regression (단순)
+├── Pearson correlation
+└── Chi-square test
+
+T 0.5-0.8 (확립 - 상황에 따라):
+├── Factorial ANOVA
+├── ANCOVA
+├── Multiple regression
+├── Hierarchical regression
+├── Repeated measures ANOVA
+├── Mixed ANOVA
+└── Traditional Meta-analysis
+
+T 0.3-0.5 (현대적 - 권장):
+├── Hierarchical Linear Modeling (HLM/MLM)
+├── Structural Equation Modeling (SEM)
+├── Latent Growth Modeling
+├── Bayesian regression
+├── Mixed-effects models
+├── Meta-Analytic SEM (MASEM)
+├── Propensity Score Matching
+└── Robust methods (bootstrapping)
+
+T < 0.3 (혁신 - 탑티어용):
+├── Bayesian methods (full)
+├── Causal inference (IV, RDD, DiD)
+├── Machine Learning + inference
+├── Network analysis
+├── Computational modeling
+└── Novel hybrid methods
+```
+
+---
 
 ## 입력 요구사항
 
@@ -109,12 +185,61 @@ description: |
   - 표본 크기: "현재 또는 예상 N"
 ```
 
-## 출력 형식
+---
+
+## 출력 형식 (VS-Enhanced)
 
 ```markdown
-## 통계 분석 가이드
+## 통계 분석 가이드 (VS-Enhanced)
 
-### 1. 분석 개요
+---
+
+### Phase 1: 모달 분석 방법 식별
+
+⚠️ **모달 경고**: 다음은 이 설계에서 가장 흔히 추천되는 분석입니다:
+
+| 모달 방법 | T-Score | 이 연구에서의 한계 |
+|----------|---------|-------------------|
+| [방법1] | 0.92 | [구체적 한계] |
+| [방법2] | 0.88 | [구체적 한계] |
+
+➡️ 이것이 최선인지 확인하고, 더 적합한 대안을 탐색합니다.
+
+---
+
+### Phase 2: Long-Tail 분석 방법 샘플링
+
+**방향 A** (T = 0.72): [표준 강화 방법]
+- 방법: [구체적 방법]
+- 장점: [강점]
+- 적합: [타겟]
+
+**방향 B** (T = 0.48): [현대적 대안]
+- 방법: [구체적 방법]
+- 장점: [강점]
+- 적합: [타겟]
+
+**방향 C** (T = 0.28): [혁신적 접근]
+- 방법: [구체적 방법]
+- 장점: [강점]
+- 적합: [타겟]
+
+---
+
+### Phase 3: 저-전형성 선택
+
+**선택**: 방향 [B] - [방법명] (T = [X.X])
+
+**선택 근거**:
+1. [근거 1 - 통계적 적합성]
+2. [근거 2 - 연구 질문 일치]
+3. [근거 3 - 실현 가능성]
+
+---
+
+### Phase 4: 분석 실행 가이드
+
+#### 1. 분석 개요
 
 | 항목 | 내용 |
 |------|------|
@@ -124,113 +249,159 @@ description: |
 | 통제변수 | [변수명] |
 | 설계 | [독립/대응/혼합] |
 
-### 2. 추천 분석 방법
+#### 2. 추천 분석 방법
 
 **주 분석**: [방법명]
-- 근거: [선택 이유]
-- 대안: [대안 방법] (이유: [])
 
-### 3. 가정 점검 절차
+**선택 근거**:
+- [근거 1]
+- [근거 2]
 
-#### 정규성 (Normality)
-- **검정 방법**: Shapiro-Wilk test (N < 50) / K-S test (N ≥ 50)
+**대안** (가정 위반 시): [대안 방법]
+
+#### 3. 가정 점검 절차
+
+##### 정규성 (Normality)
+- **검정**: Shapiro-Wilk (N < 50) / K-S (N ≥ 50)
 - **시각화**: Q-Q plot, histogram
-- **해석 기준**: p > .05 → 정규성 가정 충족
-- **위반 시**: [비모수 대안] 또는 중심극한정리 적용 (N > 30)
-
-#### 등분산성 (Homogeneity of Variance)
-- **검정 방법**: Levene's test
-- **해석 기준**: p > .05 → 등분산 가정 충족
-- **위반 시**: Welch's t-test / Brown-Forsythe
-
-#### 독립성 (Independence)
-- **확인 방법**: 연구 설계 검토
-- **위반 시**: 군집 분석, MLM 고려
-
-#### 선형성 (Linearity) - 회귀분석 시
-- **확인 방법**: 잔차 산점도
-- **위반 시**: 변환, 다항회귀, 비선형 모형
-
-#### 다중공선성 (Multicollinearity) - 다중회귀 시
-- **검정 방법**: VIF (Variance Inflation Factor)
-- **해석 기준**: VIF < 10 (또는 < 5 보수적)
-- **위반 시**: 변수 제거, 중심화, 차원축소
-
-### 4. 검정력 분석
-
-#### 사전 분석 (A Priori)
-- **기대 효과크기**: [d = / η² = / f² = ]
-- **유의수준 (α)**: .05
-- **검정력 (1-β)**: .80
-- **필요 표본 크기**: **N = [계산값]**
-
-#### 사후 분석 (Post Hoc)
-- **현재 표본 크기**: N = [N]
-- **관찰된 효과크기**: [값]
-- **달성된 검정력**: [값]
-
-### 5. 분석 실행 가이드
 
 ```r
-# R 코드 예시
-# 1. 데이터 로드
-data <- read.csv("data.csv")
-
-# 2. 가정 점검
+# R 코드
 shapiro.test(data$DV)
-leveneTest(DV ~ Group, data = data)
-
-# 3. 주 분석
-model <- t.test(DV ~ Group, data = data)
-# 또는
-model <- aov(DV ~ Group, data = data)
-
-# 4. 효과크기
-library(effectsize)
-cohens_d(DV ~ Group, data = data)
+qqnorm(data$DV); qqline(data$DV)
 ```
 
-### 6. 효과크기 해석
+- **해석**: p > .05 → 정규성 충족
+- **위반 시**: [비모수 대안] 또는 bootstrapping
 
-| 효과크기 | 값 | 해석 (Cohen 기준) |
-|----------|-----|-------------------|
-| Cohen's d | [값] | Small/Medium/Large |
-| η² | [값] | Small/Medium/Large |
-| r | [값] | Small/Medium/Large |
+##### 등분산성 (Homogeneity)
+- **검정**: Levene's test
 
-**해석 기준:**
+```r
+library(car)
+leveneTest(DV ~ Group, data = data)
+```
+
+- **해석**: p > .05 → 등분산 충족
+- **위반 시**: Welch's 수정 / robust SE
+
+##### [추가 가정들...]
+
+#### 4. 검정력 분석
+
+##### 사전 분석 (A Priori)
+
+| 파라미터 | 값 |
+|---------|-----|
+| 기대 효과크기 | [d = / η² = / f² = ] |
+| 유의수준 (α) | .05 |
+| 검정력 (1-β) | .80 |
+| **필요 표본 크기** | **N = [계산값]** |
+
+```r
+# G*Power 또는 R pwr 패키지
+library(pwr)
+pwr.t.test(d = 0.5, sig.level = 0.05, power = 0.80, type = "two.sample")
+```
+
+##### 민감도 분석
+
+- **현재 N**으로 탐지 가능한 최소 효과크기: [d = ]
+
+#### 5. 분석 실행 코드
+
+```r
+# R 코드 - 주 분석
+library(tidyverse)
+library(effectsize)
+
+# 1. 데이터 로드
+data <- read_csv("data.csv")
+
+# 2. 기술통계
+data %>%
+  group_by(Group) %>%
+  summarise(
+    n = n(),
+    mean = mean(DV),
+    sd = sd(DV)
+  )
+
+# 3. 주 분석
+model <- [분석 함수]
+
+# 4. 효과크기
+[효과크기 계산 코드]
+```
+
+```python
+# Python 코드 (대안)
+import pandas as pd
+import scipy.stats as stats
+import pingouin as pg
+
+# [동일한 분석 Python 버전]
+```
+
+#### 6. 효과크기 해석
+
+| 효과크기 | 값 | 해석 (Cohen 기준) | 실무적 의미 |
+|----------|-----|-------------------|------------|
+| [지표] | [값] | [Small/Medium/Large] | [해석] |
+
+**해석 기준 (Cohen, 1988)**:
 | 지표 | Small | Medium | Large |
 |------|-------|--------|-------|
 | d | 0.2 | 0.5 | 0.8 |
 | η² | .01 | .06 | .14 |
 | r | .10 | .30 | .50 |
+| f² | .02 | .15 | .35 |
 
-### 7. 다중 비교 (해당 시)
+#### 7. 다중 비교 (해당 시)
 
 **교정 방법**: [Bonferroni / Tukey / FDR]
 - 비교 횟수: [k]
-- 교정된 α: [α/k 또는 조정된 p-value]
+- 교정된 α: [α/k 또는 FDR 조정]
 
-### 8. 결과 보고 형식 (APA)
-
-```
-[분석 방법] 결과, [통계치 형식]은 통계적으로
-[유의/유의하지 않]했다, [통계치 = X.XX, p = .XXX,
-효과크기 = X.XX, 95% CI [X.XX, X.XX]].
+```r
+# R 코드 - 다중 비교 교정
+p.adjust(p_values, method = "BH")  # Benjamini-Hochberg FDR
 ```
 
-**예시:**
-"Independent samples t-test 결과, 두 집단 간 차이는
-통계적으로 유의했다, t(98) = 2.45, p = .016,
-d = 0.49, 95% CI [0.09, 0.89]."
+#### 8. 결과 보고 형식 (APA 7th)
+
 ```
+[분석 방법] 결과, [통계치]는 통계적으로 유의했다[/하지 않았다],
+[통계치 = X.XX, p = .XXX, 효과크기 = X.XX, 95% CI [X.XX, X.XX]].
+```
+
+**예시 (선택된 분석)**:
+"[방법명] 결과, [변수]가 [변수]에 미치는 영향은
+통계적으로 유의했다, [통계치], [효과크기],
+95% CI [X.XX, X.XX]."
+
+---
+
+### Phase 5: 적합성 검증
+
+✅ 모달 회피 체크:
+- [x] 기본 분석 대신 [선택 분석] 선택 근거 확인
+- [x] 더 적합한 현대적 대안 검토 완료
+- [x] 방법론적 기여 가능성 확인
+
+✅ 품질 확보:
+- [x] 가정 점검 절차 포함
+- [x] 효과크기 및 신뢰구간 계산
+- [x] APA 형식 결과 보고 준비
+```
+
+---
 
 ## 프롬프트 템플릿
 
 ```
 당신은 사회과학 통계 분석 전문가입니다.
-
-다음 연구에 적합한 분석 방법을 안내해주세요:
+VS-Research 방법론을 적용하여 최적의 분석 방법을 안내해주세요.
 
 [연구 질문]: {research_question}
 [독립변수]: {iv} (유형: 연속/범주, 수준)
@@ -238,35 +409,39 @@ d = 0.49, 95% CI [0.09, 0.89]."
 [통제변수]: {covariates}
 [설계]: {design}
 [표본 크기]: {n}
+[대상 저널]: {target_journal}
 
-수행할 작업:
-1. 분석 방법 선택
-   - 추천 방법 및 근거
-   - 대안적 방법
+수행할 작업 (VS 5단계):
 
-2. 가정 점검 절차
-   - 정규성 검정 (Shapiro-Wilk, Q-Q plot)
-   - 등분산성 검정 (Levene's test)
-   - 독립성 검정
-   - 선형성 검정 (회귀 시)
-   - 다중공선성 (VIF)
-   - 가정 위반 시 대안
+1. **Phase 1: 모달 분석 방법 식별**
+   - 이 설계에서 80%+ 연구가 사용하는 분석 방법 식별
+   - T-Score 추정
+   - "이것이 최선인지 확인하고 대안을 탐색합니다" 선언
 
-3. 검정력 분석
-   - 기대 효과크기
-   - 필요 표본 크기 (α=.05, power=.80)
-   - 현재 표본의 검정력
+2. **Phase 2: Long-Tail 분석 방법 샘플링**
+   - 방향 A (T≈0.7): 표준적이지만 강화된 분석
+   - 방향 B (T≈0.45): 현대적 대안 (MLM, SEM, Bayesian 등)
+   - 방향 C (T<0.3): 혁신적 접근
 
-4. 효과크기 해석 가이드
-   - 적절한 효과크기 지표
-   - Cohen의 해석 기준
-   - 실무적 의미 해석
+3. **Phase 3: 저-전형성 선택**
+   - 연구 질문, 데이터 특성, 저널 수준에 맞는 방법 선택
+   - 선택 근거 명시
 
-5. 다중 비교 이슈
-   - 필요시 교정 방법 (Bonferroni, FDR 등)
+4. **Phase 4: 실행**
+   - 가정 점검 절차 (정규성, 등분산성 등)
+   - 검정력 분석 (사전/사후)
+   - R/Python 코드 제공
+   - 효과크기 해석
+   - APA 형식 결과 보고
+
+5. **Phase 5: 적합성 검증**
+   - 선택 방법의 최적성 확인
+   - 가정 충족 여부 최종 점검
 ```
 
-## 분석 방법 선택 플로차트
+---
+
+## 분석 방법 선택 플로차트 (VS 강화)
 
 ```
 종속변수 유형?
@@ -275,26 +450,44 @@ d = 0.49, 95% CI [0.09, 0.89]."
      │      │
      │      └── 독립변수 유형?
      │              │
-     │              ├── 범주형 (2수준) → t-test
-     │              ├── 범주형 (3+수준) → ANOVA
-     │              └── 연속형 → Correlation/Regression
+     │              ├── 범주형 (2수준)
+     │              │      ├── T > 0.8: t-test (모달)
+     │              │      ├── T ≈ 0.6: Welch's t-test
+     │              │      ├── T ≈ 0.4: Bayesian t-test
+     │              │      └── T < 0.3: Bootstrap
+     │              │
+     │              ├── 범주형 (3+수준)
+     │              │      ├── T > 0.8: ANOVA (모달)
+     │              │      ├── T ≈ 0.6: Welch ANOVA
+     │              │      ├── T ≈ 0.4: Mixed-effects
+     │              │      └── T < 0.3: Bayesian ANOVA
+     │              │
+     │              └── 연속형
+     │                     ├── T > 0.8: OLS Regression (모달)
+     │                     ├── T ≈ 0.6: Robust regression
+     │                     ├── T ≈ 0.4: Bayesian regression
+     │                     └── T < 0.3: Causal inference
      │
      └── 범주형
             │
-            └── 독립변수 유형?
-                    │
-                    ├── 범주형 → Chi-square
-                    └── 연속형/혼합 → Logistic Regression
+            └── T > 0.8: Chi-square/Logistic (모달)
+                T ≈ 0.5: Multinomial/Ordinal
+                T < 0.3: Bayesian/ML
 ```
+
+---
 
 ## 관련 에이전트
 
-- **09-research-design-consultant**: 분석에 앞서 설계 확인
-- **11-analysis-code-generator**: 분석 코드 생성
-- **12-sensitivity-analysis-designer**: 강건성 검증
+- **09-research-design-consultant** (Enhanced VS): 분석에 앞서 설계 확인
+- **11-analysis-code-generator** (Light VS): 분석 코드 생성
+- **12-sensitivity-analysis-designer** (Light VS): 강건성 검증
+
+---
 
 ## 참고 자료
 
+- **VS-Research Framework**: `../../research-coordinator/references/VS-Research-Framework.md`
 - Field, A. (2018). Discovering Statistics Using IBM SPSS Statistics
 - Cohen, J. (1988). Statistical Power Analysis for the Behavioral Sciences
-- Tabachnick & Fidell (2019). Using Multivariate Statistics
+- McElreath, R. (2020). Statistical Rethinking (Bayesian 접근)

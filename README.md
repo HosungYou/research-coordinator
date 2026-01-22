@@ -4,12 +4,16 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Skills-blue)](https://claude.ai/code)
+[![VS Methodology](https://img.shields.io/badge/VS-Verbalized%20Sampling-green)](https://arxiv.org/abs/2510.01171)
+[![Version](https://img.shields.io/badge/version-2.0.0-brightgreen)](https://github.com/HosungYou/research-coordinator)
 
 ---
 
 ## 🎯 Overview
 
 Research Coordinator는 Claude Code Skills 시스템을 활용하여 사회과학 실증 연구의 전체 과정을 지원하는 20개 전문 에이전트 모음입니다.
+
+**v2.0.0 NEW**: [Verbalized Sampling (VS) 방법론](https://arxiv.org/abs/2510.01171) 통합으로 AI 추천의 Mode Collapse를 방지하고, 창의적이면서도 학술적으로 건전한 연구 제안을 제공합니다.
 
 연구 기획부터 출판까지, 각 단계에 특화된 에이전트가 자동으로 활성화되어 연구자를 지원합니다.
 
@@ -19,10 +23,72 @@ Research Coordinator는 Claude Code Skills 시스템을 활용하여 사회과�
 - **⚡ 병렬 실행 지원**: 독립적인 작업은 동시에 여러 에이전트 실행
 - **🔗 워크플로우 통합**: 연구 단계별 에이전트 파이프라인 구성
 - **🌐 다국어 지원**: 한국어/영어 모두 지원
+- **🧠 VS 방법론 통합**: Verbalized Sampling으로 Mode Collapse 방지
+
+## 🧠 VS-Research Methodology (v2.0)
+
+**Verbalized Sampling (VS)**은 [arXiv:2510.01171](https://arxiv.org/abs/2510.01171)에 기반한 방법론으로, AI가 항상 같은 "뻔한" 추천을 하는 Mode Collapse 문제를 해결합니다.
+
+### T-Score (Typicality Score)
+
+모든 추천에 0-1 스케일의 전형성 점수를 부여합니다:
+
+| T-Score | 의미 | 적용 |
+|---------|------|------|
+| `T > 0.8` | 모달 (가장 흔한) | ⚠️ 회피 권장 |
+| `T 0.5-0.8` | 확립된 대안 | ✅ 안전한 차별화 |
+| `T 0.3-0.5` | 신흥 접근 | ✅ 혁신적, 정당화 가능 |
+| `T < 0.3` | 창의적 | ⚠️ 강한 근거 필요 |
+
+### VS 적용 수준
+
+| 수준 | 에이전트 | 설명 |
+|------|---------|------|
+| **Full VS** | 02, 03, 05, 10, 16 | 완전한 5단계 VS 프로세스 |
+| **Enhanced VS** | 01, 04, 06, 07, 08, 09 | 3단계 간소화 VS |
+| **Light VS** | 11-15, 17-20 | 모달 인식 + 대안 제시 |
+
+### 예시: 이론적 프레임워크 추천
+
+```
+❌ Before VS (Mode Collapse):
+   "AI 도입 연구에는 TAM을 권장합니다." (매번 동일)
+
+✅ After VS:
+   Phase 1 - 모달 식별:
+   "TAM (T=0.92), UTAUT (T=0.85)는 가장 예측 가능한 선택입니다."
+
+   Phase 2 - Long-Tail 샘플링:
+   - 방향 A (T≈0.6): Self-Determination Theory × TAM 통합
+   - 방향 B (T≈0.4): Cognitive Load Theory 기반 접근
+   - 방향 C (T≈0.2): 새로운 통합 프레임워크 개발
+
+   Phase 3 - 맥락 기반 선택:
+   "귀하의 연구 맥락(학습 동기 강조)에서는 SDT×TAM 통합(T=0.6)을 권장합니다."
+```
 
 ## 📦 Installation
 
-### Quick Install
+### 🏪 Marketplace Install (권장)
+
+Claude Code Skills Marketplace를 통한 가장 간편한 설치:
+
+```bash
+# Claude Code에서 실행
+claude plugin add HosungYou/research-coordinator
+```
+
+또는 개별 플러그인만 설치:
+
+```bash
+# 마스터 코디네이터만
+claude plugin add HosungYou/research-coordinator/research-coordinator
+
+# 분석 에이전트만
+claude plugin add HosungYou/research-coordinator/methodology-analysis-agents
+```
+
+### Quick Install (로컬)
 
 ```bash
 git clone https://github.com/HosungYou/research-coordinator.git
@@ -119,6 +185,19 @@ Claude: [자동 감지: "메타분석", "효과"]
 | 19 | Peer Review Strategist | 심사평 대응 전략 및 회신문 작성 |
 | 20 | Pre-registration Composer | OSF/AsPredicted 사전등록 문서 작성 |
 
+## 📦 Plugin Modules
+
+Marketplace에서 필요한 모듈만 선택적으로 설치할 수 있습니다:
+
+| 플러그인 | 포함 에이전트 | 용도 |
+|----------|--------------|------|
+| `research-coordinator` | 마스터 | 자동 디스패치 코디네이터 |
+| `research-design-agents` | 01-04 | 이론 및 연구 설계 |
+| `literature-evidence-agents` | 05-08 | 문헌 검토 및 증거 종합 |
+| `methodology-analysis-agents` | 09-12 | 방법론 및 통계 분석 |
+| `quality-validation-agents` | 13-16 | 품질 검증 및 편향 탐지 |
+| `publication-communication-agents` | 17-20 | 출판 및 학술 커뮤니케이션 |
+
 ## 📚 Documentation
 
 - [설치 가이드](docs/SETUP.md)
@@ -149,6 +228,21 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [Claude Code](https://claude.ai/code) - AI-powered coding assistant
 - [Anthropic](https://www.anthropic.com/) - Claude AI development
+- [Verbalized Sampling (arXiv:2510.01171)](https://arxiv.org/abs/2510.01171) - VS methodology foundation
+
+## 📖 Citation
+
+이 프로젝트를 연구에 활용하신다면 다음을 인용해 주세요:
+
+```bibtex
+@software{research_coordinator,
+  author = {You, Hosung},
+  title = {Research Coordinator: VS-Enhanced AI Agents for Social Science Research},
+  year = {2025},
+  url = {https://github.com/HosungYou/research-coordinator},
+  note = {Integrates Verbalized Sampling methodology from arXiv:2510.01171}
+}
+```
 
 ---
 
