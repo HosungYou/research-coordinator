@@ -452,9 +452,60 @@ VS-Research 방법론을 적용하여 포괄적 검색 전략을 수립해주세
 
 ---
 
+## Self-Critique 요구사항 (Full VS 필수)
+
+**모든 출력에 반드시 포함해야 하는 자기 평가 섹션입니다.**
+
+```markdown
+---
+
+## 🔍 Self-Critique (자기 평가)
+
+### 강점 (Strengths)
+이 검색 전략의 장점:
+- [ ] {주요 데이터베이스 포함}
+- [ ] {회색 문헌 고려}
+- [ ] {재현 가능성 확보}
+
+### 약점 (Weaknesses)
+잠재적 한계:
+- [ ] {언어 편향 가능성}: {완화 방안}
+- [ ] {데이터베이스 접근 제한}: {완화 방안}
+- [ ] {검색어 최적화 한계}: {완화 방안}
+
+### 대안적 관점 (Alternative Perspectives)
+놓칠 수 있는 문헌:
+- **누락 가능성 1**: "{놓칠 수 있는 문헌 유형}"
+  - **보완 방법**: "{보완 전략}"
+- **누락 가능성 2**: "{놓칠 수 있는 문헌 유형}"
+  - **보완 방법**: "{보완 전략}"
+
+### 개선 제안 (Improvement Suggestions)
+검색 전략 개선을 위한 제안:
+1. {추가 데이터베이스 검색}
+2. {전문가 상담 필요 영역}
+
+### 신뢰도 평가 (Confidence Assessment)
+| 영역 | 신뢰도 | 근거 |
+|------|--------|------|
+| 포괄성 (Recall) | {높음/중간/낮음} | {근거} |
+| 정밀성 (Precision) | {높음/중간/낮음} | {근거} |
+| PRISMA 준수 | {높음/중간/낮음} | {근거} |
+
+**전체 신뢰도**: {점수}/100
+
+---
+```
+
+> **참고**: Self-Critique 프레임워크 상세는 `../../research-coordinator/references/self-critique-framework.md` 참조
+
+---
+
 ## 참고 자료
 
 - **VS-Research Framework**: `../../research-coordinator/references/VS-Research-Framework.md`
+- **Self-Critique Framework**: `../../research-coordinator/references/self-critique-framework.md`
+- **Agent Contract Schema**: `../../research-coordinator/references/agent-contract-schema.md`
 - Cochrane Handbook for Systematic Reviews (Chapter 4: Searching)
 - PRISMA 2020 Statement
 - JBI Manual for Evidence Synthesis

@@ -1,0 +1,504 @@
+# Agent Registry - Research Coordinator v2.1.0
+# Centralized agent capabilities, schemas, and metadata
+# Based on: Codex Review architectural recommendations
+
+version: "2.1.0"
+last_updated: "2025-01-22"
+
+# =============================================================================
+# REGISTRY METADATA
+# =============================================================================
+
+registry:
+  description: "Centralized registry for 20 research agents with VS methodology"
+  schema_version: "1.0.0"
+  contract_reference: "agent-contract-schema.md"
+
+# =============================================================================
+# CATEGORY A: THEORY & RESEARCH DESIGN (01-04)
+# =============================================================================
+
+agents:
+  "01-research-question-refiner":
+    name: "Research Question Refiner"
+    icon: "🔬"
+    category: "A - Theory & Design"
+    vs_level: "Enhanced"
+    vs_phases: [0, 1, 2, 4]
+
+    capabilities:
+      - "Vague idea → specific research question"
+      - "PICO/SPIDER framework application"
+      - "Scope optimization"
+
+    input_schema:
+      required:
+        - research_idea: "string"
+        - domain: "string"
+      optional:
+        - target_journal_level: "enum[top-tier, mid-tier, general]"
+        - methodology_preference: "enum[quantitative, qualitative, mixed]"
+
+    output_schema:
+      main_output:
+        refined_questions: "list[RQ]"
+        pico_elements: "object"
+        scope_assessment: "object"
+
+    t_score_domains:
+      - "Research question formulation patterns"
+      - "PICO/SPIDER variations"
+
+    triggers:
+      keywords: ["연구 질문", "research question", "PICO", "SPIDER", "연구 아이디어"]
+      context: ["research planning", "proposal writing"]
+
+    dependencies:
+      sequential_next: ["02-theoretical-framework-architect"]
+      parallel_compatible: ["05-systematic-literature-scout"]
+
+  "02-theoretical-framework-architect":
+    name: "Theoretical Framework Architect"
+    icon: "🏛️"
+    category: "A - Theory & Design"
+    vs_level: "Full"
+    vs_phases: [0, 1, 2, 3, 4, 5]
+
+    capabilities:
+      - "Theory selection and justification"
+      - "Conceptual model design"
+      - "Hypothesis generation"
+      - "Novel theory integration"
+
+    input_schema:
+      required:
+        - research_question: "string"
+        - domain: "string"
+      optional:
+        - existing_theories: "list[string]"
+        - innovation_level: "float[0-1]"
+
+    output_schema:
+      main_output:
+        recommended_theories: "list[Theory]"
+        conceptual_model: "object"
+        hypotheses: "list[Hypothesis]"
+        theoretical_contribution: "string"
+
+    t_score_domains:
+      - "Psychology theories"
+      - "Education theories"
+      - "HRD/Management theories"
+      - "Theory integration patterns"
+
+    triggers:
+      keywords: ["이론적 프레임워크", "theoretical framework", "conceptual model", "가설"]
+      context: ["theory development", "framework design"]
+
+    dependencies:
+      requires: ["01-research-question-refiner"]
+      sequential_next: ["09-research-design-consultant"]
+      parallel_compatible: ["03-devils-advocate"]
+
+    self_critique_required: true
+
+  "03-devils-advocate":
+    name: "Devil's Advocate"
+    icon: "😈"
+    category: "A - Theory & Design"
+    vs_level: "Full"
+    vs_phases: [0, 1, 2, 3, 4, 5]
+
+    capabilities:
+      - "Weakness identification"
+      - "Alternative explanations"
+      - "Validity threat analysis"
+      - "Reviewer 2 simulation"
+
+    input_schema:
+      required:
+        - research_design: "object"
+      optional:
+        - critique_intensity: "enum[gentle, moderate, harsh]"
+        - focus_areas: "list[string]"
+
+    output_schema:
+      main_output:
+        critiques: "list[Critique]"
+        alternative_explanations: "list[string]"
+        validity_threats: "object"
+        rebuttals: "list[Rebuttal]"
+
+    t_score_domains:
+      - "Common critique patterns"
+      - "Validity threat categories"
+      - "Alternative explanation types"
+
+    triggers:
+      keywords: ["비판", "critique", "약점", "대안적 설명", "Reviewer 2"]
+      context: ["design validation", "pre-submission review"]
+
+    dependencies:
+      requires: ["02-theoretical-framework-architect", "09-research-design-consultant"]
+      parallel_compatible: ["16-bias-detector"]
+
+    self_critique_required: true
+
+  "04-research-ethics-advisor":
+    name: "Research Ethics Advisor"
+    icon: "⚖️"
+    category: "A - Theory & Design"
+    vs_level: "Enhanced"
+    vs_phases: [0, 1, 2, 4]
+
+    capabilities:
+      - "IRB preparation"
+      - "Ethical risk assessment"
+      - "Informed consent guidance"
+      - "Privacy compliance"
+
+    input_schema:
+      required:
+        - research_design: "object"
+        - participant_type: "string"
+      optional:
+        - jurisdiction: "string"
+        - data_sensitivity: "enum[low, medium, high]"
+
+    output_schema:
+      main_output:
+        ethical_assessment: "object"
+        irb_checklist: "list[ChecklistItem]"
+        consent_template: "string"
+        risk_mitigation: "list[string]"
+
+    triggers:
+      keywords: ["윤리", "IRB", "informed consent", "개인정보", "연구윤리"]
+      context: ["protocol development", "IRB submission"]
+
+    dependencies:
+      parallel_compatible: ["09-research-design-consultant"]
+
+# =============================================================================
+# CATEGORY B: LITERATURE & EVIDENCE (05-08)
+# =============================================================================
+
+  "05-systematic-literature-scout":
+    name: "Systematic Literature Scout"
+    icon: "📚"
+    category: "B - Literature & Evidence"
+    vs_level: "Full"
+    vs_phases: [0, 1, 2, 3, 4, 5]
+
+    capabilities:
+      - "Search strategy design"
+      - "Database selection"
+      - "Query optimization"
+      - "Grey literature identification"
+
+    input_schema:
+      required:
+        - research_question: "string"
+        - review_type: "enum[systematic, scoping, rapid]"
+      optional:
+        - databases: "list[string]"
+        - date_range: "object"
+        - language_restrictions: "list[string]"
+
+    output_schema:
+      main_output:
+        search_strategy: "object"
+        database_queries: "list[Query]"
+        prisma_flow: "object"
+        search_results_summary: "object"
+
+    t_score_domains:
+      - "Search strategy patterns"
+      - "Database combinations"
+      - "Boolean operator usage"
+
+    triggers:
+      keywords: ["문헌 검토", "systematic review", "PRISMA", "검색 전략"]
+      context: ["literature review", "meta-analysis preparation"]
+
+    self_critique_required: true
+
+  "06-evidence-quality-appraiser":
+    name: "Evidence Quality Appraiser"
+    icon: "⭐"
+    category: "B - Literature & Evidence"
+    vs_level: "Enhanced"
+    vs_phases: [0, 1, 2, 4]
+
+    capabilities:
+      - "Study quality assessment"
+      - "Risk of bias evaluation"
+      - "Evidence grading (GRADE)"
+
+    triggers:
+      keywords: ["품질 평가", "RoB", "GRADE", "비뚤림 위험"]
+
+  "07-effect-size-extractor":
+    name: "Effect Size Extractor"
+    icon: "📊"
+    category: "B - Literature & Evidence"
+    vs_level: "Enhanced"
+    vs_phases: [0, 1, 2, 4]
+
+    capabilities:
+      - "Effect size calculation"
+      - "Scale standardization"
+      - "Missing data imputation"
+
+    triggers:
+      keywords: ["효과크기", "effect size", "Cohen's d", "Hedges' g"]
+
+  "08-research-radar":
+    name: "Research Radar"
+    icon: "📡"
+    category: "B - Literature & Evidence"
+    vs_level: "Enhanced"
+    vs_phases: [0, 1, 2, 4]
+
+    capabilities:
+      - "New publication monitoring"
+      - "Citation alerts"
+      - "Trend analysis"
+
+    triggers:
+      keywords: ["최신 연구", "트렌드", "citation alert"]
+
+# =============================================================================
+# CATEGORY C: METHODOLOGY & ANALYSIS (09-12)
+# =============================================================================
+
+  "09-research-design-consultant":
+    name: "Research Design Consultant"
+    icon: "🎯"
+    category: "C - Methodology & Analysis"
+    vs_level: "Enhanced"
+    vs_phases: [0, 1, 2, 4]
+
+    capabilities:
+      - "Design selection"
+      - "Sampling strategy"
+      - "Power analysis"
+
+    triggers:
+      keywords: ["연구 설계", "실험 설계", "sampling", "검정력"]
+
+  "10-statistical-analysis-guide":
+    name: "Statistical Analysis Guide"
+    icon: "📈"
+    category: "C - Methodology & Analysis"
+    vs_level: "Full"
+    vs_phases: [0, 1, 2, 3, 4, 5]
+
+    capabilities:
+      - "Analysis method selection"
+      - "Assumption checking"
+      - "Result interpretation"
+      - "Alternative methods"
+
+    t_score_domains:
+      - "Statistical methods"
+      - "Model specifications"
+      - "Robustness checks"
+
+    triggers:
+      keywords: ["통계 분석", "회귀분석", "ANOVA", "SEM"]
+
+    self_critique_required: true
+
+  "11-analysis-code-generator":
+    name: "Analysis Code Generator"
+    icon: "💻"
+    category: "C - Methodology & Analysis"
+    vs_level: "Light"
+    vs_phases: [0, 1, 4]
+
+    capabilities:
+      - "R code generation"
+      - "Python code generation"
+      - "SPSS/Stata syntax"
+
+    triggers:
+      keywords: ["R 코드", "Python 코드", "SPSS", "Stata"]
+
+  "12-sensitivity-analysis-designer":
+    name: "Sensitivity Analysis Designer"
+    icon: "🔍"
+    category: "C - Methodology & Analysis"
+    vs_level: "Light"
+    vs_phases: [0, 1, 4]
+
+    capabilities:
+      - "Robustness check design"
+      - "Multiverse analysis"
+      - "Specification curve"
+
+    triggers:
+      keywords: ["민감도 분석", "robustness", "multiverse"]
+
+# =============================================================================
+# CATEGORY D: QUALITY & VALIDATION (13-16)
+# =============================================================================
+
+  "13-internal-consistency-checker":
+    name: "Internal Consistency Checker"
+    icon: "✅"
+    category: "D - Quality & Validation"
+    vs_level: "Light"
+    vs_phases: [0, 1, 4]
+
+    triggers:
+      keywords: ["일관성", "consistency", "논리적 검증"]
+
+  "14-checklist-manager":
+    name: "Checklist Manager"
+    icon: "📋"
+    category: "D - Quality & Validation"
+    vs_level: "Light"
+    vs_phases: [0, 1, 4]
+
+    triggers:
+      keywords: ["PRISMA", "CONSORT", "STROBE", "체크리스트"]
+
+  "15-reproducibility-auditor":
+    name: "Reproducibility Auditor"
+    icon: "🛡️"
+    category: "D - Quality & Validation"
+    vs_level: "Light"
+    vs_phases: [0, 1, 4]
+
+    triggers:
+      keywords: ["재현성", "OSF", "오픈 사이언스"]
+
+  "16-bias-detector":
+    name: "Bias Detector"
+    icon: "🔎"
+    category: "D - Quality & Validation"
+    vs_level: "Full"
+    vs_phases: [0, 1, 2, 3, 4, 5]
+
+    capabilities:
+      - "p-hacking detection"
+      - "HARKing identification"
+      - "Publication bias assessment"
+      - "QRP screening"
+
+    t_score_domains:
+      - "Bias detection patterns"
+      - "QRP indicators"
+      - "Statistical red flags"
+
+    triggers:
+      keywords: ["편향", "p-hacking", "HARKing", "QRP"]
+
+    self_critique_required: true
+
+# =============================================================================
+# CATEGORY E: PUBLICATION & COMMUNICATION (17-20)
+# =============================================================================
+
+  "17-journal-matcher":
+    name: "Journal Matcher"
+    icon: "📝"
+    category: "E - Publication & Communication"
+    vs_level: "Light"
+    vs_phases: [0, 1, 4]
+
+    triggers:
+      keywords: ["저널", "투고", "impact factor"]
+
+  "18-academic-communicator":
+    name: "Academic Communicator"
+    icon: "🎤"
+    category: "E - Publication & Communication"
+    vs_level: "Light"
+    vs_phases: [0, 1, 4]
+
+    triggers:
+      keywords: ["초록", "plain language", "프레스 릴리즈"]
+
+  "19-peer-review-strategist":
+    name: "Peer Review Strategist"
+    icon: "🔄"
+    category: "E - Publication & Communication"
+    vs_level: "Light"
+    vs_phases: [0, 1, 4]
+
+    triggers:
+      keywords: ["리뷰어", "심사평", "response letter"]
+
+  "20-preregistration-composer":
+    name: "Pre-registration Composer"
+    icon: "📄"
+    category: "E - Publication & Communication"
+    vs_level: "Light"
+    vs_phases: [0, 1, 4]
+
+    triggers:
+      keywords: ["사전등록", "OSF", "AsPredicted"]
+
+# =============================================================================
+# WORKFLOW ORCHESTRATION
+# =============================================================================
+
+workflows:
+  "full-research-cycle":
+    description: "Complete research workflow from idea to publication"
+    stages:
+      - stage: "planning"
+        agents: ["01", "02", "03", "04"]
+        parallel_groups:
+          - ["01"]
+          - ["02", "03"]
+          - ["04"]
+
+      - stage: "literature"
+        agents: ["05", "06", "07", "08"]
+        parallel_groups:
+          - ["05"]
+          - ["06", "07"]
+          - ["08"]
+
+      - stage: "methods"
+        agents: ["09", "10", "11", "12"]
+
+      - stage: "validation"
+        agents: ["13", "14", "15", "16"]
+        parallel_groups:
+          - ["13", "14", "15", "16"]
+
+      - stage: "publication"
+        agents: ["17", "18", "19", "20"]
+
+  "meta-analysis":
+    description: "Meta-analysis specific workflow"
+    agents: ["01", "02", "05", "06", "07", "10", "12", "16", "17"]
+
+  "quick-review":
+    description: "Rapid literature review"
+    agents: ["01", "05", "14"]
+
+# =============================================================================
+# EVALUATION METRICS
+# =============================================================================
+
+evaluation:
+  vs_compliance:
+    - "modal_identification_rate"
+    - "t_score_distribution"
+    - "phase_completion_rate"
+    - "novelty_vs_safety_balance"
+
+  output_quality:
+    - "schema_compliance"
+    - "provenance_completeness"
+    - "self_critique_depth"
+
+  inter_agent:
+    - "handoff_success_rate"
+    - "context_preservation"
+    - "dependency_satisfaction"

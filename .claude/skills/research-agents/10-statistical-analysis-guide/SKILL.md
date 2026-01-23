@@ -485,9 +485,62 @@ VS-Research 방법론을 적용하여 최적의 분석 방법을 안내해주세
 
 ---
 
+## Self-Critique 요구사항 (Full VS 필수)
+
+**모든 출력에 반드시 포함해야 하는 자기 평가 섹션입니다.**
+
+```markdown
+---
+
+## 🔍 Self-Critique (자기 평가)
+
+### 강점 (Strengths)
+이 통계 분석 추천의 장점:
+- [ ] {연구 질문과의 적합성}
+- [ ] {통계적 가정 충족}
+- [ ] {검정력 적절성}
+
+### 약점 (Weaknesses)
+잠재적 한계:
+- [ ] {인과 vs 상관 혼동 가능성}: {완화 방안}
+- [ ] {효과크기 해석의 맥락성}: {완화 방안}
+- [ ] {다중 비교 문제}: {완화 방안}
+
+### 대안적 관점 (Alternative Perspectives)
+다른 분석 방법론의 장단점:
+- **대안 1**: "{대안 방법}"
+  - **장점**: "{장점}"
+  - **선택하지 않은 이유**: "{이유}"
+- **대안 2**: "{대안 방법}"
+  - **장점**: "{장점}"
+  - **선택하지 않은 이유**: "{이유}"
+
+### 개선 제안 (Improvement Suggestions)
+분석 개선을 위한 제안:
+1. {추가 분석 권고}
+2. {강건성 검증 방법}
+
+### 신뢰도 평가 (Confidence Assessment)
+| 영역 | 신뢰도 | 근거 |
+|------|--------|------|
+| 방법 선택 적합성 | {높음/중간/낮음} | {근거} |
+| 가정 충족 여부 | {높음/중간/낮음} | {근거} |
+| 결과 해석 정확성 | {높음/중간/낮음} | {근거} |
+
+**전체 신뢰도**: {점수}/100
+
+---
+```
+
+> **참고**: Self-Critique 프레임워크 상세는 `../../research-coordinator/references/self-critique-framework.md` 참조
+
+---
+
 ## 참고 자료
 
 - **VS-Research Framework**: `../../research-coordinator/references/VS-Research-Framework.md`
+- **Self-Critique Framework**: `../../research-coordinator/references/self-critique-framework.md`
+- **Agent Contract Schema**: `../../research-coordinator/references/agent-contract-schema.md`
 - Field, A. (2018). Discovering Statistics Using IBM SPSS Statistics
 - Cohen, J. (1988). Statistical Power Analysis for the Behavioral Sciences
 - McElreath, R. (2020). Statistical Rethinking (Bayesian 접근)

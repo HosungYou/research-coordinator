@@ -418,9 +418,58 @@ VS-Research 방법론을 적용하여 이 연구에 특화된 편향 분석을 �
 
 ---
 
+## Self-Critique 요구사항 (Full VS 필수)
+
+**모든 출력에 반드시 포함해야 하는 자기 평가 섹션입니다.**
+
+```markdown
+---
+
+## 🔍 Self-Critique (자기 평가)
+
+### 강점 (Strengths)
+이 편향 분석의 장점:
+- [ ] {연구 설계별 특화 편향 분석}
+- [ ] {데이터 수집별 편향 식별}
+- [ ] {분석별 편향 검토}
+- [ ] {보고 편향 평가}
+
+### 약점 (Weaknesses)
+이 편향 분석의 한계:
+- [ ] {위양성 가능성 (과잉 탐지)}: {보완 방안}
+- [ ] {위음성 가능성 (미탐지)}: {보완 방안}
+
+### 대안적 관점 (Alternative Perspectives)
+놓친 편향 가능성:
+- **분야 특수성**: "{분야별 고유 편향 고려 여부}"
+- **연구 단계별 차이**: "{단계별 편향 차이 고려 여부}"
+
+### 개선 제안 (Improvement Suggestions)
+편향 분석 개선을 위한 제안:
+1. {추가 검토가 필요한 영역}
+2. {외부 전문가 자문 권고 영역}
+
+### 신뢰도 평가 (Confidence Assessment)
+| 영역 | 신뢰도 | 근거 |
+|------|--------|------|
+| 탐지 완전성 | {높음/중간/낮음} | {근거} |
+| 심각도 평가 정확성 | {높음/중간/낮음} | {근거} |
+| 완화 전략 실행성 | {높음/중간/낮음} | {근거} |
+
+**전체 신뢰도**: {점수}/100
+
+---
+```
+
+> **참고**: Self-Critique 프레임워크 상세는 `../../research-coordinator/references/self-critique-framework.md` 참조
+
+---
+
 ## 참고 자료
 
 - **VS-Research Framework**: `../../research-coordinator/references/VS-Research-Framework.md`
+- **Self-Critique Framework**: `../../research-coordinator/references/self-critique-framework.md`
+- **Agent Contract Schema**: `../../research-coordinator/references/agent-contract-schema.md`
 - Simmons et al. (2011). False-Positive Psychology
 - Nosek et al. (2018). The Preregistration Revolution
 - Head et al. (2015). The Extent and Consequences of P-Hacking

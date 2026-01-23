@@ -411,6 +411,14 @@ Task(
 
 ## 참고 자료
 
+### 핵심 문서
 - **VS-Research Framework**: `references/VS-Research-Framework.md`
+- **Agent Contract Schema**: `references/agent-contract-schema.md` - Agent I/O 표준 계약
+- **Agent Registry**: `references/agent-registry.yaml` - 중앙 에이전트 레지스트리
+- **Evaluation Harness**: `references/evaluation-harness.md` - VS 행동 평가 하네스
+- **Self-Critique Framework**: `references/self-critique-framework.md` - Reflexion 기반 자기 평가
+
+### 외부 참조
 - **arXiv:2510.01171**: Verbalized Sampling 방법론
 - **VS Design Diverge PR**: https://github.com/anthropics/skills/pull/242
+- **Reflexion (Shinn et al., 2023)**: Self-Critique 이론적 기반
