@@ -7,7 +7,7 @@
   },
   "metadata": {
     "description": "20 specialized AI agents for social science research workflow with VS (Verbalized Sampling) methodology",
-    "version": "2.0.1",
+    "version": "2.1.0",
     "keywords": [
       "social-science",
       "research",
@@ -24,150 +24,32 @@
   "plugins": [
     {
       "name": "research-coordinator",
-      "description": "Master coordinator with context-aware auto-dispatch for 20 research agents. Analyzes conversation to automatically activate appropriate agents with VS methodology.",
-      "source": "./.claude/skills/research-coordinator",
+      "description": "Complete research agent suite: Master coordinator + 20 specialized agents for social science research. Single install includes all agents with VS methodology.",
+      "source": "./",
       "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "01-research-question-refiner",
-      "description": "Refines and structures research questions with FINER/PICO frameworks and VS methodology",
-      "source": "./.claude/skills/research-agents/01-research-question-refiner",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "02-theoretical-framework-architect",
-      "description": "Designs theoretical frameworks with full VS 5-phase process for theory discovery",
-      "source": "./.claude/skills/research-agents/02-theoretical-framework-architect",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "03-devils-advocate",
-      "description": "Challenges assumptions and identifies weaknesses with full VS methodology",
-      "source": "./.claude/skills/research-agents/03-devils-advocate",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "04-research-ethics-advisor",
-      "description": "Reviews research ethics including IRB requirements and informed consent",
-      "source": "./.claude/skills/research-agents/04-research-ethics-advisor",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "05-systematic-literature-scout",
-      "description": "Conducts systematic literature searches following PRISMA guidelines with full VS process",
-      "source": "./.claude/skills/research-agents/05-systematic-literature-scout",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "06-evidence-quality-appraiser",
-      "description": "Appraises evidence quality using established assessment frameworks",
-      "source": "./.claude/skills/research-agents/06-evidence-quality-appraiser",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "07-effect-size-extractor",
-      "description": "Extracts and calculates effect sizes for meta-analysis",
-      "source": "./.claude/skills/research-agents/07-effect-size-extractor",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "08-research-radar",
-      "description": "Tracks latest research trends and emerging topics in the field",
-      "source": "./.claude/skills/research-agents/08-research-radar",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "09-research-design-consultant",
-      "description": "Advises on research design including experimental and quasi-experimental methods",
-      "source": "./.claude/skills/research-agents/09-research-design-consultant",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "10-statistical-analysis-guide",
-      "description": "Guides statistical analysis selection with full VS 5-phase methodology",
-      "source": "./.claude/skills/research-agents/10-statistical-analysis-guide",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "11-analysis-code-generator",
-      "description": "Generates R/Python analysis code for statistical procedures",
-      "source": "./.claude/skills/research-agents/11-analysis-code-generator",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "12-sensitivity-analysis-designer",
-      "description": "Designs sensitivity analyses for robustness checking",
-      "source": "./.claude/skills/research-agents/12-sensitivity-analysis-designer",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "13-internal-consistency-checker",
-      "description": "Checks internal consistency across research documents",
-      "source": "./.claude/skills/research-agents/13-internal-consistency-checker",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "14-checklist-manager",
-      "description": "Manages research checklists (PRISMA, CONSORT, STROBE, etc.)",
-      "source": "./.claude/skills/research-agents/14-checklist-manager",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "15-reproducibility-auditor",
-      "description": "Audits research reproducibility and open science practices",
-      "source": "./.claude/skills/research-agents/15-reproducibility-auditor",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "16-bias-detector",
-      "description": "Detects research biases with full VS 5-phase methodology",
-      "source": "./.claude/skills/research-agents/16-bias-detector",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "17-journal-matcher",
-      "description": "Matches manuscripts to appropriate journals based on scope and impact",
-      "source": "./.claude/skills/research-agents/17-journal-matcher",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "18-academic-communicator",
-      "description": "Assists with academic communication including abstracts and cover letters",
-      "source": "./.claude/skills/research-agents/18-academic-communicator",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "19-peer-review-strategist",
-      "description": "Develops strategies for responding to peer review feedback",
-      "source": "./.claude/skills/research-agents/19-peer-review-strategist",
-      "strict": false,
-      "skills": ["./"]
-    },
-    {
-      "name": "20-preregistration-composer",
-      "description": "Composes preregistration documents for OSF and other platforms",
-      "source": "./.claude/skills/research-agents/20-preregistration-composer",
-      "strict": false,
-      "skills": ["./"]
+      "skills": [
+        "./.claude/skills/research-coordinator",
+        "./.claude/skills/research-agents/01-research-question-refiner",
+        "./.claude/skills/research-agents/02-theoretical-framework-architect",
+        "./.claude/skills/research-agents/03-devils-advocate",
+        "./.claude/skills/research-agents/04-research-ethics-advisor",
+        "./.claude/skills/research-agents/05-systematic-literature-scout",
+        "./.claude/skills/research-agents/06-evidence-quality-appraiser",
+        "./.claude/skills/research-agents/07-effect-size-extractor",
+        "./.claude/skills/research-agents/08-research-radar",
+        "./.claude/skills/research-agents/09-research-design-consultant",
+        "./.claude/skills/research-agents/10-statistical-analysis-guide",
+        "./.claude/skills/research-agents/11-analysis-code-generator",
+        "./.claude/skills/research-agents/12-sensitivity-analysis-designer",
+        "./.claude/skills/research-agents/13-internal-consistency-checker",
+        "./.claude/skills/research-agents/14-checklist-manager",
+        "./.claude/skills/research-agents/15-reproducibility-auditor",
+        "./.claude/skills/research-agents/16-bias-detector",
+        "./.claude/skills/research-agents/17-journal-matcher",
+        "./.claude/skills/research-agents/18-academic-communicator",
+        "./.claude/skills/research-agents/19-peer-review-strategist",
+        "./.claude/skills/research-agents/20-preregistration-composer"
+      ]
     }
   ]
 }
