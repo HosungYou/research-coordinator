@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Skills-blue)](https://claude.ai/code)
 [![VS Methodology](https://img.shields.io/badge/VS-Verbalized%20Sampling-green)](https://arxiv.org/abs/2510.01171)
-[![Version](https://img.shields.io/badge/version-2.0.0-brightgreen)](https://github.com/HosungYou/research-coordinator)
+[![Version](https://img.shields.io/badge/version-2.0.1-brightgreen)](https://github.com/HosungYou/research-coordinator)
 
 ---
 
@@ -71,40 +71,107 @@ Research Coordinator는 Claude Code Skills 시스템을 활용하여 사회과�
 
 ### 🏪 Marketplace Install (권장)
 
-Claude Code Skills Marketplace를 통한 가장 간편한 설치:
+Claude Code Marketplace를 통한 설치:
 
 ```bash
-# Claude Code에서 실행
-claude plugin add HosungYou/research-coordinator
+# Step 1: 마켓플레이스 추가
+claude plugin marketplace add HosungYou/research-coordinator
+
+# Step 2: 플러그인 설치 (아래 옵션 중 선택)
 ```
 
-또는 개별 플러그인만 설치:
+#### 옵션 A: 전체 설치 (21개 플러그인)
 
 ```bash
-# 마스터 코디네이터만
-claude plugin add HosungYou/research-coordinator/research-coordinator
-
-# 분석 에이전트만
-claude plugin add HosungYou/research-coordinator/methodology-analysis-agents
+# 일괄 설치 스크립트 사용 (권장)
+curl -sL https://raw.githubusercontent.com/HosungYou/research-coordinator/main/scripts/install-all-plugins.sh | bash
 ```
 
-### Quick Install (로컬)
+또는 수동으로:
+
+```bash
+# 마스터 코디네이터
+claude plugin install research-coordinator
+
+# 모든 에이전트 (01-20)
+for i in $(seq -w 1 20); do
+  case $i in
+    01) name="research-question-refiner";;
+    02) name="theoretical-framework-architect";;
+    03) name="devils-advocate";;
+    04) name="research-ethics-advisor";;
+    05) name="systematic-literature-scout";;
+    06) name="evidence-quality-appraiser";;
+    07) name="effect-size-extractor";;
+    08) name="research-radar";;
+    09) name="research-design-consultant";;
+    10) name="statistical-analysis-guide";;
+    11) name="analysis-code-generator";;
+    12) name="sensitivity-analysis-designer";;
+    13) name="internal-consistency-checker";;
+    14) name="checklist-manager";;
+    15) name="reproducibility-auditor";;
+    16) name="bias-detector";;
+    17) name="journal-matcher";;
+    18) name="academic-communicator";;
+    19) name="peer-review-strategist";;
+    20) name="preregistration-composer";;
+  esac
+  claude plugin install "${i}-${name}"
+done
+```
+
+#### 옵션 B: 선택적 설치
+
+필요한 에이전트만 개별 설치:
+
+```bash
+# 마스터 코디네이터 (자동 디스패치)
+claude plugin install research-coordinator
+
+# 개별 에이전트 (예시)
+claude plugin install 05-systematic-literature-scout   # 문헌 검토
+claude plugin install 10-statistical-analysis-guide    # 통계 분석
+claude plugin install 17-journal-matcher               # 저널 매칭
+```
+
+#### 옵션 C: 카테고리별 설치
+
+```bash
+# 이론 및 연구 설계 (01-04)
+claude plugin install 01-research-question-refiner 02-theoretical-framework-architect \
+  03-devils-advocate 04-research-ethics-advisor
+
+# 문헌 및 증거 (05-08)
+claude plugin install 05-systematic-literature-scout 06-evidence-quality-appraiser \
+  07-effect-size-extractor 08-research-radar
+
+# 방법론 및 분석 (09-12)
+claude plugin install 09-research-design-consultant 10-statistical-analysis-guide \
+  11-analysis-code-generator 12-sensitivity-analysis-designer
+
+# 품질 및 검증 (13-16)
+claude plugin install 13-internal-consistency-checker 14-checklist-manager \
+  15-reproducibility-auditor 16-bias-detector
+
+# 출판 및 커뮤니케이션 (17-20)
+claude plugin install 17-journal-matcher 18-academic-communicator \
+  19-peer-review-strategist 20-preregistration-composer
+```
+
+### 설치 확인
+
+```bash
+# 설치된 플러그인 목록 확인
+claude plugin list | grep research-coordinator-skills
+```
+
+### Quick Install (로컬 개발용)
 
 ```bash
 git clone https://github.com/HosungYou/research-coordinator.git
 cd research-coordinator
 ./scripts/install.sh
-```
-
-### Manual Install
-
-```bash
-# 스킬 디렉토리 생성
-mkdir -p ~/.claude/skills
-
-# 심볼릭 링크 생성
-ln -sf /path/to/research-coordinator/.claude/skills/research-coordinator ~/.claude/skills/
-ln -sf /path/to/research-coordinator/.claude/skills/research-agents ~/.claude/skills/
 ```
 
 ## 🚀 Usage
@@ -185,18 +252,35 @@ Claude: [자동 감지: "메타분석", "효과"]
 | 19 | Peer Review Strategist | 심사평 대응 전략 및 회신문 작성 |
 | 20 | Pre-registration Composer | OSF/AsPredicted 사전등록 문서 작성 |
 
-## 📦 Plugin Modules
+## 📦 Available Plugins (21개)
 
-Marketplace에서 필요한 모듈만 선택적으로 설치할 수 있습니다:
+모든 플러그인은 개별적으로 설치됩니다. 필요한 것만 선택하세요:
 
-| 플러그인 | 포함 에이전트 | 용도 |
-|----------|--------------|------|
-| `research-coordinator` | 마스터 | 자동 디스패치 코디네이터 |
-| `research-design-agents` | 01-04 | 이론 및 연구 설계 |
-| `literature-evidence-agents` | 05-08 | 문헌 검토 및 증거 종합 |
-| `methodology-analysis-agents` | 09-12 | 방법론 및 통계 분석 |
-| `quality-validation-agents` | 13-16 | 품질 검증 및 편향 탐지 |
-| `publication-communication-agents` | 17-20 | 출판 및 학술 커뮤니케이션 |
+| Plugin Name | Category | VS Level | Description |
+|-------------|----------|----------|-------------|
+| `research-coordinator` | Master | - | 자동 디스패치 코디네이터 |
+| `01-research-question-refiner` | A: Design | Enhanced | 연구 질문 정제 (FINER/PICO) |
+| `02-theoretical-framework-architect` | A: Design | **Full** | 이론적 프레임워크 설계 |
+| `03-devils-advocate` | A: Design | **Full** | 연구 약점 비판 및 대안 |
+| `04-research-ethics-advisor` | A: Design | Enhanced | IRB 및 윤리 자문 |
+| `05-systematic-literature-scout` | B: Literature | **Full** | PRISMA 체계적 문헌검색 |
+| `06-evidence-quality-appraiser` | B: Literature | Enhanced | 증거 품질 평가 |
+| `07-effect-size-extractor` | B: Literature | Enhanced | 효과크기 추출/변환 |
+| `08-research-radar` | B: Literature | Enhanced | 최신 연구 트렌드 |
+| `09-research-design-consultant` | C: Method | Enhanced | 연구 설계 컨설팅 |
+| `10-statistical-analysis-guide` | C: Method | **Full** | 통계 분석 가이드 |
+| `11-analysis-code-generator` | C: Method | Light | R/Python 코드 생성 |
+| `12-sensitivity-analysis-designer` | C: Method | Light | 민감도 분석 설계 |
+| `13-internal-consistency-checker` | D: Quality | Light | 내적 일관성 검증 |
+| `14-checklist-manager` | D: Quality | Light | PRISMA/CONSORT 체크리스트 |
+| `15-reproducibility-auditor` | D: Quality | Light | 재현성 감사 |
+| `16-bias-detector` | D: Quality | **Full** | 편향 탐지 |
+| `17-journal-matcher` | E: Publish | Light | 저널 매칭 |
+| `18-academic-communicator` | E: Publish | Light | 학술 커뮤니케이션 |
+| `19-peer-review-strategist` | E: Publish | Light | 피어리뷰 대응 |
+| `20-preregistration-composer` | E: Publish | Light | 사전등록 문서 작성 |
+
+> **참고**: `research-coordinator`를 설치해도 다른 에이전트가 자동 설치되지 않습니다. 마스터 코디네이터는 대화 맥락을 분석하여 적절한 에이전트를 **추천**하지만, 개별 에이전트의 `/skill-name` 명령어를 사용하려면 해당 플러그인을 설치해야 합니다.
 
 ## 📚 Documentation
 
