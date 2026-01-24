@@ -1,10 +1,24 @@
 ---
 name: research-design-consultant
+version: 3.0.0
 description: |
   VS-Enhanced 연구 설계 컨설턴트 - Mode Collapse 방지 및 창의적 설계 옵션 제시
   Enhanced VS 3단계 프로세스 적용: 뻔한 설계 회피, 맥락 최적 설계 전략 제안
   Use when: selecting research design, planning methodology, choosing between approaches
   트리거: 연구 설계, RCT, 준실험, 실험 설계, 조사 설계, 방법론
+upgrade_level: ENHANCED
+v3_integration:
+  dynamic_t_score: true
+  creativity_modules:
+    - forced-analogy
+    - iterative-loop
+    - semantic-distance
+  checkpoints:
+    - CP-INIT-002
+    - CP-VS-001
+    - CP-VS-003
+    - CP-FA-001
+    - CP-IL-001
 ---
 
 # 연구 설계 컨설턴트 (Research Design Consultant)
@@ -323,6 +337,40 @@ T < 0.3 (혁신 - 선도 연구용):
 - **01-research-question-refiner**: 설계 선택 전 질문 정제
 - **10-statistical-analysis-guide**: 설계에 맞는 분석 방법
 - **04-research-ethics-advisor**: 설계의 윤리적 검토
+
+## v3.0 창의적 장치 통합
+
+### 활용 가능한 창의적 장치 (ENHANCED)
+
+| 장치 | 적용 시점 | 활용 예시 |
+|------|----------|----------|
+| **Forced Analogy** | Phase 2 | 다른 분야의 연구 설계 패턴 유추 적용 |
+| **Iterative Loop** | Phase 2 | 4라운드 발산-수렴으로 설계 옵션 정제 |
+| **Semantic Distance** | Phase 2 | 기존 설계 한계를 넘는 혁신적 접근 발견 |
+
+### 체크포인트 통합
+
+```yaml
+적용 체크포인트:
+  - CP-INIT-002: 창의성 수준 선택
+  - CP-VS-001: 연구 설계 방향 선택 (다중)
+  - CP-VS-003: 최종 설계 만족도 확인
+  - CP-FA-001: 유추 소스 분야 선택
+  - CP-IL-001: 반복 라운드 수 설정
+```
+
+### 모듈 참조
+
+```
+../../research-coordinator/core/vs-engine.md
+../../research-coordinator/core/t-score-dynamic.md
+../../research-coordinator/creativity/forced-analogy.md
+../../research-coordinator/creativity/iterative-loop.md
+../../research-coordinator/creativity/semantic-distance.md
+../../research-coordinator/interaction/user-checkpoints.md
+```
+
+---
 
 ## 참고 자료
 

@@ -1,10 +1,23 @@
 ---
 name: research-radar
+version: 3.0.0
 description: |
   VS-Enhanced 최신 연구 레이더 - Mode Collapse 방지 및 차별화된 트렌드 분석
   Enhanced VS 3단계 프로세스 적용: 단순 키워드 추적 회피, 전략적 연구 모니터링
   Use when: tracking new publications, monitoring research trends, staying updated
   트리거: 최신 연구, 트렌드, 신규 출판, 새로운 논문, 연구 동향
+upgrade_level: ENHANCED
+v3_integration:
+  dynamic_t_score: true
+  creativity_modules:
+    - forced-analogy
+    - iterative-loop
+    - semantic-distance
+  checkpoints:
+    - CP-INIT-002
+    - CP-VS-001
+    - CP-VS-003
+    - CP-SD-001
 ---
 
 # 최신 연구 레이더 (Research Radar)
@@ -320,6 +333,39 @@ T < 0.3 (예측적 - 선도 연구용):
 - **05-systematic-literature-scout**: 체계적 문헌 검색
 - **02-theoretical-framework-architect**: 새 이론 동향 반영
 - **17-journal-matcher**: 출판 트렌드 파악
+
+## v3.0 창의적 장치 통합
+
+### 활용 가능한 창의적 장치 (ENHANCED)
+
+| 장치 | 적용 시점 | 활용 예시 |
+|------|----------|----------|
+| **Forced Analogy** | Phase 2 | 다른 분야의 트렌드 추적 방법 유추 적용 |
+| **Iterative Loop** | Phase 2 | 4라운드 발산-수렴으로 모니터링 전략 정제 |
+| **Semantic Distance** | Phase 2 | 의미적으로 먼 키워드 조합으로 신흥 트렌드 발견 |
+
+### 체크포인트 통합
+
+```yaml
+적용 체크포인트:
+  - CP-INIT-002: 창의성 수준 선택
+  - CP-VS-001: 모니터링 전략 방향 선택 (다중)
+  - CP-VS-003: 최종 레이더 설정 만족도 확인
+  - CP-SD-001: 개념 조합 거리 임계값
+```
+
+### 모듈 참조
+
+```
+../../research-coordinator/core/vs-engine.md
+../../research-coordinator/core/t-score-dynamic.md
+../../research-coordinator/creativity/forced-analogy.md
+../../research-coordinator/creativity/iterative-loop.md
+../../research-coordinator/creativity/semantic-distance.md
+../../research-coordinator/interaction/user-checkpoints.md
+```
+
+---
 
 ## 참고 자료
 

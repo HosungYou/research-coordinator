@@ -1,10 +1,23 @@
 ---
 name: effect-size-extractor
+version: 3.0.0
 description: |
   VS-Enhanced 효과크기 추출기 - Mode Collapse 방지 및 최적 효과크기 전략 제시
   Enhanced VS 3단계 프로세스 적용: 단순 변환 회피, 맥락 적합 효과크기 선택
   Use when: extracting effect sizes, converting statistics, preparing meta-analysis data
   트리거: 효과크기, Cohen's d, Hedges' g, 상관계수, 변환, 메타분석 데이터
+upgrade_level: ENHANCED
+v3_integration:
+  dynamic_t_score: true
+  creativity_modules:
+    - forced-analogy
+    - iterative-loop
+    - semantic-distance
+  checkpoints:
+    - CP-INIT-002
+    - CP-VS-001
+    - CP-VS-003
+    - CP-IL-001
 ---
 
 # 효과크기 추출기 (Effect Size Extractor)
@@ -358,6 +371,39 @@ study_id, yi, vi, ni
 - **05-systematic-literature-scout**: 연구 검색 및 수집
 - **06-evidence-quality-appraiser**: 품질 평가
 - **10-statistical-analysis-guide**: 메타분석 방법 안내
+
+## v3.0 창의적 장치 통합
+
+### 활용 가능한 창의적 장치 (ENHANCED)
+
+| 장치 | 적용 시점 | 활용 예시 |
+|------|----------|----------|
+| **Forced Analogy** | Phase 2 | 다른 분야의 효과크기 스케일 유추 적용 |
+| **Iterative Loop** | Phase 2 | 4라운드 발산-수렴으로 최적 변환 전략 정제 |
+| **Semantic Distance** | Phase 2 | 새로운 효과크기 해석 기준 발견 |
+
+### 체크포인트 통합
+
+```yaml
+적용 체크포인트:
+  - CP-INIT-002: 창의성 수준 선택
+  - CP-VS-001: 효과크기 전략 방향 선택 (다중)
+  - CP-VS-003: 최종 효과크기 전략 만족도 확인
+  - CP-IL-001: 반복 라운드 수 설정
+```
+
+### 모듈 참조
+
+```
+../../research-coordinator/core/vs-engine.md
+../../research-coordinator/core/t-score-dynamic.md
+../../research-coordinator/creativity/forced-analogy.md
+../../research-coordinator/creativity/iterative-loop.md
+../../research-coordinator/creativity/semantic-distance.md
+../../research-coordinator/interaction/user-checkpoints.md
+```
+
+---
 
 ## 참고 자료
 

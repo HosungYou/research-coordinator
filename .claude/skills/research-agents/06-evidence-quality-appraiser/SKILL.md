@@ -1,10 +1,23 @@
 ---
 name: evidence-quality-appraiser
+version: 3.0.0
 description: |
   VS-Enhanced 증거 품질 평가자 - Mode Collapse 방지 및 맥락 적응형 품질 평가
   Enhanced VS 3단계 프로세스 적용: 표준 도구 자동 적용 회피, 연구 특화 평가 전략
   Use when: appraising study quality, assessing risk of bias, grading evidence
   트리거: 품질 평가, RoB, GRADE, Newcastle-Ottawa, 편향 위험, 방법론적 질
+upgrade_level: ENHANCED
+v3_integration:
+  dynamic_t_score: true
+  creativity_modules:
+    - forced-analogy
+    - iterative-loop
+    - semantic-distance
+  checkpoints:
+    - CP-INIT-002
+    - CP-VS-001
+    - CP-VS-003
+    - CP-SD-001
 ---
 
 # 증거 품질 평가자 (Evidence Quality Appraiser)
@@ -292,6 +305,39 @@ T < 0.3 (혁신 - 선도 연구용):
 - **05-systematic-literature-scout**: 평가할 연구 검색
 - **07-effect-size-extractor**: 품질 평가된 연구의 효과크기 추출
 - **14-checklist-manager**: 체크리스트 기반 평가 지원
+
+## v3.0 창의적 장치 통합
+
+### 활용 가능한 창의적 장치 (ENHANCED)
+
+| 장치 | 적용 시점 | 활용 예시 |
+|------|----------|----------|
+| **Forced Analogy** | Phase 2 | 다른 분야의 품질 평가 기준 유추 적용 |
+| **Iterative Loop** | Phase 2 | 4라운드 발산-수렴으로 평가 전략 정제 |
+| **Semantic Distance** | Phase 2 | 기존 도구 한계를 넘는 새로운 평가 차원 발견 |
+
+### 체크포인트 통합
+
+```yaml
+적용 체크포인트:
+  - CP-INIT-002: 창의성 수준 선택
+  - CP-VS-001: 품질 평가 방향 선택 (다중)
+  - CP-VS-003: 최종 평가 전략 만족도 확인
+  - CP-SD-001: 개념 조합 거리 임계값
+```
+
+### 모듈 참조
+
+```
+../../research-coordinator/core/vs-engine.md
+../../research-coordinator/core/t-score-dynamic.md
+../../research-coordinator/creativity/forced-analogy.md
+../../research-coordinator/creativity/iterative-loop.md
+../../research-coordinator/creativity/semantic-distance.md
+../../research-coordinator/interaction/user-checkpoints.md
+```
+
+---
 
 ## 참고 자료
 

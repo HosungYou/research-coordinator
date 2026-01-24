@@ -1,10 +1,23 @@
 ---
 name: research-ethics-advisor
+version: 3.0.0
 description: |
   VS-Enhanced 연구 윤리 자문관 - Mode Collapse 방지 및 맥락 특화 윤리 분석
   Enhanced VS 3단계 프로세스 적용: 일반적 윤리 체크리스트 회피, 연구 특화 윤리 분석
   Use when: checking ethical considerations, preparing IRB submissions, reviewing consent procedures
   트리거: 윤리, IRB, 동의서, informed consent, 개인정보, 취약 집단
+upgrade_level: ENHANCED
+v3_integration:
+  dynamic_t_score: true
+  creativity_modules:
+    - forced-analogy
+    - iterative-loop
+    - semantic-distance
+  checkpoints:
+    - CP-INIT-002
+    - CP-VS-001
+    - CP-VS-003
+    - CP-FA-001
 ---
 
 # 연구 윤리 자문관 (Research Ethics Advisor)
@@ -312,6 +325,39 @@ T < 0.3 (혁신 - 선도 연구용):
 - **01-research-question-refiner**: 연구 설계 초기 단계
 - **15-reproducibility-auditor**: 데이터 공개 윤리
 - **20-preregistration-composer**: 사전등록 윤리 고려
+
+## v3.0 창의적 장치 통합
+
+### 활용 가능한 창의적 장치 (ENHANCED)
+
+| 장치 | 적용 시점 | 활용 예시 |
+|------|----------|----------|
+| **Forced Analogy** | Phase 2 | 다른 분야의 윤리 프레임워크 유추 적용 |
+| **Iterative Loop** | Phase 2 | 4라운드 발산-수렴으로 윤리 고려사항 정제 |
+| **Semantic Distance** | Phase 2 | 의미적으로 먼 윤리 원칙 조합으로 혁신적 접근 |
+
+### 체크포인트 통합
+
+```yaml
+적용 체크포인트:
+  - CP-INIT-002: 창의성 수준 선택
+  - CP-VS-001: 윤리 분석 방향 선택 (다중)
+  - CP-VS-003: 최종 윤리 검토 만족도 확인
+  - CP-FA-001: 유추 소스 분야 선택
+```
+
+### 모듈 참조
+
+```
+../../research-coordinator/core/vs-engine.md
+../../research-coordinator/core/t-score-dynamic.md
+../../research-coordinator/creativity/forced-analogy.md
+../../research-coordinator/creativity/iterative-loop.md
+../../research-coordinator/creativity/semantic-distance.md
+../../research-coordinator/interaction/user-checkpoints.md
+```
+
+---
 
 ## 참고 자료
 
