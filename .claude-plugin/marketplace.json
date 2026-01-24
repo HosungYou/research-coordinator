@@ -6,8 +6,8 @@
     "github": "HosungYou"
   },
   "metadata": {
-    "description": "20 specialized AI agents for social science research workflow with VS (Verbalized Sampling) methodology",
-    "version": "2.1.0",
+    "description": "20 specialized AI agents for social science research with VS-Research v3.0 (Verbalized Sampling) - Dynamic T-Score, 5 Creativity Mechanisms, User Checkpoints",
+    "version": "3.0.0",
     "keywords": [
       "social-science",
       "research",
@@ -16,15 +16,21 @@
       "statistics",
       "academic-writing",
       "PRISMA",
-      "verbalized-sampling"
+      "verbalized-sampling",
+      "mode-collapse-prevention",
+      "t-score",
+      "creativity-mechanisms"
     ],
     "repository": "https://github.com/HosungYou/research-coordinator",
-    "license": "MIT"
+    "license": "MIT",
+    "changelog": {
+      "3.0.0": "VS-Research v3.0: Dynamic T-Score system, 5 creativity mechanisms (Forced Analogy, Iterative Loop, Semantic Distance, Temporal Reframing, Community Simulation), User Checkpoints, 3-tier agent upgrade (FULL/ENHANCED/LIGHT)"
+    }
   },
   "plugins": [
     {
       "name": "research-coordinator",
-      "description": "Complete research agent suite: Master coordinator + 20 specialized agents for social science research. Single install includes all agents with VS methodology.",
+      "description": "Complete research agent suite v3.0: Master coordinator + 20 specialized agents with VS-Research methodology. Features Dynamic T-Score (0.0-1.0), 5 Creativity Mechanisms, and User Checkpoints for mode collapse prevention.",
       "source": "./",
       "strict": false,
       "skills": [
