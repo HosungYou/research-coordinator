@@ -1,18 +1,19 @@
 ---
 name: research-coordinator
 description: |
-  VS-Enhanced 사회과학 연구 에이전트 코디네이터.
-  Verbalized Sampling 방법론으로 Mode Collapse를 방지하고 창의적 연구 추천 제공.
+  VS-Enhanced 사회과학 연구 에이전트 코디네이터 v3.0.
+  Verbalized Sampling + 5개 창의성 모듈 + 사용자 체크포인트 시스템.
   Use when starting research, designing studies, reviewing literature,
   analyzing data, or preparing publications. Automatically dispatches
-  appropriate agents with VS methodology based on context.
+  appropriate agents with VS methodology and creativity mechanisms.
   트리거: 연구 질문, 이론적 프레임워크, 가설, 문헌 검토, 메타분석,
   효과크기, IRB, PRISMA, 통계 분석, 표본 크기, 편향, 저널, 피어리뷰
+version: "3.0.0"
 ---
 
-# Research Coordinator (VS-Enhanced)
+# Research Coordinator v3.0 (VS-Enhanced + Creativity Suite)
 
-사회과학 연구자를 위한 20개 전문 에이전트를 **Verbalized Sampling(VS) 방법론**과 함께 맥락에 따라 자동으로 인식하고 실행하는 코디네이터입니다.
+사회과학 연구자를 위한 20개 전문 에이전트를 **Verbalized Sampling(VS) 방법론**과 **5개 창의성 모듈**, **사용자 체크포인트 시스템**과 함께 제공하는 코디네이터입니다.
 
 ## VS-Research 방법론
 
@@ -37,6 +38,72 @@ VS-Enhanced: "이론 추천"
 | **Full VS** | 02, 03, 05, 10, 16 | 5단계 전체 + T-Score 명시 |
 | **Enhanced VS** | 01, 04, 06, 07, 08, 09 | 3단계 간소화 |
 | **Light VS** | 11-15, 17-20 | 모달 인식 + 대안 제시 |
+
+---
+
+## v3.0 신규 기능
+
+### 모듈화된 아키텍처
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                Research Coordinator v3.0                     │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  core/                    creativity/                       │
+│  ├── vs-engine.md        ├── forced-analogy.md             │
+│  └── t-score-dynamic.md  ├── iterative-loop.md             │
+│                          ├── semantic-distance.md           │
+│                          ├── temporal-reframing.md          │
+│                          └── community-simulation.md        │
+│                                                             │
+│  interaction/            references/                        │
+│  └── user-checkpoints.md ├── agent-registry.yaml           │
+│                          ├── creativity-mechanisms.md       │
+│                          ├── user-checkpoint-schema.md      │
+│                          └── dynamic-t-score-spec.md        │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 5개 창의성 모듈
+
+| 모듈 | 목적 | 체크포인트 |
+|------|------|-----------|
+| **Forced Analogy** | 다른 분야에서 개념 매핑 | CP-FA-001, CP-FA-002 |
+| **Iterative Loop** | 발산-수렴 4라운드 사이클 | CP-IL-001~004 |
+| **Semantic Distance** | 임베딩 기반 거리 추천 | CP-SD-001, CP-SD-002 |
+| **Temporal Reframing** | 시간 관점 전환 | CP-TR-001 |
+| **Community Simulation** | 7명 가상 연구자 피드백 | CP-CS-001, CP-CS-002 |
+
+### 사용자 체크포인트 시스템
+
+| 유형 | 아이콘 | 용도 |
+|------|--------|------|
+| PREFERENCE | 🔵 | 사용자 선호 선택 |
+| APPROVAL | 🟡 | 명시적 승인 필요 |
+| GUARDRAIL | 🔴 | 위험 인지 확인 |
+| ITERATION | 🟢 | 프로세스 제어 |
+
+### 동적 T-Score
+
+```
+dynamic_t_score = base_score + recency_modifier + domain_modifier + trend_modifier
+
+모드:
+- 정적 (Static): 사전 정의된 테이블 사용
+- 동적 (Dynamic): API로 실시간 계산 (권장)
+- 하이브리드 (Hybrid): 정적 기준선 + 트렌드 보정
+```
+
+### 창의성 수준 선택
+
+| 수준 | T-Score 범위 | 창의성 모듈 | 적합 대상 |
+|------|-------------|-------------|----------|
+| Conservative | T ≥ 0.5 | 없음 | 첫 출판, 보수적 저널 |
+| Balanced (권장) | T ≥ 0.3 | 선택적 3개 | 대부분 연구 |
+| Innovative | T ≥ 0.2 | 전체 5개 | 혁신 지향 저널 |
+| Extreme | T < 0.2 | 전체 5개 | 탑티어, 패러다임 전환 |
 
 ---
 
@@ -119,6 +186,52 @@ Full VS 에이전트(02, 03, 05, 10, 16)가 활성화되면 다음 5단계를 �
 │         ↓                                                   │
 │  Phase 5: 독창성 검증                                       │
 │    └─ "80% AI가 이 답변을 할까?" → NO 확인                 │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### v3.0 Enhanced VS 워크플로우
+
+v3.0에서는 사용자 체크포인트와 창의성 모듈이 통합됩니다:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                VS Engine v3.0 실행 흐름                      │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ▶ 초기화 체크포인트                                        │
+│    🔵 CP-INIT-001: 연구 유형 선택                           │
+│    🔵 CP-INIT-002: 창의성 수준 선택                         │
+│    🔵 CP-INIT-003: T-Score 모드 선택                        │
+│         │                                                   │
+│         ▼                                                   │
+│  ▶ Phase 0-1: 맥락 수집 + 모달 식별                        │
+│         │                                                   │
+│         ▼                                                   │
+│  ▶ Phase 2: Long-Tail 샘플링 (5-7개 방향 확장)             │
+│    🔵 CP-VS-001: 탐색 방향 선택 (다중 선택)                 │
+│         │                                                   │
+│         ▼                                                   │
+│  ▶ Phase 3: 저-전형성 선택                                 │
+│    🔴 CP-VS-002: 위험 경고 (T < 0.3인 경우)                │
+│         │                                                   │
+│         ▼                                                   │
+│  ▶ Phase 4: 실행 + 창의성 모듈                             │
+│    ┌─────────────────────────────────────────────────┐     │
+│    │ IF creativity_level >= "Innovative":            │     │
+│    │   → Forced Analogy (CP-FA-001, 002)            │     │
+│    │   → Iterative Loop (CP-IL-001~004)             │     │
+│    │   → Semantic Distance (CP-SD-001, 002)         │     │
+│    │   → Temporal Reframing (CP-TR-001)             │     │
+│    │   → Community Simulation (CP-CS-001, 002)      │     │
+│    └─────────────────────────────────────────────────┘     │
+│         │                                                   │
+│         ▼                                                   │
+│  ▶ Phase 5: 독창성 검증                                    │
+│    🟢 CP-VS-003: 만족도 확인                                │
+│         │ (불만족 시 Phase 2로 복귀)                       │
+│         ▼                                                   │
+│  ▶ 출력 + Self-Critique                                    │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -412,13 +525,23 @@ Task(
 ## 참고 자료
 
 ### 핵심 문서
+- **VS Engine v3.0**: `core/vs-engine.md` - 체크포인트 통합 VS 엔진
+- **Dynamic T-Score**: `core/t-score-dynamic.md` - 동적 T-Score 시스템
+- **User Checkpoints**: `interaction/user-checkpoints.md` - 사용자 체크포인트 정의
 - **VS-Research Framework**: `references/VS-Research-Framework.md`
-- **Agent Contract Schema**: `references/agent-contract-schema.md` - Agent I/O 표준 계약
-- **Agent Registry**: `references/agent-registry.yaml` - 중앙 에이전트 레지스트리
-- **Evaluation Harness**: `references/evaluation-harness.md` - VS 행동 평가 하네스
-- **Self-Critique Framework**: `references/self-critique-framework.md` - Reflexion 기반 자기 평가
+- **Agent Registry v3.0**: `references/agent-registry.yaml` - 중앙 에이전트 레지스트리
+- **Creativity Mechanisms**: `references/creativity-mechanisms.md` - 창의성 모듈 참조
+- **Checkpoint Schema**: `references/user-checkpoint-schema.md` - 체크포인트 스키마
+- **T-Score Spec**: `references/dynamic-t-score-spec.md` - T-Score 기술 사양
+
+### 창의성 모듈
+- **Forced Analogy**: `creativity/forced-analogy.md`
+- **Iterative Loop**: `creativity/iterative-loop.md`
+- **Semantic Distance**: `creativity/semantic-distance.md`
+- **Temporal Reframing**: `creativity/temporal-reframing.md`
+- **Community Simulation**: `creativity/community-simulation.md`
 
 ### 외부 참조
 - **arXiv:2510.01171**: Verbalized Sampling 방법론
-- **VS Design Diverge PR**: https://github.com/anthropics/skills/pull/242
-- **Reflexion (Shinn et al., 2023)**: Self-Critique 이론적 기반
+- **Guilford's Divergent Thinking**: 창의성 이론적 기반
+- **OECD PISA 2022**: 창의적 사고 평가 프레임워크
