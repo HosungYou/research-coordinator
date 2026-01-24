@@ -13,12 +13,16 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# 버전 정보
+VERSION="3.0.0"
+
 # 로고 출력
 echo -e "${BLUE}"
-echo "╔═══════════════════════════════════════════╗"
-echo "║     Research Coordinator Installer        ║"
-echo "║     사회과학 연구 에이전트 시스템         ║"
-echo "╚═══════════════════════════════════════════╝"
+echo "╔═══════════════════════════════════════════════════════╗"
+echo "║     Research Coordinator Installer v${VERSION}           ║"
+echo "║     사회과학 연구 에이전트 시스템                      ║"
+echo "║     VS-Research: Mode Collapse 방지 시스템            ║"
+echo "╚═══════════════════════════════════════════════════════╝"
 echo -e "${NC}"
 
 # 변수 설정
@@ -90,9 +94,16 @@ echo -e "  ${GREEN}✓${NC} 에이전트 스킬: ${AGENT_COUNT}개 확인됨"
 
 # 완료 메시지
 echo ""
-echo -e "${GREEN}╔═══════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║     설치가 완료되었습니다!                 ║${NC}"
-echo -e "${GREEN}╚═══════════════════════════════════════════╝${NC}"
+echo -e "${GREEN}╔═══════════════════════════════════════════════════════╗${NC}"
+echo -e "${GREEN}║     Research Coordinator v${VERSION} 설치 완료!           ║${NC}"
+echo -e "${GREEN}╚═══════════════════════════════════════════════════════╝${NC}"
+echo ""
+echo -e "${YELLOW}v3.0 새로운 기능:${NC}"
+echo "  • VS-Research 방법론: LLM Mode Collapse 방지"
+echo "  • Dynamic T-Score: 권장안의 전형성(0.0-1.0) 평가"
+echo "  • 5가지 창의적 장치: 강제 비유, 반복 루프, 의미적 거리, 시간 재구성, 커뮤니티 시뮬레이션"
+echo "  • User Checkpoints: 14개 확인 지점"
+echo "  • 3-Tier Agent Upgrade: FULL(5) / ENHANCED(6) / LIGHT(9)"
 echo ""
 echo -e "${YELLOW}사용 방법:${NC}"
 echo "  Claude Code에서 다음 명령어로 시작하세요:"
