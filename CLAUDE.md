@@ -1,6 +1,8 @@
 # CLAUDE.md
 
-# Research Coordinator v5.0.0 (Sisyphus Edition)
+# NovaScholar v5.0.0 (Sisyphus Edition)
+
+**Beyond Modal: AI Research Assistant That Thinks Creatively**
 
 AI Research Assistant for the Complete Research Lifecycle - from question formulation to publication.
 
@@ -8,22 +10,23 @@ AI Research Assistant for the Complete Research Lifecycle - from question formul
 
 ## Project Overview
 
-Research Coordinator provides **context-persistent research support** through 27 specialized agents across 8 categories (A-H). Unlike other AI tools, its real value is maintaining research context across the entire project lifecycle in a single platform.
+NovaScholar provides **context-persistent research support** through 27 specialized agents across 8 categories (A-H). Unlike other AI tools that suffer from **mode collapse** (always recommending the same predictable options), NovaScholar uses **Verbalized Sampling (VS) methodology** to guide you toward creative, defensible research choices while maintaining research context across the entire project lifecycle in a single platform.
 
 ## Core Value Proposition
 
-1. **Context Persistence**: No re-explaining your research question, methodology, or decisions
-2. **Single Platform**: Claude Code as your unified research environment
-3. **Research Pipeline**: Structured workflow from idea to publication
-4. **Tool Discovery**: Easy access to tools/platforms you didn't know existed
-5. **Human-Centered**: AI assists, humans decide
+1. **Beyond Modal**: VS methodology prevents mode collapse - you get creative alternatives, not just obvious choices
+2. **Context Persistence**: No re-explaining your research question, methodology, or decisions
+3. **Single Platform**: Claude Code as your unified research environment
+4. **Research Pipeline**: Structured workflow from idea to publication
+5. **Tool Discovery**: Easy access to tools/platforms you didn't know existed
+6. **Human-Centered**: AI assists, humans decide
 
 > **Core Principle**: "Human decisions remain with humans. AI handles what's beyond human scope."
 > "인간이 할 일은 인간이, AI는 인간의 범주를 벗어난 것을 수행"
 
 ## Quick Start
 
-Simply tell Research Coordinator what you want to do:
+Simply tell NovaScholar what you want to do:
 
 ```
 "I want to conduct a systematic review on AI in education"
@@ -105,7 +108,7 @@ https://github.com/HosungYou/research-coordinator
 
 ## OMC Integration (v3.2.0+)
 
-Research Coordinator integrates with **oh-my-claudecode** for parallel processing and smart model routing.
+NovaScholar integrates with **oh-my-claudecode** for parallel processing and smart model routing.
 
 ### Human Checkpoints
 
@@ -135,7 +138,7 @@ ralph: 연구 설계 완료해줘  # persistence until done
 
 ## Sisyphus Protocol (v5.0)
 
-Research Coordinator embodies the **Sisyphus philosophy**: **Never claim completion without verification**.
+NovaScholar embodies the **Sisyphus philosophy**: **Never claim completion without verification**.
 
 ### Continuation Enforcement
 
@@ -193,7 +196,7 @@ Before ANY claim of "done", "fixed", or "complete":
 
 ## Paradigm Detection (Auto-Activation)
 
-Research Coordinator automatically detects research paradigm and activates appropriate agent packs.
+NovaScholar automatically detects research paradigm and activates appropriate agent packs.
 
 ### Auto-Detection Triggers
 
