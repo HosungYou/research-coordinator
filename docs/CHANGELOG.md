@@ -7,6 +7,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.1.0] - 2025-01-24
+
+### 🎨 Feature Release: Conceptual Framework Visualizer
+
+연구 Discussion 섹션의 Conceptual Framework 시각화를 **Code-First** 접근 방식으로 생성하는 21번째 에이전트를 추가했습니다.
+
+### Added
+
+#### New Agent: 21-Conceptual-Framework-Visualizer
+- **Full VS (5단계)** 적용으로 최대 창의성 보장
+- **Code-First, Image-Second** 접근: 논리 구조 → 코드 → 시각화
+- **멀티 모달리티 지원**:
+  - Mermaid: 빠른 프로토타입
+  - Graphviz: 계층/네트워크 구조
+  - Python NetworkX: 데이터 기반 시각화
+  - D3.js + SVG: 출판용 Figure
+
+- **T-Score 기반 시각화 선택**:
+  | T-Score | 유형 | 권장 |
+  |---------|------|------|
+  | > 0.8 | 모달 (박스-화살표) | ❌ 회피 |
+  | 0.5-0.8 | 조건부 (동심원, 계층) | ⚠️ 차별화 필요 |
+  | 0.3-0.5 | 권장 (네트워크, 레이어드) | ✅ **권장** |
+  | < 0.3 | 혁신적 (3D, 유기적) | ⚡ 정당화 필요 |
+
+- **Academic Modern 색상 팔레트** (T-Score 0.45):
+  - Navy: `#1a365d`
+  - Gold: `#c4a35a`
+  - Terracotta: `#c67d5a`
+  - Sage: `#87a878`
+
+#### New Workflow: Visualization Pipeline
+```
+02(이론) + 10(통계) → 21(시각화) → 03(검토) → 18(캡션)
+```
+
+#### New Checkpoints
+- `CP_VISUALIZATION_PREFERENCE` (🔵): 시각화 방향 선택
+- `CP_T_SCORE_APPROVAL` (🟡): T-Score 범위 승인
+- `CP_CODE_EXECUTION` (🟢): 코드 수정/재생성
+- `CP_ORIGINALITY_CHECK` (🔴): 독창성 검증 통과
+
+### Changed
+
+- **Registry 업데이트**: agent-registry.yaml v3.1.0
+  - 21개 에이전트 지원 (20 → 21)
+  - Full VS 에이전트에 21번 추가
+  - visualization-pipeline 워크플로우 추가
+
+- **Master Skill 업데이트**: research-coordinator SKILL.md
+  - Category E에 21번 에이전트 추가
+  - 연구 생애주기 다이어그램에 시각화 파이프라인 추가
+
+### Documentation
+
+- `docs/plans/2025-01-24-conceptual-framework-visualizer-design.md`: 설계 문서
+- `.claude/skills/research-agents/21-conceptual-framework-visualizer/SKILL.md`: 에이전트 스킬
+
+---
+
 ## [3.0.0] - 2025-01-24
 
 ### 🎯 Major Release: VS-Research v3.0

@@ -1,16 +1,16 @@
-# Agent Registry - Research Coordinator v3.0.0
+# Agent Registry - Research Coordinator v3.1.0
 # Centralized agent capabilities, schemas, and metadata
 # Based on: Codex Review architectural recommendations
 
-version: "3.0.0"
-last_updated: "2025-01-23"
+version: "3.1.0"
+last_updated: "2025-01-24"
 
 # =============================================================================
 # REGISTRY METADATA
 # =============================================================================
 
 registry:
-  description: "Centralized registry for 20 research agents with VS methodology"
+  description: "Centralized registry for 21 research agents with VS methodology"
   schema_version: "1.0.0"
   contract_reference: "agent-contract-schema.md"
 
@@ -26,7 +26,7 @@ v3_config:
 
   upgrade_levels:
     FULL:
-      agents: ["02", "03", "05", "10", "16"]
+      agents: ["02", "03", "05", "10", "16", "21"]
       features:
         - dynamic_t_score: true
         - all_creativity_modules: true
@@ -617,6 +617,88 @@ agents:
       creativity_modules: []
       checkpoints: ["CP-INIT-001"]
 
+  "21-conceptual-framework-visualizer":
+    name: "Conceptual Framework Visualizer"
+    icon: "🎨"
+    category: "E - Publication & Communication"
+    vs_level: "Full"
+    vs_phases: [0, 1, 2, 3, 4, 5]
+
+    capabilities:
+      - "Code-First visualization generation"
+      - "Multi-modality support (Mermaid/Graphviz/Python/D3.js)"
+      - "T-Score based creative sampling"
+      - "Academic publication quality figures"
+      - "Theoretical model diagram generation"
+
+    input_schema:
+      required:
+        - research_context:
+            research_question: "string"
+            theoretical_background: "string"
+            key_variables: "list[Variable]"
+            hypotheses: "list[Hypothesis]"
+      optional:
+        - target_journal_style: "enum[APA, Nature, SSCI]"
+        - preferred_visualization_type: "string"
+        - t_score_preference: "enum[conservative, balanced, innovative]"
+        - color_palette: "string"
+
+    output_schema:
+      main_output:
+        logical_structure: "object"
+        modal_visualizations: "list[ModalVisualization]"
+        recommended_visualization: "object"
+        rendering_code: "object"
+        style_guide: "object"
+
+    t_score_domains:
+      - "Visualization type selection patterns"
+      - "Color palette choices"
+      - "Layout structure decisions"
+      - "Diagram complexity levels"
+
+    triggers:
+      keywords: ["conceptual framework", "개념적 모형", "이론 모델 시각화", "Discussion figure", "변수 관계도", "framework diagram"]
+      context: ["paper writing", "discussion section", "figure creation"]
+
+    dependencies:
+      receives_from: ["02-theoretical-framework-architect", "10-statistical-analysis-guide"]
+      sends_to: ["18-academic-communicator"]
+      review_by: ["03-devils-advocate"]
+      parallel_compatible: ["17-journal-matcher"]
+
+    self_critique_required: true
+
+    # v3.1 enhancements
+    upgrade_level: "FULL"
+    v3_integration:
+      dynamic_t_score: true
+      creativity_modules: ["forced-analogy", "iterative-loop", "semantic-distance"]
+      checkpoints: ["CP_VISUALIZATION_PREFERENCE", "CP_T_SCORE_APPROVAL", "CP_CODE_EXECUTION", "CP_ORIGINALITY_CHECK"]
+
+    technology_stack:
+      mermaid:
+        use_case: "Quick prototypes, simple flowcharts"
+        complexity: "low"
+      graphviz:
+        use_case: "Hierarchical/network structures"
+        complexity: "medium"
+      python_networkx:
+        use_case: "Data-driven visualizations"
+        complexity: "high"
+      d3js_svg:
+        use_case: "Publication-ready figures"
+        complexity: "highest"
+
+    color_palettes:
+      academic_modern:
+        navy: "#1a365d"
+        gold: "#c4a35a"
+        terracotta: "#c67d5a"
+        sage: "#87a878"
+      t_score: 0.45
+
 # =============================================================================
 # WORKFLOW ORCHESTRATION
 # =============================================================================
@@ -648,7 +730,11 @@ workflows:
           - ["13", "14", "15", "16"]
 
       - stage: "publication"
-        agents: ["17", "18", "19", "20"]
+        agents: ["17", "18", "19", "20", "21"]
+        parallel_groups:
+          - ["17", "21"]
+          - ["18"]
+          - ["19", "20"]
 
   "meta-analysis":
     description: "Meta-analysis specific workflow"
@@ -661,9 +747,32 @@ workflows:
   "v3-creative-research":
     description: "v3.0 creativity-enhanced research workflow"
     creativity_level: "Innovative"
-    agents: ["01", "02", "03", "05", "10", "16"]
+    agents: ["01", "02", "03", "05", "10", "16", "21"]
     creativity_modules_enabled: true
     checkpoints_enabled: true
+
+  "visualization-pipeline":
+    description: "v3.1 Conceptual Framework visualization workflow"
+    agents: ["02", "10", "21", "03", "18"]
+    sequence:
+      - step: "theory_extraction"
+        agent: "02"
+        output: "theoretical_structure_json"
+      - step: "statistical_context"
+        agent: "10"
+        output: "analysis_results"
+      - step: "visualization_generation"
+        agent: "21"
+        input: ["theoretical_structure_json", "analysis_results"]
+        output: "rendering_code"
+      - step: "critical_review"
+        agent: "03"
+        input: "rendering_code"
+        output: "feedback"
+      - step: "caption_generation"
+        agent: "18"
+        input: "rendering_code"
+        output: "figure_caption"
 
 # =============================================================================
 # EVALUATION METRICS

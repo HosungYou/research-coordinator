@@ -1,19 +1,22 @@
 ---
 name: research-coordinator
 description: |
-  VS-Enhanced 사회과학 연구 에이전트 코디네이터 v3.0.
-  Verbalized Sampling + 5개 창의성 모듈 + 사용자 체크포인트 시스템.
+  VS-Enhanced 사회과학 연구 에이전트 코디네이터 v3.1.
+  Verbalized Sampling + 5개 창의성 모듈 + 사용자 체크포인트 시스템 + Conceptual Framework 시각화.
   Use when starting research, designing studies, reviewing literature,
-  analyzing data, or preparing publications. Automatically dispatches
-  appropriate agents with VS methodology and creativity mechanisms.
+  analyzing data, preparing publications, or creating conceptual framework visualizations.
+  Automatically dispatches appropriate agents with VS methodology and creativity mechanisms.
   트리거: 연구 질문, 이론적 프레임워크, 가설, 문헌 검토, 메타분석,
-  효과크기, IRB, PRISMA, 통계 분석, 표본 크기, 편향, 저널, 피어리뷰
-version: "3.0.0"
+  효과크기, IRB, PRISMA, 통계 분석, 표본 크기, 편향, 저널, 피어리뷰,
+  conceptual framework, 개념적 모형, 시각화, Discussion figure
+version: "3.1.0"
 ---
 
-# Research Coordinator v3.0 (VS-Enhanced + Creativity Suite)
+# Research Coordinator v3.1 (VS-Enhanced + Creativity Suite + Visualization)
 
-사회과학 연구자를 위한 20개 전문 에이전트를 **Verbalized Sampling(VS) 방법론**과 **5개 창의성 모듈**, **사용자 체크포인트 시스템**과 함께 제공하는 코디네이터입니다.
+사회과학 연구자를 위한 **21개 전문 에이전트**를 **Verbalized Sampling(VS) 방법론**과 **5개 창의성 모듈**, **사용자 체크포인트 시스템**과 함께 제공하는 코디네이터입니다.
+
+**v3.1 신규:** 21-Conceptual-Framework-Visualizer 에이전트 추가 (Full VS, Code-First 시각화)
 
 ## VS-Research 방법론
 
@@ -35,7 +38,7 @@ VS-Enhanced: "이론 추천"
 
 | 수준 | 에이전트 | 특징 |
 |------|---------|------|
-| **Full VS** | 02, 03, 05, 10, 16 | 5단계 전체 + T-Score 명시 |
+| **Full VS** | 02, 03, 05, 10, 16, **21** | 5단계 전체 + T-Score 명시 |
 | **Enhanced VS** | 01, 04, 06, 07, 08, 09 | 3단계 간소화 |
 | **Light VS** | 11-15, 17-20 | 모달 인식 + 대안 제시 |
 
@@ -153,6 +156,7 @@ dynamic_t_score = base_score + recency_modifier + domain_modifier + trend_modifi
 | 18 | 학술 커뮤니케이터 | `/academic-communicator` | Light | 초록, plain language, 프레스 릴리즈 |
 | 19 | 피어 리뷰 대응 전략가 | `/peer-review-strategist` | Light | 리뷰어, 수정 요청, response letter |
 | 20 | 사전등록 문서 작성자 | `/preregistration-composer` | Light | 사전등록, registered report, OSF |
+| 21 | **개념적 프레임워크 시각화** | `/conceptual-framework-visualizer` | **Full** | conceptual framework, 개념적 모형, 시각화, Discussion figure |
 
 ---
 
@@ -427,6 +431,14 @@ VS로 창의성을 추구하더라도 다음은 절대 타협 불가:
 │  │  #17(L) → #19(L) → #18(L)                                 │ │
 │  │  저널     리뷰     커뮤니                                   │ │
 │  │  매칭     대응     케이션                                   │ │
+│  │          └→ #21(F) (시각화) [VS]                          │ │
+│  └────────────────────────────────────────────────────────────┘ │
+│                                                                  │
+│  🎨 시각화 파이프라인 (v3.1 신규)                                 │
+│  ┌────────────────────────────────────────────────────────────┐ │
+│  │  #02(F) + #10(F) → #21(F) → #03(F) → #18(L)              │ │
+│  │  이론    통계      시각화    검토     캡션                   │ │
+│  │  [입력]           [VS]     [피드백]  [출력]                 │ │
 │  └────────────────────────────────────────────────────────────┘ │
 │                                                                  │
 │  범례: (F)=Full VS, (E)=Enhanced VS, (L)=Light VS               │
