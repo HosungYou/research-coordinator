@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-# Research Coordinator v4.0
+# Research Coordinator v5.0.0 (Sisyphus Edition)
 
 AI Research Assistant for the Complete Research Lifecycle - from question formulation to publication.
 
@@ -8,7 +8,7 @@ AI Research Assistant for the Complete Research Lifecycle - from question formul
 
 ## Project Overview
 
-Research Coordinator provides **context-persistent research support** through 21 specialized agents. Unlike other AI tools, its real value is maintaining research context across the entire project lifecycle in a single platform.
+Research Coordinator provides **context-persistent research support** through 27 specialized agents across 8 categories (A-H). Unlike other AI tools, its real value is maintaining research context across the entire project lifecycle in a single platform.
 
 ## Core Value Proposition
 
@@ -43,13 +43,43 @@ The system guides you through a conversational wizard with clear choice points.
 | Guided Wizard | AskUserQuestion UX | `core/guided-wizard.md` |
 | Auto-Documentation | Document generation | `core/auto-documentation.md` |
 
-## Agent Structure (3-Tier)
+## Agent Structure (v5.0)
 
-| Tier | Agents | Purpose |
-|------|--------|---------|
-| **Flagship** | #02, #03, #10, #21 | Full VS methodology, strategic decisions |
-| **Core** | #01, #05, #06, #09, #16, #17 | Essential capabilities |
-| **Support** | #04, #07-08, #11-15, #18-20 | Specialized tasks |
+### 27 Agents in 8 Categories
+
+| Category | Agents | Paradigm Affinity |
+|----------|--------|-------------------|
+| **A: Foundation** | A1-ResearchQuestionRefiner, A2-TheoreticalFrameworkArchitect, A3-DevilsAdvocate, A4-ResearchEthicsAdvisor, A5-ParadigmWorldviewAdvisor | All paradigms |
+| **B: Evidence** | B1-SystematicLiteratureScout, B2-EvidenceQualityAppraiser, B3-EffectSizeExtractor, B4-ResearchRadar | Quantitative-focused |
+| **C: Design** | C1-QuantitativeDesignConsultant, C2-QualitativeDesignConsultant, C3-MixedMethodsDesignConsultant, C4-ExperimentalMaterialsDeveloper | Paradigm-specific |
+| **D: Data Collection** | D1-SamplingStrategyAdvisor, D2-InterviewFocusGroupSpecialist, D3-ObservationProtocolDesigner, D4-MeasurementInstrumentDeveloper | Method-specific |
+| **E: Analysis** | E1-QuantitativeAnalysisGuide, E2-QualitativeCodingSpecialist, E3-MixedMethodsIntegration, E4-AnalysisCodeGenerator | Paradigm-specific |
+| **F: Quality** | F1-SensitivityAnalysisDesigner, F2-ChecklistManager, F3-ReproducibilityAuditor, F4-BiasTrustworthinessDetector | All paradigms |
+| **G: Communication** | G1-JournalMatcher, G2-AcademicCommunicator, G3-PeerReviewStrategist, G4-PreregistrationComposer | All paradigms |
+| **H: Specialized** | H1-EthnographicResearchAdvisor, H2-NarrativeAnalysisSpecialist, H3-GroundedTheoryAdvisor | Qualitative-focused |
+
+### Research Types Supported
+
+**Quantitative:**
+- Experimental designs (RCT, quasi-experimental)
+- Survey research
+- Meta-analysis and systematic reviews
+- Correlational studies
+- Psychometric validation
+
+**Qualitative:**
+- Phenomenology
+- Grounded theory
+- Case study
+- Ethnography
+- Narrative inquiry
+- Action research
+
+**Mixed Methods:**
+- Sequential (explanatory, exploratory)
+- Convergent parallel
+- Embedded design
+- Transformative frameworks
 
 ## Tool Integrations
 
@@ -85,13 +115,13 @@ Research Coordinator integrates with **oh-my-claudecode** for parallel processin
 | 🟠 RECOMMENDED | CP_ANALYSIS_PLAN, CP_QUALITY_REVIEW | Review recommended |
 | 🟡 OPTIONAL | CP_VISUALIZATION_PREFERENCE, CP_RENDERING_METHOD | Defaults available |
 
-### Model Routing
+### Model Routing (v5.0)
 
 | Tier | Model | Agents |
 |------|-------|--------|
-| HIGH | Opus | #01, #02, #03, #09, #19 |
-| MEDIUM | Sonnet | #04, #06, #10, #12, #15-18, #20-21 |
-| LOW | Haiku | #05, #07, #08, #11, #13-14 |
+| HIGH | Opus | A2, A5, C2, C3, E2, E3, H1-H3 (Complex interpretive work, philosophical reasoning) |
+| MEDIUM | Sonnet | A1, A3, A4, B1, B2, C1, C4, D1-D4, E1, E4, F2, F4, G2, G3 (Standard research tasks) |
+| LOW | Haiku | B3, B4, F1, F3, G1, G4 (Quick lookups, formatting, checklists) |
 
 ### OMC Modes
 
@@ -100,3 +130,106 @@ ulw: 문헌 검색해줘     # ultrawork - maximum parallelism
 eco: 통계 분석해줘     # ecomode - token efficient
 ralph: 연구 설계 완료해줘  # persistence until done
 ```
+
+---
+
+## Sisyphus Protocol (v5.0)
+
+Research Coordinator embodies the **Sisyphus philosophy**: **Never claim completion without verification**.
+
+### Continuation Enforcement
+
+The system is bound to its task list and paradigm-specific completion criteria. It CANNOT stop until:
+
+**Universal Criteria (All Paradigms):**
+- [ ] All TODO items marked complete
+- [ ] All human checkpoints approved
+- [ ] Project state file updated
+- [ ] Documentation generated
+- [ ] No unaddressed errors or warnings
+
+**Quantitative Research:**
+- [ ] Hypotheses formulated and testable
+- [ ] Variables defined with operational definitions
+- [ ] Sample size justified with power analysis
+- [ ] Statistical analysis plan documented
+- [ ] Analysis code generated and tested
+- [ ] Results interpreted with effect sizes
+- [ ] Visualizations generated (tables, figures)
+
+**Qualitative Research:**
+- [ ] Research questions aligned with qualitative approach
+- [ ] Participant selection strategy justified
+- [ ] Data collection protocol developed
+- [ ] Coding framework established
+- [ ] Saturation reached and documented
+- [ ] Themes refined and verified
+- [ ] Trustworthiness criteria met (credibility, transferability, dependability, confirmability)
+- [ ] Member checking or peer debriefing completed
+
+**Mixed Methods Research:**
+- [ ] Quantitative strand completed (all quantitative criteria)
+- [ ] Qualitative strand completed (all qualitative criteria)
+- [ ] Integration strategy documented (when, how, why)
+- [ ] Joint display created showing integration
+- [ ] Meta-inference generated from integrated findings
+- [ ] Methodological coherence verified
+
+### Verification Before Completion
+
+Before ANY claim of "done", "fixed", or "complete":
+
+1. **IDENTIFY**: What evidence proves this claim?
+2. **RUN**: Execute verification (test, validation, review)
+3. **READ**: Check output - did it pass?
+4. **ONLY THEN**: Make the claim with evidence
+
+**Red Flags (STOP and verify):**
+- Using "should", "probably", "seems to"
+- Expressing satisfaction before verification
+- Claiming completion without fresh evidence
+
+---
+
+## Paradigm Detection (Auto-Activation)
+
+Research Coordinator automatically detects research paradigm and activates appropriate agent packs.
+
+### Auto-Detection Triggers
+
+**Quantitative signals:** "hypothesis", "effect size", "p-value", "experiment", "ANOVA", "regression", "가설", "효과크기", "통계"
+
+**Qualitative signals:** "lived experience", "saturation", "themes", "phenomenology", "coding", "체험", "포화", "현상학"
+
+**Mixed methods signals:** "sequential", "convergent", "integration", "joint display", "혼합방법", "통합"
+
+### Agent Pack Activation
+
+When paradigm is detected:
+
+**Quantitative Pack:**
+- Primary: C1-QuantitativeDesignConsultant, E1-QuantitativeAnalysisGuide, E4-AnalysisCodeGenerator
+- Secondary: B3-EffectSizeExtractor, D4-MeasurementInstrumentDeveloper
+- Support: F2-ChecklistManager (CONSORT/STROBE), F4-BiasTrustworthinessDetector
+
+**Qualitative Pack:**
+- Primary: C2-QualitativeDesignConsultant, E2-QualitativeCodingSpecialist, D2-InterviewFocusGroupSpecialist
+- Secondary: A5-ParadigmWorldviewAdvisor, H1-EthnographicResearchAdvisor, H2-NarrativeAnalysisSpecialist
+- Support: F2-ChecklistManager (COREQ/SRQR), F4-BiasTrustworthinessDetector
+
+**Mixed Methods Pack:**
+- Primary: C3-MixedMethodsDesignConsultant, E3-MixedMethodsIntegrationSpecialist
+- Includes: ALL agents from both quantitative and qualitative packs
+- Support: F2-ChecklistManager (GRAMMS)
+
+### User Clarification
+
+If paradigm is undetermined (confidence < 0.7), ask:
+
+> "Which research approach are you using?"
+> 1. Quantitative (hypothesis testing, statistics)
+> 2. Qualitative (interviews, themes, lived experiences)
+> 3. Mixed Methods (combining both)
+> 4. Not decided yet (need help choosing)
+
+---

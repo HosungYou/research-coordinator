@@ -1,124 +1,223 @@
-# Research Coordinator - 사회과학 연구 에이전트 시스템
+# Research Coordinator v5.0.0 (Sisyphus Edition)
+
+## 사회과학 연구 전체 생애주기를 위한 AI 연구 어시스턴트
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-5.0.0-brightgreen)](https://github.com/HosungYou/research-coordinator)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-Skills-blue)](https://claude.ai/code)
+
+---
 
 ## 목차
 
-1. [소개](#소개)
-2. [시스템 구성](#시스템-구성)
-3. [에이전트 카테고리](#에이전트-카테고리)
-4. [설치 방법](#설치-방법)
-5. [사용 방법](#사용-방법)
-6. [자동 트리거 시스템](#자동-트리거-시스템)
-7. [병렬 실행](#병렬-실행)
-8. [FAQ](#faq)
+1. [개요](#개요)
+2. [v5.0.0 새로운 기능](#v500-새로운-기능)
+3. [27개 에이전트 (8개 카테고리)](#27개-에이전트-8개-카테고리)
+4. [패러다임 자동 감지](#패러다임-자동-감지)
+5. [Sisyphus 프로토콜](#sisyphus-프로토콜)
+6. [설치 및 사용법](#설치-및-사용법)
+7. [FAQ](#faq)
 
 ---
 
-## 소개
+## 개요
 
-**Research Coordinator**는 사회과학 연구자를 위한 20개의 전문 AI 에이전트를 제공하는 Claude Code Skills 시스템입니다. 연구의 전체 생애주기를 지원합니다:
+**Research Coordinator**는 사회과학 연구자를 위한 **27개의 전문 AI 에이전트**를 제공하는 Claude Code Skills 시스템입니다.
 
-- **아이디어 구체화**: 연구 질문 정제, 이론적 프레임워크 설계
-- **문헌 검토**: 체계적 검색, 품질 평가, 근거 종합
-- **연구 설계**: 방법론 선택, 표본 크기 계산, 분석 계획
-- **품질 검증**: 편향 탐지, 일관성 점검, 재현성 감사
-- **출판 준비**: 저널 매칭, 초록 작성, 리뷰어 대응
+### 핵심 가치
 
-### 핵심 특징
+1. **맥락 지속성**: 연구 질문, 방법론, 의사결정을 매번 다시 설명할 필요 없음
+2. **단일 플랫폼**: Claude Code를 통합 연구 환경으로 사용
+3. **연구 파이프라인**: 아이디어에서 출판까지 구조화된 워크플로우
+4. **인간 중심**: AI는 보조하고, 인간이 결정
 
-1. **자동 맥락 인식**: 대화 내용을 분석하여 적절한 에이전트 자동 선택
-2. **병렬 실행 지원**: 관련 에이전트들의 동시 실행으로 효율성 극대화
-3. **표준 가이드라인 내장**: PRISMA, CONSORT, STROBE, APA 7 등 준수
-4. **다국어 지원**: 한국어/영어 연구 모두 지원
+> **핵심 원칙**: "인간이 할 일은 인간이, AI는 인간의 범주를 벗어난 것을 수행"
 
 ---
 
-## 시스템 구성
+## v5.0.0 새로운 기능
+
+### Sisyphus 프로토콜: 지속 강제
+
+oh-my-opencode에서 영감을 받은 Sisyphus 패턴으로 **연구 작업 완료까지 절대 멈추지 않습니다**:
+
+- **지속 강제**: 패러다임별 완료 기준 충족까지 작업 계속
+- **완료 전 검증**: 모든 "완료" 주장에 신선한 증거 필요
+- **패러다임별 기준**: 양적/질적/혼합방법 각각 다른 완료 체크리스트
+
+### 패러다임 자동 감지
+
+대화 키워드를 기반으로 연구 패러다임을 자동 감지:
+
+| 패러다임 | 감지 키워드 | 활성화되는 에이전트 팩 |
+|----------|-----------|----------------------|
+| **양적** | "가설", "효과크기", "메타분석", "ANOVA" | A1-A5, C1, E1, E4 |
+| **질적** | "체험", "포화", "주제 분석", "현상학" | A1-A5, C2, D2, E2 |
+| **혼합방법** | "순차적", "수렴적", "통합", "joint display" | 전체 27개 에이전트 |
+
+### 완전한 질적 연구 지원 (신규)
+
+- **현상학**: 브라케팅, 본질 추출, 의미 단위
+- **근거이론**: 개방/축/선택 코딩, 이론적 포화
+- **사례연구**: 두꺼운 기술, 패턴 매칭, 교차 사례 합성
+- **민족지**: 현장 연구, 참여 관찰, 문화 해석
+- **실행연구**: PDSA 사이클, 참여적 연구, 변화 문서화
+
+### 혼합방법 통합 (신규)
+
+- **Joint Display 테이블**: 양적 + 질적 데이터 나란히
+- **메타 추론 생성**: 두 데이터 유형의 통합 합성
+- **수렴적 설계**: 병렬 데이터 수집 + 통합 분석
+- **설명적 순차 설계**: QUANT → qual 후속 탐구
+- **탐색적 순차 설계**: QUAL → quant 검증
+
+---
+
+## 27개 에이전트 (8개 카테고리)
+
+### Category A: 연구 기초 (5개)
+
+| ID | 에이전트명 | 주요 기능 | 티어 |
+|----|-----------|----------|------|
+| A1 | **연구 질문 정제기** | FINER/PICO/SPIDER 프레임워크 | MEDIUM |
+| A2 | **이론적 프레임워크 설계자** | 이론 선택, 개념 모델 구축 | HIGH |
+| A3 | **악마의 옹호자** | 비판적 검토, 대안적 관점 | MEDIUM |
+| A4 | **연구 윤리 자문관** | IRB, 동의서, 데이터 보호 | MEDIUM |
+| A5 | **패러다임 조언자 (신규)** | 존재론/인식론/방법론 안내 | HIGH |
+
+### Category B: 문헌 및 근거 (4개)
+
+| ID | 에이전트명 | 주요 기능 | 티어 |
+|----|-----------|----------|------|
+| B1 | **문헌 검토 전략가** | PRISMA, 스코핑, 메타합성 | MEDIUM |
+| B2 | **근거 품질 평가자** | RoB, CASP, JBI 평가 | MEDIUM |
+| B3 | **효과크기 추출기** | 효과크기 계산 및 변환 | LOW |
+| B4 | **최신 연구 레이더** | 트렌드 모니터링, 핵심 논문 | LOW |
+
+### Category C: 연구 설계 (4개)
+
+| ID | 에이전트명 | 주요 기능 | 티어 |
+|----|-----------|----------|------|
+| C1 | **양적 설계 컨설턴트** | 실험, 조사, 타당도 | MEDIUM |
+| C2 | **질적 설계 컨설턴트 (신규)** | 현상학, 근거이론, 사례연구 | HIGH |
+| C3 | **혼합방법 설계 컨설턴트 (신규)** | 순차적, 수렴적, 내재적 설계 | HIGH |
+| C4 | **실험 자료 개발자 (신규)** | 처치, 통제, 조작 점검 | MEDIUM |
+
+### Category D: 데이터 수집 (4개, 신규 카테고리)
+
+| ID | 에이전트명 | 주요 기능 | 티어 |
+|----|-----------|----------|------|
+| D1 | **표집 전략 조언자** | 확률/비확률/이론적 표집 | MEDIUM |
+| D2 | **면담/포커스그룹 전문가** | 프로토콜, 전사 규약 | MEDIUM |
+| D3 | **관찰 프로토콜 설계자** | 현장 노트, 구조화된 관찰 | MEDIUM |
+| D4 | **측정 도구 개발자** | 척도 구성, 타당도, 신뢰도 | MEDIUM |
+
+### Category E: 분석 (4개)
+
+| ID | 에이전트명 | 주요 기능 | 티어 |
+|----|-----------|----------|------|
+| E1 | **양적 분석 가이드** | 통계 분석, 베이지안, ML | MEDIUM |
+| E2 | **질적 코딩 전문가 (신규)** | 주제 분석, 근거이론 코딩 | HIGH |
+| E3 | **혼합방법 통합 전문가 (신규)** | Joint Display, 메타 추론 | HIGH |
+| E4 | **분석 코드 생성기** | R, Python, NVivo, ATLAS.ti | MEDIUM |
+
+### Category F: 품질 및 검증 (4개)
+
+| ID | 에이전트명 | 주요 기능 | 티어 |
+|----|-----------|----------|------|
+| F1 | **민감도 분석 설계자** | 강건성 검증, 민감도 분석 | LOW |
+| F2 | **체크리스트 관리자** | PRISMA, CONSORT, COREQ | LOW |
+| F3 | **재현성 감사자** | Open Science, 재현성 점검 | LOW |
+| F4 | **편향/신뢰성 탐지기** | 편향 탐지, 질적 신뢰성 기준 | MEDIUM |
+
+### Category G: 출판 및 커뮤니케이션 (4개)
+
+| ID | 에이전트명 | 주요 기능 | 티어 |
+|----|-----------|----------|------|
+| G1 | **저널 매칭 전문가** | 타겟 저널 선정 | LOW |
+| G2 | **학술 커뮤니케이터** | 초록, 요약, 청중 맞춤 | LOW |
+| G3 | **피어 리뷰 대응 전략가** | 심사평 분석, 회신문 | MEDIUM |
+| G4 | **사전등록 문서 작성자** | OSF, AsPredicted | LOW |
+
+### Category H: 특화 접근법 (4개, 신규 카테고리)
+
+| ID | 에이전트명 | 주요 기능 | 티어 |
+|----|-----------|----------|------|
+| H1 | **민족지 연구 조언자 (신규)** | 현장 연구, 두꺼운 기술 | HIGH |
+| H2 | **실행연구 촉진자 (신규)** | PAR, CBPR, 실행 사이클 | MEDIUM |
+| H3 | **근거이론 조언자 (신규)** | 상수 비교, 이론 개발 | HIGH |
+| H4 | **내러티브 분석 전문가 (신규)** | 내러티브 탐구, 생애사 | HIGH |
+
+---
+
+## 패러다임 자동 감지
+
+### 감지 트리거 키워드
+
+**양적 연구 신호**:
+- "가설", "효과크기", "p-value", "ANOVA", "회귀분석"
+- "hypothesis", "effect size", "statistical power", "RCT"
+
+**질적 연구 신호**:
+- "체험", "포화", "주제", "현상학", "코딩"
+- "lived experience", "saturation", "themes", "grounded theory"
+
+**혼합방법 신호**:
+- "순차적", "수렴적", "통합", "joint display"
+- "explanatory sequential", "convergent", "meta-inference"
+
+### 에이전트 팩 자동 활성화
 
 ```
-research-coordinator/
-├── .claude/skills/
-│   ├── research-coordinator/           # 마스터 코디네이터
-│   │   └── SKILL.md
-│   └── research-agents/                # 20개 전문 에이전트
-│       ├── 01-research-question-refiner/
-│       ├── 02-theoretical-framework-architect/
-│       ├── 03-devils-advocate/
-│       ├── 04-research-ethics-advisor/
-│       ├── 05-systematic-literature-scout/
-│       ├── 06-evidence-quality-appraiser/
-│       ├── 07-effect-size-extractor/
-│       ├── 08-research-radar/
-│       ├── 09-research-design-consultant/
-│       ├── 10-statistical-analysis-guide/
-│       ├── 11-analysis-code-generator/
-│       ├── 12-sensitivity-analysis-designer/
-│       ├── 13-internal-consistency-checker/
-│       ├── 14-checklist-manager/
-│       ├── 15-reproducibility-auditor/
-│       ├── 16-bias-detector/
-│       ├── 17-journal-matcher/
-│       ├── 18-academic-communicator/
-│       ├── 19-peer-review-strategist/
-│       └── 20-preregistration-composer/
-├── docs/
-├── scripts/
-└── README.md
+사용자: "교사의 AI 도구 채택 경험을 현상학적으로 탐구하고 싶습니다."
+
+감지: 질적 패러다임 (현상학)
+활성화:
+  - A5: 패러다임 조언자 → 현상학적 접근 안내
+  - C2: 질적 설계 컨설턴트 → 현상학적 설계
+  - D2: 면담 전문가 → 면담 프로토콜 개발
+  - E2: 질적 코딩 전문가 → 의미 단위 분석
+  - F4: 신뢰성 탐지기 → 신빙성 기준 점검
 ```
 
 ---
 
-## 에이전트 카테고리
+## Sisyphus 프로토콜
 
-### Category A: 이론 및 연구 설계 (01-04)
+### 핵심 원칙
 
-| ID | 에이전트명 | 주요 기능 |
-|----|-----------|----------|
-| 01 | **연구 질문 정제기** | PICO/SPIDER 프레임워크로 연구 질문 구체화 |
-| 02 | **이론적 프레임워크 설계자** | 이론 지도 작성, 개념적 모델 구축 |
-| 03 | **악마의 옹호자** | 비판적 검토, 약점 식별, Reviewer 2 시뮬레이션 |
-| 04 | **연구 윤리 자문관** | IRB 준비, 윤리적 고려사항, 동의서 검토 |
+**"연구 작업이 완료될 때까지 절대 멈추지 않음"**
 
-### Category B: 문헌 및 증거 (05-08)
+### 패러다임별 완료 기준
 
-| ID | 에이전트명 | 주요 기능 |
-|----|-----------|----------|
-| 05 | **체계적 문헌 탐색자** | PRISMA 기반 검색 전략, 데이터베이스 선정 |
-| 06 | **증거 품질 평가자** | RoB 2.0, NOS, GRADE 평가 |
-| 07 | **효과크기 추출기** | 효과크기 계산 및 변환, 메타분석 데이터 추출 |
-| 08 | **최신 연구 레이더** | 최신 동향 모니터링, 핵심 논문 식별 |
+| 패러다임 | 완료 기준 |
+|----------|----------|
+| **양적** | 가설 검증 완료, 검정력 분석, 효과크기 보고, 시각화 생성 |
+| **질적** | 포화 문서화, 주제 정제, 신뢰성 기준 충족, 참여자 검토 완료 |
+| **혼합방법** | 양적 + 질적 완료, 통합 전략 문서화, Joint Display 생성, 메타 추론 도출 |
 
-### Category C: 방법론 및 분석 (09-12)
+### 완료 전 검증 철칙
 
-| ID | 에이전트명 | 주요 기능 |
-|----|-----------|----------|
-| 09 | **연구 설계 컨설턴트** | 연구 설계 선택, 타당도 위협 분석 |
-| 10 | **통계 분석 가이드** | 분석 방법 선택, 가정 점검, 해석 지원 |
-| 11 | **분석 코드 생성기** | R/Python/SPSS/Stata 코드 생성 |
-| 12 | **민감도 분석 설계자** | 민감도 분석 설계, 강건성 검증 |
+```
+"완료", "수정됨", "해결됨" 주장 전에:
 
-### Category D: 품질 및 검증 (13-16)
+1. 식별: 무엇이 이 주장을 증명하는가?
+2. 실행: 검증 명령 실행
+3. 확인: 출력 확인 - 통과했는가?
+4. 주장: 증거와 함께 주장
+```
 
-| ID | 에이전트명 | 주요 기능 |
-|----|-----------|----------|
-| 13 | **내적 일관성 검증자** | 논문 내 수치/진술 일관성 점검 |
-| 14 | **체크리스트 관리자** | PRISMA/CONSORT/STROBE 등 준수 검토 |
-| 15 | **재현성 감사자** | Open Science 수준 평가, 재현성 점검 |
-| 16 | **편향 탐지기** | p-hacking, HARKing, 선택적 보고 탐지 |
+### 경고 신호 (멈추고 검증)
 
-### Category E: 출판 및 커뮤니케이션 (17-20)
-
-| ID | 에이전트명 | 주요 기능 |
-|----|-----------|----------|
-| 17 | **저널 매칭 전문가** | 타겟 저널 선정, 투고 전략 수립 |
-| 18 | **학술 커뮤니케이터** | 초록, plain language 요약, SNS 콘텐츠 |
-| 19 | **피어 리뷰 대응 전략가** | 심사평 분석, 회신문 작성 |
-| 20 | **사전등록 문서 작성자** | OSF/AsPredicted 사전등록 문서 |
+- "아마", "~할 것 같다", "~로 보인다" 사용
+- 검증 전 만족 표현
+- 신선한 테스트/빌드 결과 없이 완료 주장
 
 ---
 
-## 설치 방법
+## 설치 및 사용법
 
-### 자동 설치 (권장)
+### 설치
 
 ```bash
 git clone https://github.com/HosungYou/research-coordinator.git
@@ -126,112 +225,37 @@ cd research-coordinator
 ./scripts/install.sh
 ```
 
-### 수동 설치
+### 기본 사용법
 
 ```bash
-# 1. 레포지토리 클론
-git clone https://github.com/HosungYou/research-coordinator.git
-
-# 2. 심볼릭 링크 생성
-mkdir -p ~/.claude/skills
-ln -sf "$(pwd)/.claude/skills/research-coordinator" ~/.claude/skills/
-ln -sf "$(pwd)/.claude/skills/research-agents" ~/.claude/skills/
-```
-
-### 설치 확인
-
-```bash
-ls -la ~/.claude/skills/research-coordinator/
-ls -la ~/.claude/skills/research-agents/
-```
-
----
-
-## 사용 방법
-
-### 1. 마스터 코디네이터 호출
-
-```
 /research-coordinator
 ```
 
-마스터 코디네이터는 대화 맥락을 분석하여 적절한 에이전트를 자동 선택합니다.
+### OMC 모드 (oh-my-claudecode 통합)
 
-### 2. 개별 에이전트 직접 호출
-
-특정 에이전트가 필요한 경우 직접 호출:
-
-```
-/research-question-refiner
-/theoretical-framework-architect
-/devils-advocate
-/statistical-analysis-guide
-/journal-matcher
+```bash
+ulw: 문헌 검색해줘     # 최대 병렬 실행
+eco: 통계 분석해줘     # 토큰 효율적
+ralph: 연구 설계해줘   # 완료까지 지속
 ```
 
-### 3. 자연어 트리거
-
-특정 키워드가 포함된 메시지를 작성하면 자동으로 해당 에이전트 활성화:
+### 패러다임별 호출 예시
 
 ```
-"연구 질문을 더 구체적으로 다듬고 싶어요"
-→ 01-research-question-refiner 자동 활성화
-
-"메타분석을 위한 효과크기를 계산해야 해요"
-→ 07-effect-size-extractor 자동 활성화
+"현상학적 연구 설계해줘"      # → 질적 팩 활성화 (C2, E2, D2)
+"혼합방법 연구 통합해줘"      # → 혼합방법 팩 활성화 (C3, E3)
+"메타분석 효과크기 추출해줘"  # → 양적 팩 활성화 (C1, E1, B3)
 ```
 
 ---
 
-## 자동 트리거 시스템
+## 모델 라우팅
 
-### 키워드 매핑 테이블
-
-| 키워드 | 트리거되는 에이전트 |
-|--------|---------------------|
-| 연구 질문, research question, PICO, SPIDER | 01-research-question-refiner |
-| 이론적 프레임워크, theoretical framework, conceptual model | 02-theoretical-framework-architect |
-| 비판, 약점, Reviewer 2, 반론 | 03-devils-advocate |
-| 윤리, IRB, 동의서, 개인정보 | 04-research-ethics-advisor |
-| 문헌 검색, PRISMA, 체계적 리뷰 | 05-systematic-literature-scout |
-| 품질 평가, RoB, GRADE | 06-evidence-quality-appraiser |
-| 효과크기, Cohen's d, OR, effect size | 07-effect-size-extractor |
-| 최신 연구, 트렌드, 핵심 논문 | 08-research-radar |
-| 연구 설계, RCT, 준실험 | 09-research-design-consultant |
-| 통계 분석, ANOVA, 회귀, SEM | 10-statistical-analysis-guide |
-| R 코드, Python, SPSS | 11-analysis-code-generator |
-| 민감도 분석, robustness | 12-sensitivity-analysis-designer |
-| 일관성, 수치 검증 | 13-internal-consistency-checker |
-| 체크리스트, CONSORT, STROBE | 14-checklist-manager |
-| 재현성, OSF, Open Science | 15-reproducibility-auditor |
-| 편향, p-hacking, HARKing | 16-bias-detector |
-| 저널, 투고, Impact Factor | 17-journal-matcher |
-| 초록, plain language, 요약 | 18-academic-communicator |
-| 리뷰어, 수정 요청, response letter | 19-peer-review-strategist |
-| 사전등록, preregistration | 20-preregistration-composer |
-
----
-
-## 병렬 실행
-
-관련된 에이전트들을 동시에 실행하여 효율성을 높일 수 있습니다.
-
-### 사전 정의된 병렬 그룹
-
-```
-그룹 1 - 초기 설계: 01 + 02 + 03
-그룹 2 - 문헌 검토: 05 + 06 + 08
-그룹 3 - 분석 설계: 09 + 10 + 12
-그룹 4 - 품질 검증: 13 + 14 + 15 + 16
-그룹 5 - 출판 준비: 17 + 18 + 19
-```
-
-### 예시
-
-```
-"메타분석 논문을 준비하고 있는데, 검색 전략부터 품질 평가까지 검토해주세요"
-→ 05 + 06 + 07 병렬 실행
-```
+| 티어 | 모델 | 에이전트 |
+|------|------|---------|
+| HIGH | Opus | A2, A5, C2, C3, E2, E3, H1-H4 (복잡한 해석 작업) |
+| MEDIUM | Sonnet | A1, A3, A4, B1, B2, C1, C4, D1-D4, E1, E4, F4, G3 (표준 연구 작업) |
+| LOW | Haiku | B3, B4, F1-F3, G1, G2, G4 (빠른 조회, 체크리스트) |
 
 ---
 
@@ -246,24 +270,35 @@ A: 사회과학 전반에 적합합니다:
 - 사회학
 - 커뮤니케이션학
 
-### Q: 양적 연구만 지원하나요?
+### Q: 질적 연구도 지원하나요?
 
-A: 아닙니다. 양적, 질적, 혼합 방법 연구 모두 지원합니다. 다만 현재 버전은 양적 연구 분석 도구가 더 풍부합니다.
+A: **v5.0.0부터 완전 지원!** 현상학, 근거이론, 사례연구, 민족지, 실행연구 모두 지원합니다.
+
+### Q: 혼합방법 연구는요?
+
+A: **v5.0.0에서 새로 추가!** 순차적/수렴적/내재적 설계, Joint Display, 메타 추론 생성을 지원합니다.
 
 ### Q: 영어 논문도 지원하나요?
 
-A: 네, 한국어와 영어 모두 완벽히 지원합니다. 저널 매칭, 초록 작성, 리뷰어 대응 등 모든 기능이 이중 언어로 제공됩니다.
+A: 네, 한국어와 영어 모두 완벽히 지원합니다.
 
-### Q: 에이전트를 커스터마이징할 수 있나요?
-
-A: 네, 각 SKILL.md 파일을 수정하여 프롬프트 템플릿, 출력 형식 등을 커스터마이징할 수 있습니다.
-
-### Q: 제거하려면?
+### Q: 에이전트 검증은 어떻게 하나요?
 
 A:
 ```bash
-./scripts/uninstall.sh
+python scripts/validate_agents.py
+# 결과: 33/33 agents passed validation
 ```
+
+---
+
+## 인간 체크포인트
+
+| 수준 | 체크포인트 | 조치 |
+|------|-----------|------|
+| 🔴 필수 | CP_RESEARCH_DIRECTION, CP_THEORY_SELECTION, CP_METHODOLOGY_APPROVAL | 사용자 승인 필수 |
+| 🟠 권장 | CP_ANALYSIS_PLAN, CP_QUALITY_REVIEW | 검토 권장 |
+| 🟡 선택 | CP_VISUALIZATION_PREFERENCE, CP_RENDERING_METHOD | 기본값 사용 가능 |
 
 ---
 
@@ -271,9 +306,16 @@ A:
 
 - **GitHub Issues**: 버그 리포트 및 기능 요청
 - **Pull Requests**: 기여 환영
+- **Repository**: https://github.com/HosungYou/research-coordinator
 
 ---
 
 ## 라이센스
 
 MIT License - 자유롭게 사용, 수정, 배포 가능
+
+---
+
+**Made with ❤️ for Social Science Researchers**
+
+*인간 연구자의 판단을 존중하는 AI 어시스턴트*
