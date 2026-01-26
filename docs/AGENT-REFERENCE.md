@@ -1,558 +1,679 @@
-# Research Coordinator 에이전트 참조 문서
+# Diverga Agent Reference (v6.0.1)
 
-## 전체 에이전트 목록
+## Complete Agent Registry (33 Agents in 8 Categories)
 
-| ID | 이름 | 카테고리 | 아이콘 | 슬래시 명령어 |
-|----|------|----------|--------|---------------|
-| 01 | Research Question Refiner | A - 이론/설계 | 🔬 | `/research-question-refiner` |
-| 02 | Theoretical Framework Architect | A - 이론/설계 | 🏛️ | `/theoretical-framework-architect` |
-| 03 | Devil's Advocate | A - 이론/설계 | 😈 | `/devils-advocate` |
-| 04 | Research Ethics Advisor | A - 이론/설계 | ⚖️ | `/research-ethics-advisor` |
-| 05 | Systematic Literature Scout | B - 문헌/증거 | 📚 | `/systematic-literature-scout` |
-| 06 | Evidence Quality Appraiser | B - 문헌/증거 | ⭐ | `/evidence-quality-appraiser` |
-| 07 | Effect Size Extractor | B - 문헌/증거 | 📊 | `/effect-size-extractor` |
-| 08 | Research Radar | B - 문헌/증거 | 📡 | `/research-radar` |
-| 09 | Research Design Consultant | C - 방법론/분석 | 🎯 | `/research-design-consultant` |
-| 10 | Statistical Analysis Guide | C - 방법론/분석 | 📈 | `/statistical-analysis-guide` |
-| 11 | Analysis Code Generator | C - 방법론/분석 | 💻 | `/analysis-code-generator` |
-| 12 | Sensitivity Analysis Designer | C - 방법론/분석 | 🔍 | `/sensitivity-analysis-designer` |
-| 13 | Internal Consistency Checker | D - 품질/검증 | ✅ | `/internal-consistency-checker` |
-| 14 | Checklist Manager | D - 품질/검증 | 📋 | `/checklist-manager` |
-| 15 | Reproducibility Auditor | D - 품질/검증 | 🔄 | `/reproducibility-auditor` |
-| 16 | Bias Detector | D - 품질/검증 | ⚠️ | `/bias-detector` |
-| 17 | Journal Matcher | E - 출판/커뮤니케이션 | 📝 | `/journal-matcher` |
-| 18 | Academic Communicator | E - 출판/커뮤니케이션 | 🎤 | `/academic-communicator` |
-| 19 | Peer Review Strategist | E - 출판/커뮤니케이션 | 🔄 | `/peer-review-strategist` |
-| 20 | Pre-registration Composer | E - 출판/커뮤니케이션 | 📄 | `/preregistration-composer` |
+| ID | Agent | Category | Model | Checkpoint |
+|----|-------|----------|-------|------------|
+| A1 | research-question-refiner | Foundation | Opus | 🔴 CP_RESEARCH_DIRECTION |
+| A2 | theoretical-framework-architect | Foundation | Opus | 🔴 CP_THEORY_SELECTION |
+| A3 | devils-advocate | Foundation | Opus | - |
+| A4 | research-ethics-advisor | Foundation | Sonnet | 🔴 CP_METHODOLOGY_APPROVAL |
+| A5 | paradigm-worldview-advisor | Foundation | Opus | 🔴 CP_PARADIGM_SELECTION |
+| A6 | conceptual-framework-visualizer | Foundation | Sonnet | 🟡 CP_VISUALIZATION_PREFERENCE |
+| B1 | systematic-literature-scout | Evidence | Sonnet | - |
+| B2 | evidence-quality-appraiser | Evidence | Sonnet | - |
+| B3 | effect-size-extractor | Evidence | Haiku | - |
+| B4 | research-radar | Evidence | Haiku | - |
+| C1 | quantitative-design-consultant | Design | Opus | 🔴 CP_METHODOLOGY_APPROVAL |
+| C2 | qualitative-design-consultant | Design | Opus | 🔴 CP_METHODOLOGY_APPROVAL |
+| C3 | mixed-methods-design-consultant | Design | Opus | 🔴 CP_METHODOLOGY_APPROVAL |
+| C4 | experimental-materials-developer | Design | Sonnet | - |
+| D1 | sampling-strategy-advisor | Data Collection | Sonnet | - |
+| D2 | interview-focus-group-specialist | Data Collection | Sonnet | - |
+| D3 | observation-protocol-designer | Data Collection | Haiku | - |
+| D4 | measurement-instrument-developer | Data Collection | Opus | 🔴 CP_METHODOLOGY_APPROVAL |
+| E1 | quantitative-analysis-guide | Analysis | Opus | 🟠 CP_ANALYSIS_PLAN |
+| E2 | qualitative-coding-specialist | Analysis | Opus | - |
+| E3 | mixed-methods-integration | Analysis | Opus | 🟠 CP_INTEGRATION_STRATEGY |
+| E4 | analysis-code-generator | Analysis | Haiku | - |
+| E5 | sensitivity-analysis-designer | Analysis | Sonnet | - |
+| F1 | internal-consistency-checker | Quality | Haiku | - |
+| F2 | checklist-manager | Quality | Haiku | - |
+| F3 | reproducibility-auditor | Quality | Sonnet | - |
+| F4 | bias-trustworthiness-detector | Quality | Sonnet | - |
+| G1 | journal-matcher | Communication | Sonnet | - |
+| G2 | academic-communicator | Communication | Sonnet | - |
+| G3 | peer-review-strategist | Communication | Opus | 🟠 CP_RESPONSE_APPROVAL |
+| G4 | preregistration-composer | Communication | Sonnet | 🟠 CP_PREREGISTRATION_APPROVAL |
+| H1 | ethnographic-research-advisor | Specialized | Opus | 🔴 CP_METHODOLOGY_APPROVAL |
+| H2 | action-research-facilitator | Specialized | Opus | 🔴 CP_METHODOLOGY_APPROVAL |
 
 ---
 
-## Category A: 이론 및 연구 설계
+## Category A: Foundation (6 Agents)
 
-### 01. Research Question Refiner (연구 질문 정제기) 🔬
+Establishes theoretical and ethical foundations for research projects.
 
-**목적**: 모호한 연구 아이디어를 구체적이고 검증 가능한 연구 질문으로 발전
+### A1. Research Question Refiner 🔬
 
-**트리거 키워드**: 연구 질문, research question, PICO, SPIDER, 질문 정제
+**Purpose**: Develop specific, testable research questions from vague ideas
 
-**핵심 기능**:
-- PICO (양적) / SPIDER (질적) 프레임워크 적용
-- 좁은/중간/넓은 범위 옵션 제공
-- 검증 가능성 평가
+**Trigger Keywords**: 연구 질문, research question, PICO, SPIDER, FINER
 
-**입력 요구사항**:
+**Core Functions**:
+- PICO (Quantitative) / SPIDER (Qualitative) / FINER framework application
+- Narrow/Medium/Wide scope options
+- Testability assessment
+
+**Input Requirements**:
 ```yaml
-필수:
-  - 초기 아이디어: "연구하고 싶은 주제"
-선택:
-  - 연구 유형: "양적/질적/혼합"
-  - 분야: "교육/심리/경영 등"
+Required:
+  - Initial idea: "Topic you want to research"
+Optional:
+  - Research type: "Quantitative/Qualitative/Mixed"
+  - Field: "Education/Psychology/Business, etc."
 ```
 
-**출력 형식**: PICO/SPIDER 분석표 + 3개 수준의 정제된 질문 옵션
+**Output**: PICO/SPIDER analysis + 3 refined question options with T-Scores
+
+**Checkpoint**: 🔴 CP_RESEARCH_DIRECTION
 
 ---
 
-### 02. Theoretical Framework Architect (이론적 프레임워크 설계자) 🏛️
+### A2. Theoretical Framework Architect 🏛️
 
-**목적**: 이론적 토대를 체계화하고 개념적 모델 구축
+**Purpose**: Systematize theoretical foundation and build conceptual models
 
-**트리거 키워드**: 이론적 프레임워크, theoretical framework, conceptual model, 이론 통합
+**Trigger Keywords**: 이론적 프레임워크, theoretical framework, conceptual model, theory
 
-**핵심 기능**:
-- 이론 지도(Theory Map) 작성
-- 개념적 모델 시각화
-- 가설 도출 논리 구조화
+**Core Functions**:
+- Theory Map creation with VS methodology
+- Conceptual model visualization
+- Hypothesis derivation logic
 
-**입력 요구사항**:
+**Input Requirements**:
 ```yaml
-필수:
-  - 연구 질문: "정제된 연구 질문"
-선택:
-  - 관련 이론: "알고 있는 이론들"
-  - 핵심 변수: "주요 변수들"
+Required:
+  - Research question: "Refined research question"
+Optional:
+  - Related theories: "Known theories"
+  - Key variables: "Main variables"
 ```
 
-**출력 형식**: 이론 비교표 + 통합 개념 모델 다이어그램 + 가설 체계
+**Output**: Theory comparison table + Integrated conceptual model + Hypothesis system
+
+**Checkpoint**: 🔴 CP_THEORY_SELECTION
 
 ---
 
-### 03. Devil's Advocate (악마의 옹호자) 😈
+### A3. Devil's Advocate 😈
 
-**목적**: 연구의 약점과 잠재적 비판을 사전에 식별
+**Purpose**: Identify weaknesses and potential criticisms proactively
 
-**트리거 키워드**: 비판, 약점, Reviewer 2, 반론, 대안 설명
+**Trigger Keywords**: 비판, critique, Reviewer 2, weaknesses, counterarguments
 
-**핵심 기능**:
-- 타당도 위협 식별
-- Reviewer 2 시뮬레이션
-- 대안 설명 제시
+**Core Functions**:
+- Validity threat identification
+- Reviewer 2 simulation
+- Alternative explanations
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 연구 설계: "계획 또는 완료된 연구 설명"
-선택:
-  - 주요 발견: "예비 결과"
-```
-
-**출력 형식**: 타당도 위협 매트릭스 + 모의 심사평 + 대응 전략
+**Output**: Validity threat matrix + Mock review + Response strategies
 
 ---
 
-### 04. Research Ethics Advisor (연구 윤리 자문관) ⚖️
+### A4. Research Ethics Advisor ⚖️
 
-**목적**: 윤리적 연구 수행을 위한 가이드 제공
+**Purpose**: Guide ethical research conduct
 
-**트리거 키워드**: 윤리, IRB, 동의서, 개인정보, 취약계층, informed consent
+**Trigger Keywords**: 윤리, IRB, ethics, informed consent, privacy
 
-**핵심 기능**:
-- Belmont Report 원칙 점검
-- IRB 신청서 준비 지원
-- 동의서 템플릿 제공
+**Core Functions**:
+- Belmont Report principles check
+- IRB application support
+- Consent form templates
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 연구 설계: "연구 방법 개요"
-  - 참가자 특성: "대상자 정보"
-선택:
-  - 데이터 유형: "수집 데이터 종류"
-```
+**Output**: Ethics checklist + Risk assessment + IRB guide
 
-**출력 형식**: 윤리 점검 체크리스트 + 위험 평가 + IRB 신청 가이드
+**Checkpoint**: 🔴 CP_METHODOLOGY_APPROVAL
 
 ---
 
-## Category B: 문헌 및 증거
+### A5. Paradigm & Worldview Advisor 🌐
 
-### 05. Systematic Literature Scout (체계적 문헌 탐색자) 📚
+**Purpose**: Guide paradigm selection and worldview positioning
 
-**목적**: PRISMA 기반 체계적 문헌 검색 전략 수립
+**Trigger Keywords**: 패러다임, paradigm, ontology, epistemology, positionality
 
-**트리거 키워드**: 문헌 검색, PRISMA, 체계적 리뷰, systematic review, 검색 전략
+**Core Functions**:
+- Quantitative/Qualitative/Mixed methods guidance
+- Worldview articulation (Positivist, Interpretive, Critical, Pragmatic)
+- Positionality statement support
 
-**핵심 기능**:
-- 데이터베이스 선정 가이드
-- 검색식 작성 (Boolean, PCC)
-- 포함/배제 기준 설정
+**Output**: Paradigm recommendation with rationale + Worldview statement template
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 연구 질문: "체계적 리뷰 질문"
-선택:
-  - 분야: "학문 영역"
-  - 제한 조건: "언어, 기간 등"
-```
-
-**출력 형식**: 데이터베이스별 검색식 + 선정 기준표 + PRISMA 플로우 초안
+**Checkpoint**: 🔴 CP_PARADIGM_SELECTION
 
 ---
 
-### 06. Evidence Quality Appraiser (증거 품질 평가자) ⭐
+### A6. Conceptual Framework Visualizer 📊
 
-**목적**: 개별 연구의 방법론적 품질 평가
+**Purpose**: Create visual representations of conceptual frameworks
 
-**트리거 키워드**: 품질 평가, RoB, GRADE, bias risk, 방법론 평가
+**Trigger Keywords**: 개념적 프레임워크, conceptual framework, diagram, visualization
 
-**핵심 기능**:
-- RoB 2.0 (RCT), ROBINS-I (비무작위)
-- NOS (관찰 연구)
-- GRADE 근거 수준
+**Core Functions**:
+- Code-First approach (Mermaid, Graphviz, NetworkX, D3.js)
+- Academic Modern color palette
+- Publication-ready figures
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 연구 정보: "평가할 연구의 방법론 정보"
-선택:
-  - 연구 유형: "RCT/관찰/질적"
-```
+**Output**: Visual framework diagram + Code + Caption
 
-**출력 형식**: 품질 평가 체크리스트 + 영역별 판정 + 전체 품질 등급
+**Checkpoint**: 🟡 CP_VISUALIZATION_PREFERENCE
 
 ---
 
-### 07. Effect Size Extractor (효과크기 추출기) 📊
+## Category B: Evidence (4 Agents)
 
-**목적**: 다양한 통계량에서 효과크기 계산 및 변환
+Systematic evidence gathering, synthesis, and quality appraisal.
 
-**트리거 키워드**: 효과크기, effect size, Cohen's d, OR, 상관, 메타분석 데이터
+### B1. Systematic Literature Scout 📚
 
-**핵심 기능**:
-- 32+ 통계량 변환 지원
-- 신뢰구간, 분산 계산
-- 메타분석용 데이터 형식화
+**Purpose**: Develop PRISMA-compliant systematic search strategies
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 통계량: "보고된 통계 (t, F, r, p, 평균/SD 등)"
-선택:
-  - 표본 크기: "n1, n2"
-  - 목표 효과크기: "d, g, r, OR"
-```
+**Trigger Keywords**: 문헌 검색, PRISMA, systematic review, search strategy
 
-**출력 형식**: 변환 결과 + 공식 + 해석 가이드 + 메타분석용 테이블
+**Core Functions**:
+- Database selection guide
+- Boolean search query construction
+- Inclusion/exclusion criteria
+
+**Output**: Database-specific queries + Selection criteria + PRISMA flow draft
 
 ---
 
-### 08. Research Radar (최신 연구 레이더) 📡
+### B2. Evidence Quality Appraiser ⭐
 
-**목적**: 연구 동향 파악 및 핵심 논문 식별
+**Purpose**: Assess methodological quality of individual studies
 
-**트리거 키워드**: 최신 연구, 트렌드, 핵심 논문, 인용, seminal work
+**Trigger Keywords**: 품질 평가, RoB, GRADE, quality assessment
 
-**핵심 기능**:
-- 인용 네트워크 분석
-- 시계열 트렌드
-- 핫토픽 식별
+**Core Functions**:
+- RoB 2.0 (RCT), ROBINS-I (non-randomized)
+- Newcastle-Ottawa Scale (observational)
+- GRADE evidence levels
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 연구 주제: "모니터링할 분야"
-선택:
-  - 기간: "관심 기간"
-  - 핵심 저자: "추적할 연구자"
-```
-
-**출력 형식**: 핵심 논문 목록 + 트렌드 그래프 + 연구 갭 분석
+**Output**: Quality checklist + Domain ratings + Overall quality grade
 
 ---
 
-## Category C: 방법론 및 분석
+### B3. Effect Size Extractor 📊
 
-### 09. Research Design Consultant (연구 설계 컨설턴트) 🎯
+**Purpose**: Calculate and convert effect sizes from various statistics
 
-**목적**: 최적의 연구 설계 선택 및 타당도 확보
+**Trigger Keywords**: 효과크기, effect size, Cohen's d, OR, correlation
 
-**트리거 키워드**: 연구 설계, RCT, 준실험, 조사 설계, 실험 설계
+**Core Functions**:
+- 32+ statistic conversions
+- Confidence intervals, variance calculation
+- Meta-analysis data formatting
 
-**핵심 기능**:
-- 설계 유형 결정 트리
-- 타당도 위협 분석
-- 통제 전략 권장
-
-**입력 요구사항**:
-```yaml
-필수:
-  - 연구 질문: "검증할 질문"
-  - 제약 조건: "시간, 예산, 접근성"
-선택:
-  - 변수: "IV, DV, 통제변수"
-```
-
-**출력 형식**: 설계 비교표 + 권장 설계 + 타당도 매트릭스
+**Output**: Conversion results + Formulas + Interpretation guide
 
 ---
 
-### 10. Statistical Analysis Guide (통계 분석 가이드) 📈
+### B4. Research Radar 📡
 
-**목적**: 적절한 통계 방법 선택 및 가정 점검
+**Purpose**: Monitor research trends and identify key papers
 
-**트리거 키워드**: 통계 분석, ANOVA, 회귀, t-test, SEM, 다층모형
+**Trigger Keywords**: 최신 연구, trends, seminal work, citations
 
-**핵심 기능**:
-- 분석 방법 결정 트리
-- 가정 점검 절차
-- 결과 해석 가이드
+**Core Functions**:
+- Citation network analysis
+- Time-series trends
+- Hot topic identification
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 연구 질문: "분석 목적"
-  - 변수 정보: "유형, 수준, 분포"
-선택:
-  - 데이터 구조: "독립/종속, 다층 등"
-```
-
-**출력 형식**: 분석 방법 비교 + 선택 근거 + 가정 점검 체크리스트
+**Output**: Key paper list + Trend graphs + Research gap analysis
 
 ---
 
-### 11. Analysis Code Generator (분석 코드 생성기) 💻
+## Category C: Design (4 Agents)
 
-**목적**: 재현 가능한 분석 코드 생성
+Paradigm-specific design consultation for methodological rigor.
 
-**트리거 키워드**: R 코드, Python, SPSS, Stata, 분석 코드
+### C1. Quantitative Design Consultant 🎯
 
-**핵심 기능**:
-- R / Python / SPSS / Stata 지원
-- 주석 포함 코드
-- 결과 시각화 코드
+**Purpose**: Guide quantitative research design selection
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 분석 방법: "수행할 분석"
-  - 변수명: "데이터셋 변수명"
-선택:
-  - 소프트웨어: "R/Python/SPSS/Stata"
-  - 데이터 형식: "wide/long"
-```
+**Trigger Keywords**: 연구 설계, RCT, quasi-experimental, survey design, power analysis
 
-**출력 형식**: 실행 가능한 코드 + 주석 + 결과 해석 가이드
+**Core Functions**:
+- Design type decision tree
+- Validity threat analysis
+- Control strategy recommendations
+- Power analysis guidance
+
+**Output**: Design comparison + Recommended design + Validity matrix
+
+**Checkpoint**: 🔴 CP_METHODOLOGY_APPROVAL
 
 ---
 
-### 12. Sensitivity Analysis Designer (민감도 분석 설계자) 🔍
+### C2. Qualitative Design Consultant 🔍
 
-**목적**: 결과의 강건성 검증 전략 수립
+**Purpose**: Guide qualitative research design
 
-**트리거 키워드**: 민감도 분석, robustness, 강건성, sensitivity, 사양 곡선
+**Trigger Keywords**: 현상학, phenomenology, grounded theory, case study, narrative
 
-**핵심 기능**:
-- 분석적 결정 식별
-- 다중우주 분석 설계
-- 사양 곡선 분석
+**Core Functions**:
+- Phenomenology, Grounded Theory, Case Study, Ethnography, Narrative Inquiry
+- Sampling strategy for saturation
+- Data collection protocol design
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 주 분석: "기본 분석 방법과 결과"
-선택:
-  - 분석적 결정: "선택한 옵션들"
-```
+**Output**: Design rationale + Sampling plan + Data collection guide
 
-**출력 형식**: 분석 결정 매트릭스 + 민감도 분석 계획 + 결과 요약 템플릿
+**Checkpoint**: 🔴 CP_METHODOLOGY_APPROVAL
 
 ---
 
-## Category D: 품질 및 검증
+### C3. Mixed Methods Design Consultant 🔄
 
-### 13. Internal Consistency Checker (내적 일관성 검증자) ✅
+**Purpose**: Guide mixed methods research design
 
-**목적**: 논문 내 수치와 진술의 일관성 점검
+**Trigger Keywords**: 혼합연구, mixed methods, sequential, convergent, embedded
 
-**트리거 키워드**: 일관성, 수치 검증, 오류 점검, 정합성
+**Core Functions**:
+- Sequential (Explanatory, Exploratory)
+- Convergent parallel
+- Embedded design
+- Integration strategy
 
-**핵심 기능**:
-- 숫자 일관성 검증
-- 통계적 계산 확인
-- 논리적 모순 탐지
+**Output**: Design diagram + Integration plan + Timeline
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 원고: "점검할 문서"
-선택:
-  - 데이터: "원시 데이터 (확인용)"
-```
-
-**출력 형식**: 불일치 목록 + 위치 + 수정 제안
+**Checkpoint**: 🔴 CP_METHODOLOGY_APPROVAL
 
 ---
 
-### 14. Checklist Manager (체크리스트 관리자) 📋
+### C4. Experimental Materials Developer 🧪
 
-**목적**: 보고 가이드라인 준수 점검
+**Purpose**: Develop treatment protocols and experimental materials
 
-**트리거 키워드**: 체크리스트, PRISMA, CONSORT, STROBE, ARRIVE, 보고 가이드라인
+**Trigger Keywords**: 실험 자료, treatment, manipulation check, control condition
 
-**핵심 기능**:
-- PRISMA 2020 (체계적 리뷰)
-- CONSORT (RCT)
-- STROBE (관찰연구)
-- APA 7 스타일
+**Core Functions**:
+- Treatment protocol development
+- Control condition design
+- Manipulation check items
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 연구 유형: "RCT/관찰/리뷰/질적"
-  - 원고: "점검할 문서"
-```
-
-**출력 형식**: 항목별 체크 + 누락 항목 + 수정 제안
+**Output**: Treatment manual + Control protocol + Manipulation check items
 
 ---
 
-### 15. Reproducibility Auditor (재현성 감사자) 🔄
+## Category D: Data Collection (4 Agents)
 
-**목적**: Open Science 원칙 준수 및 재현성 평가
+Comprehensive data collection strategy and instrument development.
 
-**트리거 키워드**: 재현성, reproducibility, OSF, Open Science, 데이터 공유
+### D1. Sampling Strategy Advisor 👥
 
-**핵심 기능**:
-- 5단계 재현성 수준 평가
-- OSF 프로젝트 구조 가이드
-- 코드/데이터 공유 체크
+**Purpose**: Guide sampling strategy selection
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 연구 정보: "연구 설계 및 분석 정보"
-선택:
-  - 공유 계획: "데이터/코드 공개 여부"
-```
+**Trigger Keywords**: 표집, sampling, probability, purposive, theoretical sampling
 
-**출력 형식**: 재현성 수준 평가 + 개선 권장사항 + OSF 구조 템플릿
+**Core Functions**:
+- Probability sampling (Random, Stratified, Cluster)
+- Purposive sampling (Criterion, Maximum variation, Snowball)
+- Sample size determination
+
+**Output**: Sampling plan + Justification + Recruitment strategy
 
 ---
 
-### 16. Bias Detector (편향 탐지기) ⚠️
+### D2. Interview & Focus Group Specialist 🎤
 
-**목적**: 연구 과정의 다양한 편향 식별
+**Purpose**: Develop interview protocols and facilitation guides
 
-**트리거 키워드**: 편향, bias, p-hacking, HARKing, 선택적 보고
+**Trigger Keywords**: 인터뷰, interview, focus group, probing, transcription
 
-**핵심 기능**:
-- p-hacking 탐지
-- HARKing 식별
-- 선택적 보고 점검
+**Core Functions**:
+- Semi-structured interview guides
+- Focus group facilitation protocols
+- Probing techniques
+- Transcription guidance
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 연구 설계: "설계 및 분석 정보"
-선택:
-  - 결과: "보고된 결과"
-  - 사전등록: "사전등록 내용 (있는 경우)"
-```
-
-**출력 형식**: 편향 유형별 위험도 + 증거 + 완화 전략
+**Output**: Interview guide + Probing prompts + Transcription protocol
 
 ---
 
-## Category E: 출판 및 커뮤니케이션
+### D3. Observation Protocol Designer 👁️
 
-### 17. Journal Matcher (저널 매칭 전문가) 📝
+**Purpose**: Design observation protocols and field note systems
 
-**목적**: 연구에 최적화된 타겟 저널 식별
+**Trigger Keywords**: 관찰, observation, field notes, video analysis
 
-**트리거 키워드**: 저널, journal, 투고, Impact Factor, 출판
+**Core Functions**:
+- Structured/Unstructured observation
+- Field note templates
+- Video analysis protocols
 
-**핵심 기능**:
-- 범위 적합성 분석
-- 영향력 지표 비교
-- 투고 전략 수립
-
-**입력 요구사항**:
-```yaml
-필수:
-  - 연구 초록: "연구 내용 요약"
-  - 분야: "학문 영역"
-선택:
-  - 우선순위: "IF vs. 속도 vs. OA"
-```
-
-**출력 형식**: 저널 비교표 + 순차적 투고 계획 + 커버레터 템플릿
+**Output**: Observation protocol + Field note template + Analysis guide
 
 ---
 
-### 18. Academic Communicator (학술 커뮤니케이터) 🎤
+### D4. Measurement Instrument Developer 📏
 
-**목적**: 다양한 청중을 위한 연구 커뮤니케이션 자료 생성
+**Purpose**: Develop and validate measurement instruments
 
-**트리거 키워드**: 초록, abstract, plain language, 요약, SNS, 프레스릴리즈
+**Trigger Keywords**: 척도, scale, instrument, validity, reliability, Cronbach
 
-**핵심 기능**:
-- 학술 초록 (IMRAD)
+**Core Functions**:
+- Scale construction
+- Validity evidence (Content, Construct, Criterion)
+- Reliability testing
+
+**Output**: Item pool + Validation plan + Pilot study protocol
+
+**Checkpoint**: 🔴 CP_METHODOLOGY_APPROVAL
+
+---
+
+## Category E: Analysis (5 Agents)
+
+Paradigm-appropriate analytical strategies and implementation.
+
+### E1. Quantitative Analysis Guide 📈
+
+**Purpose**: Guide statistical analysis selection and implementation
+
+**Trigger Keywords**: 통계 분석, statistics, ANOVA, regression, SEM, multilevel
+
+**Core Functions**:
+- Analysis method decision tree
+- Assumption checking procedures
+- Result interpretation guide
+
+**Output**: Analysis comparison + Selection rationale + Assumption checklist
+
+**Checkpoint**: 🟠 CP_ANALYSIS_PLAN
+
+---
+
+### E2. Qualitative Coding Specialist 🏷️
+
+**Purpose**: Guide qualitative coding and analysis
+
+**Trigger Keywords**: 코딩, coding, thematic analysis, NVivo, Atlas.ti, saturation
+
+**Core Functions**:
+- Thematic analysis
+- Grounded theory coding (Open, Axial, Selective)
+- CAQDAS workflow (NVivo, Atlas.ti)
+
+**Output**: Codebook template + Coding process + Intercoder reliability plan
+
+---
+
+### E3. Mixed Methods Integration Specialist 🔗
+
+**Purpose**: Guide integration of quantitative and qualitative findings
+
+**Trigger Keywords**: 통합, integration, joint display, meta-inference, convergence
+
+**Core Functions**:
+- Joint display tables
+- Meta-inference generation
+- Convergence/divergence analysis
+
+**Output**: Joint display + Meta-inferences + Integration narrative
+
+**Checkpoint**: 🟠 CP_INTEGRATION_STRATEGY
+
+---
+
+### E4. Analysis Code Generator 💻
+
+**Purpose**: Generate reproducible analysis code
+
+**Trigger Keywords**: R 코드, Python, SPSS, Stata, analysis code
+
+**Core Functions**:
+- R / Python / SPSS / Stata support
+- Commented code with explanations
+- Visualization code
+
+**Output**: Executable code + Comments + Interpretation guide
+
+---
+
+### E5. Sensitivity Analysis Designer 🔍
+
+**Purpose**: Design robustness checks and sensitivity analyses
+
+**Trigger Keywords**: 민감도 분석, robustness, sensitivity, specification curve
+
+**Core Functions**:
+- Analytical decision identification
+- Multiverse analysis design
+- Specification curve analysis
+
+**Output**: Decision matrix + Sensitivity plan + Results template
+
+---
+
+## Category F: Quality (4 Agents)
+
+Methodological rigor, reproducibility, and bias mitigation.
+
+### F1. Internal Consistency Checker ✅
+
+**Purpose**: Verify numerical and logical consistency
+
+**Trigger Keywords**: 일관성, consistency, verification, coherence
+
+**Core Functions**:
+- Numerical consistency check
+- Statistical calculation verification
+- Logical contradiction detection
+
+**Output**: Inconsistency list + Location + Correction suggestions
+
+---
+
+### F2. Checklist Manager 📋
+
+**Purpose**: Ensure reporting guideline compliance
+
+**Trigger Keywords**: 체크리스트, PRISMA, CONSORT, STROBE, COREQ, checklist
+
+**Core Functions**:
+- PRISMA 2020 (Systematic reviews)
+- CONSORT (RCTs)
+- STROBE (Observational)
+- COREQ/SRQR (Qualitative)
+
+**Output**: Item-by-item check + Missing items + Suggestions
+
+---
+
+### F3. Reproducibility Auditor 🔄
+
+**Purpose**: Assess Open Science compliance and reproducibility
+
+**Trigger Keywords**: 재현성, reproducibility, OSF, Open Science, data sharing
+
+**Core Functions**:
+- 5-level reproducibility assessment
+- OSF project structure guide
+- Code/data sharing checklist
+
+**Output**: Reproducibility level + Recommendations + OSF template
+
+---
+
+### F4. Bias & Trustworthiness Detector ⚠️
+
+**Purpose**: Identify various biases in research process
+
+**Trigger Keywords**: 편향, bias, trustworthiness, credibility, p-hacking
+
+**Core Functions**:
+- Quantitative: p-hacking, HARKing, selective reporting
+- Qualitative: Credibility, Transferability, Dependability, Confirmability
+
+**Output**: Bias type risk levels + Evidence + Mitigation strategies
+
+---
+
+## Category G: Communication (4 Agents)
+
+Academic writing, dissemination, and peer review response.
+
+### G1. Journal Matcher 📝
+
+**Purpose**: Identify optimal target journals
+
+**Trigger Keywords**: 저널, journal, submission, Impact Factor, publication
+
+**Core Functions**:
+- Scope fit analysis
+- Impact metrics comparison
+- Submission strategy
+
+**Output**: Journal comparison + Sequential submission plan + Cover letter template
+
+---
+
+### G2. Academic Communicator 🎤
+
+**Purpose**: Generate research communication materials for various audiences
+
+**Trigger Keywords**: 초록, abstract, plain language, summary, infographic
+
+**Core Functions**:
+- Academic abstract (IMRAD)
 - Plain language summary
-- 프레스 릴리즈
-- SNS 콘텐츠
+- Press release
+- Social media content
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 연구 결과: "주요 발견 요약"
-선택:
-  - 타겟 청중: "동료/정책/대중/언론"
-  - 형식: "초록/요약/SNS"
-```
-
-**출력 형식**: 청중별 맞춤 콘텐츠 패키지
+**Output**: Audience-tailored content package
 
 ---
 
-### 19. Peer Review Strategist (피어 리뷰 대응 전략가) 🔄
+### G3. Peer Review Strategist 🔄
 
-**목적**: 심사평에 대한 효과적인 대응 전략 수립
+**Purpose**: Develop effective response strategies to reviewer comments
 
-**트리거 키워드**: 리뷰어, reviewer, 수정 요청, response letter, 회신문
+**Trigger Keywords**: 리뷰어, reviewer, revision, response letter, rebuttal
 
-**핵심 기능**:
-- 코멘트 분류 및 우선순위
-- 대응 전략 수립
-- 회신문 작성
+**Core Functions**:
+- Comment classification and prioritization
+- Response strategy development
+- Point-by-point response letter
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 심사평: "리뷰어 코멘트"
-선택:
-  - 원고: "현재 원고"
-  - 결정: "Major/Minor/Reject"
-```
+**Output**: Comment analysis + Response strategy + Response letter
 
-**출력 형식**: 코멘트 분석표 + 대응 전략 + Point-by-point 회신문
+**Checkpoint**: 🟠 CP_RESPONSE_APPROVAL
 
 ---
 
-### 20. Pre-registration Composer (사전등록 문서 작성자) 📄
+### G4. Pre-registration Composer 📄
 
-**목적**: 연구 사전등록 문서 작성 지원
+**Purpose**: Support research pre-registration document creation
 
-**트리거 키워드**: 사전등록, preregistration, OSF, AsPredicted, registered report
+**Trigger Keywords**: 사전등록, preregistration, OSF, AsPredicted, registered report
 
-**핵심 기능**:
-- OSF Prereg 템플릿
-- AsPredicted 형식
-- Registered Report 지원
+**Core Functions**:
+- OSF Prereg template
+- AsPredicted format
+- Registered Report support
 
-**입력 요구사항**:
-```yaml
-필수:
-  - 연구 계획: "연구 설계 및 분석 계획"
-선택:
-  - 플랫폼: "OSF/AsPredicted"
-  - 유형: "표준/Registered Report"
-```
+**Output**: Platform-specific pre-registration + Checklist + Timeline
 
-**출력 형식**: 플랫폼별 사전등록 문서 + 체크리스트 + 타임라인
+**Checkpoint**: 🟠 CP_PREREGISTRATION_APPROVAL
 
 ---
 
-## 에이전트 간 연계
+## Category H: Specialized (2 Agents)
 
-### 권장 워크플로우
+Advanced qualitative and participatory research methodologies.
 
-```
-연구 초기:
-01 → 02 → 03 → 04
+### H1. Ethnographic Research Advisor 🌍
 
-문헌 검토:
-05 → 06 → 07 → 08
+**Purpose**: Guide ethnographic research design and fieldwork
 
-연구 수행:
-09 → 10 → 11 → 12
+**Trigger Keywords**: 민족지학, ethnography, fieldwork, thick description, culture
 
-품질 검증:
-13 → 14 → 15 → 16
+**Core Functions**:
+- Fieldwork planning
+- Thick description development
+- Cultural interpretation
+- Prolonged engagement monitoring
 
-출판 준비:
-17 → 18 → 19 (→ 20 if 사전등록 필요)
-```
+**Output**: Fieldwork plan + Observation guide + Cultural analysis framework
 
-### 병렬 실행 가능 조합
-
-| 그룹 | 에이전트 | 상황 |
-|------|----------|------|
-| 초기 설계 | 01 + 02 + 03 | 연구 계획 단계 |
-| 문헌 검토 | 05 + 06 + 08 | 체계적 리뷰 |
-| 메타분석 | 05 + 06 + 07 | 메타분석 데이터 수집 |
-| 분석 설계 | 09 + 10 + 12 | 분석 계획 |
-| 품질 검증 | 13 + 14 + 15 + 16 | 투고 전 점검 |
-| 출판 준비 | 17 + 18 + 19 | 투고 준비 |
+**Checkpoint**: 🔴 CP_METHODOLOGY_APPROVAL
 
 ---
 
-## 버전 정보
+### H2. Action Research Facilitator 🔄
 
-- **버전**: 1.0.0
-- **최종 업데이트**: 2025-01-22
-- **호환성**: Claude Code Skills System
+**Purpose**: Facilitate participatory action research
 
-## 기여 및 피드백
+**Trigger Keywords**: 실행연구, action research, PAR, CBPR, participatory
 
-- [GitHub Issues](https://github.com/HosungYou/research-coordinator/issues)
+**Core Functions**:
+- Action research cycles (Plan-Act-Observe-Reflect)
+- Community engagement
+- Collaborative analysis
+- Catalytic validity assessment
+
+**Output**: Action cycle plan + Community engagement protocol + Reflection guide
+
+**Checkpoint**: 🔴 CP_METHODOLOGY_APPROVAL
+
+---
+
+## Agent Workflow Recommendations
+
+### Quantitative Research Workflow
+
+```
+A1 (Question) → A2 (Framework) → 🔴 CP_THEORY_SELECTION
+     ↓
+C1 (Design) → 🔴 CP_METHODOLOGY_APPROVAL → D1 (Sampling) → D4 (Measurement)
+     ↓
+E1 (Analysis) → 🟠 CP_ANALYSIS_PLAN → E4 (Code) → E5 (Sensitivity)
+     ↓
+F2 (CONSORT/STROBE) → G1 (Journal)
+```
+
+### Qualitative Research Workflow
+
+```
+A1 (Question) → A5 (Paradigm) → 🔴 CP_PARADIGM_SELECTION
+     ↓
+A2 (Framework) → 🔴 CP_THEORY_SELECTION
+     ↓
+C2 (Design) → 🔴 CP_METHODOLOGY_APPROVAL → D2/D3 (Collection)
+     ↓
+E2 (Coding) → F4 (Trustworthiness) → F2 (COREQ)
+```
+
+### Mixed Methods Workflow
+
+```
+A1 → A5 → A2 → 🔴 CP_THEORY_SELECTION
+     ↓
+C3 (Mixed Design) → 🔴 CP_METHODOLOGY_APPROVAL
+     ↓
+QUAN (C1, E1) → QUAL (C2, E2) → E3 (Integration) → 🟠 CP_INTEGRATION_STRATEGY
+     ↓
+F2 (Mixed Methods Standards) → G1 (Journal)
+```
+
+---
+
+## Parallel Execution Groups
+
+| Group | Agents | Condition |
+|-------|--------|-----------|
+| Planning | A2 + A3 | After CP_RESEARCH_DIRECTION |
+| Literature | B1 + B2 + B4 | Independent |
+| Quality | F1 + F2 + F3 + F4 | After analysis |
+| Publication | G1 + G2 + G4 | After quality review |
+
+---
+
+## Version Information
+
+- **Version**: 6.0.1
+- **Last Updated**: 2026-01-25
+- **Repository**: https://github.com/HosungYou/Diverga

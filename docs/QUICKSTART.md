@@ -1,6 +1,16 @@
 # Quick Start Guide
 
-Get started with Research Coordinator in under 5 minutes!
+Get started with Diverga in under 5 minutes!
+
+**Version**: 6.0.1 (Human-Centered Edition)
+
+---
+
+## What is Diverga?
+
+Diverga is an AI research assistant that helps you make **creative, defensible research choices** while ensuring **human decisions remain with humans**.
+
+Unlike other AI tools that always recommend the same obvious options (mode collapse), Diverga uses **Verbalized Sampling (VS)** methodology to present you with innovative alternatives.
 
 ---
 
@@ -9,70 +19,76 @@ Get started with Research Coordinator in under 5 minutes!
 ### Option A: Clone and Install (Recommended)
 
 ```bash
-git clone https://github.com/HosungYou/research-coordinator.git
-cd research-coordinator
-./scripts/install.sh
+git clone https://github.com/HosungYou/Diverga.git
+cd Diverga
 ```
 
 ### Verify Installation
 
-```bash
-# Using CLI tool
-./scripts/rc status
+In Claude Code, simply describe your research need:
 
-# Or in Claude Code
-/research-coordinator
+```
+"I want to conduct a systematic review on AI in education"
+"메타분석 연구를 시작하고 싶어요"
 ```
 
 ---
 
-## Your First Agent Call (1 minute)
+## Your First Research Session (3 minutes)
 
-Open Claude Code and try one of these:
+### Step 1: Describe Your Research
 
-### Example 1: Research Question Refinement
+Simply tell Diverga what you want to research:
 
 ```
-/research-question-refiner
-
 "AI 학습 시스템이 학생들에게 도움이 될 것 같은데, 연구 질문을 어떻게 만들어야 할까요?"
 ```
 
-### Example 2: Statistical Analysis
+### Step 2: Wait for Checkpoint
+
+Diverga will analyze your request and present options:
 
 ```
-/statistical-analysis-guide
+🔴 CHECKPOINT: CP_RESEARCH_DIRECTION
 
-"300명의 대학생 데이터로 AI 튜터 사용과 학업 성취도 관계를 분석하려고 해요.
-어떤 통계 방법을 쓰면 좋을까요?"
+I've analyzed your research topic. Here are three directions:
+
+Direction A (T≈0.6): AI tutoring effects on academic achievement
+Direction B (T≈0.4): AI-enhanced self-regulated learning ⭐
+Direction C (T≈0.2): Neuroplasticity-based AI learning systems
+
+Which direction would you like to proceed?
 ```
 
-### Example 3: Literature Review
+### Step 3: Make Your Choice
+
+Simply respond with your selection:
 
 ```
-/systematic-literature-scout
-
-"AI 기반 적응형 학습에 대한 체계적 문헌고찰을 하려고 합니다.
-검색 전략을 도와주세요."
+"Direction B, please"
 ```
+
+### Step 4: Continue Through Checkpoints
+
+Diverga will guide you through the research process, stopping at each checkpoint for your approval.
 
 ---
 
-## How It Works (2 minutes)
+## How It Works
 
 ### VS-Research Methodology
 
-Research Coordinator uses **Verbalized Sampling (VS)** to prevent "Mode Collapse" - the problem where AI always gives the same obvious answers.
+Diverga uses **Verbalized Sampling (VS)** to prevent "Mode Collapse":
 
 ```
 ❌ Without VS:
-   "이론 추천해줘" → "TAM 쓰세요" (항상 같은 답)
+   "이론 추천해줘" → "TAM 쓰세요" (always the same answer)
 
 ✅ With VS:
    "이론 추천해줘"
-   → Phase 1: "TAM, UTAUT는 가장 뻔한 선택입니다 (T=0.9)"
-   → Phase 2: "대안을 탐색합니다..."
-   → Phase 3: "맥락에 맞는 차별화된 이론: SDT × TAM 통합 (T=0.4)"
+   → Phase 1: "TAM, UTAUT are predictable choices (T=0.9)"
+   → Phase 2: "Exploring alternatives..."
+   → Phase 3: "Differentiated theory: SDT × TAM integration (T=0.4)"
 ```
 
 ### T-Score System
@@ -81,20 +97,35 @@ Every recommendation comes with a **Typicality Score (T-Score)**:
 
 | T-Score | Meaning | Recommendation |
 |---------|---------|----------------|
-| > 0.8 | Most common choice | ⚠️ Avoid |
+| > 0.8 | Most common choice | ⚠️ Predictable - consider alternatives |
 | 0.5-0.8 | Established alternative | ✅ Safe differentiation |
-| 0.3-0.5 | Emerging approach | ✅ Innovative, justified |
-| < 0.3 | Creative | ⚠️ Needs strong justification |
+| 0.3-0.5 | Emerging approach | ✅ Innovative, well-justified |
+| < 0.3 | Creative/Novel | ⚠️ Needs strong justification |
 
-### Agent Categories
+### Human Checkpoint System
 
-| Category | Agents | Purpose |
-|----------|--------|---------|
-| A | 01-04 | Research Design (question, theory, ethics) |
-| B | 05-08 | Literature (review, quality, effect sizes) |
-| C | 09-12 | Methods (design, statistics, code) |
-| D | 13-16 | Quality (consistency, checklists, bias) |
-| E | 17-21 | Publication (journal, review, visualization) |
+Diverga stops at critical points and waits for your decision:
+
+| Level | Icon | Behavior |
+|-------|------|----------|
+| **REQUIRED** | 🔴 | System STOPS - Cannot proceed without your approval |
+| **RECOMMENDED** | 🟠 | System PAUSES - Strongly suggests your review |
+| **OPTIONAL** | 🟡 | System ASKS - Defaults available if you skip |
+
+---
+
+## Agent Categories (33 Agents)
+
+| Category | Count | Purpose |
+|----------|-------|---------|
+| A: Foundation | 6 | Research question, theory, ethics, paradigm |
+| B: Evidence | 4 | Literature review, quality appraisal, effect sizes |
+| C: Design | 4 | Quantitative, qualitative, mixed methods design |
+| D: Data Collection | 4 | Sampling, interviews, observation, instruments |
+| E: Analysis | 5 | Statistical analysis, coding, integration |
+| F: Quality | 4 | Consistency, checklists, reproducibility, bias |
+| G: Communication | 4 | Journal matching, communication, peer review |
+| H: Specialized | 2 | Ethnography, action research |
 
 ---
 
@@ -103,62 +134,49 @@ Every recommendation comes with a **Typicality Score (T-Score)**:
 ### Use Case 1: Planning a New Study
 
 ```
-1. /research-question-refiner
-   → Define your research question
+1. Describe your research topic
+   → A1: Research Question Refiner activates
+   → 🔴 CP_RESEARCH_DIRECTION: Choose your direction
 
-2. /theoretical-framework-architect
-   → Build theoretical foundation
+2. Select theoretical framework
+   → A2: Theoretical Framework Architect activates
+   → 🔴 CP_THEORY_SELECTION: Approve framework
 
-3. /research-design-consultant
-   → Choose appropriate methodology
-
-4. /research-ethics-advisor
-   → Prepare IRB documentation
+3. Design your methodology
+   → C1/C2/C3: Design Consultant activates
+   → 🔴 CP_METHODOLOGY_APPROVAL: Approve design
 ```
 
 ### Use Case 2: Literature Review
 
 ```
-1. /systematic-literature-scout
-   → Develop search strategy
+1. "I want to conduct a systematic review on [topic]"
+   → B1: Systematic Literature Scout activates
+   → Develops PRISMA-compliant search strategy
 
-2. /evidence-quality-appraiser
-   → Assess study quality
+2. Quality assessment
+   → B2: Evidence Quality Appraiser activates
+   → Applies RoB, GRADE criteria
 
-3. /effect-size-extractor
-   → Extract and convert effect sizes
-
-4. /bias-detector
-   → Check for publication bias
+3. Effect size extraction
+   → B3: Effect Size Extractor activates
+   → Calculates and converts effect sizes
 ```
 
 ### Use Case 3: Data Analysis
 
 ```
-1. /statistical-analysis-guide
-   → Choose appropriate methods
+1. "How should I analyze my data?"
+   → E1: Quantitative Analysis Guide activates
+   → 🟠 CP_ANALYSIS_PLAN: Review analysis plan
 
-2. /analysis-code-generator
-   → Generate R/Python/SPSS code
+2. Code generation
+   → E4: Analysis Code Generator activates
+   → Generates R/Python/SPSS code
 
-3. /sensitivity-analysis-designer
-   → Plan robustness checks
-```
-
-### Use Case 4: Publication
-
-```
-1. /journal-matcher
-   → Find suitable journals
-
-2. /checklist-manager
-   → Complete PRISMA/CONSORT checklists
-
-3. /peer-review-strategist
-   → Prepare for reviewer comments
-
-4. /conceptual-framework-visualizer
-   → Create publication-ready figures
+3. Sensitivity analysis
+   → E5: Sensitivity Analysis Designer activates
+   → Plans robustness checks
 ```
 
 ---
@@ -181,56 +199,55 @@ Every recommendation comes with a **Typicality Score (T-Score)**:
 - Top-tier journal → Innovative approach (T < 0.5)
 - Replication study → Standard approach (T > 0.6)
 
-### 3. Use Agent Combinations
+### 3. Take Time at Checkpoints
 
-Agents work best together:
+When you see 🔴 CHECKPOINT, carefully review the options before deciding. These are strategic research decisions that should be made thoughtfully.
 
-```
-/research-question-refiner → /theoretical-framework-architect → /devils-advocate
-```
-
-### 4. Leverage User Checkpoints
-
-When agents ask for confirmation (CP-VS-001, etc.), take time to review:
+### 4. Use Bilingual Input
 
 ```
-🔵 CP-VS-001: 연구 방향 A, B, C 중 선택해주세요
-   → 각 방향의 T-Score와 장단점을 비교한 후 선택
+English: "I want to conduct a systematic review"
+Korean: "체계적 문헌고찰을 하고 싶어요"
+Mixed: "메타분석을 하려는데, can you help?"
 ```
 
 ---
 
 ## Getting Help
 
-### CLI Tool
-
-```bash
-./scripts/rc help          # Show all commands
-./scripts/rc list          # List all agents
-./scripts/rc info 02       # Agent details
-./scripts/rc doctor        # Diagnose issues
-```
-
 ### Documentation
 
-- [Full Documentation](./README.md)
+- [Full Documentation](../README.md)
 - [Agent Reference](./AGENT-REFERENCE.md)
-- [Usage Examples](./USAGE-EXAMPLES.md)
-- [Setup Guide](./SETUP.md)
+- [CLAUDE.md](../CLAUDE.md) - System documentation
+- [AGENTS.md](../AGENTS.md) - AI-readable documentation
 
 ### Issues
 
-- [GitHub Issues](https://github.com/HosungYou/research-coordinator/issues)
+- [GitHub Issues](https://github.com/HosungYou/Diverga/issues)
+
+---
+
+## Key Differences from v5.0
+
+| Feature | v5.0 (Sisyphus) | v6.0.1 (Human-Centered) |
+|---------|-----------------|------------------------|
+| Checkpoints | Could be bypassed | ✅ MANDATORY |
+| OMC Modes | ralph/ultrawork/ecomode | ❌ Removed |
+| Agent Naming | Numbered (01-21) | Category-based (A1-H2) |
+| Agent Count | 27 | 33 |
 
 ---
 
 ## Next Steps
 
-1. **Explore agents**: `./scripts/rc list`
-2. **Read documentation**: `docs/AGENT-REFERENCE.md`
-3. **Try examples**: `docs/USAGE-EXAMPLES.md`
+1. **Try it out**: Describe your research need and follow the checkpoints
+2. **Explore agents**: Read the [Agent Reference](./AGENT-REFERENCE.md)
+3. **Learn VS methodology**: Understand T-Scores and creative alternatives
 4. **Join the community**: Star the repo on GitHub!
 
 ---
 
 **Happy Researching!** 🧬
+
+*Diverga: Where creativity meets rigor. Beyond the obvious, toward the innovative.*

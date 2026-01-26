@@ -3,7 +3,7 @@
 **Beyond Modal: 창의적으로 생각하는 AI 연구 어시스턴트**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-5.0.0-brightgreen)](https://github.com/HosungYou/research-coordinator)
+[![Version](https://img.shields.io/badge/version-6.0.1-brightgreen)](https://github.com/HosungYou/Diverga)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Skills-blue)](https://claude.ai/code)
 [![VS Methodology](https://img.shields.io/badge/VS-Verbalized%20Sampling-green)](https://arxiv.org/abs/2510.01171)
 
@@ -21,39 +21,71 @@
 
 ---
 
+## ✨ v6.0 (Human-Centered Edition)
+
+### 핵심 원칙
+
+> **"인간이 할 일은 인간이, AI는 인간의 범주를 벗어난 것을 수행"**
+
+### v6.0의 새로운 점
+
+| 기능 | 설명 |
+|------|------|
+| **🔴 필수 체크포인트** | AI가 중요한 결정 지점에서 멈추고 기다림 |
+| **33개 전문 에이전트** | 27개에서 33개로 확장, 카테고리 기반 명명 (A1-H2) |
+| **인간 중심 설계** | 모든 주요 결정에 명시적 인간 승인 필요 |
+| **깔끔한 아키텍처** | `.claude/` 아래 단순화된 폴더 구조 |
+
+### 제거된 기능
+
+| 제거됨 | 이유 |
+|--------|------|
+| ❌ Sisyphus 프로토콜 | 인간 체크포인트를 우회할 수 있었음 |
+| ❌ Iron Law | "OR"이 체크포인트를 선택적으로 만들었음 |
+| ❌ OMC 자율 모드 | ralph/ultrawork/ecomode가 우회를 가능하게 함 |
+
+---
+
+## 🎯 Human Checkpoint 시스템
+
+### 체크포인트 수준
+
+| 수준 | 아이콘 | 동작 |
+|------|--------|------|
+| **필수** | 🔴 | 시스템 정지 - 명시적 승인 없이 진행 불가 |
+| **권장** | 🟠 | 시스템 일시정지 - 승인 강력 권장 |
+| **선택** | 🟡 | 시스템 질문 - 건너뛰면 기본값 사용 |
+
+### 필수 체크포인트
+
+| 체크포인트 | 시점 | 내용 |
+|-----------|------|------|
+| CP_RESEARCH_DIRECTION | 연구 질문 확정 | VS 옵션 제시, 선택 대기 |
+| CP_PARADIGM_SELECTION | 방법론 접근 | 양적/질적/혼합 질문 |
+| CP_THEORY_SELECTION | 프레임워크 선택 | T-Score와 함께 대안 제시 |
+| CP_METHODOLOGY_APPROVAL | 설계 완료 | 상세 검토 필요 |
+
+---
+
 ## 🧠 핵심 혁신: Verbalized Sampling (VS) 방법론
 
 ### 문제: Modal 추천
 
-AI 시스템은 통계적으로 가장 흔한 옵션 - **modal 추천**을 권장하는 경향이 있습니다. 안전하지만 다음과 같은 문제를 야기합니다:
+AI 시스템은 통계적으로 가장 흔한 옵션 - **modal 추천**을 권장하는 경향이 있습니다:
 - 획일화된 연구 지형
 - 혁신적 기회 상실
 - 연구의 차별화 어려움
 
 ### 해결책: Dynamic T-Score 시스템
 
-Diverga는 모든 추천에 **전형성 점수 (T-Score)**를 부여합니다:
-
 | T-Score | 해석 | Diverga 행동 |
-|---------|------|-----------------|
-| `T > 0.8` | **Modal** (가장 흔함) | ⚠️ "예측 가능함" 표시 - 차별화 경고 |
+|---------|------|--------------|
+| `T > 0.8` | **Modal** (가장 흔함) | ⚠️ "예측 가능함" 표시 |
 | `T 0.5-0.8` | **확립된 대안** | ✅ 균형 잡힌 선택으로 제안 |
-| `T 0.3-0.5` | **신흥 접근법** | ✅ 혁신을 위해 정당화와 함께 추천 |
-| `T < 0.3` | **새로운/창의적** | 🔬 강력한 근거 필요와 함께 제시 |
+| `T 0.3-0.5` | **신흥 접근법** | ✅ 혁신을 위해 추천 |
+| `T < 0.3` | **새로운/창의적** | 🔬 강력한 근거와 함께 제시 |
 
-### 5가지 창의성 메커니즘
-
-Diverga는 다섯 가지 인지 메커니즘으로 비뻔한 옵션을 생성합니다:
-
-| 메커니즘 | 설명 | 예시 |
-|----------|------|------|
-| **강제 유추 (Forced Analogy)** | 먼 분야에서 개념 차용 | "생태계 이론을 기술 채택에 적용" |
-| **반복적 정제 (Iterative Refinement)** | 3-5회 개선 사이클 | "초기 → 개선 → 최적화된 프레임워크" |
-| **의미적 거리 (Semantic Distance)** | 개념적으로 먼 아이디어 탐색 | "학습 동기를 신경가소성에 연결" |
-| **시간적 재구성 (Temporal Reframing)** | 시간 관점 전환 | "10년 후 어떻게 보일까?" |
-| **커뮤니티 시뮬레이션** | 학술 토론 시뮬레이션 | "비평가 vs. 혁신가는 뭐라 할까?" |
-
-### VS 실제 적용: Before vs. After
+### VS 실제 적용
 
 ```
 ❌ VS 없이 (Mode Collapse):
@@ -64,173 +96,89 @@ Diverga는 다섯 가지 인지 메커니즘으로 비뻔한 옵션을 생성합
 ✅ VS 적용 (Diverga):
    사용자: "AI 채택 연구를 위한 이론적 프레임워크 선택을 도와주세요"
 
-   Diverga: "전형성 스펙트럼에 걸쳐 옵션을 분석해 보겠습니다:
+   🔴 CHECKPOINT: CP_THEORY_SELECTION
+
+   Diverga: "전형성 스펙트럼에 걸쳐 옵션을 분석합니다:
 
    [Modal 인식] TAM (T=0.92)과 UTAUT (T=0.85)은 예측 가능한 선택입니다.
-   대부분의 심사자가 예상하지만, 차별화가 제한적입니다.
-
-   [강제 유추 적용] 생태학 이론에서:
-   → '적응형 학습 생태계' 프레임워크 (T=0.35)
-
-   [의미적 거리 적용] 신경과학에서:
-   → '기술 사용의 인지 가소성' 모델 (T=0.28)
 
    추천 옵션:
    • 방향 A (T≈0.6): 자기결정이론 × TAM 통합
-   • 방향 B (T≈0.4): 인지부하이론 + 적응형 생태계
+   • 방향 B (T≈0.4): 인지부하이론 + 적응형 생태계 ⭐
    • 방향 C (T≈0.2): 신경가소성 기반 기술 학습
 
-   귀하의 맥락 (혁신적 저널, 새로운 기여 필요)을 고려할 때,
-   방향 B를 추천합니다. 자세히 설명해 드릴까요?"
+   어떤 방향으로 진행하시겠습니까?"
+   (인간 선택 대기)
 ```
 
 ---
 
-## 🎯 Diverga가 다른 점
+## 🏗️ 아키텍처 (8개 카테고리 33개 에이전트)
 
-### 1. **창의적 안내, 단순 답변이 아님**
-Diverga는 질문에만 답하지 않습니다 - 당신이 몰랐던 옵션을 보여줌으로써 사고를 확장합니다.
+### Category A: Foundation (6개)
+| 에이전트 | 모델 | 목적 |
+|---------|------|------|
+| A1-research-question-refiner | Opus | FINER/PICO/SPIDER 프레임워크 |
+| A2-theoretical-framework-architect | Opus | VS를 통한 이론 선택 |
+| A3-devils-advocate | Opus | 비판적 평가 |
+| A4-research-ethics-advisor | Sonnet | IRB, 윤리적 고려 |
+| A5-paradigm-worldview-advisor | Opus | 양적/질적/혼합 안내 |
+| A6-conceptual-framework-visualizer | Sonnet | 시각적 프레임워크 설계 |
 
-### 2. **맥락 지속성**
-일반 AI 도구와 달리 Diverga는 연구 맥락을 유지합니다:
-- 연구 질문과 이론적 프레임워크
-- 방법론적 결정과 그 근거
-- 문헌 검색 전략과 결과
-- 분석 계획과 중간 발견
+### Category B: Evidence (4개)
+| 에이전트 | 모델 | 목적 |
+|---------|------|------|
+| B1-systematic-literature-scout | Sonnet | PRISMA/질적 검색 |
+| B2-evidence-quality-appraiser | Sonnet | RoB, GRADE 평가 |
+| B3-effect-size-extractor | Haiku | 효과크기 계산 |
+| B4-research-radar | Haiku | 트렌드 모니터링 |
 
-### 3. **27개 전문 에이전트**
-질문 형성부터 출판까지 모든 연구 단계를 위한 전문 에이전트
+### Category C: Design (4개)
+| 에이전트 | 모델 | 목적 |
+|---------|------|------|
+| C1-quantitative-design-consultant | Opus | 실험, 조사 설계 |
+| C2-qualitative-design-consultant | Opus | 현상학, GT, 사례연구 |
+| C3-mixed-methods-design-consultant | Opus | 순차적, 수렴적 |
+| C4-experimental-materials-developer | Sonnet | 처치 자료 |
 
-### 4. **패러다임 인식**
-양적/질적/혼합방법 자동 감지 및 적절한 에이전트 활성화
+### Category D: Data Collection (4개)
+| 에이전트 | 모델 | 목적 |
+|---------|------|------|
+| D1-sampling-strategy-advisor | Sonnet | 확률/의도적 표집 |
+| D2-interview-focus-group-specialist | Sonnet | 프로토콜, 전사 |
+| D3-observation-protocol-designer | Haiku | 현장 노트 |
+| D4-measurement-instrument-developer | Opus | 척도 구성 |
 
-### 5. **Sisyphus 프로토콜**
-검증 증거 없이는 절대 완료를 주장하지 않음
+### Category E: Analysis (5개)
+| 에이전트 | 모델 | 목적 |
+|---------|------|------|
+| E1-quantitative-analysis-guide | Opus | 통계 분석 |
+| E2-qualitative-coding-specialist | Opus | 주제, GT 코딩 |
+| E3-mixed-methods-integration | Opus | Joint display, 메타 추론 |
+| E4-analysis-code-generator | Haiku | R/Python/NVivo 코드 |
+| E5-sensitivity-analysis-designer | Sonnet | 강건성 검증 |
 
----
+### Category F: Quality (4개)
+| 에이전트 | 모델 | 목적 |
+|---------|------|------|
+| F1-internal-consistency-checker | Haiku | 내적 타당도 |
+| F2-checklist-manager | Haiku | PRISMA/CONSORT/COREQ |
+| F3-reproducibility-auditor | Sonnet | Open Science |
+| F4-bias-trustworthiness-detector | Sonnet | 편향 탐지 |
 
-## 🔬 VS 적용 수준
+### Category G: Communication (4개)
+| 에이전트 | 모델 | 목적 |
+|---------|------|------|
+| G1-journal-matcher | Sonnet | 타겟 저널 선정 |
+| G2-academic-communicator | Sonnet | 청중 맞춤 |
+| G3-peer-review-strategist | Opus | 리뷰 대응 |
+| G4-preregistration-composer | Sonnet | OSF/AsPredicted |
 
-다양한 에이전트가 다른 강도로 VS를 적용합니다:
-
-| 수준 | 에이전트 | VS 메커니즘 | 사용 사례 |
-|------|---------|-------------|----------|
-| **FULL** | A2, A4, B1, E1, E3, F4, H1-H4 | 5개 전체 + 체크포인트 | 이론 선택, 분석 설계 |
-| **ENHANCED** | A1, A3, A5, B2-B4, C1-C4, D1-D4, E2 | FA, IL, SD + modal 인식 | 설계, 데이터 수집 |
-| **LIGHT** | E4, F1-F3, G1-G4 | Modal 인식만 | 코드 생성, 체크리스트 |
-
-### 14개 사용자 체크포인트
-
-Diverga는 중요한 지점에서 결정을 확인합니다:
-
-| 코드 | 체크포인트 | 목적 |
-|------|-----------|------|
-| CP-INIT-001 | 초기 맥락 | 연구 분야, 경험 수준 |
-| CP-VS-001 | Modal 인식 | 예측 가능한 옵션 인지 |
-| CP-VS-003 | 최종 선택 | 선택된 접근법 승인 |
-| CP-FA-001 | 강제 유추 | 교차 도메인 개념 검증 |
-| CP-IL-001 | 반복 게이트 | 정제 계속? |
-| CP-SD-001 | 의미적 거리 | 개념 확장 확인 |
-
----
-
-## ✨ v5.0.0 (Sisyphus Edition)
-
-### Sisyphus 프로토콜: 지속 강제
-연구 작업은 다음 단계로 넘어가기 전에 **완료**되어야 합니다:
-- **에이전트 기반 오케스트레이션**: 전문 에이전트에 작업 위임
-- **패러다임 인식 완료**: 양적/질적/혼합에 따른 다른 기준
-- **철칙**: 신선한 증거 없이는 완료 주장 불가
-
-### 패러다임 감지 & 에이전트 팩
-자동 감지가 적절한 에이전트 세트를 활성화합니다:
-
-| 패러다임 | 자동 감지 키워드 | 에이전트 팩 |
-|----------|-----------------|------------|
-| **양적** | "효과크기", "메타분석", "통계적 검정력" | A1-A5, C1, E1, E4 |
-| **질적** | "현상학", "근거이론", "주제 분석" | A1-A5, C2, D2, E2 |
-| **혼합방법** | "수렴적", "순차적", "joint display" | 전체 27개 에이전트 |
-
-### 완전한 질적 연구 지원 (신규)
-- **현상학**: 브라케팅, 본질 식별, 의미 단위
-- **근거이론**: 개방/축/선택 코딩, 이론적 포화
-- **사례연구**: 두꺼운 기술, 패턴 매칭
-- **민족지**: 현장 연구, 문화 해석
-- **실행연구**: PDSA 사이클, 참여적 연구
-
-### 혼합방법 통합 (신규)
-- Joint Display 테이블
-- 메타 추론 생성
-- 수렴적/순차적 설계 지원
-
----
-
-## 🏗️ 아키텍처 (8개 카테고리 27개 에이전트)
-
-### Category A: 연구 기초 (5개)
-| # | 에이전트 | VS 수준 | 목적 |
-|---|---------|--------|------|
-| A1 | 연구 질문 정제기 | Enhanced | FINER/PICO/SPIDER |
-| A2 | 이론적 프레임워크 설계자 | **Full** | 창의적 이론 선택 |
-| A3 | 가설 생성기 | Enhanced | 검증 가능한 가설 |
-| A4 | 악마의 옹호자 | **Full** | 비판적 평가 |
-| A5 | 패러다임 조언자 | Enhanced | 양적/질적/혼합 안내 |
-
-### Category B: 문헌 & 근거 (4개)
-| # | 에이전트 | VS 수준 | 목적 |
-|---|---------|--------|------|
-| B1 | 체계적 문헌 탐색자 | **Full** | PRISMA/질적 검색 |
-| B2 | 근거 품질 평가자 | Enhanced | 품질 평가 |
-| B3 | 효과크기 추출기 | Enhanced | 효과크기/주제 |
-| B4 | 연구 레이더 | Enhanced | 트렌드 모니터링 |
-
-### Category C: 연구 설계 (4개)
-| # | 에이전트 | VS 수준 | 목적 |
-|---|---------|--------|------|
-| C1 | 양적 설계 컨설턴트 | Enhanced | 실험 설계 |
-| C2 | 질적 설계 컨설턴트 | Enhanced | 현상학, GT, 사례연구 |
-| C3 | 혼합방법 설계 컨설턴트 | Enhanced | 순차적, 수렴적 |
-| C4 | 실험 자료 개발자 | Enhanced | 처치, 통제 조건 |
-
-### Category D: 데이터 수집 (4개)
-| # | 에이전트 | VS 수준 | 목적 |
-|---|---------|--------|------|
-| D1 | 표집 전략 조언자 | Enhanced | 확률/의도적 표집 |
-| D2 | 면담/포커스그룹 전문가 | Enhanced | 프로토콜, 전사 |
-| D3 | 관찰 프로토콜 설계자 | Enhanced | 현장 노트, 구조화 관찰 |
-| D4 | 측정 도구 개발자 | Enhanced | 척도 구성 |
-
-### Category E: 분석 (4개)
-| # | 에이전트 | VS 수준 | 목적 |
-|---|---------|--------|------|
-| E1 | 양적 분석 가이드 | **Full** | 통계 분석 |
-| E2 | 질적 코딩 전문가 | Enhanced | 주제, GT 코딩 |
-| E3 | 혼합방법 통합 전문가 | **Full** | Joint display, 메타 추론 |
-| E4 | 분석 코드 생성기 | Light | R/Python/NVivo 코드 |
-
-### Category F: 품질 & 검증 (4개)
-| # | 에이전트 | VS 수준 | 목적 |
-|---|---------|--------|------|
-| F1 | 민감도 분석 설계자 | Light | 강건성 검증 |
-| F2 | 체크리스트 관리자 | Light | PRISMA/CONSORT/COREQ |
-| F3 | 재현성 감사자 | Light | Open Science |
-| F4 | 편향 & 신뢰성 탐지기 | **Full** | 편향 탐지 |
-
-### Category G: 출판 & 커뮤니케이션 (4개)
-| # | 에이전트 | VS 수준 | 목적 |
-|---|---------|--------|------|
-| G1 | 저널 매칭 전문가 | Light | 타겟 저널 선정 |
-| G2 | 학술 커뮤니케이터 | Light | 청중 맞춤 |
-| G3 | 피어 리뷰 전략가 | Light | 리뷰 대응 |
-| G4 | 사전등록 작성자 | Light | OSF/AsPredicted |
-
-### Category H: 특화 접근법 (4개)
-| # | 에이전트 | VS 수준 | 목적 |
-|---|---------|--------|------|
-| H1 | 민족지 연구 조언자 | **Full** | 현장 연구, 두꺼운 기술 |
-| H2 | 실행연구 촉진자 | **Full** | PAR, CBPR 사이클 |
-| H3 | 근거이론 조언자 | **Full** | 상수 비교 |
-| H4 | 내러티브 분석 전문가 | **Full** | 생애사, 자문화기술지 |
+### Category H: Specialized (2개)
+| 에이전트 | 모델 | 목적 |
+|---------|------|------|
+| H1-ethnographic-research-advisor | Opus | 현장 연구, 두꺼운 기술 |
+| H2-action-research-facilitator | Opus | PAR, CBPR 사이클 |
 
 ---
 
@@ -239,9 +187,8 @@ Diverga는 중요한 지점에서 결정을 확인합니다:
 ### 설치
 
 ```bash
-git clone https://github.com/HosungYou/research-coordinator.git
-cd research-coordinator
-./scripts/install.sh
+git clone https://github.com/HosungYou/Diverga.git
+cd Diverga
 ```
 
 ### 사용법
@@ -253,36 +200,33 @@ cd research-coordinator
 "실험 연구 설계를 도와주세요"
 ```
 
-**마스터 스킬**:
-```bash
-/research-coordinator
-```
-
-**OMC (oh-my-claudecode)와 함께**:
-```bash
-ulw: 문헌 검색해줘     # 최대 병렬성
-eco: 통계 분석해줘     # 토큰 효율적
-ralph: 연구 설계해줘   # 완료까지 지속
-```
+시스템은:
+1. 패러다임 감지
+2. **확인 요청** (🔴 CHECKPOINT)
+3. T-Score와 함께 VS 대안 제시
+4. **선택 대기**
+5. 체크포인트와 함께 파이프라인 안내
 
 ---
 
-## 🔧 핵심 원칙: 인간-AI 분업
+## 🔗 통합 허브
 
-> **"인간이 할 일은 인간이, AI는 인간의 범주를 벗어난 것을 수행"**
+### 기본 제공 (설정 불필요)
+| 도구 | 용도 |
+|------|------|
+| Excel | 데이터 추출, 코딩 시트 |
+| PowerPoint | 학회 발표 |
+| Word | 원고, 방법론 섹션 |
+| Python | 분석 스크립트 |
+| Mermaid | 플로우 다이어그램 |
 
-### 인간이 결정하는 것
-- 연구 방향과 이론적 입장
-- 포함/제외 기준
-- 발견의 해석
-- 윤리적 트레이드오프
-
-### Diverga가 처리하는 것
-- 20,000+ 논문 검색
-- 평가자간 신뢰도 계산
-- PRISMA 흐름도 생성
-- 저널 스타일에 맞는 참고문헌 서식
-- **뻔한 것을 넘어서는 옵션 확장**
+### 설정 필요
+| 도구 | 목적 |
+|------|------|
+| Semantic Scholar | 문헌 검색 |
+| OpenAlex | 오픈 액세스 검색 |
+| Zotero MCP | 참고문헌 관리 |
+| R Scripts | 통계 분석 |
 
 ---
 
@@ -298,9 +242,19 @@ English: "I want to conduct a systematic review"
 
 ---
 
+## 📚 문서
+
+| 문서 | 설명 |
+|------|------|
+| [CLAUDE.md](../../CLAUDE.md) | 전체 시스템 문서 |
+| [AGENTS.md](../../AGENTS.md) | 33개 에이전트 상세 참조 |
+| [Quick Start](../QUICKSTART.md) | 5분 안에 시작하기 |
+
+---
+
 ## 📄 라이선스
 
-MIT License - [LICENSE](LICENSE) 참조
+MIT License - [LICENSE](../../LICENSE) 참조
 
 ---
 
@@ -310,10 +264,10 @@ MIT License - [LICENSE](LICENSE) 참조
 @software{diverga,
   author = {You, Hosung},
   title = {Diverga: Beyond Modal AI Research Assistant},
-  year = {2025},
-  version = {5.0.0},
-  url = {https://github.com/HosungYou/research-coordinator},
-  note = {VS 방법론과 Sisyphus 프로토콜을 갖춘 27개 에이전트. Verbalized Sampling (arXiv:2510.01171)을 통한 mode collapse 방지}
+  year = {2026},
+  version = {6.0.1},
+  url = {https://github.com/HosungYou/Diverga},
+  note = {VS 방법론과 Human-Centered 설계를 갖춘 33개 에이전트. Verbalized Sampling (arXiv:2510.01171)을 통한 mode collapse 방지}
 }
 ```
 
