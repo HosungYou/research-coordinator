@@ -107,9 +107,8 @@ The system will:
 |--------|---------|----------|
 | Project State | Context persistence | `.research/project-state.yaml` |
 | Decision Log | Human decisions | `.research/decision-log.yaml` |
-| Pipeline Templates | PRISMA 2020 workflow | `core/pipeline-templates.md` |
-| Integration Hub | Tool connections | `core/integration-hub.md` |
-| Guided Wizard | AskUserQuestion UX | `core/guided-wizard.md` |
+| Research Coordinator | Main skill definition | `.claude/skills/research-coordinator/SKILL.md` |
+| Orchestrator | Agent management | `.omc/skills/research-orchestrator/SKILL.md` |
 
 ---
 
