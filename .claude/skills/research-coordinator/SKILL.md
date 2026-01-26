@@ -1,21 +1,24 @@
 ---
 name: research-coordinator
 description: |
-  Research Coordinator v5.0 - Sisyphus-Enhanced AI Research Assistant.
+  Research Coordinator v6.0 - Human-Centered Edition
   Context-persistent platform with 27 specialized agents across 8 categories.
-  Features: Sisyphus Continuation Enforcement, Paradigm Detection, PRISMA 2020 Pipeline.
+  Features: Human Checkpoints First, VS Methodology, Paradigm Detection.
   Supports quantitative, qualitative, and mixed methods research.
   Language: English base with Korean support (한국어 입력 지원).
   Triggers: research question, theoretical framework, hypothesis, literature review, meta-analysis,
   effect size, IRB, PRISMA, statistical analysis, sample size, bias, journal, peer review,
   conceptual framework, visualization, systematic review, qualitative, phenomenology, grounded theory,
   thematic analysis, mixed methods, interview, focus group, ethnography, action research
-version: "5.0.0"
+version: "6.0.0"
 ---
 
-# Research Coordinator v5.0 - Sisyphus Edition
+# Research Coordinator v6.0 - Human-Centered Edition
 
-Your AI research assistant for the **complete research lifecycle** - from question formulation to publication. Now with **Sisyphus Continuation Enforcement** to ensure research work never stops until complete.
+Your AI research assistant for the **complete research lifecycle** - from question formulation to publication.
+
+**Core Principle**: "Human decisions remain with humans. AI handles what's beyond human scope."
+> "인간이 할 일은 인간이, AI는 인간의 범주를 벗어난 것을 수행"
 
 **Language Support**: English base with Korean recognition (한국어 입력 지원)
 
@@ -23,31 +26,49 @@ Your AI research assistant for the **complete research lifecycle** - from questi
 
 ---
 
-## What's New in v5.0.0
+## What's New in v6.0.0 (Clean Slate Edition)
 
-| Feature | Description |
-|---------|-------------|
-| **Sisyphus Protocol** | Continuation enforcement - work never stops until complete |
-| **27 Agents** | Expanded from 21 to 27 specialized research agents |
-| **8 Categories** | New Data Collection (D) and Specialized Approaches (H) categories |
-| **Paradigm Detection** | Auto-detect quantitative/qualitative/mixed methods approach |
-| **Qualitative Support** | Full support for phenomenology, grounded theory, case study, ethnography |
-| **Mixed Methods** | Integration specialists for joint displays and meta-inference |
+| Change | Before (v5.0) | After (v6.0) |
+|--------|---------------|--------------|
+| **Sisyphus Protocol** | ❌ REMOVED | Human checkpoints control flow |
+| **Iron Law** | ❌ REMOVED | Sequential checkpoint verification |
+| **ralph/ultrawork/autopilot/ecomode** | ❌ REMOVED | No autonomous modes |
+| **Model Routing** | ✅ KEPT | Intelligent tier assignment |
+| **VS Methodology** | ✅ ENHANCED | Creative alternatives |
+| **Agent System** | ✅ KEPT | 27 specialized agents |
+| **Checkpoint System** | ✅ STRENGTHENED | Mandatory human approval |
+
+### Design Philosophy
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    v6.0 Design Principle                    │
+│                                                             │
+│   "AI works BETWEEN checkpoints, humans decide AT them"     │
+│                                                             │
+│   ┌─────────┐     ┌─────────┐     ┌─────────┐              │
+│   │ Stage 1 │ ──▶ │ STOP &  │ ──▶ │ Stage 2 │              │
+│   │ (AI)    │     │  ASK    │     │ (AI)    │              │
+│   └─────────┘     └─────────┘     └─────────┘              │
+│                       ▲                                     │
+│                       │                                     │
+│              Human Decision Required                        │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ---
 
 ## Table of Contents
 
 1. [Core Value Proposition](#core-value-proposition)
-2. [Sisyphus Protocol](#sisyphus-protocol)
+2. [Human Checkpoint System](#human-checkpoint-system)
 3. [Paradigm Detection](#paradigm-detection)
 4. [Agent Catalog (27 Agents)](#agent-catalog-27-agents)
 5. [Model Routing](#model-routing)
-6. [Core Systems](#core-systems)
-7. [Human Checkpoints](#human-checkpoints)
-8. [VS-Research Methodology](#vs-research-methodology)
-9. [Quality Guardrails](#quality-guardrails)
-10. [OMC Integration](#omc-integration)
+6. [VS-Research Methodology](#vs-research-methodology)
+7. [Core Systems](#core-systems)
+8. [Quality Guardrails](#quality-guardrails)
 
 ---
 
@@ -55,98 +76,100 @@ Your AI research assistant for the **complete research lifecycle** - from questi
 
 Research Coordinator isn't just another AI tool. Its **real value** is:
 
-1. **Context Persistence**: Maintain research context across the entire project lifecycle
-2. **Single Platform**: No more switching between tools and losing context
-3. **Research Pipeline**: Structured workflow from idea to publication
-4. **Paradigm Flexibility**: Support for quantitative, qualitative, and mixed methods
-5. **Sisyphus Enforcement**: Work continues until verified complete
-6. **Human-Centered**: AI assists, humans decide
-
-> **Core Principle**: "Human decisions remain with humans. AI handles what's beyond human scope."
-> "인간이 할 일은 인간이, AI는 인간의 범주를 벗어난 것을 수행"
+1. **Human-Centered**: AI assists, humans decide at every critical point
+2. **Context Persistence**: Maintain research context across the entire project lifecycle
+3. **Single Platform**: No more switching between tools and losing context
+4. **Research Pipeline**: Structured workflow from idea to publication
+5. **Paradigm Flexibility**: Support for quantitative, qualitative, and mixed methods
+6. **Creative Alternatives**: VS methodology prevents mode collapse
 
 ---
 
-## Sisyphus Protocol
+## Human Checkpoint System
 
-### Core Principle
+### Core Principle: Checkpoints Are Gates, Not Suggestions
 
-**Research work NEVER stops until complete.** Like Sisyphus pushing the boulder, Research Coordinator persists through all obstacles until the research objective is achieved.
-
-### Continuation Enforcement Rules
-
-```yaml
-sisyphus_protocol:
-  core_principle: "연구 작업이 완료될 때까지 절대 멈추지 않음"
-
-  continuation_enforcement:
-    on_agent_complete:
-      - verify_output_quality           # Check agent produced valid output
-      - check_human_checkpoint_required # Pause only for mandatory checkpoints
-      - assign_next_agent_or_finalize   # Continue to next agent or finalize
-
-    on_agent_fail:
-      - log_failure_reason              # Document what went wrong
-      - attempt_recovery_strategy       # Try alternative approach
-      - escalate_to_human_if_critical   # Only escalate if truly blocked
-
-    on_session_interrupt:
-      - save_state_to_project_file      # Persist progress
-      - document_resume_point           # Mark where to continue
-      - prepare_handoff_context         # Enable seamless resumption
+```
+┌────────────────────────────────────────────────────────────────┐
+│                   CHECKPOINT PROTOCOL                          │
+│                                                                │
+│   When AI reaches a checkpoint:                                │
+│                                                                │
+│   1. STOP immediately                                          │
+│   2. Present options with VS alternatives                      │
+│   3. WAIT for explicit human approval                          │
+│   4. DO NOT proceed until approval received                    │
+│   5. DO NOT assume approval based on context                   │
+│                                                                │
+│   ❌ NEVER: "진행하겠습니다" without asking                     │
+│   ❌ NEVER: Auto-approve based on implied consent              │
+│   ✅ ALWAYS: "어떤 방향으로 진행하시겠습니까?"                  │
+│                                                                │
+└────────────────────────────────────────────────────────────────┘
 ```
 
-### Completion Criteria by Paradigm
+### Checkpoint Types
 
-| Paradigm | Completion Criteria |
-|----------|---------------------|
-| **Quantitative** | Statistical analysis complete + Results interpreted + Visualizations generated + Effect sizes reported |
-| **Qualitative** | Coding saturation reached + Themes refined + Member checking complete (if applicable) + Audit trail documented |
-| **Mixed Methods** | Quantitative phase complete + Qualitative phase complete + Integration complete + Meta-inferences drawn |
+| Level | Icon | Behavior | Checkpoints |
+|-------|------|----------|-------------|
+| **REQUIRED** | 🔴 | System STOPS - Cannot proceed without explicit approval | CP_RESEARCH_DIRECTION, CP_PARADIGM_SELECTION, CP_THEORY_SELECTION, CP_METHODOLOGY_APPROVAL |
+| **RECOMMENDED** | 🟠 | System PAUSES - Strongly suggests approval | CP_ANALYSIS_PLAN, CP_INTEGRATION_STRATEGY, CP_QUALITY_REVIEW |
+| **OPTIONAL** | 🟡 | System ASKS - Defaults available if skipped | CP_VISUALIZATION_PREFERENCE, CP_RENDERING_METHOD |
 
-### Sisyphus State Tracking
+### Required Checkpoints (🔴 MANDATORY HALT)
 
-**Location**: `.research/sisyphus-state.json`
+| Checkpoint | When | What to Ask |
+|------------|------|-------------|
+| **CP_RESEARCH_DIRECTION** | Research question finalized | "연구 방향이 결정되었습니다. 이 방향으로 진행해도 될까요?" + VS alternatives |
+| **CP_PARADIGM_SELECTION** | Methodology approach | "연구 패러다임을 선택해 주세요: 양적/질적/혼합" |
+| **CP_THEORY_SELECTION** | Framework chosen | "이론적 프레임워크를 선택해 주세요" + VS alternatives |
+| **CP_METHODOLOGY_APPROVAL** | Design complete | "연구 방법론을 승인해 주세요" + detailed design |
 
-```json
-{
-  "active": true,
-  "started_at": "2026-01-25T10:00:00Z",
-  "current_phase": "analysis",
-  "current_agent": "E1-quantitative-analysis-guide",
-  "completed_agents": ["A1", "A2", "B1", "B2", "C1"],
-  "pending_agents": ["E1", "E4", "F1", "F2", "G1"],
-  "blocking_checkpoint": null,
-  "recovery_attempts": 0,
-  "completion_percentage": 45,
-  "paradigm": "quantitative"
-}
+### Recommended Checkpoints (🟠 SUGGESTED HALT)
+
+| Checkpoint | When | What to Ask |
+|------------|------|-------------|
+| **CP_ANALYSIS_PLAN** | Before analysis | "분석 계획을 검토해 주시겠습니까?" |
+| **CP_INTEGRATION_STRATEGY** | Mixed methods only | "통합 전략을 확인해 주세요" |
+| **CP_QUALITY_REVIEW** | Assessment done | "품질 평가 결과를 검토해 주세요" |
+
+### Checkpoint Workflow Example
+
 ```
+User: "AI 튜터 효과에 대한 메타분석 연구를 진행해줘"
 
-### Recovery Strategies
+AI:
+  Step 1: Understand request → Meta-analysis on AI tutors
 
-| Failure Type | Recovery Strategy |
-|--------------|-------------------|
-| Agent timeout | Retry with simplified prompt |
-| Invalid output | Re-run with explicit format instructions |
-| Missing data | Request from user or mark as limitation |
-| API error | Retry with exponential backoff |
-| Checkpoint blocked | Wait for human decision (only valid pause) |
+  Step 2: 🔴 CP_RESEARCH_DIRECTION (HALT)
 
-### Iron Law of Continuation
+  "연구 질문 방향에 대해 몇 가지 옵션을 제시합니다:
 
-Before ANY agent claims completion:
+   [A] 전체 효과 (T=0.65) - 일반적 접근
+   [B] 하위요인별 효과 (T=0.40) - 차별화된 접근 ⭐
+   [C] 개인차 조절효과 (T=0.25) - 혁신적 접근
 
-1. **VERIFY**: Run validation checks on output
-2. **CHECK**: Are all required elements present?
-3. **CONFIRM**: Does output meet quality standards?
-4. **PROCEED**: Move to next agent or human checkpoint
+   어떤 방향으로 진행하시겠습니까?"
 
-**Red Flags (Agent must NOT stop):**
-- Using "probably", "might work", "should be fine"
-- Skipping validation steps
-- Leaving tasks partially complete
-- Claiming completion without evidence
+  ⏸️ WAIT FOR USER RESPONSE ⏸️
+
+User: "B로 진행해줘"
+
+AI:
+  Step 3: User selected Direction B
+
+  Step 4: 🔴 CP_THEORY_SELECTION (HALT)
+
+  "하위요인 분석을 위한 이론적 프레임워크 옵션입니다:
+
+   [A] Guilford's 4-factor (유창성/융통성/독창성/정교성) - T=0.55
+   [B] Kaufman's 4C Model (mini-c/little-c/Pro-c/Big-C) - T=0.35
+   [C] Component Model (Amabile) - T=0.40
+
+   어떤 프레임워크를 사용하시겠습니까?"
+
+  ⏸️ WAIT FOR USER RESPONSE ⏸️
+```
 
 ---
 
@@ -189,29 +212,20 @@ paradigm_detection:
       - "순차적", "sequential", "explanatory"
       - "동시적", "concurrent", "parallel"
       - "joint display", "meta-inference"
-    designs:
-      - "convergent parallel", "explanatory sequential"
-      - "exploratory sequential", "embedded"
 ```
 
-### Agent Pack Activation
+### Paradigm Confirmation (Always Ask)
 
-When paradigm is detected, relevant agent packs auto-activate:
-
-| Paradigm Detected | Primary Agents | Support Agents |
-|-------------------|----------------|----------------|
-| **Quantitative Dominant** | B3, C1, E1, E4, F1 | A1-A4, G1-G4 |
-| **Qualitative Dominant** | C2, D2, E2, H1, H2 | A1-A5, B1, G1-G4 |
-| **Mixed Methods** | C3, E3 + all above | Full catalog available |
-
-### Explicit Override
-
-Users can explicitly set paradigm:
+When paradigm is detected, **ALWAYS confirm with user**:
 
 ```
-"This is a qualitative phenomenological study"
-→ Paradigm locked to: QUALITATIVE
-→ Primary agents: C2, D2, E2, H1
+"연구 맥락에서 [양적 연구] 접근이 감지되었습니다.
+이 패러다임으로 진행해도 될까요?
+
+ [Y] 예, 양적 연구로 진행
+ [Q] 아니요, 질적 연구로 변경
+ [M] 아니요, 혼합방법으로 변경
+ [?] 잘 모르겠어요, 도움이 필요해요"
 ```
 
 ---
@@ -220,459 +234,124 @@ Users can explicitly set paradigm:
 
 ### Category A: Research Foundation (5 Agents)
 
-| ID | Agent | Purpose | Tier | New/Existing |
-|----|-------|---------|------|--------------|
-| A1 | **Research Question Refiner** | Refine questions using PICO/SPIDER/PEO frameworks | HIGH | Existing (#01) |
-| A2 | **Theoretical Framework Architect** | Theory selection with VS methodology | HIGH | Existing (#02) |
-| A3 | **Devil's Advocate** | Critical review, anticipate reviewers, challenge assumptions | HIGH | Existing (#03) |
-| A4 | **Research Ethics Advisor** | IRB protocols, consent forms, ethical considerations | MEDIUM | Existing (#04) |
-| A5 | **Paradigm & Worldview Advisor** | Epistemology, ontology, axiology guidance | HIGH | **NEW** |
-
-#### A5: Paradigm & Worldview Advisor (NEW)
-
-**Purpose**: Guide researchers in understanding and articulating their philosophical foundations.
-
-**Capabilities**:
-- Explain positivist, interpretivist, pragmatist, transformative worldviews
-- Map paradigm to appropriate methodology
-- Ensure alignment between worldview, methodology, and methods
-- Support paradigm justification in methodology chapters
-
-**Triggers**: "worldview", "paradigm", "epistemology", "ontology", "philosophy of science", "positivist", "interpretivist"
-
----
+| ID | Agent | Purpose | Tier |
+|----|-------|---------|------|
+| A1 | **Research Question Refiner** | Refine questions using PICO/SPIDER/PEO frameworks | HIGH |
+| A2 | **Theoretical Framework Architect** | Theory selection with VS methodology | HIGH |
+| A3 | **Devil's Advocate** | Critical review, anticipate reviewers | HIGH |
+| A4 | **Research Ethics Advisor** | IRB protocols, consent forms | MEDIUM |
+| A5 | **Paradigm & Worldview Advisor** | Epistemology, ontology guidance | HIGH |
 
 ### Category B: Literature & Evidence (4 Agents)
 
-| ID | Agent | Purpose | Tier | New/Existing |
-|----|-------|---------|------|--------------|
-| B1 | **Literature Review Strategist** | PRISMA-compliant search + scoping review + meta-synthesis | MEDIUM | Expanded (#05) |
-| B2 | **Evidence Quality Appraiser** | RoB 2, ROBINS-I, CASP, JBI, GRADE assessment | MEDIUM | Existing (#06) |
-| B3 | **Effect Size Extractor** | Calculate, convert, and interpret effect sizes | LOW | Existing (#07) |
-| B4 | **Research Radar** | Track recent publications, alerts, citation tracking | LOW | Existing (#08) |
-
-#### B1: Literature Review Strategist (EXPANDED)
-
-**New Capabilities**:
-- Scoping review methodology (Arksey & O'Malley, JBI)
-- Meta-synthesis for qualitative studies (meta-ethnography, thematic synthesis)
-- Rapid review protocols
-- Living systematic review support
-- Grey literature search strategies
-
----
+| ID | Agent | Purpose | Tier |
+|----|-------|---------|------|
+| B1 | **Literature Review Strategist** | PRISMA-compliant search + scoping review | MEDIUM |
+| B2 | **Evidence Quality Appraiser** | RoB 2, ROBINS-I, CASP, JBI, GRADE | MEDIUM |
+| B3 | **Effect Size Extractor** | Calculate, convert effect sizes | LOW |
+| B4 | **Research Radar** | Track recent publications | LOW |
 
 ### Category C: Study Design (4 Agents)
 
-| ID | Agent | Purpose | Tier | New/Existing |
-|----|-------|---------|------|--------------|
-| C1 | **Quantitative Design Consultant** | Experimental, quasi-experimental, survey design | HIGH | Split from (#09) |
-| C2 | **Qualitative Design Consultant** | Phenomenology, grounded theory, case study, narrative | HIGH | **NEW** |
-| C3 | **Mixed Methods Design Consultant** | Convergent, explanatory, exploratory, embedded designs | HIGH | **NEW** |
-| C4 | **Experimental Materials Developer** | Stimuli, instruments, intervention protocols | MEDIUM | **NEW** |
+| ID | Agent | Purpose | Tier |
+|----|-------|---------|------|
+| C1 | **Quantitative Design Consultant** | Experimental, quasi-experimental design | HIGH |
+| C2 | **Qualitative Design Consultant** | Phenomenology, grounded theory | HIGH |
+| C3 | **Mixed Methods Design Consultant** | Convergent, sequential designs | HIGH |
+| C4 | **Experimental Materials Developer** | Stimuli, instruments, protocols | MEDIUM |
 
-#### C2: Qualitative Design Consultant (NEW)
+### Category D: Data Collection (4 Agents)
 
-**Purpose**: Guide researchers in designing rigorous qualitative studies.
-
-**Capabilities**:
-- Phenomenological design (Husserlian, Heideggerian, IPA)
-- Grounded theory (Glaser, Strauss & Corbin, Charmaz)
-- Case study design (Yin, Stake, Merriam)
-- Narrative inquiry approaches
-- Ethnographic design principles
-
-**Triggers**: "phenomenology", "grounded theory", "case study", "narrative", "qualitative design", "interpretive"
-
-#### C3: Mixed Methods Design Consultant (NEW)
-
-**Purpose**: Design integrated mixed methods studies following established frameworks.
-
-**Capabilities**:
-- Creswell & Plano Clark typology
-- Convergent parallel design
-- Explanatory sequential design
-- Exploratory sequential design
-- Embedded and transformative designs
-- Integration strategies (merging, connecting, embedding)
-
-**Triggers**: "mixed methods", "multimethod", "convergent", "sequential", "integration", "joint display"
-
-#### C4: Experimental Materials Developer (NEW)
-
-**Purpose**: Create research instruments and experimental materials.
-
-**Capabilities**:
-- Survey/questionnaire development
-- Interview protocol design
-- Experimental stimuli creation
-- Intervention manual development
-- Pilot testing protocols
-
-**Triggers**: "instrument", "questionnaire", "survey design", "stimuli", "intervention protocol"
-
----
-
-### Category D: Data Collection (4 Agents) [NEW CATEGORY]
-
-| ID | Agent | Purpose | Tier | New/Existing |
-|----|-------|---------|------|--------------|
-| D1 | **Sampling Strategy Advisor** | Probability, purposeful, theoretical sampling | MEDIUM | **NEW** |
-| D2 | **Interview & Focus Group Specialist** | Protocol development, facilitation guides | MEDIUM | **NEW** |
-| D3 | **Observation Protocol Designer** | Structured, semi-structured observation guides | LOW | **NEW** |
-| D4 | **Measurement Instrument Developer** | Scale development, validation, psychometrics | HIGH | **NEW** |
-
-#### D1: Sampling Strategy Advisor (NEW)
-
-**Purpose**: Guide appropriate sampling strategies for all paradigms.
-
-**Capabilities**:
-- Probability sampling (simple random, stratified, cluster)
-- Purposeful sampling (criterion, maximum variation, typical case)
-- Theoretical sampling for grounded theory
-- Sample size justification (power analysis, saturation)
-- Recruitment strategy development
-
-**Triggers**: "sampling", "sample size", "recruitment", "participants", "purposeful", "random"
-
-#### D2: Interview & Focus Group Specialist (NEW)
-
-**Purpose**: Design and optimize qualitative data collection protocols.
-
-**Capabilities**:
-- Semi-structured interview guide development
-- Focus group facilitation protocols
-- Probe and follow-up question design
-- Virtual interview considerations
-- Rapport building strategies
-
-**Triggers**: "interview", "focus group", "interview guide", "qualitative data collection", "semi-structured"
-
-#### D3: Observation Protocol Designer (NEW)
-
-**Purpose**: Create systematic observation instruments.
-
-**Capabilities**:
-- Structured observation checklists
-- Time sampling protocols
-- Event sampling protocols
-- Field note templates
-- Inter-rater reliability procedures
-
-**Triggers**: "observation", "field notes", "observer", "behavioral coding"
-
-#### D4: Measurement Instrument Developer (NEW)
-
-**Purpose**: Support rigorous instrument development and validation.
-
-**Capabilities**:
-- Item pool development
-- Expert panel review protocols
-- Cognitive interviewing
-- Exploratory and confirmatory factor analysis guidance
-- Reliability assessment (internal consistency, test-retest)
-- Validity evidence collection
-
-**Triggers**: "scale development", "instrument validation", "psychometrics", "reliability", "validity"
-
----
+| ID | Agent | Purpose | Tier |
+|----|-------|---------|------|
+| D1 | **Sampling Strategy Advisor** | Probability, purposeful sampling | MEDIUM |
+| D2 | **Interview & Focus Group Specialist** | Protocol development | MEDIUM |
+| D3 | **Observation Protocol Designer** | Structured observation guides | LOW |
+| D4 | **Measurement Instrument Developer** | Scale development, validation | HIGH |
 
 ### Category E: Analysis (4 Agents)
 
-| ID | Agent | Purpose | Tier | New/Existing |
-|----|-------|---------|------|--------------|
-| E1 | **Quantitative Analysis Guide** | Statistical method selection + interpretation | HIGH | Expanded (#10) |
-| E2 | **Qualitative Coding Specialist** | Thematic analysis, grounded theory coding, IPA | MEDIUM | **NEW** |
-| E3 | **Mixed Methods Integration Specialist** | Joint displays, meta-inference, integration | HIGH | **NEW** |
-| E4 | **Analysis Code Generator** | R, Python, SPSS, Stata + CAQDAS support | LOW | Expanded (#11) |
-
-#### E1: Quantitative Analysis Guide (EXPANDED)
-
-**New Capabilities**:
-- Advanced SEM and multilevel modeling
-- Bayesian analysis guidance
-- Machine learning integration
-- Effect size interpretation guidelines
-- Assumption checking protocols
-
-#### E2: Qualitative Coding Specialist (NEW)
-
-**Purpose**: Guide rigorous qualitative analysis processes.
-
-**Capabilities**:
-- Open, axial, selective coding (grounded theory)
-- Thematic analysis (Braun & Clarke 6-phase model)
-- Interpretative Phenomenological Analysis (IPA)
-- Framework analysis
-- Content analysis
-- Code development and codebook creation
-- Saturation assessment
-
-**Triggers**: "coding", "thematic analysis", "grounded theory coding", "themes", "codebook", "saturation"
-
-#### E3: Mixed Methods Integration Specialist (NEW)
-
-**Purpose**: Facilitate meaningful integration of quantitative and qualitative findings.
-
-**Capabilities**:
-- Joint display creation (side-by-side, statistics-by-theme, weaving)
-- Meta-inference development
-- Convergence/divergence analysis
-- Integration legitimation criteria
-- Mixed methods validity assessment
-
-**Triggers**: "integration", "joint display", "meta-inference", "convergence", "mixing"
-
-#### E4: Analysis Code Generator (EXPANDED)
-
-**New Capabilities**:
-- CAQDAS project setup (NVivo, ATLAS.ti, MAXQDA guidance)
-- R packages: metafor, lavaan, lme4, brms
-- Python: pandas, scipy, statsmodels, scikit-learn
-- Visualization code for all paradigms
-
----
+| ID | Agent | Purpose | Tier |
+|----|-------|---------|------|
+| E1 | **Quantitative Analysis Guide** | Statistical method selection | HIGH |
+| E2 | **Qualitative Coding Specialist** | Thematic analysis, grounded theory coding | MEDIUM |
+| E3 | **Mixed Methods Integration Specialist** | Joint displays, meta-inference | HIGH |
+| E4 | **Analysis Code Generator** | R, Python, SPSS, Stata code | LOW |
 
 ### Category F: Quality & Validation (4 Agents)
 
-| ID | Agent | Purpose | Tier | New/Existing |
-|----|-------|---------|------|--------------|
-| F1 | **Internal Consistency Checker** | Logic flow verification, argument coherence | LOW | Existing (#13) |
-| F2 | **Checklist Manager** | CONSORT, STROBE, PRISMA, SRQR, COREQ, GRAMMS | LOW | Existing (#14) |
-| F3 | **Reproducibility Auditor** | OSF, open science, data sharing | MEDIUM | Existing (#15) |
-| F4 | **Bias & Trustworthiness Detector** | Quantitative bias + qualitative trustworthiness | MEDIUM | Expanded (#16) |
-
-#### F4: Bias & Trustworthiness Detector (EXPANDED)
-
-**New Capabilities**:
-- Quantitative: p-hacking, HARKing, publication bias detection
-- Qualitative trustworthiness criteria:
-  - Credibility (prolonged engagement, triangulation, member checking)
-  - Transferability (thick description)
-  - Dependability (audit trail)
-  - Confirmability (reflexivity)
-- Mixed methods legitimation criteria
-
----
+| ID | Agent | Purpose | Tier |
+|----|-------|---------|------|
+| F1 | **Internal Consistency Checker** | Logic flow verification | LOW |
+| F2 | **Checklist Manager** | CONSORT, STROBE, PRISMA, SRQR, COREQ | LOW |
+| F3 | **Reproducibility Auditor** | OSF, open science | MEDIUM |
+| F4 | **Bias & Trustworthiness Detector** | Bias + qualitative trustworthiness | MEDIUM |
 
 ### Category G: Publication & Communication (4 Agents)
 
-| ID | Agent | Purpose | Tier | New/Existing |
-|----|-------|---------|------|--------------|
-| G1 | **Journal Matcher** | Find target journals by scope, IF, acceptance rate | MEDIUM | Existing (#17) |
-| G2 | **Academic Communicator** | Plain language summaries, abstracts, press releases | MEDIUM | Existing (#18) |
-| G3 | **Peer Review Strategist** | Response to reviewers, revision strategies | HIGH | Existing (#19) |
-| G4 | **Pre-registration Composer** | OSF, AsPredicted, Registered Reports | MEDIUM | Existing (#20) |
+| ID | Agent | Purpose | Tier |
+|----|-------|---------|------|
+| G1 | **Journal Matcher** | Find target journals | MEDIUM |
+| G2 | **Academic Communicator** | Plain language summaries | MEDIUM |
+| G3 | **Peer Review Strategist** | Response to reviewers | HIGH |
+| G4 | **Pre-registration Composer** | OSF, AsPredicted | MEDIUM |
 
----
+### Category H: Specialized Approaches (2 Agents)
 
-### Category H: Specialized Approaches (2 Agents) [NEW CATEGORY]
-
-| ID | Agent | Purpose | Tier | New/Existing |
-|----|-------|---------|------|--------------|
-| H1 | **Ethnographic Research Advisor** | Ethnographic methodology, fieldwork, cultural analysis | HIGH | **NEW** |
-| H2 | **Action Research Facilitator** | Participatory action research, cycles, stakeholder engagement | HIGH | **NEW** |
-
-#### H1: Ethnographic Research Advisor (NEW)
-
-**Purpose**: Guide researchers conducting ethnographic studies.
-
-**Capabilities**:
-- Ethnographic design principles
-- Fieldwork planning and logistics
-- Participant observation strategies
-- Key informant selection
-- Cultural analysis frameworks
-- Reflexivity in ethnography
-- Writing ethnographic accounts
-
-**Triggers**: "ethnography", "fieldwork", "participant observation", "cultural", "anthropological"
-
-#### H2: Action Research Facilitator (NEW)
-
-**Purpose**: Support participatory and action research approaches.
-
-**Capabilities**:
-- Action research cycle design (plan-act-observe-reflect)
-- Stakeholder engagement strategies
-- Community-based participatory research (CBPR)
-- Collaborative inquiry methods
-- Practical outcome documentation
-- Change facilitation
-
-**Triggers**: "action research", "participatory", "CBPR", "community-based", "practitioner research", "collaborative inquiry"
+| ID | Agent | Purpose | Tier |
+|----|-------|---------|------|
+| H1 | **Ethnographic Research Advisor** | Ethnographic methodology | HIGH |
+| H2 | **Action Research Facilitator** | Participatory action research | HIGH |
 
 ---
 
 ## Model Routing
 
-### Complexity-Based Tier Assignment
+### Tier Assignment (Kept from v5.0)
 
-| Tier | Model | Agents | Task Characteristics |
-|------|-------|--------|----------------------|
-| **HIGH** | Opus | A1, A2, A3, A5, C1, C2, C3, D4, E1, E3, G3, H1, H2 | Strategic decisions, complex reasoning, paradigm-level guidance |
-| **MEDIUM** | Sonnet | A4, B1, B2, C4, D1, D2, E2, F3, F4, G1, G2, G4 | Standard analysis, protocol development, quality assessment |
-| **LOW** | Haiku | B3, B4, D3, E4, F1, F2 | Calculations, search, code generation, checklists |
+| Tier | Model | When to Use |
+|------|-------|-------------|
+| **HIGH** | Opus | Strategic decisions, complex reasoning, paradigm-level guidance |
+| **MEDIUM** | Sonnet | Standard analysis, protocol development, quality assessment |
+| **LOW** | Haiku | Calculations, search, code generation, checklists |
 
-### Dynamic Routing Rules
+### Agent-Model Mapping
 
-```yaml
-model_routing:
-  complexity_signals:
-    opus_triggers:
-      - "design", "framework", "theory", "strategy"
-      - "paradigm", "worldview", "philosophical"
-      - "reviewer response", "methodology chapter"
-      - "integration", "meta-inference"
+| Tier | Model | Agents |
+|------|-------|--------|
+| **HIGH** | Opus | A1, A2, A3, A5, C1, C2, C3, D4, E1, E3, G3, H1, H2 |
+| **MEDIUM** | Sonnet | A4, B1, B2, C4, D1, D2, E2, F3, F4, G1, G2, G4 |
+| **LOW** | Haiku | B3, B4, D3, E4, F1, F2 |
 
-    sonnet_triggers:
-      - "analysis", "assessment", "protocol"
-      - "interview guide", "sampling plan"
-      - "journal selection", "abstract"
+### Task Tool Usage
 
-    haiku_triggers:
-      - "calculate", "search", "generate code"
-      - "checklist", "extract", "format"
+```python
+# Always pass model parameter explicitly
 
-  override_rules:
-    - condition: "user explicitly requests thorough analysis"
-      action: "upgrade one tier"
-    - condition: "ecomode active"
-      action: "prefer lower tier when possible"
-    - condition: "ralph/sisyphus active"
-      action: "maintain assigned tier for consistency"
+# HIGH tier
+Task(
+    subagent_type="general-purpose",
+    model="opus",
+    description="A2: Theory selection",
+    prompt="..."
+)
+
+# MEDIUM tier
+Task(
+    subagent_type="general-purpose",
+    model="sonnet",
+    description="B1: Literature search",
+    prompt="..."
+)
+
+# LOW tier
+Task(
+    subagent_type="general-purpose",
+    model="haiku",
+    description="B3: Effect size extraction",
+    prompt="..."
+)
 ```
-
----
-
-## Core Systems
-
-### 1. Research Project State
-
-Maintains context throughout your entire research journey.
-
-**Location**: `.research/project-state.yaml`
-
-```yaml
-project:
-  name: "Your Project Name"
-  type: "mixed_methods"  # quantitative | qualitative | mixed_methods
-  paradigm: "pragmatist"  # positivist | interpretivist | pragmatist | transformative
-  current_stage: 4
-  sisyphus_active: true
-
-research_context:
-  research_question:
-    main: "How do AI tutors affect student motivation and learning?"
-    quantitative_strand: "What is the effect of AI tutors on achievement?"
-    qualitative_strand: "How do students experience AI tutor interactions?"
-
-  theoretical_framework:
-    primary_theory: "Self-Determination Theory"
-    integration_framework: "Pragmatist Mixed Methods"
-
-  methodology:
-    design_type: "Explanatory Sequential"
-    phase_1: "Quasi-experimental (N=200)"
-    phase_2: "Phenomenological interviews (n=15)"
-    integration: "Joint display connecting QUAN results to QUAL themes"
-```
-
-### 2. Pipeline Templates
-
-#### Quantitative Pipeline (PRISMA 2020)
-```
-Stage 1: Protocol → Stage 2: Search → Stage 3: Screen →
-Stage 4: Extract → Stage 5: Quality → Stage 6: Analyze →
-Stage 7: Write → Stage 8: Publish
-```
-
-#### Qualitative Pipeline
-```
-Stage 1: Design → Stage 2: Sampling → Stage 3: Data Collection →
-Stage 4: Transcription → Stage 5: Coding → Stage 6: Theme Development →
-Stage 7: Trustworthiness → Stage 8: Write → Stage 9: Member Check
-```
-
-#### Mixed Methods Pipeline
-```
-PHASE 1 (QUAN): Design → Collect → Analyze
-     ↓
-INTEGRATION: Connect → Joint Display → Meta-Inference
-     ↑
-PHASE 2 (QUAL): Design → Collect → Analyze
-```
-
-### 3. Integration Hub
-
-| Category | Tools | Status |
-|----------|-------|--------|
-| **Office** | Excel, Word, PowerPoint | Ready |
-| **Statistical** | R, Python, SPSS, Stata | Ready |
-| **Qualitative** | NVivo, ATLAS.ti, MAXQDA | Guidance only |
-| **Literature** | Semantic Scholar, OpenAlex, Zotero | API setup |
-| **Visualization** | Mermaid, Nanobanana, ggplot2 | Ready/API |
-| **Open Science** | OSF, AsPredicted, PROSPERO | Ready |
-
-### 4. Guided Dialogue (Wizard)
-
-Clear choice points for important decisions:
-
-```
-Question: "Which research paradigm aligns with your worldview?"
-
-Options:
-1. Positivist/Post-positivist (T=0.70)
-   Objective reality, hypothesis testing, generalization
-
-2. Interpretivist/Constructivist (T=0.55)
-   Multiple realities, understanding meaning, context-bound
-
-3. Pragmatist (T=0.45)
-   Problem-centered, what works, mixed methods friendly
-
-4. Transformative (T=0.30)
-   Social justice focus, participatory, emancipatory
-```
-
-### 5. Auto-Documentation
-
-Auto-generated documents by paradigm:
-
-| Paradigm | Documents |
-|----------|-----------|
-| **All** | Decision Log, Methods Draft, Audit Trail |
-| **Quantitative** | PRISMA Diagram, Analysis Scripts, Power Analysis |
-| **Qualitative** | Codebook, Theme Map, Reflexivity Journal |
-| **Mixed** | Joint Displays, Integration Matrix, Meta-Inference Summary |
-
----
-
-## Human Checkpoints
-
-### Required Checkpoints (System STOPS)
-
-| Checkpoint | When | Decision |
-|------------|------|----------|
-| CP_RESEARCH_DIRECTION | Research question finalized | Confirm scope and direction |
-| CP_PARADIGM_SELECTION | Methodology chapter | Approve worldview/paradigm |
-| CP_THEORY_SELECTION | Framework chosen | Approve theoretical approach |
-| CP_METHODOLOGY_APPROVAL | Design complete | Approve methodology |
-
-### Recommended Checkpoints (System Pauses)
-
-| Checkpoint | When | Decision |
-|------------|------|----------|
-| CP_ANALYSIS_PLAN | Before analysis | Review statistical/coding approach |
-| CP_INTEGRATION_STRATEGY | Mixed methods only | Approve integration method |
-| CP_QUALITY_REVIEW | Assessment done | Approve quality judgments |
-
-### Optional Checkpoints (Defaults Available)
-
-| Checkpoint | When | Default |
-|------------|------|---------|
-| CP_VISUALIZATION_PREFERENCE | Creating figures | Hybrid style |
-| CP_RENDERING_METHOD | Export options | Standard format |
 
 ---
 
@@ -688,7 +367,8 @@ Standard AI: "Recommend a methodology" → Survey (70% of the time)
 VS-Enhanced: "Recommend a methodology"
              → Step 1: Identify Survey as modal (explicitly consider)
              → Step 2: Explore alternatives (experiment, case study, ethnography)
-             → Step 3: Select based on T-Score, RQ fit, and paradigm
+             → Step 3: Present options with T-Scores
+             → Step 4: WAIT for human selection
              → Result: Differentiated, defensible methodology
 ```
 
@@ -701,7 +381,7 @@ VS-Enhanced: "Recommend a methodology"
 | 0.2-0.4 | Innovative | Novel, requires strong justification |
 | < 0.2 | Experimental | Highly novel, high risk/reward |
 
-### VS Process (3-Stage)
+### VS Process (3-Stage with Human Decision)
 
 ```
 Stage 1: Context & Modal Identification
@@ -713,10 +393,101 @@ Stage 2: Divergent Exploration
   ├─ Direction B (T~0.4): Balanced novelty
   └─ Direction C (T<0.3): Innovative/experimental
 
-Stage 3: Selection & Execution
-  ├─ Present options with T-Scores and paradigm fit
-  ├─ Human selects direction
-  └─ Execute with methodological rigor
+Stage 3: Human Selection (🔴 CHECKPOINT)
+  ├─ Present ALL options with T-Scores
+  ├─ Explain trade-offs for each
+  ├─ WAIT for human decision
+  └─ Execute selected direction
+```
+
+---
+
+## Core Systems
+
+### 1. Research Project State
+
+Maintains context throughout your entire research journey.
+
+**Location**: `.research/project-state.yaml`
+
+```yaml
+project:
+  name: "Your Project Name"
+  type: "quantitative"  # quantitative | qualitative | mixed_methods
+  paradigm: "post-positivist"  # positivist | interpretivist | pragmatist
+  current_stage: 1
+  created_at: "2026-01-25T10:00:00Z"
+  updated_at: "2026-01-25T12:00:00Z"
+
+research_context:
+  research_question:
+    main: "How do AI tutors affect creativity subfactors?"
+
+  theoretical_framework:
+    primary_theory: "Guilford's Divergent Thinking Theory"
+
+checkpoints:
+  - id: "CP_RESEARCH_DIRECTION"
+    status: "approved"
+    approved_at: "2026-01-25T10:30:00Z"
+    selected_option: "B - Subfactor analysis"
+
+  - id: "CP_THEORY_SELECTION"
+    status: "pending"
+    options_presented: ["Guilford", "Kaufman", "Amabile"]
+```
+
+### 2. Pipeline Templates
+
+#### Quantitative Pipeline (PRISMA 2020)
+```
+Stage 1: Protocol    🔴 CP_RESEARCH_DIRECTION
+Stage 2: Search      🟡 CP_SEARCH_STRATEGY
+Stage 3: Screen      🟠 CP_SCREENING_CRITERIA
+Stage 4: Extract     🟡 CP_EXTRACTION_TEMPLATE
+Stage 5: Quality     🟠 CP_QUALITY_REVIEW
+Stage 6: Analyze     🔴 CP_ANALYSIS_PLAN
+Stage 7: Write       🟡 CP_WRITING_STYLE
+Stage 8: Publish     🔴 CP_FINAL_REVIEW
+```
+
+#### Qualitative Pipeline
+```
+Stage 1: Design      🔴 CP_PARADIGM_SELECTION
+Stage 2: Sampling    🟠 CP_SAMPLING_STRATEGY
+Stage 3: Collection  🟡 CP_PROTOCOL_DESIGN
+Stage 4: Coding      🟠 CP_CODING_APPROACH
+Stage 5: Themes      🔴 CP_THEME_VALIDATION
+Stage 6: Quality     🟠 CP_TRUSTWORTHINESS
+Stage 7: Write       🟡 CP_WRITING_STYLE
+Stage 8: Review      🔴 CP_MEMBER_CHECK
+```
+
+### 3. Decision Log
+
+All human decisions are logged:
+
+**Location**: `.research/decision-log.yaml`
+
+```yaml
+decisions:
+  - checkpoint: "CP_RESEARCH_DIRECTION"
+    timestamp: "2026-01-25T10:30:00Z"
+    options_presented:
+      - "A: Overall effect (T=0.65)"
+      - "B: Subfactor effects (T=0.40)"
+      - "C: Individual differences (T=0.25)"
+    selected: "B"
+    rationale: "User wants differentiated contribution"
+
+  - checkpoint: "CP_THEORY_SELECTION"
+    timestamp: "2026-01-25T11:00:00Z"
+    options_presented:
+      - "Guilford's 4-factor"
+      - "Kaufman's 4C"
+      - "Amabile's Component"
+    selected: "Guilford's 4-factor"
+    rationale: "Best fit for fluency/flexibility/originality/elaboration analysis"
 ```
 
 ---
@@ -742,68 +513,6 @@ Stage 3: Selection & Execution
 
 ---
 
-## OMC Integration
-
-### Mode Compatibility
-
-| OMC Mode | Research Coordinator Behavior |
-|----------|------------------------------|
-| **ultrawork** | Maximum parallelism, all available agent groups |
-| **ecomode** | Token-efficient, prefer LOW tier, batch tasks |
-| **ralph** | Sisyphus protocol active, persist until complete |
-| **autopilot** | Full autonomous workflow with checkpoints |
-
-### Parallel Execution Groups
-
-```
-Group 1: Research Foundation
-  [A2 + A3] parallel after A1
-  [A4 + C1/C2/C3] parallel after theory selection
-
-Group 2: Literature & Data Collection
-  [B1 + B4] parallel (search + monitoring)
-  [D1 + D2 + D3] parallel (sampling + protocols)
-
-Group 3: Analysis
-  [E1 + E2] parallel for mixed methods
-  [E4 + F1 + F2] parallel (code + quality checks)
-
-Group 4: Publication
-  [G1 + G2] parallel (journal + communication)
-  [G3 + G4] parallel (review strategy + preregistration)
-```
-
-### OMC Mode Commands
-
-```bash
-ulw: 문헌 검색해줘        # ultrawork - maximum parallelism
-eco: 통계 분석해줘        # ecomode - token efficient
-ralph: 연구 설계 완료해줘  # persistence until done (Sisyphus)
-autopilot: 체계적 문헌고찰 진행해줘  # full autonomous workflow
-```
-
----
-
-## Auto-Trigger Keywords
-
-| Keywords | Agents Activated | Paradigm Signal |
-|----------|------------------|-----------------|
-| "research question", "연구 질문", "PICO", "SPIDER" | A1 | - |
-| "theoretical framework", "이론", "conceptual model" | A2 | - |
-| "worldview", "paradigm", "epistemology" | A5 | - |
-| "literature review", "PRISMA", "systematic review" | B1 | Quantitative |
-| "qualitative", "phenomenology", "grounded theory" | C2, E2 | Qualitative |
-| "mixed methods", "integration", "joint display" | C3, E3 | Mixed |
-| "interview", "focus group" | D2 | Qualitative |
-| "statistics", "ANOVA", "regression" | E1, E4 | Quantitative |
-| "thematic analysis", "coding", "themes" | E2 | Qualitative |
-| "ethnography", "fieldwork" | H1 | Qualitative |
-| "action research", "participatory" | H2 | Qualitative |
-| "journal", "submission", "투고" | G1 | - |
-| "reviewer", "peer review" | G3 | - |
-
----
-
 ## Quick Start
 
 ### For New Users
@@ -814,14 +523,14 @@ Simply tell Research Coordinator what you want to do:
 "I want to conduct a systematic review on AI in education"
 "메타분석 연구를 시작하고 싶어"
 "Help me design a phenomenological study on teacher burnout"
-"I need to design a mixed methods study"
 ```
 
 The system will:
 1. Detect your paradigm from your request
-2. Activate appropriate agent pack
-3. Guide you through conversational wizard
-4. Enforce Sisyphus protocol for completion
+2. **ASK for confirmation** of paradigm
+3. Present VS alternatives with T-Scores
+4. **WAIT for your selection**
+5. Guide you through the pipeline with checkpoints
 
 ### Entry Points
 
@@ -830,58 +539,62 @@ The system will:
 | Start a new research project | Set up systematic review, qualitative study, or mixed methods |
 | Continue existing project | Resume work with full context preserved |
 | Get help with a specific task | Literature search, analysis, writing, etc. |
-| Switch paradigm | Change methodology approach mid-project |
 
 ---
 
 ## Version History
 
-- **v5.0.0**: Sisyphus protocol, paradigm detection, 27 agents, qualitative/mixed methods support
-- **v4.0.0**: Context persistence, pipeline templates, integration hub, guided wizard
-- **v3.2.0**: OMC integration, model routing, parallel execution
-- **v3.1.0**: Conceptual Framework Visualizer (#21)
+- **v6.0.0**: Clean Slate Edition - Removed Sisyphus/OMC modes, strengthened checkpoints
+- **v5.0.0**: Sisyphus protocol, paradigm detection, 27 agents
+- **v4.0.0**: Context persistence, pipeline templates, integration hub
+- **v3.2.0**: OMC integration, model routing
 - **v3.0.0**: Creativity modules, user checkpoints, dynamic T-Score
 
 ---
 
-## Module Reference
+## What Was Removed in v6.0
 
-### Core Modules
+### ❌ Sisyphus Protocol
+- **Was**: "Work never stops until complete"
+- **Problem**: Bypassed human checkpoints
+- **Now**: AI stops at every checkpoint and waits
 
-| Module | Path | Purpose |
-|--------|------|---------|
-| Project State | `core/project-state.md` | Context persistence |
-| Pipeline Templates | `core/pipeline-templates.md` | Research workflows |
-| Integration Hub | `core/integration-hub.md` | Tool connections |
-| Guided Wizard | `core/guided-wizard.md` | Conversation UX |
-| Auto-Documentation | `core/auto-documentation.md` | Document generation |
-| Sisyphus Protocol | `core/sisyphus-protocol.md` | Continuation enforcement |
-| Paradigm Detection | `core/paradigm-detection.md` | Auto-detect methodology |
+### ❌ Iron Law of Continuation
+- **Was**: "Move to next agent OR human checkpoint"
+- **Problem**: "OR" made checkpoints optional
+- **Now**: Sequential verification - checkpoint THEN next agent
 
-### Configuration Files
+### ❌ OMC Autonomous Modes
+- **Removed**: ralph, ultrawork, autopilot, ecomode
+- **Problem**: These modes enabled checkpoint bypass
+- **Kept**: Model routing (haiku/sonnet/opus) for efficiency
 
-| File | Path | Purpose |
-|------|------|---------|
-| Project State | `.research/project-state.yaml` | Current project context |
-| Sisyphus State | `.research/sisyphus-state.json` | Continuation tracking |
-| Decision Log | `.research/decision-log.yaml` | Research decisions |
-| Paradigm Config | `.research/paradigm-config.yaml` | Detected paradigm |
-| Routing Config | `.omc/config/research-coordinator-routing.yaml` | Model routing |
-| Checkpoints | `.omc/checkpoints/checkpoint-definitions.yaml` | Human checkpoints |
+### ✅ What Remains
+- 27 specialized agents
+- Model routing by complexity
+- VS methodology for creative alternatives
+- Checkpoint system (now mandatory)
+- Context persistence
+- Pipeline templates
+- Paradigm detection
 
 ---
 
 ## Getting Started
 
-1. **Start a conversation** with your research topic
-2. **Let paradigm detection** identify your approach (or specify explicitly)
-3. **Follow the guided wizard** through choice points
-4. **Trust Sisyphus protocol** to maintain momentum
-5. **Approve at checkpoints** to maintain human agency
+1. **Describe your research** topic or question
+2. **Confirm paradigm** when asked
+3. **Select from VS options** at each checkpoint
+4. **Approve methodology** before proceeding
+5. **Review outputs** at each stage
 6. **Export documentation** when ready
 
 ```
-"I want to understand how teachers experience AI adoption in their classrooms"
+"I want to understand how AI affects different aspects of creativity"
 ```
 
-Research Coordinator will detect qualitative signals, activate appropriate agents, and guide you from there - never stopping until your research is complete.
+Research Coordinator will:
+- Detect: Quantitative research, meta-analysis
+- Ask: Confirm paradigm? Select subfactor approach?
+- Wait: For your explicit approval
+- Proceed: Only after checkpoint cleared
