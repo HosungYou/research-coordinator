@@ -1,8 +1,11 @@
 # CLAUDE.md
 
-# Diverga v6.0.0 (Human-Centered Edition)
+# Diverga v6.2.0 (Human-Centered Edition + Parallel Document Processing)
 
 **Beyond Modal: AI Research Assistant That Thinks Creatively**
+
+**v6.2 New**: Parallel Document Processing - Process large PDF collections without memory overflow
+**v6.1**: Humanization Pipeline - Transform AI-generated text to natural academic prose
 
 AI Research Assistant for the Complete Research Lifecycle - from question formulation to publication.
 
@@ -112,30 +115,44 @@ The system will:
 
 ---
 
-## Agent Structure (33 Agents in 8 Categories)
+## Agent Structure (37 Agents in 8 Categories)
 
 | Category | Count | Agents | Paradigm |
 |----------|-------|--------|----------|
 | **A: Foundation** | 6 | A1-ResearchQuestionRefiner, A2-TheoreticalFrameworkArchitect, A3-DevilsAdvocate, A4-ResearchEthicsAdvisor, A5-ParadigmWorldviewAdvisor, **A6-ConceptualFrameworkVisualizer** | All |
-| **B: Evidence** | 4 | B1-SystematicLiteratureScout, B2-EvidenceQualityAppraiser, B3-EffectSizeExtractor, B4-ResearchRadar | Quant |
+| **B: Evidence** | 5 | B1-SystematicLiteratureScout, B2-EvidenceQualityAppraiser, B3-EffectSizeExtractor, B4-ResearchRadar, **B5-ParallelDocumentProcessor** | All |
 | **C: Design** | 4 | C1-QuantitativeDesignConsultant, C2-QualitativeDesignConsultant, C3-MixedMethodsDesignConsultant, C4-ExperimentalMaterialsDeveloper | Paradigm-specific |
 | **D: Data Collection** | 4 | D1-SamplingStrategyAdvisor, D2-InterviewFocusGroupSpecialist, D3-ObservationProtocolDesigner, D4-MeasurementInstrumentDeveloper | Method-specific |
 | **E: Analysis** | 5 | E1-QuantitativeAnalysisGuide, E2-QualitativeCodingSpecialist, E3-MixedMethodsIntegration, E4-AnalysisCodeGenerator, **E5-SensitivityAnalysisDesigner** | Paradigm-specific |
-| **F: Quality** | 4 | F1-InternalConsistencyChecker, F2-ChecklistManager, F3-ReproducibilityAuditor, F4-BiasTrustworthinessDetector | All |
-| **G: Communication** | 4 | G1-JournalMatcher, G2-AcademicCommunicator, G3-PeerReviewStrategist, G4-PreregistrationComposer | All |
+| **F: Quality** | 5 | F1-InternalConsistencyChecker, F2-ChecklistManager, F3-ReproducibilityAuditor, F4-BiasTrustworthinessDetector, **F5-HumanizationVerifier** | All |
+| **G: Communication** | 6 | G1-JournalMatcher, G2-AcademicCommunicator, G3-PeerReviewStrategist, G4-PreregistrationComposer, **G5-AcademicStyleAuditor**, **G6-AcademicStyleHumanizer** | All |
 | **H: Specialized** | 2 | H1-EthnographicResearchAdvisor, H2-ActionResearchFacilitator | Qual |
 
-**Total: 6 + 4 + 4 + 4 + 5 + 4 + 4 + 2 = 33 agents**
+**Total: 6 + 5 + 4 + 4 + 5 + 5 + 6 + 2 = 37 agents**
+
+### New in v6.1: Humanization Pipeline Agents
+
+| Agent | Purpose | Model |
+|-------|---------|-------|
+| **G5-AcademicStyleAuditor** | AI pattern detection (24 categories) | Sonnet |
+| **G6-AcademicStyleHumanizer** | Transform AI patterns to natural prose | Opus |
+| **F5-HumanizationVerifier** | Verify transformation integrity | Haiku |
+
+### New in v6.2: Parallel Document Processing
+
+| Agent | Purpose | Model |
+|-------|---------|-------|
+| **B5-ParallelDocumentProcessor** | Batch PDF processing with parallel workers | Opus |
 
 ---
 
-## Model Routing (v6.0)
+## Model Routing (v6.2)
 
-| Tier | Model | Agents (33 total) |
+| Tier | Model | Agents (37 total) |
 |------|-------|-------------------|
-| HIGH | Opus | A1, A2, A3, A5, C1, C2, C3, D4, E1, E2, E3, G3, H1, H2 (14) |
-| MEDIUM | Sonnet | A4, A6, B1, B2, C4, D1, D2, E5, F3, F4, G1, G2, G4 (13) |
-| LOW | Haiku | B3, B4, D3, E4, F1, F2 (6) |
+| HIGH | Opus | A1, A2, A3, A5, **B5**, C1, C2, C3, D4, E1, E2, E3, G3, **G6**, H1, H2 (16) |
+| MEDIUM | Sonnet | A4, A6, B1, B2, C4, D1, D2, E5, F3, F4, G1, G2, G4, **G5** (14) |
+| LOW | Haiku | B3, B4, D3, E4, F1, F2, **F5** (7) |
 
 ---
 
@@ -238,6 +255,52 @@ When paradigm is detected, **ALWAYS ask for confirmation**:
 
 ---
 
+## Humanization Pipeline (v6.1 New Feature)
+
+### Overview
+
+Transform AI-generated academic text into natural, human-sounding prose while preserving scholarly integrity. Based on Wikipedia's AI Cleanup initiative's 24 pattern categories, adapted for academic writing.
+
+### Pipeline Stages
+
+```
+Content Generation (G2/G3) → G5 Analysis → Checkpoint → G6 Transform → F5 Verify → Export
+```
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `"Check AI patterns"` | Run G5 analysis, show pattern report |
+| `"Humanize my draft"` | Full pipeline with balanced mode |
+| `"Humanize (conservative)"` | Minimal changes, high-risk only |
+| `"Humanize (aggressive)"` | Maximum naturalness |
+| `"Export with humanization"` | Run pipeline before export |
+
+### Transformation Modes
+
+| Mode | Target | Best For |
+|------|--------|----------|
+| **Conservative** | High-risk patterns only | Journal submissions |
+| **Balanced** ⭐ | High + medium-risk | Most academic writing |
+| **Aggressive** | All patterns | Blog posts, informal |
+
+### New Checkpoint
+
+| Checkpoint | Level | When |
+|------------|-------|------|
+| CP_HUMANIZATION_REVIEW | 🟠 Recommended | After content generation |
+| CP_HUMANIZATION_VERIFY | 🟡 Optional | Before final export |
+
+### Ethics Note
+
+Humanization helps express ideas naturally—it does NOT make AI use "undetectable."
+Researchers should follow institutional and journal AI disclosure policies.
+
+See: `.claude/skills/research-coordinator/ethics/ai-writing-ethics.md`
+
+---
+
 ## What Was Removed in v6.0
 
 ### ❌ Sisyphus Protocol
@@ -265,6 +328,8 @@ https://github.com/HosungYou/Diverga
 
 ## Version History
 
+- **v6.2.0**: Parallel Document Processing - B5-ParallelDocumentProcessor for batch PDF handling (37 agents total)
+- **v6.1.0**: Humanization Pipeline - G5-AcademicStyleAuditor, G6-AcademicStyleHumanizer, F5-HumanizationVerifier (36 agents total)
 - **v6.0.1**: Agent restructuring - 33 agents with category-based naming (A1-H2)
 - **v6.0.0**: Clean Slate - Removed Sisyphus/OMC modes, mandatory checkpoints
 - **v5.0.0**: Sisyphus protocol, paradigm detection, 27 agents

@@ -3,10 +3,11 @@
 **Beyond Modal: AI Research Assistant That Thinks Creatively**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-6.0.1-brightgreen)](https://github.com/HosungYou/Diverga)
+[![Version](https://img.shields.io/badge/version-6.2.0-brightgreen)](https://github.com/HosungYou/Diverga)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Skills-blue)](https://claude.ai/code)
 [![VS Methodology](https://img.shields.io/badge/VS-Verbalized%20Sampling-green)](https://arxiv.org/abs/2510.01171)
 [![Language](https://img.shields.io/badge/language-English%20%7C%20한국어-orange)](docs/i18n/ko/README-ko.md)
+[![Humanization](https://img.shields.io/badge/NEW-Humanization%20Pipeline-purple)](docs/v6.1.0-humanization-pipeline.md)
 
 ---
 
@@ -22,23 +23,55 @@ Most AI research assistants suffer from **mode collapse** - they always recommen
 
 ---
 
-## ✨ v6.0 (Human-Centered Edition)
+## ✨ v6.2 (Human-Centered Edition + Parallel Document Processing)
 
 ### Core Principle
 
 > **"Human decisions remain with humans. AI handles what's beyond human scope."**
 > **"인간이 할 일은 인간이, AI는 인간의 범주를 벗어난 것을 수행"**
 
-### What's New in v6.0
+### 🆕 What's New in v6.2
+
+| Feature | Description |
+|---------|-------------|
+| **📄⚡ B5-ParallelDocumentProcessor** | Batch PDF processing with parallel workers (NEW) |
+| **🚀 High-throughput Processing** | Process 50-500 PDFs concurrently without memory overflow |
+| **🔄 Fault Tolerance** | Automatic retry logic for failed extractions |
+
+### What Was Added in v6.1
+
+| Feature | Description |
+|---------|-------------|
+| **✨ Humanization Pipeline** | Transform AI-generated text to natural academic prose |
+| **🔍 G5-AcademicStyleAuditor** | Detect 24 categories of AI writing patterns |
+| **✨ G6-AcademicStyleHumanizer** | Transform patterns while preserving citations & statistics |
+| **✅ F5-HumanizationVerifier** | Verify transformation integrity |
+| **📋 Ethics Framework** | AI writing disclosure guidelines |
+
+### Humanization Quick Start
+
+```
+"Check AI patterns in my draft"    → G5 analysis
+"Humanize my abstract"             → Full pipeline (balanced mode)
+"Humanize (conservative)"          → For journal submissions
+"Export with humanization"         → Pipeline before Word export
+```
+
+**3 Transformation Modes**:
+- **Conservative**: High-risk patterns only (5-15% text change)
+- **Balanced**: Recommended default (15-30% text change)
+- **Aggressive**: All patterns (30-50% text change)
+
+### What's in v6.0
 
 | Feature | Description |
 |---------|-------------|
 | **🔴 Mandatory Checkpoints** | AI STOPS and WAITS at critical decision points |
-| **33 Specialized Agents** | Expanded from 27 to 33 agents with category-based naming (A1-H2) |
+| **36 Specialized Agents** | 33 agents + 3 new humanization agents (A1-H2, F5, G5-G6) |
 | **Human-Centered Design** | Every major decision requires explicit human approval |
 | **Clean Architecture** | Simplified folder structure under `.claude/` |
 
-### What Was Removed
+### What Was Removed (v6.0)
 
 | Removed | Reason |
 |---------|--------|
@@ -117,7 +150,7 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 
 ---
 
-## 🏗️ Architecture (33 Agents in 8 Categories)
+## 🏗️ Architecture (37 Agents in 8 Categories)
 
 ### Category A: Foundation (6 Agents)
 | Agent | Model | Purpose |
@@ -129,13 +162,14 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 | A5-paradigm-worldview-advisor | Opus | Quant/qual/mixed guidance |
 | A6-conceptual-framework-visualizer | Sonnet | Visual framework design |
 
-### Category B: Evidence (4 Agents)
+### Category B: Evidence (5 Agents)
 | Agent | Model | Purpose |
 |-------|-------|---------|
 | B1-systematic-literature-scout | Sonnet | PRISMA/qualitative search |
 | B2-evidence-quality-appraiser | Sonnet | RoB, GRADE assessment |
 | B3-effect-size-extractor | Haiku | Effect size calculations |
 | B4-research-radar | Haiku | Trend monitoring |
+| **B5-parallel-document-processor** 🆕 | Opus | Batch PDF processing with parallel workers |
 
 ### Category C: Design (4 Agents)
 | Agent | Model | Purpose |
@@ -162,21 +196,24 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 | E4-analysis-code-generator | Haiku | R/Python/NVivo code |
 | E5-sensitivity-analysis-designer | Sonnet | Robustness checks |
 
-### Category F: Quality (4 Agents)
+### Category F: Quality (5 Agents)
 | Agent | Model | Purpose |
 |-------|-------|---------|
 | F1-internal-consistency-checker | Haiku | Internal validity |
 | F2-checklist-manager | Haiku | PRISMA/CONSORT/COREQ |
 | F3-reproducibility-auditor | Sonnet | Open Science |
 | F4-bias-trustworthiness-detector | Sonnet | Bias detection |
+| **F5-humanization-verifier** 🆕 | Haiku | Transformation verification |
 
-### Category G: Communication (4 Agents)
+### Category G: Communication (6 Agents)
 | Agent | Model | Purpose |
 |-------|-------|---------|
 | G1-journal-matcher | Sonnet | Target journal selection |
 | G2-academic-communicator | Sonnet | Audience adaptation |
 | G3-peer-review-strategist | Opus | Review response |
 | G4-preregistration-composer | Sonnet | OSF/AsPredicted |
+| **G5-academic-style-auditor** 🆕 | Sonnet | AI pattern detection (24 categories) |
+| **G6-academic-style-humanizer** 🆕 | Opus | Pattern transformation |
 
 ### Category H: Specialized (2 Agents)
 | Agent | Model | Purpose |
@@ -251,9 +288,14 @@ Mixed: "메타분석을 하려는데, can you help?"
 | Document | Description |
 |----------|-------------|
 | [CLAUDE.md](CLAUDE.md) | Full system documentation |
-| [AGENTS.md](AGENTS.md) | 33 agents detailed reference |
+| [AGENTS.md](AGENTS.md) | 37 agents detailed reference |
+| [**Agent Orchestration Guide**](docs/AGENT-ORCHESTRATION-GUIDE.md) 🆕 | Comprehensive multi-agent pipelines (EN) |
+| [**에이전트 오케스트레이션 가이드**](docs/AGENT-ORCHESTRATION-GUIDE-ko.md) 🆕 | 종합 멀티에이전트 파이프라인 (KO) |
+| [**B5 Parallel Processing**](docs/B5-PARALLEL-PROCESSING.md) 🆕 | v6.2 parallel document processing |
 | [Quick Start](docs/QUICKSTART.md) | Get started in 5 minutes |
 | [VS Methodology](docs/VS-METHODOLOGY.md) | Deep dive into Verbalized Sampling |
+| [Humanization Pipeline](docs/v6.1.0-humanization-pipeline.md) | v6.1 humanization documentation |
+| [CHANGELOG](CHANGELOG.md) | Version history |
 
 ---
 
@@ -278,9 +320,9 @@ MIT License - see [LICENSE](LICENSE) for details.
   author = {You, Hosung},
   title = {Diverga: Beyond Modal AI Research Assistant},
   year = {2026},
-  version = {6.0.1},
+  version = {6.2.0},
   url = {https://github.com/HosungYou/Diverga},
-  note = {33 agents with VS Methodology and Human-Centered Design. Prevents mode collapse through Verbalized Sampling (arXiv:2510.01171)}
+  note = {37 agents with VS Methodology, Human-Centered Design, Humanization Pipeline, and Parallel Document Processing. Prevents mode collapse through Verbalized Sampling (arXiv:2510.01171)}
 }
 ```
 

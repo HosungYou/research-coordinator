@@ -2,6 +2,160 @@
 
 All notable changes to Diverga (formerly Research Coordinator) will be documented in this file.
 
+---
+
+## [6.1.0] - 2025-01-26 (Human-Centered Edition + Humanization Pipeline)
+
+### Overview
+
+Diverga v6.1.0 introduces the **Humanization Pipeline**, a comprehensive system for transforming AI-generated academic text into natural, human-sounding prose while preserving scholarly integrity.
+
+**Core Theme**: "Humanization improves expression, not deception"
+
+### New Agents (+3)
+
+| Agent ID | Name | Model | Purpose |
+|----------|------|-------|---------|
+| G5 | Academic Style Auditor | Sonnet | AI pattern detection (24 categories) |
+| G6 | Academic Style Humanizer | Opus | Pattern transformation |
+| F5 | Humanization Verifier | Haiku | Quality verification |
+
+**Total Agents**: 33 → 36
+
+### New Features
+
+#### Humanization Pipeline
+
+```
+Content Generation → G5 Analysis → Checkpoint → G6 Transform → F5 Verify → Export
+```
+
+- **24 AI Pattern Categories**: Content (C1-C6), Language (L1-L6), Style (S1-S6), Communication (M1-M3), Hedging (H1-H3), Academic (A1-A6)
+- **3 Transformation Modes**: Conservative (journal submissions), Balanced (default), Aggressive (informal)
+- **Preservation Rules**: 100% citation and statistics integrity
+
+#### New Checkpoints
+
+| Checkpoint | Level | Trigger |
+|------------|-------|---------|
+| CP_HUMANIZATION_REVIEW | 🟠 Recommended | After G5 analysis |
+| CP_HUMANIZATION_VERIFY | 🟡 Optional | After G6 transformation |
+
+#### Ethics Framework
+
+- AI writing ethics guidelines
+- Disclosure templates (journal, conference, thesis)
+- Red lines for prohibited uses
+
+### New Files Created
+
+| File | Purpose |
+|------|---------|
+| `G5-academic-style-auditor/SKILL.md` | Main skill definition |
+| `G5-academic-style-auditor/patterns/*.yaml` | Pattern definitions (4 files) |
+| `G5-academic-style-auditor/detection-rules.md` | Detection algorithm |
+| `G6-academic-style-humanizer/SKILL.md` | Main skill definition |
+| `G6-academic-style-humanizer/transformations/*.yaml` | Mode definitions (3 files) |
+| `G6-academic-style-humanizer/academic-exceptions.md` | Preservation rules |
+| `F5-humanization-verifier/SKILL.md` | Verification skill |
+| `research-coordinator/core/humanization-pipeline.md` | Pipeline architecture |
+| `research-coordinator/ethics/ai-writing-ethics.md` | Ethics framework |
+| `docs/v6.1.0-humanization-pipeline.md` | Comprehensive documentation |
+
+### Modified Files
+
+| File | Changes |
+|------|---------|
+| `CLAUDE.md` | v6.1.0, 36 agents, Humanization Pipeline section |
+| `agent-registry.yaml` | Added G5, G6, F5; updated model routing and checkpoints |
+| `G2-academic-communicator/SKILL.md` | Humanization integration |
+| `G3-peer-review-strategist/SKILL.md` | Humanization for response letters |
+| `integration-hub.md` | Humanization tools section |
+
+### Model Routing (Updated)
+
+| Tier | Model | Agents |
+|------|-------|--------|
+| HIGH | Opus | A2, A5, B1, C2, C3, E1, E2, E3, F4, **G6**, H1 |
+| MEDIUM | Sonnet | A1, A3, A4, B2, B3, B4, C1, C4, D1, D2, D3, D4, E4, G3, **G5**, H2 |
+| LOW | Haiku | F1, F2, F3, **F5**, G1, G2, G4 |
+
+### Usage
+
+```
+"Check AI patterns"           → G5 analysis only
+"Humanize my draft"           → Full pipeline (balanced)
+"Humanize (conservative)"     → Minimal changes
+"Export with humanization"    → Pipeline before export
+```
+
+### No Breaking Changes
+
+Existing workflows continue unchanged. Humanization is opt-in.
+
+---
+
+## [6.0.1] - 2025-01-25 (Human-Centered Edition - Restructure)
+
+### Overview
+
+Agent restructuring with category-based naming convention (A1-H2).
+
+### Changes
+
+- Agent IDs standardized: A1-A5, B1-B4, C1-C4, D1-D4, E1-E4, F1-F4, G1-G4, H1-H2
+- Legacy numeric IDs (01-21) deprecated but retained for compatibility
+- 33 total agents across 8 categories
+
+---
+
+## [6.0.0] - 2025-01-25 (Human-Centered Edition - Clean Slate)
+
+### Overview
+
+**Clean Slate Release** - Removed autonomous modes to enforce mandatory human checkpoints.
+
+**Core Theme**: "Human decisions remain with humans. AI handles what's beyond human scope."
+
+### Removed
+
+| Component | Reason |
+|-----------|--------|
+| ❌ Sisyphus Protocol | Bypassed human checkpoints |
+| ❌ Iron Law of Continuation | "OR" made checkpoints optional |
+| ❌ ralph/ultrawork/autopilot/ecomode | Enabled checkpoint bypass |
+
+### Kept
+
+| Component | Purpose |
+|-----------|---------|
+| ✅ Model Routing | haiku/sonnet/opus selection |
+| ✅ VS Methodology | Creative alternatives, T-Scores |
+| ✅ Paradigm Detection | Auto-detection with confirmation |
+| ✅ Human Checkpoints | Now MANDATORY |
+
+### Checkpoint Behavior (Strict)
+
+```
+When AI reaches a checkpoint:
+1. STOP immediately
+2. Present options with VS alternatives
+3. WAIT for explicit human approval
+4. DO NOT proceed until approval received
+5. DO NOT assume approval based on context
+
+❌ NEVER: "진행하겠습니다" without asking
+✅ ALWAYS: "어떤 방향으로 진행하시겠습니까?"
+```
+
+### Breaking Changes
+
+- Autonomous execution modes no longer available
+- All critical decisions require explicit user approval
+- Workflow continues only after checkpoint approval
+
+---
+
 ## [5.0.0] - 2025-01-25 (Sisyphus Edition)
 
 ### Overview

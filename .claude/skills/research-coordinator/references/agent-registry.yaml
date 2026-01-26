@@ -1,19 +1,21 @@
-# Agent Registry - Research Coordinator v5.0.0
+# Agent Registry - Research Coordinator v6.2.0
 # Centralized agent capabilities, schemas, and metadata
-# 27 agents across 8 categories (A-H) with expanded qualitative/mixed methods support
+# 37 agents across 8 categories (A-H) with expanded qualitative/mixed methods support
+# v6.2 New: Parallel Document Processing agent (B5)
+# v6.1: Humanization Pipeline agents (G5, G6, F5)
 
-version: "5.0.0"
-last_updated: "2025-01-25"
+version: "6.2.0"
+last_updated: "2026-01-26"
 
 # =============================================================================
 # REGISTRY METADATA
 # =============================================================================
 
 registry:
-  description: "Centralized registry for 27 research agents with VS methodology"
-  schema_version: "2.0.0"
+  description: "Centralized registry for 37 research agents with VS methodology"
+  schema_version: "2.2.0"
   contract_reference: "agent-contract-schema.md"
-  total_agents: 27
+  total_agents: 37
   categories: 8
 
 # =============================================================================
@@ -28,11 +30,11 @@ v5_config:
 
   paradigm_support:
     quantitative:
-      primary_agents: ["A1", "A2", "A3", "A4", "C1", "C4", "D1", "D4", "E1", "E4", "F1", "F2", "F3", "G1", "G2", "G3", "G4"]
+      primary_agents: ["A1", "A2", "A3", "A4", "B5", "C1", "C4", "D1", "D4", "E1", "E4", "F1", "F2", "F3", "G1", "G2", "G3", "G4"]
     qualitative:
-      primary_agents: ["A1", "A2", "A5", "C2", "D1", "D2", "D3", "E2", "F4", "G1", "G2", "G3", "H1", "H2"]
+      primary_agents: ["A1", "A2", "A5", "B5", "C2", "D1", "D2", "D3", "E2", "F4", "G1", "G2", "G3", "H1", "H2"]
     mixed:
-      primary_agents: ["A1", "A2", "A5", "C3", "D1", "D2", "D4", "E1", "E2", "E3", "F4", "G1", "G2", "G3", "G4", "H2"]
+      primary_agents: ["A1", "A2", "A5", "B5", "C3", "D1", "D2", "D4", "E1", "E2", "E3", "F4", "G1", "G2", "G3", "G4", "H2"]
 
   upgrade_levels:
     FULL:
@@ -522,6 +524,78 @@ agents:
       dynamic_t_score: true
       creativity_modules: ["forced-analogy", "semantic-distance"]
       checkpoints: ["CP-INIT-001", "CP-INIT-002", "CP-VS-001"]
+
+  "B5-parallel-document-processor":
+    name: "Parallel Document Processor"
+    icon: "📄⚡"
+    category: "B - Literature & Evidence"
+    tier: "HIGH"
+    model: "opus"
+    legacy_id: null
+    vs_level: "Enhanced"
+    vs_phases: [0, 1, 4]
+
+    capabilities:
+      - "Batch PDF processing with parallel workers"
+      - "Large document collection handling"
+      - "Context-safe extraction (prevents memory overflow)"
+      - "Intelligent workload distribution"
+      - "Fault-tolerant processing with retry logic"
+      - "Result aggregation from multiple workers"
+      - "Progress tracking and status reporting"
+
+    input_schema:
+      required:
+        - pdf_directory: "string"
+        - extraction_task: "enum[full_text, abstract, metadata, tables, citations, specific_sections]"
+      optional:
+        - max_workers: "int (default: 5, max: 10)"
+        - batch_size: "int (default: 10)"
+        - output_format: "enum[json, yaml, csv, markdown]"
+        - specific_fields: "list[string]"
+        - retry_failed: "bool"
+        - file_filter: "string"
+
+    output_schema:
+      main_output:
+        summary:
+          total_files: "int"
+          successful: "int"
+          failed: "int"
+          processing_time: "string"
+        results: "list[object]"
+        aggregated_data: "object"
+
+    triggers:
+      keywords: ["batch PDF", "parallel reading", "multiple PDFs", "병렬 처리", "large document", "큰 파일", "대용량 PDF"]
+      context: ["systematic review", "meta-analysis", "literature extraction", "bulk processing"]
+
+    paradigm_affinity: ["quantitative", "qualitative", "mixed"]
+
+    dependencies:
+      upstream: ["B1-systematic-literature-scout"]
+      downstream: ["B2-evidence-quality-appraiser", "B3-effect-size-extractor", "E1-quantitative-analysis-guide"]
+      parallel_compatible: ["B4-research-radar"]
+
+    worker_configuration:
+      light:
+        model: "haiku"
+        max_files_per_batch: 20
+        use_case: "metadata, abstracts"
+      standard:
+        model: "sonnet"
+        max_files_per_batch: 10
+        use_case: "full text, tables"
+      heavy:
+        model: "opus"
+        max_files_per_batch: 5
+        use_case: "complex extraction, analysis"
+
+    upgrade_level: "ENHANCED"
+    v5_integration:
+      dynamic_t_score: false
+      creativity_modules: []
+      checkpoints: ["CP-INIT-001", "CP-PROGRESS-001", "CP-COMPLETE-001"]
 
 # =============================================================================
 # CATEGORY C: STUDY DESIGN (4 agents)
@@ -1380,8 +1454,60 @@ agents:
       creativity_modules: ["forced-analogy", "iterative-loop", "semantic-distance", "temporal-reframing", "community-simulation"]
       checkpoints: ["CP-BIAS-001", "CP-TRUST-001", "CP-VS-001", "CP-VS-002", "CP-VS-003"]
 
+  "F5-humanization-verifier":
+    name: "Humanization Verifier"
+    icon: "✅"
+    category: "F - Quality & Validation"
+    tier: "LOW"
+    model: "haiku"
+    legacy_id: null
+    vs_level: "Light"
+    vs_phases: [0, 1, 4]
+
+    capabilities:
+      - "Citation integrity verification"
+      - "Statistical accuracy checking"
+      - "Meaning preservation validation"
+      - "AI pattern reduction measurement"
+      - "Academic tone consistency"
+      - "Transformation quality assurance"
+
+    input_schema:
+      required:
+        - original_text: "string"
+        - humanized_text: "string"
+      optional:
+        - transformation_log: "object"
+        - section_type: "enum[abstract, methods, results, discussion]"
+        - strictness: "enum[low, medium, high]"
+
+    output_schema:
+      main_output:
+        citation_check: "object"
+        statistical_check: "object"
+        meaning_check: "object"
+        ai_reduction_check: "object"
+        tone_check: "object"
+        overall_verdict: "enum[approved, review, rejected]"
+
+    triggers:
+      keywords: ["verify humanization", "check transformation", "validate changes", "humanization quality"]
+      context: ["humanization pipeline", "quality verification"]
+
+    paradigm_affinity: ["quantitative", "qualitative", "mixed"]
+
+    dependencies:
+      requires: ["G6-academic-style-humanizer"]
+      parallel_compatible: ["F1-internal-consistency-checker"]
+
+    upgrade_level: "LIGHT"
+    v6_integration:
+      dynamic_t_score: false
+      creativity_modules: []
+      checkpoints: ["CP_HUMANIZATION_VERIFY"]
+
 # =============================================================================
-# CATEGORY G: PUBLICATION & COMMUNICATION (4 agents)
+# CATEGORY G: PUBLICATION & COMMUNICATION (6 agents)
 # =============================================================================
 
   "G1-journal-matcher":
@@ -1513,8 +1639,125 @@ agents:
       creativity_modules: []
       checkpoints: ["CP-INIT-001"]
 
+  "G5-academic-style-auditor":
+    name: "Academic Style Auditor"
+    icon: "🔍"
+    category: "G - Publication & Communication"
+    tier: "MEDIUM"
+    model: "sonnet"
+    legacy_id: null
+    vs_level: "Light"
+    vs_phases: [0, 1, 4]
+
+    capabilities:
+      - "AI pattern detection (24 categories)"
+      - "AI probability scoring"
+      - "Pattern density analysis"
+      - "Risk classification (high/medium/low)"
+      - "Academic writing style assessment"
+      - "Vocabulary tier analysis"
+      - "Section-specific pattern detection"
+
+    input_schema:
+      required:
+        - text: "string"
+      optional:
+        - section_type: "enum[abstract, introduction, methods, results, discussion, conclusion]"
+        - analysis_depth: "enum[quick, standard, deep]"
+        - sensitivity: "enum[low, medium, high]"
+
+    output_schema:
+      main_output:
+        ai_probability: "float"
+        pattern_count: "integer"
+        patterns_by_category: "object"
+        patterns_by_risk: "object"
+        recommendations: "list[string]"
+        humanization_recommended: "boolean"
+
+    t_score_domains:
+      - "AI writing pattern categories"
+      - "Academic style conventions"
+      - "Detection algorithm patterns"
+
+    triggers:
+      keywords: ["AI detection", "check AI patterns", "style audit", "humanization check", "AI probability"]
+      context: ["manuscript preparation", "writing quality", "pre-submission"]
+
+    paradigm_affinity: ["quantitative", "qualitative", "mixed"]
+
+    dependencies:
+      sequential_next: ["G6-academic-style-humanizer"]
+      parallel_compatible: ["G2-academic-communicator"]
+
+    upgrade_level: "LIGHT"
+    v6_integration:
+      dynamic_t_score: false
+      creativity_modules: []
+      checkpoints: ["CP_HUMANIZATION_REVIEW"]
+
+  "G6-academic-style-humanizer":
+    name: "Academic Style Humanizer"
+    icon: "✨"
+    category: "G - Publication & Communication"
+    tier: "HIGH"
+    model: "opus"
+    legacy_id: null
+    vs_level: "Enhanced"
+    vs_phases: [0, 1, 2, 4]
+
+    capabilities:
+      - "AI pattern transformation"
+      - "Citation preservation"
+      - "Statistical accuracy preservation"
+      - "Meaning-preserving rewriting"
+      - "Academic tone maintenance"
+      - "Three transformation modes (conservative/balanced/aggressive)"
+      - "Section-specific transformation rules"
+
+    input_schema:
+      required:
+        - text: "string"
+        - g5_analysis: "object"
+      optional:
+        - mode: "enum[conservative, balanced, aggressive]"
+        - section_type: "enum[abstract, introduction, methods, results, discussion, conclusion]"
+        - preserve_technical_terms: "list[string]"
+
+    output_schema:
+      main_output:
+        humanized_text: "string"
+        transformation_log: "list[Transformation]"
+        patterns_addressed: "integer"
+        ai_probability_reduction: "float"
+        preservation_report: "object"
+
+    t_score_domains:
+      - "Natural academic writing patterns"
+      - "Transformation strategies"
+      - "Preservation rules"
+
+    triggers:
+      keywords: ["humanize", "transform AI text", "natural writing", "humanization", "reduce AI patterns"]
+      context: ["manuscript preparation", "writing improvement", "pre-submission"]
+
+    paradigm_affinity: ["quantitative", "qualitative", "mixed"]
+
+    dependencies:
+      requires: ["G5-academic-style-auditor"]
+      sequential_next: ["F5-humanization-verifier"]
+      parallel_compatible: []
+
+    human_checkpoint: "CP_HUMANIZATION_REVIEW"
+
+    upgrade_level: "ENHANCED"
+    v6_integration:
+      dynamic_t_score: true
+      creativity_modules: ["semantic-distance"]
+      checkpoints: ["CP_HUMANIZATION_REVIEW", "CP_HUMANIZATION_VERIFY"]
+
 # =============================================================================
-# CATEGORY H: SPECIALIZED APPROACHES (2 agents) - NEW CATEGORY
+# CATEGORY H: SPECIALIZED APPROACHES (2 agents)
 # =============================================================================
 
   "H1-ethnographic-research-advisor":
@@ -1938,18 +2181,18 @@ parallel_execution_groups:
 model_routing:
   HIGH:
     model: "opus"
-    agents: ["A2", "A5", "B1", "C2", "C3", "E1", "E2", "E3", "F4", "H1"]
-    description: "Complex reasoning, strategic decisions, deep analysis"
+    agents: ["A2", "A5", "B1", "C2", "C3", "E1", "E2", "E3", "F4", "G6", "H1"]
+    description: "Complex reasoning, strategic decisions, deep analysis, humanization transformation"
 
   MEDIUM:
     model: "sonnet"
-    agents: ["A1", "A3", "A4", "B2", "B3", "B4", "C1", "C4", "D1", "D2", "D3", "D4", "E4", "G3", "H2"]
-    description: "Standard analytical tasks, moderate complexity"
+    agents: ["A1", "A3", "A4", "B2", "B3", "B4", "C1", "C4", "D1", "D2", "D3", "D4", "E4", "G3", "G5", "H2"]
+    description: "Standard analytical tasks, moderate complexity, AI pattern detection"
 
   LOW:
     model: "haiku"
-    agents: ["F1", "F2", "F3", "G1", "G2", "G4"]
-    description: "Simple lookups, checklist management, basic tasks"
+    agents: ["F1", "F2", "F3", "F5", "G1", "G2", "G4"]
+    description: "Simple lookups, checklist management, basic tasks, verification"
 
 # =============================================================================
 # HUMAN CHECKPOINTS
@@ -1982,10 +2225,18 @@ human_checkpoints:
       description: "Review recommended for interview protocols"
       applicable_agents: ["D2"]
 
+    - id: "CP_HUMANIZATION_REVIEW"
+      description: "Review recommended after G5 analysis, before G6 transformation"
+      applicable_agents: ["G5", "G6"]
+
   optional:
     - id: "CP_VISUALIZATION_PREFERENCE"
       description: "Optional review for visualization choices"
       applicable_agents: ["G2"]
+
+    - id: "CP_HUMANIZATION_VERIFY"
+      description: "Optional verification of humanization transformation"
+      applicable_agents: ["F5"]
 
 # =============================================================================
 # EVALUATION METRICS

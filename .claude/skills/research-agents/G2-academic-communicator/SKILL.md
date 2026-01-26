@@ -363,11 +363,91 @@ Tasks to perform:
 - **Timeliness**: Connect to current issues
 - **Surprise**: Results defy expectations
 
+## Humanization Integration (v6.1)
+
+### Automatic AI Pattern Check
+
+After G2 generates any content, the Humanization Pipeline can be invoked:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  📝 Content Generated                                       │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  G2 Output: [Abstract / Summary / Press Release / etc.]    │
+│                                                             │
+│  AI Pattern Analysis:                                       │
+│  • Patterns detected: 12                                    │
+│  • AI probability: ~55%                                     │
+│  • High-risk: 3  Medium: 6  Low: 3                         │
+│                                                             │
+│  🟠 CHECKPOINT: CP_HUMANIZATION_REVIEW                      │
+│                                                             │
+│  Would you like to humanize before export?                  │
+│                                                             │
+│  [A] Humanize (Conservative)                                │
+│  [B] Humanize (Balanced) ⭐ Recommended                     │
+│  [C] Humanize (Aggressive)                                  │
+│  [D] View detailed report                                   │
+│  [E] Keep original                                          │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Commands with Humanization
+
+```
+"Generate abstract with humanization"
+→ G2 generates → G5 analyzes → Checkpoint → G6 transforms
+
+"Create summary (humanize: balanced)"
+→ Specifies mode, skips mode selection
+
+"Write press release (skip humanization)"
+→ G2 generates → Direct output (no pipeline)
+
+"Generate Twitter thread (humanize: aggressive)"
+→ Social media benefits from aggressive mode
+```
+
+### Output-Specific Recommendations
+
+| Output Type | Recommended Mode | Rationale |
+|-------------|------------------|-----------|
+| Academic Abstract | Conservative | Preserve scholarly precision |
+| Plain Language Summary | Balanced | Natural but accurate |
+| Press Release | Balanced | Professional yet accessible |
+| Twitter/X Thread | Aggressive | Maximum naturalness |
+| LinkedIn Post | Balanced | Professional tone |
+| Elevator Pitch | Aggressive | Conversational style |
+
+### Workflow Integration
+
+```yaml
+g2_humanization_workflow:
+  trigger: "After G2 output generation"
+  default: "Show checkpoint"
+
+  options:
+    auto_humanize: false      # Require user approval
+    default_mode: "balanced"
+    skip_if_low_ai: true      # Skip if AI probability < 25%
+
+  preservation:
+    - "All research findings"
+    - "All citations"
+    - "Key messages"
+    - "Target audience adaptations"
+```
+
 ## Related Agents
 
-- **17-journal-matcher**: Select submission journal
-- **02-theoretical-framework-architect**: Clarify theoretical contribution
-- **19-peer-review-strategist**: Respond to reviewers
+- **G1-JournalMatcher**: Select submission journal
+- **A2-TheoreticalFrameworkArchitect**: Clarify theoretical contribution
+- **G3-PeerReviewStrategist**: Respond to reviewers
+- **G5-AcademicStyleAuditor**: Analyze AI patterns in G2 output
+- **G6-AcademicStyleHumanizer**: Transform G2 output
+- **F5-HumanizationVerifier**: Verify transformation quality
 
 ## References
 

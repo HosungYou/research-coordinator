@@ -507,3 +507,94 @@ integrations:
       - analyze.R
       - process.py
 ```
+
+---
+
+## Humanization Tools (v6.1)
+
+### Overview
+
+The Humanization Pipeline helps transform AI-generated academic text into natural, human-sounding prose while maintaining scholarly integrity.
+
+### Available Tools
+
+| Tool | Purpose | Setup |
+|------|---------|-------|
+| G5-AcademicStyleAuditor | AI pattern detection | Built-in |
+| G6-AcademicStyleHumanizer | Pattern transformation | Built-in |
+| F5-HumanizationVerifier | Quality verification | Built-in |
+
+### Usage Commands
+
+```
+"Check AI patterns in my draft"
+→ Runs G5 analysis, shows pattern report
+
+"Humanize my abstract"
+→ Full pipeline: G5 → Checkpoint → G6 → F5
+
+"Humanize (conservative)"
+→ Minimal changes, high-risk patterns only
+
+"Humanize (balanced)"
+→ Recommended for most academic writing
+
+"Humanize (aggressive)"
+→ Maximum naturalness, for informal writing
+
+"Export with humanization"
+→ Run pipeline before Word/PDF export
+```
+
+### Configuration
+
+```yaml
+# .research/humanization-config.yaml
+
+humanization:
+  enabled: true
+  default_mode: "balanced"
+
+  auto_check: true          # Auto-run G5 on exports
+  show_checkpoint: true     # Show humanization options
+
+  thresholds:
+    skip_if_below: 20       # Skip if AI probability < 20%
+    recommend_if_above: 40  # Recommend if > 40%
+
+  reports:
+    include_audit_trail: true
+    save_original: true
+```
+
+### When to Use
+
+| Situation | Recommendation |
+|-----------|----------------|
+| Journal submission | Conservative mode |
+| Conference paper | Balanced mode |
+| Response letter | Balanced mode |
+| Blog/social media | Aggressive mode |
+| AI probability < 25% | Skip (likely fine) |
+| AI probability > 60% | Strongly recommend |
+
+### Workflow Integration
+
+The humanization pipeline integrates with:
+- **G2-AcademicCommunicator**: Post-generation humanization
+- **G3-PeerReviewStrategist**: Response letter humanization
+- **Auto-Documentation**: Pre-export humanization
+- **Word Export**: Optional humanization before export
+
+### Ethical Considerations
+
+Humanization helps express ideas naturally—it does not:
+- Make AI use "undetectable" (detection will improve)
+- Replace the need for AI disclosure
+- Substitute for original research
+
+Researchers should follow institutional and journal AI use policies.
+
+### Pipeline Details
+
+See: `humanization-pipeline.md` for full architecture

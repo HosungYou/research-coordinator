@@ -386,11 +386,82 @@ Tasks to perform:
 - "This change is highlighted in [yellow/red] in the revised manuscript."
 - "Please see the updated [Table X/Figure Y]."
 
+## Humanization Integration (v6.1)
+
+### Response Letter Humanization
+
+Response letters benefit from humanization while preserving professional conventions:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  📝 Response Letter Generated                               │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Points addressed: 12 (R1: 5, R2: 4, R3: 3)                │
+│                                                             │
+│  AI Pattern Analysis:                                       │
+│  • Patterns detected: 8                                     │
+│  • AI probability: ~42%                                     │
+│  • Note: Professional gratitude phrases preserved           │
+│                                                             │
+│  🟠 CHECKPOINT: CP_HUMANIZATION_REVIEW                      │
+│                                                             │
+│  [A] Humanize (Conservative)                                │
+│  [B] Humanize (Balanced) ⭐ Recommended                     │
+│  [C] View report   [D] Keep original                        │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Special Preservation Rules for Response Letters
+
+| Element | Preservation Rule |
+|---------|-------------------|
+| "We thank the reviewer" | Always preserve |
+| "This is an excellent point" | Preserve or slightly adjust |
+| Reviewer reference numbers | Always preserve (R1.1, R2.3) |
+| Point-by-point structure | Always preserve |
+| Page/line references | Always preserve |
+| Technical corrections | Always preserve |
+
+### What Gets Transformed
+
+| Pattern | Transformation Example |
+|---------|----------------------|
+| L1 AI vocabulary | "delve into" → "address" |
+| L2 Copula avoidance | "serves as evidence" → "is evidence" |
+| H2 Excessive hedging | "could potentially" → "may" |
+| C3 Superficial -ing | "highlighting the importance" → direct statement |
+
+### Commands
+
+```
+"Write response letter with humanization"
+→ G3 generates → Checkpoint → G6 transforms (balanced)
+
+"Generate response (skip humanization)"
+→ G3 generates → Direct output
+
+"Humanize my response letter (conservative)"
+→ For existing response, minimal changes
+```
+
+### Best Practice: Response Letters
+
+Response letters should feel professional but authentic. The **balanced mode** is recommended because:
+- Preserves appropriate professional gratitude
+- Removes obvious AI patterns
+- Maintains structured format
+- Keeps technical precision
+
 ## Related Agents
 
-- **03-devils-advocate**: Predict criticism beforehand
-- **13-internal-consistency-checker**: Check consistency after revision
-- **17-journal-matcher**: Alternative journals after rejection
+- **A3-DevilsAdvocate**: Predict criticism beforehand
+- **F1-InternalConsistencyChecker**: Check consistency after revision
+- **G1-JournalMatcher**: Alternative journals after rejection
+- **G5-AcademicStyleAuditor**: Analyze AI patterns
+- **G6-AcademicStyleHumanizer**: Transform response letters
+- **F5-HumanizationVerifier**: Verify transformation quality
 
 ## References
 
