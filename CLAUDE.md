@@ -108,7 +108,7 @@ The system will:
 | Project State | Context persistence | `.research/project-state.yaml` |
 | Decision Log | Human decisions | `.research/decision-log.yaml` |
 | Research Coordinator | Main skill definition | `.claude/skills/research-coordinator/SKILL.md` |
-| Orchestrator | Agent management | `.omc/skills/research-orchestrator/SKILL.md` |
+| Orchestrator | Agent management | `.claude/skills/research-orchestrator/SKILL.md` |
 
 ---
 
