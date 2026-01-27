@@ -4,6 +4,94 @@ All notable changes to Diverga (formerly Research Coordinator) will be documente
 
 ---
 
+## [6.4.0] - 2026-01-27 (Plugin Marketplace Edition)
+
+### Overview
+
+Diverga v6.4.0 introduces **Plugin Marketplace Registration**, enabling installation via Claude Code's plugin system with auto-trigger agent dispatch.
+
+**Core Theme**: "Install once, auto-execute everywhere"
+
+### Installation (NEW)
+
+```bash
+# Step 1: Add to marketplace
+/plugin marketplace add https://github.com/HosungYou/Diverga
+
+# Step 2: Install
+/plugin install diverga
+
+# Step 3: Setup
+/diverga:setup
+```
+
+### New Skills
+
+| Skill | Command | Description |
+|-------|---------|-------------|
+| Setup | `/diverga:setup` | Interactive configuration wizard |
+| Help | `/diverga:help` | Comprehensive 40-agent reference |
+| Meta-Analysis | `/diverga:meta-analysis` | C5+C6+C7 workflow |
+| PDF Extract | `/diverga:pdf-extract` | C6 data extraction |
+
+### New Files
+
+| File | Purpose |
+|------|---------|
+| `PLUGIN.md` | Plugin marketplace definition |
+| `.claude/skills/setup/SKILL.md` | Setup wizard implementation |
+| `.claude/skills/help/SKILL.md` | Help skill implementation |
+
+### Auto-Trigger Agent Dispatch
+
+All 40 agents now have keyword-based auto-trigger patterns in CLAUDE.md:
+
+| Example Keywords | Agent Triggered |
+|------------------|-----------------|
+| "research question", "RQ", "연구 질문" | diverga:a1 |
+| "meta-analysis", "메타분석" | diverga:c5 |
+| "data extraction", "PDF extract" | diverga:c6 |
+| "systematic review", "PRISMA" | diverga:b1 |
+| "qualitative", "interview" | diverga:c2 |
+
+### Task Tool Invocation
+
+Agents invoked via Task tool with `subagent_type` parameter:
+
+```python
+Task(
+    subagent_type="diverga:c5",
+    model="opus",
+    description="Meta-analysis orchestration",
+    prompt="Validate the extracted effect sizes..."
+)
+```
+
+### Model Routing Reference
+
+| Tier | Model | Agents |
+|------|-------|--------|
+| HIGH | opus | A1,A2,A3,A5,B5,C1,C2,C3,C5,D4,E1,E2,E3,G6,H1,H2 |
+| MEDIUM | sonnet | A4,A6,B1,B2,C4,C6,C7,D1,D2,E5,F3,F4,G1-G5 |
+| LOW | haiku | B3,B4,D3,E4,F1,F2,F5 |
+
+### Setup Wizard Flow
+
+1. **LLM API Selection**: Anthropic/OpenAI/Groq/Local
+2. **Human Checkpoints**: Enable/Disable mandatory stops
+3. **Research Paradigm**: Quantitative/Qualitative/Mixed/Auto
+4. **Language**: English/Korean/Auto
+
+### Configuration
+
+Generated config file: `~/.claude/plugins/diverga/config/diverga-config.json`
+
+### No Breaking Changes
+
+Existing workflows continue unchanged. Plugin installation is additive.
+
+---
+
 ## [6.3.0] - 2026-01-26 (Multi-Gate Validation Pipeline)
 
 ### Overview
