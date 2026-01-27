@@ -4,6 +4,93 @@ All notable changes to Diverga (formerly Research Coordinator) will be documente
 
 ---
 
+## [6.5.2] - 2026-01-27 (Structure Fix)
+
+### Overview
+
+Fixes critical issue where `/agents/` directory was not recognized by Claude Code Task tool. Root cause: explicit `skills` key in marketplace.json prevented automatic directory scanning.
+
+### Breaking Change
+
+**Directory Structure Changed:**
+```
+BEFORE (v6.5.1):
+├── .claude/skills/          # Skills location
+├── agents/                   # Agents location
+└── marketplace.json          # Had explicit skills[] array
+
+AFTER (v6.5.2):
+├── skills/                   # NEW: Skills at root level
+├── agents/                   # Agents location (unchanged)
+└── marketplace.json          # Simplified, no skills key
+```
+
+### Root Cause Analysis
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| `diverga:a1` not found in Task tool | `skills` key in marketplace.json | Removed `skills` key |
+| Agents not auto-scanned | Explicit skills registration | Follow oh-my-claudecode pattern |
+
+**Why This Happened:**
+- Claude Code's plugin system: If `skills` key is **explicitly defined**, it only loads those paths
+- oh-my-claudecode: No `skills` key → Claude Code auto-scans `/agents/` + `/skills/`
+- Diverga: Had `skills` key → Only skills loaded, `/agents/` ignored
+
+### Files Changed
+
+| File | Change |
+|------|--------|
+| `.claude-plugin/marketplace.json` | Removed `skills` array, simplified to oh-my-claudecode style |
+| `skills/` | NEW: Moved from `.claude/skills/` to root level |
+| `.claude/skills/` | DEPRECATED: Keep for backwards compatibility but not used |
+
+### marketplace.json Comparison
+
+**oh-my-claudecode (works):**
+```json
+{
+  "plugins": [{
+    "name": "oh-my-claudecode",
+    "source": "./"
+    // NO skills key → auto-scans /agents/ + /skills/
+  }]
+}
+```
+
+**Diverga v6.5.2 (fixed):**
+```json
+{
+  "plugins": [{
+    "name": "diverga",
+    "source": "./"
+    // NO skills key → auto-scans /agents/ + /skills/
+  }]
+}
+```
+
+### Reinstall Required
+
+```bash
+# Uninstall old version
+/plugin uninstall diverga
+
+# Reinstall from marketplace
+/plugin install diverga
+
+# Verify agents are available
+# Type: Task(subagent_type="diverga:a1", prompt="test")
+```
+
+### Verification
+
+After reinstall, these should work:
+- `Task(subagent_type="diverga:a1", ...)` → Research Question Refiner
+- `Task(subagent_type="diverga:a6", ...)` → Conceptual Framework Visualizer
+- `/diverga:research-coordinator` → Skill invocation
+
+---
+
 ## [6.5.1] - 2026-01-27 (Bugfix Release)
 
 ### Overview

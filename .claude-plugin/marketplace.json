@@ -1,91 +1,16 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "diverga",
+  "description": "40 specialized AI research agents with VS methodology - Human-centered checkpoints, creative alternatives, parallel execution",
   "owner": {
     "name": "Hosung You",
     "github": "HosungYou"
   },
-  "metadata": {
-    "description": "40 specialized AI research agents with VS-Research methodology (Verbalized Sampling) - Human-centered checkpoints, creative alternatives, meta-analysis system, parallel execution support",
-    "version": "6.5.0",
-    "keywords": [
-      "research",
-      "social-science",
-      "meta-analysis",
-      "systematic-review",
-      "academic-writing",
-      "verbalized-sampling",
-      "mode-collapse-prevention",
-      "human-centered",
-      "PRISMA",
-      "qualitative",
-      "quantitative",
-      "mixed-methods"
-    ],
-    "repository": "https://github.com/HosungYou/Diverga",
-    "license": "MIT",
-    "changelog": {
-      "6.5.0": "Independent Agent Runtime - Parallel execution via Task(subagent_type='diverga:a1'), TypeScript runtime, dynamic SKILL.md loading",
-      "6.4.0": "Plugin Marketplace Edition - /diverga:setup wizard, auto-trigger dispatch, 40 agents",
-      "6.3.0": "Meta-Analysis Agent System - C5/C6/C7 for Hedges' g calculation and validation",
-      "6.2.0": "Parallel Document Processing - B5 for batch PDF handling",
-      "6.1.0": "Humanization Pipeline - G5/G6/F5 for natural academic prose",
-      "6.0.0": "Human-Centered Edition - Mandatory checkpoints, removed autonomous modes"
-    }
-  },
   "plugins": [
     {
       "name": "diverga",
-      "description": "Complete research agent suite v6.5: 40 specialized agents across 8 categories (A-H) with VS methodology, human checkpoints, meta-analysis system, and parallel execution support via Task tool.",
-      "source": "./",
-      "strict": false,
-      "skills": [
-        "./.claude/skills/research-coordinator",
-        "./.claude/skills/research-orchestrator",
-        "./.claude/skills/setup",
-        "./.claude/skills/help",
-        "./.claude/skills/universal-ma-codebook",
-        "./.claude/skills/research-agents/A1-research-question-refiner",
-        "./.claude/skills/research-agents/A2-theoretical-framework-architect",
-        "./.claude/skills/research-agents/A3-devils-advocate",
-        "./.claude/skills/research-agents/A4-research-ethics-advisor",
-        "./.claude/skills/research-agents/A5-paradigm-worldview-advisor",
-        "./.claude/skills/research-agents/A6-conceptual-framework-visualizer",
-        "./.claude/skills/research-agents/B1-systematic-literature-scout",
-        "./.claude/skills/research-agents/B2-evidence-quality-appraiser",
-        "./.claude/skills/research-agents/B3-effect-size-extractor",
-        "./.claude/skills/research-agents/B4-research-radar",
-        "./.claude/skills/research-agents/B5-parallel-document-processor",
-        "./.claude/skills/research-agents/C1-quantitative-design-consultant",
-        "./.claude/skills/research-agents/C2-qualitative-design-consultant",
-        "./.claude/skills/research-agents/C3-mixed-methods-design-consultant",
-        "./.claude/skills/research-agents/C4-experimental-materials-developer",
-        "./.claude/skills/research-agents/C5-meta-analysis-master",
-        "./.claude/skills/research-agents/C6-data-integrity-guard",
-        "./.claude/skills/research-agents/C7-error-prevention-engine",
-        "./.claude/skills/research-agents/D1-sampling-strategy-advisor",
-        "./.claude/skills/research-agents/D2-interview-focus-group-specialist",
-        "./.claude/skills/research-agents/D3-observation-protocol-designer",
-        "./.claude/skills/research-agents/D4-measurement-instrument-developer",
-        "./.claude/skills/research-agents/E1-quantitative-analysis-guide",
-        "./.claude/skills/research-agents/E2-qualitative-coding-specialist",
-        "./.claude/skills/research-agents/E3-mixed-methods-integration",
-        "./.claude/skills/research-agents/E4-analysis-code-generator",
-        "./.claude/skills/research-agents/E5-sensitivity-analysis-designer",
-        "./.claude/skills/research-agents/F1-internal-consistency-checker",
-        "./.claude/skills/research-agents/F2-checklist-manager",
-        "./.claude/skills/research-agents/F3-reproducibility-auditor",
-        "./.claude/skills/research-agents/F4-bias-trustworthiness-detector",
-        "./.claude/skills/research-agents/F5-humanization-verifier",
-        "./.claude/skills/research-agents/G1-journal-matcher",
-        "./.claude/skills/research-agents/G2-academic-communicator",
-        "./.claude/skills/research-agents/G3-peer-review-strategist",
-        "./.claude/skills/research-agents/G4-preregistration-composer",
-        "./.claude/skills/research-agents/G5-academic-style-auditor",
-        "./.claude/skills/research-agents/G6-academic-style-humanizer",
-        "./.claude/skills/research-agents/H1-ethnographic-research-advisor",
-        "./.claude/skills/research-agents/H2-action-research-facilitator"
-      ]
+      "description": "Complete research agent suite v6.5: 40 specialized agents (A1-H2) across 8 categories with VS methodology, human checkpoints, meta-analysis system, and parallel execution via Task(subagent_type='diverga:a1').",
+      "source": "./"
     }
   ]
 }
