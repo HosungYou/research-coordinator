@@ -3,11 +3,35 @@
 **Beyond Modal: AI Research Assistant That Thinks Creatively**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-6.2.0-brightgreen)](https://github.com/HosungYou/Diverga)
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-Skills-blue)](https://claude.ai/code)
+[![Version](https://img.shields.io/badge/version-6.4.0-brightgreen)](https://github.com/HosungYou/Diverga)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-blue)](https://claude.ai/code)
 [![VS Methodology](https://img.shields.io/badge/VS-Verbalized%20Sampling-green)](https://arxiv.org/abs/2510.01171)
 [![Language](https://img.shields.io/badge/language-English%20%7C%20한국어-orange)](docs/i18n/ko/README-ko.md)
-[![Humanization](https://img.shields.io/badge/NEW-Humanization%20Pipeline-purple)](docs/v6.1.0-humanization-pipeline.md)
+[![Agents](https://img.shields.io/badge/agents-40-purple)](docs/AGENTS.md)
+
+---
+
+## 🚀 Quick Start (3 Steps)
+
+```bash
+# Step 1: Add to Claude Code marketplace
+/plugin marketplace add https://github.com/HosungYou/Diverga
+
+# Step 2: Install the plugin
+/plugin install diverga
+
+# Step 3: Run setup wizard
+/diverga:setup
+```
+
+Then just say what you want:
+```
+"I want to conduct a meta-analysis on AI in education"
+"체계적 문헌고찰을 시작하고 싶어"
+"Help me design an experimental study"
+```
+
+Diverga auto-detects context and activates the right agents.
 
 ---
 
@@ -23,18 +47,36 @@ Most AI research assistants suffer from **mode collapse** - they always recommen
 
 ---
 
-## ✨ v6.2 (Human-Centered Edition + Parallel Document Processing)
+## ✨ v6.4 (Plugin Marketplace Edition)
 
 ### Core Principle
 
 > **"Human decisions remain with humans. AI handles what's beyond human scope."**
 > **"인간이 할 일은 인간이, AI는 인간의 범주를 벗어난 것을 수행"**
 
-### 🆕 What's New in v6.2
+### 🆕 What's New in v6.4
 
 | Feature | Description |
 |---------|-------------|
-| **📄⚡ B5-ParallelDocumentProcessor** | Batch PDF processing with parallel workers (NEW) |
+| **📦 Plugin Marketplace** | Install via `/plugin marketplace add` |
+| **⚡ Auto-Trigger Dispatch** | Context-based automatic agent activation |
+| **🔧 /diverga:setup Wizard** | Interactive configuration with LLM API, checkpoints, paradigm |
+| **📋 /diverga:help** | Comprehensive agent reference |
+| **🧠 40 Specialized Agents** | Complete research lifecycle coverage |
+
+### What's in v6.3
+
+| Feature | Description |
+|---------|-------------|
+| **📊 C5-MetaAnalysisMaster** | Multi-gate validation, workflow orchestration |
+| **🔍 C6-DataIntegrityGuard** | Data extraction with provenance tracking |
+| **⚠️ C7-ErrorPreventionEngine** | Pattern detection, error prevention |
+
+### What's in v6.2
+
+| Feature | Description |
+|---------|-------------|
+| **📄⚡ B5-ParallelDocumentProcessor** | Batch PDF processing with parallel workers |
 | **🚀 High-throughput Processing** | Process 50-500 PDFs concurrently without memory overflow |
 | **🔄 Fault Tolerance** | Automatic retry logic for failed extractions |
 
@@ -150,7 +192,7 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 
 ---
 
-## 🏗️ Architecture (37 Agents in 8 Categories)
+## 🏗️ Architecture (40 Agents in 8 Categories)
 
 ### Category A: Foundation (6 Agents)
 | Agent | Model | Purpose |
@@ -171,13 +213,16 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 | B4-research-radar | Haiku | Trend monitoring |
 | **B5-parallel-document-processor** 🆕 | Opus | Batch PDF processing with parallel workers |
 
-### Category C: Design (4 Agents)
+### Category C: Design & Meta-Analysis (7 Agents)
 | Agent | Model | Purpose |
 |-------|-------|---------|
 | C1-quantitative-design-consultant | Opus | Experimental, survey design |
 | C2-qualitative-design-consultant | Opus | Phenomenology, GT, case study |
 | C3-mixed-methods-design-consultant | Opus | Sequential, convergent |
 | C4-experimental-materials-developer | Sonnet | Treatment materials |
+| **C5-meta-analysis-master** 🆕 | Opus | Multi-gate validation, workflow orchestration |
+| **C6-data-integrity-guard** 🆕 | Sonnet | Data extraction with provenance |
+| **C7-error-prevention-engine** 🆕 | Sonnet | Pattern detection, error prevention |
 
 ### Category D: Data Collection (4 Agents)
 | Agent | Model | Purpose |
@@ -225,7 +270,16 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 
 ## 🚀 Getting Started
 
-### Installation
+### Installation (Claude Code Plugin)
+
+```bash
+# Install via Claude Code marketplace
+/plugin marketplace add https://github.com/HosungYou/Diverga
+/plugin install diverga
+/diverga:setup
+```
+
+### Alternative: Manual Installation
 
 ```bash
 git clone https://github.com/HosungYou/Diverga.git
@@ -234,11 +288,19 @@ cd Diverga
 
 ### Usage
 
-**Natural Language**:
+**Natural Language** (auto-triggers agents):
 ```
 "I want to conduct a systematic review on AI in education"
 "메타분석 연구를 시작하고 싶어요"
 "Help me design an experimental study"
+```
+
+**Direct Commands**:
+```
+/diverga:setup          # Configuration wizard
+/diverga:help           # Show all 40 agents
+/diverga:meta-analysis  # Start meta-analysis workflow
+diverga:c5              # Invoke specific agent
 ```
 
 The system will:
@@ -288,7 +350,8 @@ Mixed: "메타분석을 하려는데, can you help?"
 | Document | Description |
 |----------|-------------|
 | [CLAUDE.md](CLAUDE.md) | Full system documentation |
-| [AGENTS.md](AGENTS.md) | 37 agents detailed reference |
+| [PLUGIN.md](PLUGIN.md) | Plugin marketplace definition |
+| [AGENTS.md](AGENTS.md) | 40 agents detailed reference |
 | [**Agent Orchestration Guide**](docs/AGENT-ORCHESTRATION-GUIDE.md) 🆕 | Comprehensive multi-agent pipelines (EN) |
 | [**에이전트 오케스트레이션 가이드**](docs/AGENT-ORCHESTRATION-GUIDE-ko.md) 🆕 | 종합 멀티에이전트 파이프라인 (KO) |
 | [**B5 Parallel Processing**](docs/B5-PARALLEL-PROCESSING.md) 🆕 | v6.2 parallel document processing |
@@ -320,9 +383,9 @@ MIT License - see [LICENSE](LICENSE) for details.
   author = {You, Hosung},
   title = {Diverga: Beyond Modal AI Research Assistant},
   year = {2026},
-  version = {6.2.0},
+  version = {6.4.0},
   url = {https://github.com/HosungYou/Diverga},
-  note = {37 agents with VS Methodology, Human-Centered Design, Humanization Pipeline, and Parallel Document Processing. Prevents mode collapse through Verbalized Sampling (arXiv:2510.01171)}
+  note = {40 agents with VS Methodology, Human-Centered Design, Meta-Analysis System, Humanization Pipeline, and Plugin Marketplace. Prevents mode collapse through Verbalized Sampling (arXiv:2510.01171)}
 }
 ```
 
