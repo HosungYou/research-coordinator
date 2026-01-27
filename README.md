@@ -1,14 +1,72 @@
-# Diverga 🌟
+<div align="center">
 
-**Beyond Modal: AI Research Assistant That Thinks Creatively**
+```
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                                                                               ║
+║     ██████╗ ██╗██╗   ██╗███████╗██████╗  ██████╗  █████╗                    ║
+║     ██╔══██╗██║██║   ██║██╔════╝██╔══██╗██╔════╝ ██╔══██╗                   ║
+║     ██║  ██║██║██║   ██║█████╗  ██████╔╝██║  ███╗███████║                   ║
+║     ██║  ██║██║╚██╗ ██╔╝██╔══╝  ██╔══██╗██║   ██║██╔══██║                   ║
+║     ██████╔╝██║ ╚████╔╝ ███████╗██║  ██║╚██████╔╝██║  ██║                   ║
+║     ╚═════╝ ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝                   ║
+║                                                                               ║
+║              🎯 Diverge from the Modal · Discover the Exceptional            ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-6.5.0-brightgreen)](https://github.com/HosungYou/Diverga)
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-blue)](https://claude.ai/code)
-[![Task Tool](https://img.shields.io/badge/Task%20Tool-Parallel%20Execution-ff69b4)](docs/PARALLEL-EXECUTION.md)
-[![VS Methodology](https://img.shields.io/badge/VS-Verbalized%20Sampling-green)](https://arxiv.org/abs/2510.01171)
-[![Language](https://img.shields.io/badge/language-English%20%7C%20한국어-orange)](docs/i18n/ko/README-ko.md)
-[![Agents](https://img.shields.io/badge/agents-40-purple)](docs/AGENTS.md)
+              ┌─────────────────────────────────────────────────┐
+              │  Research Methodology AI Assistant for          │
+              │  Claude Code · 40 Specialized Agents · VS+HAVS  │
+              └─────────────────────────────────────────────────┘
+```
+
+[![Version](https://img.shields.io/badge/version-6.5.0-7c3aed?style=for-the-badge&logo=semantic-release&logoColor=white)](https://github.com/HosungYou/Diverga)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-Plugin-FF6B00?style=for-the-badge&logo=anthropic&logoColor=white)](https://claude.ai/code)
+[![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge&logo=open-source-initiative&logoColor=white)](LICENSE)
+[![Methodology](https://img.shields.io/badge/Powered_by-VS+HAVS-violet?style=for-the-badge&logo=academia&logoColor=white)](docs/methodology.md)
+[![Language](https://img.shields.io/badge/language-English%20%7C%20한국어-orange?style=for-the-badge)](docs/i18n/ko/README-ko.md)
+[![Agents](https://img.shields.io/badge/agents-40-purple?style=for-the-badge)](docs/AGENTS.md)
+
+```
+         ╭──────────────────────────────────────────────────────────╮
+         │                                                          │
+         │  "When AI recommendations converge on the modal,         │
+         │   Diverga helps you explore the exceptional."            │
+         │                                                          │
+         │               — Verbalized Sampling Principle            │
+         │                                                          │
+         ╰──────────────────────────────────────────────────────────╯
+```
+
+</div>
+
+---
+
+## ✨ What is Diverga?
+
+**Diverga** is a research methodology assistant that transforms Claude Code into a 40-agent orchestra for social science research. Built on **Verbalized Sampling (VS)** and **HAVS** (Humanization-Adapted VS) methodologies, it prevents AI "mode collapse" — the tendency to recommend only safe, modal solutions.
+
+```
+        Modal AI Response              Diverga with VS/HAVS
+        ─────────────────              ────────────────────
+              ▲ │                         ◆   ◆   ◆
+              █ │                       ◆ ◆ ◆ ◆ ◆ ◆
+            ████│                     ◆ ◆ ◆ █ ◆ ◆ ◆
+          ██████│                   ◆ ◆ ◆ ███ ◆ ◆ ◆
+        ████████│                 ◆ ◆ ◆ █████ ◆ ◆ ◆
+        ────────┴────────        ────────────────────────
+         Narrow                    Diverse & Exceptional
+         Safe                      Creative & Rigorous
+         Common                    Methodologically Sound
+```
+
+<div align="center">
+
+### 🎯 Perfect For
+
+**Education** • **Psychology** • **Management** • **Sociology** • **HRD** • **Communication**
+
+</div>
 
 ---
 
@@ -46,6 +104,46 @@ Most AI research assistants suffer from **mode collapse** - they always recommen
 
 **Diverga is different.** Built on **Verbalized Sampling (VS) methodology** (arXiv:2510.01171), it actively prevents mode collapse and guides you toward **creative, defensible research choices**.
 
+<table>
+<tr>
+<td width="50%">
+
+### 🤖 Standard AI Assistant
+
+```
+User: "Suggest a research design"
+
+AI: ✓ Use quasi-experimental design
+    ✓ Pretest-posttest control group
+    ✓ ANOVA for analysis
+
+Result: Safe, common, modal ✓
+        But not optimal for you ✗
+```
+
+</td>
+<td width="50%">
+
+### ⚡ Diverga with VS/HAVS
+
+```
+User: "Suggest a research design"
+
+Diverga:
+  ◆ Option A (Modal): Quasi-experimental
+  ◆ Option B (Creative): Design-based research
+  ◆ Option C (Mixed): Sequential explanatory
+  ◆ Option D (Novel): Computational simulation
+
+  → Human checkpoints enforce choice
+  → Forces divergence from modal
+  → Preserves methodological rigor
+```
+
+</td>
+</tr>
+</table>
+
 ---
 
 ## ✨ v6.5 (Parallel Execution Edition)
@@ -77,76 +175,47 @@ Task(subagent_type="diverga:a2", prompt="Theoretical framework...")
 Task(subagent_type="diverga:a3", prompt="Critical evaluation...")
 ```
 
-### What's in v6.4
-
-| Feature | Description |
-|---------|-------------|
-| **📦 Plugin Marketplace** | Install via `/plugin marketplace add` |
-| **⚡ Auto-Trigger Dispatch** | Context-based automatic agent activation |
-| **🔧 /diverga:setup Wizard** | Interactive configuration with LLM API, checkpoints, paradigm |
-| **📋 /diverga:help** | Comprehensive agent reference |
-| **🧠 40 Specialized Agents** | Complete research lifecycle coverage |
-
-### What's in v6.3
-
-| Feature | Description |
-|---------|-------------|
-| **📊 C5-MetaAnalysisMaster** | Multi-gate validation, workflow orchestration |
-| **🔍 C6-DataIntegrityGuard** | Data extraction with provenance tracking |
-| **⚠️ C7-ErrorPreventionEngine** | Pattern detection, error prevention |
-
-### What's in v6.2
-
-| Feature | Description |
-|---------|-------------|
-| **📄⚡ B5-ParallelDocumentProcessor** | Batch PDF processing with parallel workers |
-| **🚀 High-throughput Processing** | Process 50-500 PDFs concurrently without memory overflow |
-| **🔄 Fault Tolerance** | Automatic retry logic for failed extractions |
-
-### What Was Added in v6.1
-
-| Feature | Description |
-|---------|-------------|
-| **✨ Humanization Pipeline** | Transform AI-generated text to natural academic prose |
-| **🔍 G5-AcademicStyleAuditor** | Detect 24 categories of AI writing patterns |
-| **✨ G6-AcademicStyleHumanizer** | Transform patterns while preserving citations & statistics |
-| **✅ F5-HumanizationVerifier** | Verify transformation integrity |
-| **📋 Ethics Framework** | AI writing disclosure guidelines |
-
-### Humanization Quick Start
-
-```
-"Check AI patterns in my draft"    → G5 analysis
-"Humanize my abstract"             → Full pipeline (balanced mode)
-"Humanize (conservative)"          → For journal submissions
-"Export with humanization"         → Pipeline before Word export
-```
-
-**3 Transformation Modes**:
-- **Conservative**: High-risk patterns only (5-15% text change)
-- **Balanced**: Recommended default (15-30% text change)
-- **Aggressive**: All patterns (30-50% text change)
-
-### What's in v6.0
-
-| Feature | Description |
-|---------|-------------|
-| **🔴 Mandatory Checkpoints** | AI STOPS and WAITS at critical decision points |
-| **36 Specialized Agents** | 33 agents + 3 new humanization agents (A1-H2, F5, G5-G6) |
-| **Human-Centered Design** | Every major decision requires explicit human approval |
-| **Clean Architecture** | Simplified folder structure under `.claude/` |
-
-### What Was Removed (v6.0)
-
-| Removed | Reason |
-|---------|--------|
-| ❌ Sisyphus Protocol | Could bypass human checkpoints |
-| ❌ Iron Law | "OR" made checkpoints optional |
-| ❌ OMC Autonomous Modes | ralph/ultrawork/ecomode enabled bypass |
-
 ---
 
 ## 🎯 Human Checkpoint System
+
+Diverga implements **forced divergence** through human checkpoints:
+
+<div align="center">
+
+```
+                    ╭─────────────────────────────╮
+                    │   User Research Question    │
+                    ╰──────────────┬──────────────╯
+                                   │
+                                   ▼
+                    ╭─────────────────────────────╮
+                    │  Agent Generates Multiple   │
+                    │  Diverse Options (VS/HAVS)  │
+                    │                             │
+                    │  ◆ Option A (Modal)         │
+                    │  ◆ Option B (Creative)      │
+                    │  ◆ Option C (Rigorous)      │
+                    │  ◆ Option D (Novel)         │
+                    ╰──────────────┬──────────────╯
+                                   │
+                                   ▼
+                    ╭─────────────────────────────╮
+                    │  👤 HUMAN CHECKPOINT 👤    │
+                    │                             │
+                    │  Required: Explicit Choice  │
+                    │  No default selection       │
+                    │  Forces consideration       │
+                    ╰──────────────┬──────────────╯
+                                   │
+                                   ▼
+                    ╭─────────────────────────────╮
+                    │  Selected Path Continues    │
+                    │  (Prevents mode collapse)   │
+                    ╰─────────────────────────────╯
+```
+
+</div>
 
 ### Checkpoint Types
 
@@ -217,7 +286,57 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 
 ## 🏗️ Architecture (40 Agents in 8 Categories)
 
-### Category A: Foundation (6 Agents)
+<div align="center">
+
+```
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                         🎯 AGENT ECOSYSTEM (40 AGENTS)                        ║
+╠═══════════════════════════════════════════════════════════════════════════════╣
+║                                                                               ║
+║   📐 Category A: Foundation (6)         🔍 Category B: Evidence (5)          ║
+║   ─────────────────────────────         ────────────────────────             ║
+║   ◆ A1-research-question-refiner        ◆ B1-systematic-literature-scout    ║
+║   ◆ A2-theoretical-framework-architect  ◆ B2-evidence-quality-appraiser     ║
+║   ◆ A3-devils-advocate                  ◆ B3-effect-size-extractor          ║
+║   ◆ A4-research-ethics-advisor          ◆ B4-research-radar                  ║
+║   ◆ A5-paradigm-worldview-advisor       ◆ B5-parallel-document-processor    ║
+║   ◆ A6-conceptual-framework-visualizer                                       ║
+║                                                                               ║
+║   📊 Category C: Design (7)             📋 Category D: Data Collection (4)   ║
+║   ─────────────────────────             ─────────────────────────────────    ║
+║   ◆ C1-quantitative-design-consultant   ◆ D1-sampling-strategy-advisor      ║
+║   ◆ C2-qualitative-design-consultant    ◆ D2-interview-focus-group-specialist║
+║   ◆ C3-mixed-methods-design-consultant  ◆ D3-observation-protocol-designer  ║
+║   ◆ C4-experimental-materials-developer ◆ D4-measurement-instrument-developer║
+║   ◆ C5-meta-analysis-master                                                  ║
+║   ◆ C6-data-integrity-guard                                                  ║
+║   ◆ C7-error-prevention-engine                                               ║
+║                                                                               ║
+║   📈 Category E: Analysis (5)           ✅ Category F: Quality (5)           ║
+║   ───────────────────────               ─────────────────────                ║
+║   ◆ E1-quantitative-analysis-guide      ◆ F1-internal-consistency-checker   ║
+║   ◆ E2-qualitative-coding-specialist    ◆ F2-checklist-manager              ║
+║   ◆ E3-mixed-methods-integration        ◆ F3-reproducibility-auditor        ║
+║   ◆ E4-analysis-code-generator          ◆ F4-bias-trustworthiness-detector  ║
+║   ◆ E5-sensitivity-analysis-designer    ◆ F5-humanization-verifier          ║
+║                                                                               ║
+║   📝 Category G: Communication (6)      🎓 Category H: Specialized (2)       ║
+║   ─────────────────────────────         ──────────────────────────           ║
+║   ◆ G1-journal-matcher                  ◆ H1-ethnographic-research-advisor  ║
+║   ◆ G2-academic-communicator            ◆ H2-action-research-facilitator    ║
+║   ◆ G3-peer-review-strategist                                                ║
+║   ◆ G4-preregistration-composer                                              ║
+║   ◆ G5-academic-style-auditor                                                ║
+║   ◆ G6-academic-style-humanizer 🆕 HAVS                                      ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+```
+
+</div>
+
+### Agent Details by Category
+
+#### Category A: Foundation (6 Agents)
 | Agent | Model | Purpose |
 |-------|-------|---------|
 | A1-research-question-refiner | Opus | FINER/PICO/SPIDER framework |
@@ -227,27 +346,27 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 | A5-paradigm-worldview-advisor | Opus | Quant/qual/mixed guidance |
 | A6-conceptual-framework-visualizer | Sonnet | Visual framework design |
 
-### Category B: Evidence (5 Agents)
+#### Category B: Evidence (5 Agents)
 | Agent | Model | Purpose |
 |-------|-------|---------|
 | B1-systematic-literature-scout | Sonnet | PRISMA/qualitative search |
 | B2-evidence-quality-appraiser | Sonnet | RoB, GRADE assessment |
 | B3-effect-size-extractor | Haiku | Effect size calculations |
 | B4-research-radar | Haiku | Trend monitoring |
-| **B5-parallel-document-processor** 🆕 | Opus | Batch PDF processing with parallel workers |
+| **B5-parallel-document-processor** | Opus | Batch PDF processing with parallel workers |
 
-### Category C: Design & Meta-Analysis (7 Agents)
+#### Category C: Design & Meta-Analysis (7 Agents)
 | Agent | Model | Purpose |
 |-------|-------|---------|
 | C1-quantitative-design-consultant | Opus | Experimental, survey design |
 | C2-qualitative-design-consultant | Opus | Phenomenology, GT, case study |
 | C3-mixed-methods-design-consultant | Opus | Sequential, convergent |
 | C4-experimental-materials-developer | Sonnet | Treatment materials |
-| **C5-meta-analysis-master** 🆕 | Opus | Multi-gate validation, workflow orchestration |
-| **C6-data-integrity-guard** 🆕 | Sonnet | Data extraction with provenance |
-| **C7-error-prevention-engine** 🆕 | Sonnet | Pattern detection, error prevention |
+| **C5-meta-analysis-master** | Opus | Multi-gate validation, workflow orchestration |
+| **C6-data-integrity-guard** | Sonnet | Data extraction with provenance |
+| **C7-error-prevention-engine** | Sonnet | Pattern detection, error prevention |
 
-### Category D: Data Collection (4 Agents)
+#### Category D: Data Collection (4 Agents)
 | Agent | Model | Purpose |
 |-------|-------|---------|
 | D1-sampling-strategy-advisor | Sonnet | Probability/purposive sampling |
@@ -255,7 +374,7 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 | D3-observation-protocol-designer | Haiku | Field notes |
 | D4-measurement-instrument-developer | Opus | Scale construction |
 
-### Category E: Analysis (5 Agents)
+#### Category E: Analysis (5 Agents)
 | Agent | Model | Purpose |
 |-------|-------|---------|
 | E1-quantitative-analysis-guide | Opus | Statistical analysis |
@@ -264,26 +383,26 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 | E4-analysis-code-generator | Haiku | R/Python/NVivo code |
 | E5-sensitivity-analysis-designer | Sonnet | Robustness checks |
 
-### Category F: Quality (5 Agents)
+#### Category F: Quality (5 Agents)
 | Agent | Model | Purpose |
 |-------|-------|---------|
 | F1-internal-consistency-checker | Haiku | Internal validity |
 | F2-checklist-manager | Haiku | PRISMA/CONSORT/COREQ |
 | F3-reproducibility-auditor | Sonnet | Open Science |
 | F4-bias-trustworthiness-detector | Sonnet | Bias detection |
-| **F5-humanization-verifier** 🆕 | Haiku | Transformation verification |
+| **F5-humanization-verifier** | Haiku | Transformation verification |
 
-### Category G: Communication (6 Agents)
+#### Category G: Communication (6 Agents)
 | Agent | Model | Purpose |
 |-------|-------|---------|
 | G1-journal-matcher | Sonnet | Target journal selection |
 | G2-academic-communicator | Sonnet | Audience adaptation |
 | G3-peer-review-strategist | Opus | Review response |
 | G4-preregistration-composer | Sonnet | OSF/AsPredicted |
-| **G5-academic-style-auditor** 🆕 | Sonnet | AI pattern detection (24 categories) |
-| **G6-academic-style-humanizer** 🆕 | Opus | Pattern transformation |
+| **G5-academic-style-auditor** | Sonnet | AI pattern detection (24 categories) |
+| **G6-academic-style-humanizer** | Opus | Pattern transformation (HAVS) |
 
-### Category H: Specialized (2 Agents)
+#### Category H: Specialized (2 Agents)
 | Agent | Model | Purpose |
 |-------|-------|---------|
 | H1-ethnographic-research-advisor | Opus | Fieldwork, thick description |
@@ -335,6 +454,19 @@ The system will:
 
 ---
 
+## 📚 Version History
+
+| Version | Feature |
+|---------|---------|
+| **v6.5.0** | Parallel Execution Edition - Task tool support, /agents/ directory |
+| **v6.4.0** | Plugin Marketplace - `/plugin marketplace add`, auto-trigger dispatch |
+| **v6.3.0** | Meta-Analysis Agent System - C5/C6/C7 for Hedges' g calculation |
+| **v6.2.0** | Parallel Document Processing - B5 for batch PDF handling |
+| **v6.1.0** | Humanization Pipeline - G5/G6/F5 for natural academic prose |
+| **v6.0.0** | Human-Centered Edition - Mandatory checkpoints, removed autonomous modes |
+
+---
+
 ## 🔗 Integration Hub
 
 ### Built-in (No Setup)
@@ -375,9 +507,9 @@ Mixed: "메타분석을 하려는데, can you help?"
 | [CLAUDE.md](CLAUDE.md) | Full system documentation |
 | [PLUGIN.md](PLUGIN.md) | Plugin marketplace definition |
 | [AGENTS.md](AGENTS.md) | 40 agents detailed reference |
-| [**Agent Orchestration Guide**](docs/AGENT-ORCHESTRATION-GUIDE.md) 🆕 | Comprehensive multi-agent pipelines (EN) |
-| [**에이전트 오케스트레이션 가이드**](docs/AGENT-ORCHESTRATION-GUIDE-ko.md) 🆕 | 종합 멀티에이전트 파이프라인 (KO) |
-| [**B5 Parallel Processing**](docs/B5-PARALLEL-PROCESSING.md) 🆕 | v6.2 parallel document processing |
+| [Agent Orchestration Guide](docs/AGENT-ORCHESTRATION-GUIDE.md) | Comprehensive multi-agent pipelines (EN) |
+| [에이전트 오케스트레이션 가이드](docs/AGENT-ORCHESTRATION-GUIDE-ko.md) | 종합 멀티에이전트 파이프라인 (KO) |
+| [B5 Parallel Processing](docs/B5-PARALLEL-PROCESSING.md) | v6.2 parallel document processing |
 | [Quick Start](docs/QUICKSTART.md) | Get started in 5 minutes |
 | [VS Methodology](docs/VS-METHODOLOGY.md) | Deep dive into Verbalized Sampling |
 | [Humanization Pipeline](docs/v6.1.0-humanization-pipeline.md) | v6.1 humanization documentation |
@@ -414,6 +546,10 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
+<div align="center">
+
 **Made with 🌟 for Social Science Researchers**
 
 *Diverga: Where creativity meets rigor. Beyond the obvious, toward the innovative.*
+
+</div>

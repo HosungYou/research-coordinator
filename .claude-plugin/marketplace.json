@@ -38,11 +38,6 @@
       "name": "diverga",
       "description": "Complete research agent suite v6.5: 40 specialized agents across 8 categories (A-H) with VS methodology, human checkpoints, meta-analysis system, and parallel execution support via Task tool.",
       "source": "./",
-      "runtime": {
-        "type": "typescript",
-        "entry": "./dist/index.js",
-        "agents": "./dist/agents/definitions.js"
-      },
       "strict": false,
       "skills": [
         "./.claude/skills/research-coordinator",
