@@ -283,6 +283,141 @@ C5 → C6: "Track V7 → V8 changes"
 C6 → C5: version_change_report
 ```
 
+## Universal Codebook Integration (v2.1)
+
+### Extraction with Provenance
+
+C6 now tracks extraction provenance for AI-Human collaboration:
+
+```python
+def extract_with_provenance(pdf_path, fields, methods=["rag", "ocr"]):
+    """
+    Extract statistical values with full provenance tracking.
+
+    Returns:
+    - ai_extraction_json: {field: {ai_value, source, method, confidence, derived_from}}
+    """
+    results = {}
+
+    for field in fields:
+        extractions = []
+
+        # Try RAG extraction
+        if "rag" in methods:
+            rag_result = rag_extract(pdf_path, field)
+            if rag_result:
+                extractions.append({
+                    "value": rag_result.value,
+                    "source": rag_result.location,
+                    "method": "RAG",
+                    "confidence": rag_result.confidence,
+                    "source_type": classify_source(rag_result.location)
+                })
+
+        # Try OCR extraction
+        if "ocr" in methods:
+            ocr_result = ocr_extract(pdf_path, field)
+            if ocr_result:
+                extractions.append({
+                    "value": ocr_result.value,
+                    "source": ocr_result.location,
+                    "method": "OCR",
+                    "confidence": ocr_result.confidence,
+                    "source_type": classify_source(ocr_result.location)
+                })
+
+        # Reconcile if multiple extractions
+        if len(extractions) > 1:
+            final = reconcile_extractions(extractions, get_field_type(field))
+        elif len(extractions) == 1:
+            final = extractions[0]
+        else:
+            final = {"value": None, "confidence": 0, "method": "NOT_FOUND"}
+
+        results[field] = {
+            "ai_value": final["value"],
+            "source": final.get("source"),
+            "method": final["method"],
+            "confidence": final["confidence"],
+            "derived_from": final.get("derived_from"),
+            "candidates": extractions if len(extractions) > 1 else None
+        }
+
+    return results
+```
+
+### Hedges' g with Provenance
+
+```python
+def calculate_hedges_g_with_provenance(m1, sd1, n1, m2, sd2, n2, sources=None):
+    """
+    Calculate Hedges' g with source provenance tracking.
+
+    Args:
+        sources: {m1_source, sd1_source, n1_source, ...}
+
+    Returns:
+        {g, se_g, confidence, provenance}
+    """
+    g, se_g = calculate_hedges_g(m1, sd1, n1, m2, sd2, n2)
+
+    if g is None:
+        return {"g": None, "se_g": None, "confidence": 0, "status": "CALC_FAIL"}
+
+    # Propagate confidence from source values
+    source_confidences = [
+        sources.get(f"{f}_confidence", 100)
+        for f in ["m1", "sd1", "n1", "m2", "sd2", "n2"]
+        if sources
+    ]
+
+    min_confidence = min(source_confidences) if source_confidences else 100
+    derived_confidence = min_confidence * 0.95  # Formula reliability factor
+
+    return {
+        "g": round(g, 4),
+        "se_g": round(se_g, 4),
+        "confidence": round(derived_confidence, 1),
+        "provenance": {
+            "formula": "Hedges' g with small-sample correction",
+            "sources": sources,
+            "assumptions": ["Pooled SD", "Equal variances assumed"]
+        },
+        "status": "CALCULATED"
+    }
+```
+
+### ScholaRAG Integration
+
+```python
+def extract_from_scholarag_rag(rag_instance, study_id, fields):
+    """
+    Extract values from ScholaRAG RAG system with provenance.
+
+    Used in Phase 1 of Universal Codebook workflow.
+    """
+    prompt_template = """
+    From study {study_id}, extract the following statistical values:
+    {field_list}
+
+    For each value found, provide:
+    1. The extracted value
+    2. The exact location (page, table, paragraph)
+    3. Your confidence (0-100%)
+
+    If not found, respond with "NOT_FOUND".
+    """
+
+    response = rag_instance.query(
+        prompt_template.format(
+            study_id=study_id,
+            field_list="\n".join(f"- {f}" for f in fields)
+        )
+    )
+
+    return parse_rag_response(response)
+```
+
 ## Error Messages
 
 | Code | Message | Action |
@@ -292,6 +427,8 @@ C6 → C5: version_change_report
 | `C6_DATA_LOSS` | {n} values lost in {field} | Critical warning |
 | `C6_TIER3` | Record below 40% completeness | Flag for review |
 | `C6_RECOVERY_FAIL` | All SD recovery strategies failed | Report to C5 |
+| `C6_CONFLICT` | Multiple extractions disagree beyond tolerance | Flag for human review |
+| `C6_LOW_CONF` | Extraction confidence below threshold | Flag for human review |
 
 ## Version History
 

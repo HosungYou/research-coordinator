@@ -262,6 +262,178 @@ Before extracting from each study, verify:
 - [ ] Dependent ES handling planned
 ```
 
+## Universal Codebook Integration (v2.1)
+
+### Triage Functionality
+
+C7 handles Phase 2 (Triage) of the Universal Codebook workflow:
+
+```python
+# Configurable thresholds
+DEFAULT_THRESHOLDS = {
+    "n": {"high": 95, "medium": 80},
+    "m": {"high": 90, "medium": 70},
+    "sd": {"high": 85, "medium": 65},
+    "hedges_g": {"high": 92, "medium": 75},
+    "se_g": {"high": 92, "medium": 75},
+    "pre_post_corr": {"high": 85, "medium": 65},
+    "icc": {"high": 80, "medium": 60}
+}
+
+SOURCE_MODIFIERS = {
+    "table": 10,
+    "figure": 5,
+    "text": 0,
+    "abstract": -15,
+    "ocr_artifacts": -20
+}
+
+def triage_extractions(extraction_data, thresholds=None):
+    """
+    Triage AI extractions into confidence categories for human review queue.
+
+    Used in Phase 2 of Universal Codebook workflow.
+
+    Returns:
+    - categorized records with priority rankings
+    """
+    thresholds = thresholds or DEFAULT_THRESHOLDS
+    results = []
+
+    for record in extraction_data:
+        # Calculate effective confidence
+        base_conf = record.get("ai_confidence_avg", 0)
+        source_type = record.get("ai_source_type", "text")
+        effective_conf = base_conf + SOURCE_MODIFIERS.get(source_type, 0)
+        effective_conf = max(0, min(100, effective_conf))  # Clamp to 0-100
+
+        # Check for conflicts
+        has_conflict = record.get("ai_conflicts", False)
+
+        # Determine category and priority
+        if has_conflict:
+            category = "CONFLICT"
+            priority = 1
+            status = "PENDING"
+        elif effective_conf < thresholds.get("sd", {}).get("medium", 65):
+            category = "LOW"
+            priority = 2
+            status = "PENDING"
+        elif effective_conf < thresholds.get("sd", {}).get("high", 85):
+            category = "MEDIUM"
+            priority = 3
+            status = "PENDING"
+        else:
+            category = "HIGH"
+            priority = 4
+            status = "PROVISIONAL"
+
+        results.append({
+            "es_id": record["es_id"],
+            "effective_confidence": effective_conf,
+            "category": category,
+            "priority": priority,
+            "verified_status": status,
+            "review_reason": get_review_reason(record, category),
+            "ai_extraction_json": record.get("ai_extraction_json")
+        })
+
+    # Sort by priority (1=highest)
+    results.sort(key=lambda x: (x["priority"], -x["effective_confidence"]))
+    return results
+
+
+def get_review_reason(record, category):
+    """Generate human-readable reason for review."""
+    if category == "CONFLICT":
+        return "Multiple extractions disagree beyond tolerance"
+    elif category == "LOW":
+        fields = []
+        for field in ["n_treatment", "sd_treatment", "m_treatment"]:
+            if record.get(f"{field}_confidence", 100) < 70:
+                fields.append(field)
+        return f"Low confidence in: {', '.join(fields)}" if fields else "Low overall confidence"
+    elif category == "MEDIUM":
+        return "Medium confidence - recommended verification"
+    else:
+        return "High confidence - spot check only"
+```
+
+### Conflict Detection
+
+```python
+# Tolerance thresholds for conflict detection
+TOLERANCE = {"n": 0.05, "m": 0.10, "sd": 0.15}
+ABSOLUTE_TOLERANCE = {"n": 2, "m": 0.5, "sd": 0.5}
+EPSILON = 0.001
+
+def detect_extraction_conflicts(extractions, field_type):
+    """
+    Detect if multiple extraction methods disagree beyond tolerance.
+
+    Args:
+        extractions: List of {method, value, confidence}
+        field_type: "n", "m", or "sd"
+
+    Returns:
+        {has_conflict, severity, details}
+    """
+    if len(extractions) < 2:
+        return {"has_conflict": False}
+
+    values = [e["value"] for e in extractions if e["value"] is not None]
+    if len(values) < 2:
+        return {"has_conflict": False}
+
+    # Calculate disagreement
+    v1, v2 = values[0], values[1]
+    denominator = max(abs(v1), abs(v2), EPSILON)
+    relative_diff = abs(v1 - v2) / denominator
+    absolute_diff = abs(v1 - v2)
+
+    # Check thresholds
+    exceeds_relative = relative_diff > TOLERANCE[field_type]
+    exceeds_absolute = absolute_diff > ABSOLUTE_TOLERANCE[field_type]
+
+    if exceeds_relative or exceeds_absolute:
+        return {
+            "has_conflict": True,
+            "severity": "HIGH" if exceeds_relative and exceeds_absolute else "MEDIUM",
+            "relative_diff": round(relative_diff, 3),
+            "absolute_diff": round(absolute_diff, 2),
+            "candidates": extractions,
+            "recommend": "HUMAN_REVIEW"
+        }
+
+    return {"has_conflict": False}
+```
+
+### Review Queue Generation
+
+```python
+def generate_review_queue(triage_results, output_format="excel"):
+    """
+    Generate prioritized review queue for human reviewers.
+
+    Output columns:
+    - study_id, es_id, priority, category, issue, ai_confidence, status
+    """
+    queue = []
+    for result in triage_results:
+        if result["verified_status"] != "PROVISIONAL" or result["priority"] <= 3:
+            queue.append({
+                "study_id": result.get("study_id"),
+                "es_id": result["es_id"],
+                "priority": result["priority"],
+                "category": result["category"],
+                "issue": result["review_reason"],
+                "ai_confidence": result["effective_confidence"],
+                "status": "pending"
+            })
+
+    return queue
+```
+
 ## Error Messages
 
 | Code | Message | Severity | Advisory To C5 |
@@ -272,6 +444,8 @@ Before extracting from each study, verify:
 | `C7_DESIGN_COMPLEX` | Complex design detected | MEDIUM | Warn extraction |
 | `C7_DUPLICATE` | Possible duplicate ES | MEDIUM | Recommend REVIEW |
 | `C7_TIER3` | Data below 40% complete | HIGH | Require HUMAN |
+| `C7_CONFLICT` | Extraction methods disagree | HIGH | Require HUMAN |
+| `C7_LOW_CONF` | Effective confidence < threshold | MEDIUM | Recommend REVIEW |
 
 ## Version History
 

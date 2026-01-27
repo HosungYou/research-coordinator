@@ -193,6 +193,121 @@ C5 Response:
 Waiting for human confirmation...
 ```
 
+## Universal Codebook Integration (v2.1)
+
+### Phase 4: Final Validation
+
+C5 owns the final validation phase of the Universal Codebook workflow:
+
+```python
+def validate_final(verified_data, require_all_verified=True, require_all_signed_off=True):
+    """
+    Final validation before dataset is ready for analysis.
+
+    Used in Phase 4 of Universal Codebook workflow.
+
+    Returns:
+        {status, issues, can_proceed}
+    """
+    issues = []
+
+    # Check verification status
+    pending_count = sum(1 for r in verified_data if r["verified_status"] == "PENDING")
+    if pending_count > 0 and require_all_verified:
+        issues.append({
+            "type": "VERIFICATION_INCOMPLETE",
+            "count": pending_count,
+            "message": f"{pending_count} records still PENDING verification"
+        })
+
+    # Check sign-off
+    unsigned_count = sum(1 for r in verified_data if not r.get("sign_off", False))
+    if unsigned_count > 0 and require_all_signed_off:
+        issues.append({
+            "type": "SIGNOFF_INCOMPLETE",
+            "count": unsigned_count,
+            "message": f"{unsigned_count} records missing sign-off"
+        })
+
+    # Run gate validation on verified data
+    for record in verified_data:
+        gate_results = run_all_gates(record)
+        if not all(gate_results.values()):
+            failed_gates = [g for g, passed in gate_results.items() if not passed]
+            issues.append({
+                "type": "GATE_FAILURE",
+                "es_id": record["es_id"],
+                "failed_gates": failed_gates
+            })
+
+    return {
+        "status": "APPROVED" if not issues else "BLOCKED",
+        "issues": issues,
+        "can_proceed": len(issues) == 0,
+        "summary": {
+            "total_records": len(verified_data),
+            "verified": len(verified_data) - pending_count,
+            "signed_off": len(verified_data) - unsigned_count,
+            "gates_passed": len(verified_data) - len([i for i in issues if i["type"] == "GATE_FAILURE"])
+        }
+    }
+
+def run_all_gates(record):
+    """Run all 4 gates on a single record."""
+    return {
+        "gate_1_extraction": validate_gate_1(record),
+        "gate_2_classification": validate_gate_2(record),
+        "gate_3_statistical": validate_gate_3(record),
+        "gate_4_independence": validate_gate_4(record)
+    }
+```
+
+### Codebook Workflow Orchestration
+
+```python
+def orchestrate_codebook_workflow(pdf_folder, project_name):
+    """
+    Full Universal Codebook workflow orchestration.
+
+    Phases:
+    1. AI Extraction (C6)
+    2. Triage (C7)
+    3. Human Review (Manual, generates queue)
+    4. Final Validation (C5)
+    """
+
+    # Phase 1: AI Extraction
+    print(f"[PHASE 1] Starting AI extraction from {pdf_folder}")
+    extraction_result = c6.extract_with_provenance(
+        pdf_folder=pdf_folder,
+        methods=["rag", "ocr"],
+        reconciliation="hierarchy"
+    )
+    print(f"  Extracted: {len(extraction_result)} records")
+
+    # Phase 2: Triage
+    print("[PHASE 2] Triaging extractions")
+    triage_result = c7.triage_extractions(extraction_result)
+    queue = c7.generate_review_queue(triage_result)
+    print(f"  Review queue: {len(queue)} records need review")
+    print(f"  Priority 1 (conflicts): {sum(1 for q in queue if q['priority'] == 1)}")
+    print(f"  Priority 2 (low conf): {sum(1 for q in queue if q['priority'] == 2)}")
+
+    # Phase 3: Human Review
+    print("[PHASE 3] Generating review queue for human reviewers")
+    export_review_queue(queue, f"{project_name}_review_queue.xlsx")
+    print("  Queue exported. Waiting for human verification...")
+
+    # Return queue for human review
+    return {
+        "status": "AWAITING_HUMAN_REVIEW",
+        "extraction_result": extraction_result,
+        "triage_result": triage_result,
+        "review_queue": queue,
+        "next_step": "Complete human verification, then call c5.validate_final()"
+    }
+```
+
 ## Error Messages
 
 | Code | Message | Action |
@@ -203,6 +318,8 @@ Waiting for human confirmation...
 | `C5_GATE4A_PRETEST` | Pre-test outcome detected | Auto-reject |
 | `C5_ANOMALY` | Extreme value detected: g={value} | Human review |
 | `C5_TIER3` | Data completeness below 40% | Human review required |
+| `C5_VERIFY_INCOMPLETE` | Records still PENDING verification | Block final |
+| `C5_SIGNOFF_MISSING` | Records missing sign-off | Block final |
 
 ## Version History
 
