@@ -173,9 +173,9 @@ Systematic evidence gathering, synthesis, and quality appraisal.
 
 ---
 
-### Category C: Design (4 agents)
+### Category C: Design & Meta-Analysis (7 agents)
 
-Paradigm-specific design consultation for methodological rigor.
+Paradigm-specific design consultation and meta-analysis orchestration.
 
 | ID | Agent | Purpose | Tier | Model | Checkpoint |
 |----|-------|---------|------|-------|------------|
@@ -183,8 +183,50 @@ Paradigm-specific design consultation for methodological rigor.
 | C2 | qualitative-design-consultant | Phenomenology, GT, case study | HIGH | opus | 🔴 CP_METHODOLOGY_APPROVAL |
 | C3 | mixed-methods-design-consultant | Sequential, convergent designs | HIGH | opus | 🔴 CP_METHODOLOGY_APPROVAL |
 | C4 | experimental-materials-developer | Treatment protocols, manipulation checks | MEDIUM | sonnet | - |
+| **C5** | **meta-analysis-master** | **Multi-gate validation, workflow orchestration** | **HIGH** | **opus** | **🔴 CP_META_GATE** |
+| **C6** | **data-integrity-guard** | **Data completeness, Hedges' g calculation, SD recovery** | **MEDIUM** | **sonnet** | - |
+| **C7** | **error-prevention-engine** | **Pattern detection, anomaly alerts, advisory** | **MEDIUM** | **sonnet** | - |
 
-**Paradigm Coverage**: Paradigm-specific (C1, C2, C3), Experimental focus (C4)
+**Paradigm Coverage**: Paradigm-specific (C1, C2, C3), Experimental focus (C4), **Meta-analysis focus (C5, C6, C7)**
+
+#### C5/C6/C7 Meta-Analysis System (v6.3 New)
+
+Based on V7 GenAI meta-analysis lessons learned:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                 META-ANALYSIS AGENT SYSTEM                   │
+├─────────────────────────────────────────────────────────────┤
+│ C5-MetaAnalysisMaster (Orchestrator - DECISION AUTHORITY)   │
+│   └─ Multi-gate validation (4 gates)                        │
+│   └─ Phase-based orchestration (7 phases)                   │
+│   └─ ES hierarchy enforcement                               │
+│                                                             │
+│ C6-DataIntegrityGuard (Service Provider)                    │
+│   └─ Hedges' g calculation                                  │
+│   └─ SD recovery strategies (4 levels)                      │
+│   └─ Version tracking                                       │
+│                                                             │
+│ C7-ErrorPreventionEngine (Advisory)                         │
+│   └─ Pattern detection (pre-test, anomaly)                  │
+│   └─ Error taxonomy (5 categories)                          │
+│   └─ Pre-extraction warnings                                │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Multi-Gate Validation (C5)**:
+- Gate 1: Extraction Validation
+- Gate 2: Classification Validation (ES Hierarchy)
+- Gate 3: Statistical Validation (Hedges' g)
+- Gate 4: Independence Validation (Pre-test exclusion)
+
+**New Checkpoints**:
+| Checkpoint | Level | When |
+|------------|-------|------|
+| `CP_META_GATE` | 🔴 | Any gate failure requiring decision |
+| `META_TIER3_REVIEW` | 🔴 | Data completeness < 40% |
+| `META_ANOMALY_REVIEW` | 🟠 | \|g\| > 3.0 detected |
+| `META_PRETEST_CONFIRM` | 🟠 | Ambiguous pre/post classification |
 
 ---
 

@@ -1,10 +1,11 @@
 # CLAUDE.md
 
-# Diverga v6.2.0 (Human-Centered Edition + Parallel Document Processing)
+# Diverga v6.3.0 (Human-Centered Edition + Meta-Analysis System)
 
 **Beyond Modal: AI Research Assistant That Thinks Creatively**
 
-**v6.2 New**: Parallel Document Processing - Process large PDF collections without memory overflow
+**v6.3 New**: Meta-Analysis Agent System (C5/C6/C7) - Multi-gate validation, Hedges' g calculation, error prevention
+**v6.2**: Parallel Document Processing - Process large PDF collections without memory overflow
 **v6.1**: Humanization Pipeline - Transform AI-generated text to natural academic prose
 
 AI Research Assistant for the Complete Research Lifecycle - from question formulation to publication.
@@ -115,20 +116,35 @@ The system will:
 
 ---
 
-## Agent Structure (37 Agents in 8 Categories)
+## Agent Structure (40 Agents in 8 Categories)
 
 | Category | Count | Agents | Paradigm |
 |----------|-------|--------|----------|
 | **A: Foundation** | 6 | A1-ResearchQuestionRefiner, A2-TheoreticalFrameworkArchitect, A3-DevilsAdvocate, A4-ResearchEthicsAdvisor, A5-ParadigmWorldviewAdvisor, **A6-ConceptualFrameworkVisualizer** | All |
 | **B: Evidence** | 5 | B1-SystematicLiteratureScout, B2-EvidenceQualityAppraiser, B3-EffectSizeExtractor, B4-ResearchRadar, **B5-ParallelDocumentProcessor** | All |
-| **C: Design** | 4 | C1-QuantitativeDesignConsultant, C2-QualitativeDesignConsultant, C3-MixedMethodsDesignConsultant, C4-ExperimentalMaterialsDeveloper | Paradigm-specific |
+| **C: Design & Meta-Analysis** | 7 | C1-QuantitativeDesignConsultant, C2-QualitativeDesignConsultant, C3-MixedMethodsDesignConsultant, C4-ExperimentalMaterialsDeveloper, **C5-MetaAnalysisMaster**, **C6-DataIntegrityGuard**, **C7-ErrorPreventionEngine** | Paradigm-specific + Meta-analysis |
 | **D: Data Collection** | 4 | D1-SamplingStrategyAdvisor, D2-InterviewFocusGroupSpecialist, D3-ObservationProtocolDesigner, D4-MeasurementInstrumentDeveloper | Method-specific |
 | **E: Analysis** | 5 | E1-QuantitativeAnalysisGuide, E2-QualitativeCodingSpecialist, E3-MixedMethodsIntegration, E4-AnalysisCodeGenerator, **E5-SensitivityAnalysisDesigner** | Paradigm-specific |
 | **F: Quality** | 5 | F1-InternalConsistencyChecker, F2-ChecklistManager, F3-ReproducibilityAuditor, F4-BiasTrustworthinessDetector, **F5-HumanizationVerifier** | All |
 | **G: Communication** | 6 | G1-JournalMatcher, G2-AcademicCommunicator, G3-PeerReviewStrategist, G4-PreregistrationComposer, **G5-AcademicStyleAuditor**, **G6-AcademicStyleHumanizer** | All |
 | **H: Specialized** | 2 | H1-EthnographicResearchAdvisor, H2-ActionResearchFacilitator | Qual |
 
-**Total: 6 + 5 + 4 + 4 + 5 + 5 + 6 + 2 = 37 agents**
+**Total: 6 + 5 + 7 + 4 + 5 + 5 + 6 + 2 = 40 agents**
+
+### New in v6.3: Meta-Analysis Agent System (C5/C6/C7)
+
+Based on V7 GenAI meta-analysis lessons learned:
+
+| Agent | Purpose | Model |
+|-------|---------|-------|
+| **C5-MetaAnalysisMaster** | Multi-gate validation, workflow orchestration | Opus |
+| **C6-DataIntegrityGuard** | Data completeness, Hedges' g calculation, SD recovery | Sonnet |
+| **C7-ErrorPreventionEngine** | Pattern detection, anomaly alerts, error prevention | Sonnet |
+
+**Authority Model**:
+- C5 = Decision Authority (gate pass/fail)
+- C6 = Service Provider (data integrity reports)
+- C7 = Advisory (warnings, recommendations)
 
 ### New in v6.1: Humanization Pipeline Agents
 
@@ -328,6 +344,7 @@ https://github.com/HosungYou/Diverga
 
 ## Version History
 
+- **v6.3.0**: Meta-Analysis Agent System - C5-MetaAnalysisMaster, C6-DataIntegrityGuard, C7-ErrorPreventionEngine (40 agents total)
 - **v6.2.0**: Parallel Document Processing - B5-ParallelDocumentProcessor for batch PDF handling (37 agents total)
 - **v6.1.0**: Humanization Pipeline - G5-AcademicStyleAuditor, G6-AcademicStyleHumanizer, F5-HumanizationVerifier (36 agents total)
 - **v6.0.1**: Agent restructuring - 33 agents with category-based naming (A1-H2)
