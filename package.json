@@ -1,0 +1,68 @@
+{
+  "name": "diverga",
+  "version": "6.5.0",
+  "description": "Diverga Agent Runtime - 40 specialized AI research agents with VS-Research methodology",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./agents": {
+      "import": "./dist/agents/index.js",
+      "types": "./dist/agents/index.d.ts"
+    },
+    "./agents/definitions": {
+      "import": "./dist/agents/definitions.js",
+      "types": "./dist/agents/definitions.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    ".claude/skills/research-agents",
+    ".claude/skills/research-coordinator",
+    ".claude/skills/research-orchestrator",
+    "README.md",
+    "CLAUDE.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HosungYou/Diverga.git"
+  },
+  "keywords": [
+    "research",
+    "social-science",
+    "meta-analysis",
+    "systematic-review",
+    "academic-writing",
+    "verbalized-sampling",
+    "claude-code",
+    "agent-runtime",
+    "qualitative-research",
+    "quantitative-research",
+    "mixed-methods",
+    "PRISMA"
+  ],
+  "author": "Hosung You",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HosungYou/Diverga/issues"
+  },
+  "homepage": "https://github.com/HosungYou/Diverga#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0"
+  }
+}

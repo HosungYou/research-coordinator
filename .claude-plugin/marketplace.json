@@ -6,8 +6,8 @@
     "github": "HosungYou"
   },
   "metadata": {
-    "description": "40 specialized AI research agents with VS-Research methodology (Verbalized Sampling) - Human-centered checkpoints, creative alternatives, meta-analysis system",
-    "version": "6.4.0",
+    "description": "40 specialized AI research agents with VS-Research methodology (Verbalized Sampling) - Human-centered checkpoints, creative alternatives, meta-analysis system, parallel execution support",
+    "version": "6.5.0",
     "keywords": [
       "research",
       "social-science",
@@ -25,6 +25,7 @@
     "repository": "https://github.com/HosungYou/Diverga",
     "license": "MIT",
     "changelog": {
+      "6.5.0": "Independent Agent Runtime - Parallel execution via Task(subagent_type='diverga:a1'), TypeScript runtime, dynamic SKILL.md loading",
       "6.4.0": "Plugin Marketplace Edition - /diverga:setup wizard, auto-trigger dispatch, 40 agents",
       "6.3.0": "Meta-Analysis Agent System - C5/C6/C7 for Hedges' g calculation and validation",
       "6.2.0": "Parallel Document Processing - B5 for batch PDF handling",
@@ -35,8 +36,13 @@
   "plugins": [
     {
       "name": "diverga",
-      "description": "Complete research agent suite v6.4: 40 specialized agents across 8 categories (A-H) with VS methodology, human checkpoints, and meta-analysis system.",
+      "description": "Complete research agent suite v6.5: 40 specialized agents across 8 categories (A-H) with VS methodology, human checkpoints, meta-analysis system, and parallel execution support via Task tool.",
       "source": "./",
+      "runtime": {
+        "type": "typescript",
+        "entry": "./dist/index.js",
+        "agents": "./dist/agents/definitions.js"
+      },
       "strict": false,
       "skills": [
         "./.claude/skills/research-coordinator",

@@ -4,6 +4,138 @@ All notable changes to Diverga (formerly Research Coordinator) will be documente
 
 ---
 
+## [6.5.0] - 2026-01-27 (Parallel Execution Edition)
+
+### Overview
+
+Diverga v6.5.0 introduces **Parallel Agent Execution via Task tool**, enabling oh-my-claudecode-compatible agent invocation for simultaneous multi-agent research workflows.
+
+**Core Theme**: "Run multiple research agents in parallel, just like oh-my-claudecode"
+
+### New Features
+
+#### `/agents/` Directory (40 Agent Files)
+
+Direct agent files for Task tool registration, compatible with Claude Code's agent discovery system:
+
+```
+agents/
+├── a1.md - a6.md    # Category A: Foundation (6 agents)
+├── b1.md - b5.md    # Category B: Evidence (5 agents)
+├── c1.md - c7.md    # Category C: Design & Meta-Analysis (7 agents)
+├── d1.md - d4.md    # Category D: Data Collection (4 agents)
+├── e1.md - e5.md    # Category E: Analysis (5 agents)
+├── f1.md - f5.md    # Category F: Quality (5 agents)
+├── g1.md - g6.md    # Category G: Communication (6 agents)
+└── h1.md - h2.md    # Category H: Specialized (2 agents)
+```
+
+**Total: 40 agent .md files**
+
+#### Parallel Execution via Task Tool
+
+Run multiple agents simultaneously in a single message:
+
+```python
+# Single agent
+Task(subagent_type="diverga:a1", prompt="Refine my research question...")
+
+# Parallel execution (single message, multiple Tasks)
+Task(subagent_type="diverga:a1", prompt="Research question...")
+Task(subagent_type="diverga:a2", prompt="Theoretical framework...")
+Task(subagent_type="diverga:a3", prompt="Critical evaluation...")
+```
+
+#### oh-my-claudecode Compatible
+
+Same invocation pattern as oh-my-claudecode:
+
+| Feature | Pattern |
+|---------|---------|
+| Agent invocation | `Task(subagent_type="diverga:a1")` |
+| Model specification | `model="opus"` / `"sonnet"` / `"haiku"` |
+| Parallel execution | Multiple Task calls in single message |
+
+#### TypeScript Runtime
+
+Programmatic agent access for advanced integrations:
+
+```typescript
+import { getAgentDefinitions, getAgent, findAgentByTrigger } from 'diverga';
+
+const agents = getAgentDefinitions();  // All 40 agents
+const a1 = getAgent('a1');             // Single agent
+const agent = findAgentByTrigger('meta-analysis');  // By keyword
+```
+
+### Agent Model Distribution
+
+| Model | Tier | Count | Agents |
+|-------|------|-------|--------|
+| opus | HIGH | 16 | a1, a2, a3, a5, b5, c1, c2, c3, c5, d4, e1, e2, e3, g6, h1, h2 |
+| sonnet | MEDIUM | 17 | a4, a6, b1, b2, c4, c6, c7, d1, d2, e5, f3, f4, g1, g2, g3, g4, g5 |
+| haiku | LOW | 7 | b3, b4, d3, e4, f1, f2, f5 |
+
+### Agent File Format
+
+Each agent file uses YAML frontmatter + Markdown:
+
+```markdown
+---
+name: a1
+description: VS-Enhanced Research Question Refiner
+model: opus
+tools: Read, Glob, Grep, WebSearch
+---
+
+# Research Question Refiner
+
+**Agent ID**: A1
+**Category**: A - Theory & Design
+**VS Level**: Enhanced (3-Phase)
+**Tier**: HIGH (Opus)
+
+## Overview
+...
+
+## Human Checkpoint Protocol
+...
+```
+
+### Dual Invocation Support
+
+Both invocation patterns work:
+
+| Method | Pattern | Status |
+|--------|---------|--------|
+| **Skill tool** | `/diverga:A1-research-question-refiner` | ✅ Works |
+| **Task tool** | `Task(subagent_type="diverga:a1")` | ✅ Works (after v6.5.0) |
+
+### New Files
+
+| File | Purpose |
+|------|---------|
+| `agents/*.md` (40 files) | Task tool agent definitions |
+| `src/agents/types.ts` | TypeScript type definitions |
+| `src/agents/definitions.ts` | Agent registry and API |
+| `src/agents/prompt-loader.ts` | SKILL.md parser with VS injection |
+| `package.json` | npm package configuration |
+| `tsconfig.json` | TypeScript configuration |
+
+### Installation Note
+
+After updating to v6.5.0, reinstall the plugin to enable Task tool agents:
+
+```bash
+/plugin reinstall diverga
+```
+
+### No Breaking Changes
+
+Existing Skill-based workflows continue unchanged. Task tool is additive.
+
+---
+
 ## [6.4.0] - 2026-01-27 (Plugin Marketplace Edition)
 
 ### Overview
