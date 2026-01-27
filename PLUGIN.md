@@ -1,6 +1,6 @@
 # Diverga
 
-**Version**: 6.4.0
+**Version**: 6.5.2
 **Author**: Hosung You
 **Repository**: https://github.com/HosungYou/Diverga
 **License**: MIT
@@ -13,10 +13,32 @@ Diverga is an AI Research Assistant for the complete research lifecycle. 40 spec
 
 **Key Features:**
 - 40 specialized research agents across 8 categories
+- **Parallel execution via Task tool** (v6.5+)
 - Auto-trigger based on conversation context
 - Human checkpoints for critical decisions
 - Verbalized Sampling (VS) methodology for creative alternatives
 - Multi-language support (English, Korean)
+
+---
+
+## Directory Structure (v6.5.2+)
+
+```
+diverga/
+├── agents/              # 40 agent definitions (Task tool)
+│   ├── a1.md           # → Task(subagent_type="diverga:a1", ...)
+│   ├── a2.md
+│   └── ...
+├── skills/              # Skill definitions (Skill tool)
+│   ├── research-coordinator/
+│   ├── setup/
+│   └── ...
+└── .claude-plugin/
+    └── marketplace.json  # Plugin registration
+```
+
+**Important**: Both `/agents/` and `/skills/` are auto-discovered by Claude Code.
+Do NOT add explicit `skills` key in marketplace.json.
 
 ---
 
