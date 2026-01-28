@@ -40,3 +40,15 @@ logs/
 
 # Local development
 .local/
+
+# Build artifacts
+dist/
+*.tsbuildinfo
+
+# Package lock files (use npm ci with package-lock.json if needed)
+package-lock.json
+.opencode/plugins/diverga/package-lock.json
+
+# TypeScript build cache
+*.js.map
+*.d.ts.map

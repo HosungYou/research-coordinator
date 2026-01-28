@@ -1,119 +1,248 @@
 #!/bin/bash
-
-# ============================================
-# Research Coordinator 설치 스크립트
-# ============================================
+#
+# Diverga Universal Installer
+# Automatically detects and installs for Codex CLI, OpenCode, and Claude Code
+#
+# Usage:
+#   curl -sSL https://raw.githubusercontent.com/HosungYou/Diverga/main/scripts/install.sh | bash
+#   ./scripts/install.sh [codex|opencode|claude-code|all]
+#
 
 set -e
 
-# 색상 정의
+# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
+CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-# 버전 정보
-VERSION="3.1.0"
+# Configuration
+REPO_URL="https://github.com/HosungYou/Diverga.git"
+VERSION="6.6.1"
 
-# 로고 출력
-echo -e "${BLUE}"
-echo "╔═══════════════════════════════════════════════════════╗"
-echo "║     Research Coordinator Installer v${VERSION}           ║"
-echo "║     사회과학 연구 에이전트 시스템                      ║"
-echo "║     VS-Research: Mode Collapse 방지 시스템            ║"
-echo "╚═══════════════════════════════════════════════════════╝"
-echo -e "${NC}"
+# Print banner
+print_banner() {
+    echo -e "${CYAN}"
+    echo "╔═══════════════════════════════════════════════════════════════╗"
+    echo "║           Diverga Universal Installer v${VERSION}              ║"
+    echo "║     Multi-Agent Research Coordinator for AI Coding Tools      ║"
+    echo "╚═══════════════════════════════════════════════════════════════╝"
+    echo -e "${NC}"
+}
 
-# 변수 설정
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SOURCE_DIR="$(dirname "$SCRIPT_DIR")"
-TARGET_DIR="$HOME/.claude/skills"
+# Logging functions
+log_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
+log_success() { echo -e "${GREEN}[✓]${NC} $1"; }
+log_warn() { echo -e "${YELLOW}[!]${NC} $1"; }
+log_error() { echo -e "${RED}[✗]${NC} $1"; }
 
-echo -e "${YELLOW}설치 정보:${NC}"
-echo "  소스 디렉토리: $SOURCE_DIR"
-echo "  대상 디렉토리: $TARGET_DIR"
-echo ""
+# Detect available platforms
+detect_platforms() {
+    local platforms=()
 
-# 소스 디렉토리 확인
-if [ ! -d "$SOURCE_DIR/.claude/skills/research-coordinator" ]; then
-    echo -e "${RED}오류: 소스 디렉토리를 찾을 수 없습니다.${NC}"
-    echo "  예상 경로: $SOURCE_DIR/.claude/skills/research-coordinator"
-    exit 1
-fi
+    if command -v codex &> /dev/null || [ -d "$HOME/.codex" ]; then
+        platforms+=("codex")
+    fi
 
-if [ ! -d "$SOURCE_DIR/.claude/skills/research-agents" ]; then
-    echo -e "${RED}오류: 에이전트 디렉토리를 찾을 수 없습니다.${NC}"
-    echo "  예상 경로: $SOURCE_DIR/.claude/skills/research-agents"
-    exit 1
-fi
+    if command -v opencode &> /dev/null || [ -d "$HOME/.opencode" ]; then
+        platforms+=("opencode")
+    fi
 
-# 대상 디렉토리 생성
-echo -e "${BLUE}[1/4] 대상 디렉토리 생성 중...${NC}"
-if [ ! -d "$TARGET_DIR" ]; then
-    mkdir -p "$TARGET_DIR"
-    echo -e "  ${GREEN}✓${NC} 생성됨: $TARGET_DIR"
-else
-    echo -e "  ${GREEN}✓${NC} 이미 존재함: $TARGET_DIR"
-fi
+    if command -v claude &> /dev/null || [ -d "$HOME/.claude" ]; then
+        platforms+=("claude-code")
+    fi
 
-# 기존 설치 확인 및 제거
-echo -e "${BLUE}[2/4] 기존 설치 확인 중...${NC}"
-if [ -L "$TARGET_DIR/research-coordinator" ] || [ -d "$TARGET_DIR/research-coordinator" ]; then
-    echo -e "  ${YELLOW}!${NC} 기존 설치 발견. 제거 중..."
-    rm -rf "$TARGET_DIR/research-coordinator"
-    echo -e "  ${GREEN}✓${NC} 기존 research-coordinator 제거됨"
-fi
+    echo "${platforms[@]}"
+}
 
-if [ -L "$TARGET_DIR/research-agents" ] || [ -d "$TARGET_DIR/research-agents" ]; then
-    rm -rf "$TARGET_DIR/research-agents"
-    echo -e "  ${GREEN}✓${NC} 기존 research-agents 제거됨"
-fi
+# Clone or update repository
+ensure_repo() {
+    local tmp_dir="/tmp/diverga-install-$$"
 
-# 심볼릭 링크 생성
-echo -e "${BLUE}[3/4] 심볼릭 링크 생성 중...${NC}"
+    log_info "Fetching Diverga repository..."
 
-ln -sf "$SOURCE_DIR/.claude/skills/research-coordinator" "$TARGET_DIR/research-coordinator"
-echo -e "  ${GREEN}✓${NC} research-coordinator 링크 생성됨"
+    if [ -d "$tmp_dir" ]; then
+        rm -rf "$tmp_dir"
+    fi
 
-ln -sf "$SOURCE_DIR/.claude/skills/research-agents" "$TARGET_DIR/research-agents"
-echo -e "  ${GREEN}✓${NC} research-agents 링크 생성됨"
+    git clone --depth 1 "$REPO_URL" "$tmp_dir" 2>/dev/null || {
+        log_error "Failed to clone repository"
+        exit 1
+    }
 
-# 설치 확인
-echo -e "${BLUE}[4/4] 설치 확인 중...${NC}"
+    echo "$tmp_dir"
+}
 
-if [ -f "$TARGET_DIR/research-coordinator/SKILL.md" ]; then
-    echo -e "  ${GREEN}✓${NC} 마스터 스킬 확인됨"
-else
-    echo -e "  ${RED}✗${NC} 마스터 스킬 확인 실패"
-    exit 1
-fi
+# Install for Codex CLI
+install_codex() {
+    local src_dir="$1"
+    local dest_dir="$HOME/.codex/diverga"
 
-AGENT_COUNT=$(ls -d "$TARGET_DIR/research-agents"/*/ 2>/dev/null | wc -l | tr -d ' ')
-echo -e "  ${GREEN}✓${NC} 에이전트 스킬: ${AGENT_COUNT}개 확인됨"
+    log_info "Installing Diverga for Codex CLI..."
 
-# 완료 메시지
-echo ""
-echo -e "${GREEN}╔═══════════════════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║     Research Coordinator v${VERSION} 설치 완료!           ║${NC}"
-echo -e "${GREEN}╚═══════════════════════════════════════════════════════╝${NC}"
-echo ""
-echo -e "${YELLOW}v3.0 새로운 기능:${NC}"
-echo "  • VS-Research 방법론: LLM Mode Collapse 방지"
-echo "  • Dynamic T-Score: 권장안의 전형성(0.0-1.0) 평가"
-echo "  • 5가지 창의적 장치: 강제 비유, 반복 루프, 의미적 거리, 시간 재구성, 커뮤니티 시뮬레이션"
-echo "  • User Checkpoints: 14개 확인 지점"
-echo "  • 3-Tier Agent Upgrade: FULL(5) / ENHANCED(6) / LIGHT(9)"
-echo ""
-echo -e "${YELLOW}사용 방법:${NC}"
-echo "  Claude Code에서 다음 명령어로 시작하세요:"
-echo ""
-echo -e "    ${BLUE}/research-coordinator${NC}    - 마스터 코디네이터"
-echo -e "    ${BLUE}/research-question-refiner${NC} - 개별 에이전트"
-echo ""
-echo -e "${YELLOW}설치 위치:${NC}"
-echo "  $TARGET_DIR/research-coordinator"
-echo "  $TARGET_DIR/research-agents"
-echo ""
-echo -e "문서: ${BLUE}https://github.com/HosungYou/research-coordinator${NC}"
-echo ""
+    mkdir -p "$dest_dir"
+
+    cp -r "$src_dir/.codex/"* "$dest_dir/" 2>/dev/null || true
+    cp "$src_dir/CLAUDE.md" "$dest_dir/" 2>/dev/null || true
+    cp "$src_dir/AGENTS.md" "$dest_dir/" 2>/dev/null || true
+
+    chmod +x "$dest_dir/diverga-codex.cjs" 2>/dev/null || true
+
+    if node "$dest_dir/diverga-codex.cjs" help &>/dev/null; then
+        log_success "Codex CLI installation complete: $dest_dir"
+        echo ""
+        echo "  Usage:"
+        echo "    node ~/.codex/diverga/diverga-codex.cjs setup"
+        echo "    node ~/.codex/diverga/diverga-codex.cjs list"
+        echo ""
+    else
+        log_warn "Codex installation completed but verification failed"
+    fi
+}
+
+# Install for OpenCode
+install_opencode() {
+    local src_dir="$1"
+    local dest_dir="$HOME/.opencode/plugins/diverga"
+    local plugin_src="$src_dir/.opencode/plugins/diverga"
+
+    log_info "Installing Diverga for OpenCode..."
+
+    if [ ! -d "$plugin_src" ]; then
+        log_error "OpenCode plugin source not found"
+        return 1
+    fi
+
+    mkdir -p "$dest_dir"
+
+    if command -v npm &> /dev/null; then
+        log_info "Building TypeScript plugin..."
+
+        cd "$plugin_src"
+        npm install --silent 2>/dev/null || true
+        npm run build --silent 2>/dev/null || {
+            log_warn "Build failed, copying source files instead"
+            cp -r "$plugin_src/"* "$dest_dir/"
+            return 0
+        }
+
+        cp -r "$plugin_src/dist/"* "$dest_dir/" 2>/dev/null || true
+        cp "$plugin_src/package.json" "$dest_dir/" 2>/dev/null || true
+
+        log_success "OpenCode installation complete (compiled): $dest_dir"
+    else
+        log_warn "npm not found, copying source files..."
+        cp -r "$plugin_src/"* "$dest_dir/"
+        log_success "OpenCode installation complete (source): $dest_dir"
+    fi
+
+    echo ""
+    echo "  Usage:"
+    echo "    opencode \"diverga:list\""
+    echo "    opencode \"diverga:setup\""
+    echo ""
+}
+
+# Install for Claude Code
+install_claude_code() {
+    local src_dir="$1"
+    local dest_dir="$HOME/.claude/plugins/diverga"
+
+    log_info "Installing Diverga for Claude Code..."
+
+    mkdir -p "$dest_dir"
+
+    if [ -d "$src_dir/.claude" ]; then
+        cp -r "$src_dir/.claude/"* "$HOME/.claude/" 2>/dev/null || true
+    fi
+
+    if [ -d "$src_dir/skills" ]; then
+        mkdir -p "$HOME/.claude/skills"
+        cp -r "$src_dir/skills/"* "$HOME/.claude/skills/" 2>/dev/null || true
+    fi
+
+    cp "$src_dir/CLAUDE.md" "$dest_dir/" 2>/dev/null || true
+    cp "$src_dir/AGENTS.md" "$dest_dir/" 2>/dev/null || true
+
+    log_success "Claude Code installation complete: $dest_dir"
+    echo ""
+    echo "  Alternatively, use the plugin marketplace:"
+    echo "    /plugin marketplace add https://github.com/HosungYou/Diverga"
+    echo "    /plugin install diverga"
+    echo ""
+}
+
+# Cleanup
+cleanup() {
+    local tmp_dir="$1"
+    if [ -d "$tmp_dir" ]; then
+        rm -rf "$tmp_dir"
+    fi
+}
+
+# Main installation logic
+main() {
+    print_banner
+
+    local target_platform="${1:-auto}"
+    local tmp_dir=""
+
+    tmp_dir=$(ensure_repo)
+    trap "cleanup '$tmp_dir'" EXIT
+
+    if [ "$target_platform" = "auto" ] || [ "$target_platform" = "all" ]; then
+        local detected=($(detect_platforms))
+
+        if [ ${#detected[@]} -eq 0 ]; then
+            log_warn "No supported platforms detected"
+            echo ""
+            echo "Supported platforms:"
+            echo "  - Codex CLI (codex command or ~/.codex directory)"
+            echo "  - OpenCode (opencode command or ~/.opencode directory)"
+            echo "  - Claude Code (claude command or ~/.claude directory)"
+            echo ""
+            echo "Install manually with:"
+            echo "  ./install.sh codex"
+            echo "  ./install.sh opencode"
+            echo "  ./install.sh claude-code"
+            exit 0
+        fi
+
+        log_info "Detected platforms: ${detected[*]}"
+        echo ""
+
+        for platform in "${detected[@]}"; do
+            case "$platform" in
+                codex) install_codex "$tmp_dir" ;;
+                opencode) install_opencode "$tmp_dir" ;;
+                claude-code) install_claude_code "$tmp_dir" ;;
+            esac
+            echo ""
+        done
+    else
+        case "$target_platform" in
+            codex) install_codex "$tmp_dir" ;;
+            opencode) install_opencode "$tmp_dir" ;;
+            claude-code|claude) install_claude_code "$tmp_dir" ;;
+            *)
+                log_error "Unknown platform: $target_platform"
+                echo "Supported: codex, opencode, claude-code, all, auto"
+                exit 1
+                ;;
+        esac
+    fi
+
+    echo -e "${GREEN}"
+    echo "═══════════════════════════════════════════════════════════════"
+    echo "              Installation Complete!"
+    echo "═══════════════════════════════════════════════════════════════"
+    echo -e "${NC}"
+    echo ""
+    echo "Documentation: https://github.com/HosungYou/Diverga"
+    echo "Issues: https://github.com/HosungYou/Diverga/issues"
+    echo ""
+}
+
+main "$@"
