@@ -544,18 +544,24 @@ codex
 |----------|------------------|---------|
 | Claude Code | Inside Claude Code | `/plugin install diverga` |
 | Codex CLI | Regular terminal | `npx @diverga/codex-setup` |
+| OpenCode | Regular terminal | `curl ... \| bash` (see below) |
 
 ### OpenCode Quick Start
 
-```jsonc
-// .opencode/oh-my-opencode.json
-{
-  "plugins": ["./plugins/diverga"],
-  "diverga": {
-    "autoTrigger": true,
-    "defaultModel": "sonnet"
-  }
-}
+> ⚠️ **Important**: Like Codex CLI, OpenCode installation runs in a **regular terminal**, not inside OpenCode.
+
+```bash
+# Step 1: Install OpenCode (if not installed)
+brew install anomalyco/tap/opencode   # macOS/Linux
+# or: npm i -g opencode-ai@latest
+
+# Step 2: Install Diverga from regular terminal
+curl -sSL https://raw.githubusercontent.com/HosungYou/Diverga/main/scripts/install-opencode.sh | bash
+
+# Step 3: Start OpenCode and use
+opencode
+> "I want to conduct a meta-analysis"
+# → Agents activate automatically
 ```
 
 ### Model Mapping
