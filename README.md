@@ -570,9 +570,9 @@ opencode
 
 | Tier | Claude Code | Codex CLI | OpenCode |
 |------|-------------|-----------|----------|
-| HIGH | opus | o3 / codex-mini | *provider 설정* |
-| MEDIUM | sonnet | gpt-4.1 | *provider 설정* |
-| LOW | haiku | gpt-4o-mini | *provider 설정* |
+| HIGH | opus | gpt-5.2-codex | *per provider* |
+| MEDIUM | sonnet | gpt-5.1-codex | *per provider* |
+| LOW | haiku | gpt-5.1-codex-mini | *per provider* |
 
 > **Note**: OpenCode is provider-agnostic (75+ models supported). Use `/connect` command to configure your preferred provider (Claude, OpenAI, Gemini, local models, etc.).
 
