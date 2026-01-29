@@ -1,274 +1,352 @@
-# Diverga QA Protocol v2.2
+# Diverga QA Protocol v3.0
 
-Automated Testing for Diverga Research Methodology Plugin
-
-**v2.2 New**: Fully automated test simulation with pre-defined response templates
-**v2.1**: Session-based folder management + RAW conversation extraction
+**True Automated Testing via CLI**
 
 ## Overview
 
-This QA protocol validates Diverga plugin functionality through **real Claude Code conversations**, not mock simulations. It tests:
+Diverga QA Protocol v3.0은 실제 AI 응답을 CLI 도구를 통해 자동으로 캡처하는 테스트 프레임워크입니다.
 
-- **Checkpoint System** - Mandatory HALT at critical decision points
-- **Agent Invocation** - Correct agent triggering and execution
-- **VS Methodology** - T-Score based alternative presentation
-- **Complex User Interactions** - Technical questions, methodological challenges, agent transitions
-- **Language Consistency** - Response matches input language (English/Korean)
+### v2.x vs v3.0 비교
+
+| 항목 | v2.x (시뮬레이션) | v3.0 (진정한 자동화) |
+|------|------------------|---------------------|
+| **AI 응답** | `RESPONSE_TEMPLATES` dict | **실제 AI 생성 응답** |
+| **실행 방식** | Python 시뮬레이터 | **CLI 비대화형 모드** |
+| **검증 가치** | 프로토콜 형식만 | **실제 기능 검증** |
+| **API 호출** | 없음 | 실제 토큰 소비 |
+
+---
 
 ## Quick Start
 
-### 1. Run Automated Tests (Recommended)
+### 단일 시나리오 실행 (v3.0 권장)
 
 ```bash
-# Run a specific scenario (no manual input required!)
+# 실제 AI 테스트
+python3 qa/runners/cli_test_runner.py --scenario QUAL-002 --cli claude
+
+# Dry Run (API 호출 없음)
+python3 qa/runners/cli_test_runner.py --scenario QUAL-002 --dry-run
+
+# Verbose 모드
+python3 qa/runners/cli_test_runner.py --scenario QUAL-002 -v
+```
+
+### 모든 시나리오 실행
+
+```bash
+# 실제 AI로 모든 시나리오 테스트
+./qa/run_all_scenarios.sh
+
+# Dry Run 모드
+./qa/run_all_scenarios.sh --dry-run
+
+# 다른 CLI 도구 사용
+./qa/run_all_scenarios.sh --cli opencode
+```
+
+### v2.x 시뮬레이션 (Legacy)
+
+```bash
+# 시뮬레이션 모드 (하드코딩된 응답)
 python3 qa/runners/automated_test.py --scenario QUAL-002
-
-# Run all scenarios
-python3 qa/runners/automated_test.py --all
-
-# Results are saved to qa/reports/sessions/{SCENARIO-ID}/
 ```
 
-### 2. Manual Test (Optional)
+---
 
-```bash
-# Start Claude Code in the Diverga project
-cd /Volumes/External\ SSD/Projects/Diverga
-claude
-
-# Invoke the research coordinator skill
-/diverga:research-coordinator
-
-# Or start with a natural language prompt from the scenario
-```
-
-### 2. Follow Test Script
-
-Use the conversation flows defined in `qa/protocol/test_*.yaml`:
-
-| Scenario | File | Focus |
-|----------|------|-------|
-| META-002 | `test_meta_002.yaml` | Advanced meta-analysis with technical challenges |
-| QUAL-002 | `test_qual_002.yaml` | Phenomenology with paradigm debates (Korean) |
-| MIXED-002 | `test_mixed_002.yaml` | Mixed methods integration challenges |
-| HUMAN-002 | `test_human_002.yaml` | Academic humanization with ethics |
-
-### 3. Extract and Evaluate
-
-```bash
-# Extract conversation from Claude Code session log
-python qa/runners/extract_conversation.py \
-  --session ~/.claude/projects/{project-id}/{session}.jsonl \
-  --output qa/reports/real-transcripts/
-
-# Evaluate against expected scenario
-python qa/run_tests.py \
-  --evaluate-extracted \
-  --input qa/reports/real-transcripts/META-002.yaml \
-  --expected qa/protocol/test_meta_002.yaml
-```
-
-## Directory Structure (v2.1)
+## 디렉토리 구조
 
 ```
 qa/
-├── README.md                    # This file
-├── run_tests.py                 # Test runner and evaluator
-├── .gitignore                   # Excludes large JSONL files
-├── docs/
-│   ├── QA_PROTOCOL_v2.md        # Full protocol documentation
-│   ├── CHECKPOINT_SPEC.md       # Checkpoint system spec
-│   └── AGENT_TRIGGER_SPEC.md    # 40 agent trigger map
-├── runners/
+├── README.md                    # 이 문서
+├── run_all_scenarios.sh         # v3.0 배치 테스트 스크립트
+├── run_tests.py                 # v2.x 테스트 러너
+│
+├── protocol/                    # 테스트 시나리오 정의
+│   ├── test_qual_001.yaml       # 기본 질적 연구
+│   ├── test_qual_002.yaml       # 고급 현상학 (한국어)
+│   ├── test_meta_001.yaml       # 기본 메타분석
+│   ├── test_meta_002.yaml       # 고급 메타분석 (영어)
+│   ├── test_mixed_001.yaml      # 혼합방법
+│   ├── test_mixed_002.yaml      # 고급 혼합방법
+│   ├── test_human_001.yaml      # 인간 체크포인트
+│   └── test_human_002.yaml      # 고급 체크포인트
+│
+├── runners/                     # 테스트 실행기
 │   ├── __init__.py
-│   └── extract_conversation.py  # Session log extractor
-├── protocol/
-│   ├── test_meta_002.yaml       # Advanced meta-analysis scenario
-│   ├── test_qual_002.yaml       # Advanced qualitative (Korean)
-│   ├── test_mixed_002.yaml      # Advanced mixed methods
-│   └── test_human_002.yaml      # Academic humanization
-└── reports/
-    ├── README.md                # Reports guide
-    ├── sessions/                # [v2.1] Session-based folders
-    │   └── META-002/            # Complete test session
+│   ├── cli_test_runner.py       # v3.0 CLI 기반 자동화 (NEW)
+│   ├── automated_test.py        # v2.x 시뮬레이터
+│   ├── extract_conversation.py  # JSONL 세션 파싱
+│   ├── checkpoint_validator.py  # 체크포인트 검증
+│   └── agent_tracker.py         # 에이전트 추적
+│
+└── reports/                     # 테스트 결과
+    ├── sessions/                # 세션별 결과
+    │   └── QUAL-002/
     │       ├── README.md
-    │       ├── conversation_transcript.md  # Human-readable
-    │       ├── conversation_raw.json       # RAW data
-    │       ├── META-002_test_result.yaml
-    │       └── META-002_report.html
-    └── (legacy files...)        # v1.0 outputs
+    │       ├── conversation_transcript.md
+    │       ├── conversation_raw.json
+    │       └── QUAL-002_test_result.yaml
+    └── real-transcripts/        # 실제 대화 기록
 ```
 
-## Test Scenarios
+---
 
-### META-002: Advanced Meta-Analysis
+## CLI Test Runner (v3.0)
 
-**Complexity:** HIGH (10-15 turns)
-**Language:** English
-**Agents:** C5, C6, C7, B1, B3, E1, E5, A2
+### CLITestRunner 클래스
 
-Tests:
-- Effect size methodology questions (Hedges' g vs Cohen's d)
-- Sample size concerns for random-effects models
-- Agent transition to theoretical framework
-- Gray literature inclusion decisions
-- Bayesian meta-analysis alternatives
-- Subgroup analysis feasibility
+```python
+from qa.runners import CLITestRunner
 
-### QUAL-002: Advanced Phenomenology (Korean)
+runner = CLITestRunner(
+    scenario_id='QUAL-002',      # 시나리오 ID
+    cli_tool='claude',           # CLI 도구 (claude, opencode, codex)
+    verbose=True,                # 상세 출력
+    dry_run=False,               # Dry Run 모드
+    timeout=300                  # 턴당 타임아웃 (초)
+)
 
-**Complexity:** HIGH (8-12 turns)
-**Language:** Korean
-**Agents:** A1, A5, C2, D2, E2, A3, C3
+session = runner.run()
+runner.save_results('qa/reports/sessions')
+```
 
-Tests:
-- Phenomenological approach selection (Husserl vs Heidegger vs van Manen)
-- Philosophical depth questions
-- Devil's advocate reviewer anticipation
-- Sample size justification (n=5)
-- Paradigm reconsideration (pure qual vs mixed)
-- Korean language consistency throughout
+### 지원 CLI 도구
 
-### MIXED-002: Complex Mixed Methods
+| CLI | 명령 | 세션 지속 |
+|-----|------|----------|
+| `claude` | `claude -p "message"` | `--continue` |
+| `opencode` | `opencode run "message"` | - |
+| `codex` | `codex exec "message"` | `--resume` |
 
-**Complexity:** HIGH (8-10 turns)
-**Language:** English
-**Agents:** A1, C3, E3, D1, D2
+### 출력 파일
 
-Tests:
-- Morse notation explanation
-- Sequential vs concurrent design selection
-- Joint display creation guidance
-- Timeline constraint handling
-- Sample size ratio recommendations
-- Methodological flexibility defense
+| 파일 | 설명 |
+|------|------|
+| `README.md` | 세션 개요 및 메트릭 |
+| `conversation_transcript.md` | 실제 AI 응답 포함 대화 기록 |
+| `conversation_raw.json` | 메타데이터 포함 RAW 데이터 |
+| `{SCENARIO}_test_result.yaml` | 테스트 결과 및 검증 |
 
-### HUMAN-002: Academic Humanization
+---
 
-**Complexity:** MEDIUM (6-8 turns)
-**Language:** English
-**Agents:** G5, G6, F5, A4
+## 테스트 시나리오
 
-Tests:
-- AI pattern detection and categorization
-- Detection logic explanation
-- Humanization transformation modes
-- Ethical considerations (AI disclosure)
-- Citation integrity verification
-- Meaning preservation checking
+### QUAL-002: 고급 현상학 (한국어)
+
+```yaml
+scenario_id: QUAL-002
+name: "Advanced Phenomenology with Paradigm Debates"
+paradigm: qualitative
+complexity_level: HIGH
+language: "Korean (user input) -> Korean (response)"
+expected_turns: 8-12
+
+checkpoints_expected:
+  - CP_PARADIGM_SELECTION (RED)
+  - CP_METHODOLOGY_APPROVAL (RED)
+  - CP_PARADIGM_RECONSIDERATION (ORANGE)
+  - CP_ANALYSIS_APPROACH (ORANGE)
+
+agents_involved:
+  - A1-ResearchQuestionRefiner
+  - A5-ParadigmWorldviewAdvisor
+  - C2-QualitativeDesignConsultant
+  - D2-InterviewFocusGroupSpecialist
+  - E2-QualitativeCodingSpecialist
+  - A3-DevilsAdvocate
+```
+
+### META-002: 고급 메타분석 (영어)
+
+```yaml
+scenario_id: META-002
+name: "Advanced Meta-Analysis with Theoretical Debates"
+paradigm: quantitative
+language: English
+expected_turns: 8-12
+```
+
+### MIXED-002: 혼합방법
+
+```yaml
+scenario_id: MIXED-002
+paradigm: mixed
+language: English
+expected_turns: 8-10
+```
+
+### HUMAN-002: 학술 휴먼화
+
+```yaml
+scenario_id: HUMAN-002
+paradigm: qualitative
+language: English
+expected_turns: 6-8
+```
+
+---
+
+## 검증 메트릭
+
+### 체크포인트 탐지
+
+```python
+# 체크포인트 패턴
+patterns = [
+    r'🔴\s*CHECKPOINT[:\s]+(\w+)',   # RED
+    r'🟠\s*CHECKPOINT[:\s]+(\w+)',   # ORANGE
+    r'🟡\s*CHECKPOINT[:\s]+(\w+)',   # YELLOW
+    r'CHECKPOINT[:\s]+(CP_\w+)',
+]
+```
+
+### 에이전트 탐지
+
+```python
+# 에이전트 참조 패턴
+patterns = [
+    r'diverga:([a-z]\d+)',           # diverga:a1
+    r'([A-Z]\d+)-\w+',               # A1-ResearchQuestionRefiner
+    r'Task.*subagent_type.*diverga:(\w+)',
+]
+```
+
+### VS 옵션 추출
+
+```python
+# T-Score 포함 옵션
+pattern = r'\[([A-Z])\]\s*([^(]+?)\s*\(T\s*=\s*(\d+\.?\d*)\)'
+# 결과: {'option': 'B', 'label': '해석학적 현상학', 't_score': 0.40}
+```
+
+---
+
+## 테스트 결과 예시
+
+### QUAL-002 실행 결과 (2026-01-29)
+
+```
+============================================================
+Diverga QA Protocol v3.0 - True Automated Testing
+Scenario: QUAL-002
+CLI Tool: claude
+Mode: LIVE
+============================================================
+
+[Turn 1] INITIAL_REQUEST
+  Received: 792 chars
+  ✓ Completed (CP: 1, Agents: 0)
+
+[Turn 2] METHODOLOGICAL_CHALLENGE
+  Received: 1810 chars
+  ✓ Completed (CP: 1, Agents: 0)
+
+[Turn 3] SELECTION
+  Received: 2469 chars
+  ✓ Completed (CP: 1, Agents: 0)
+
+[Turn 4] ALTERNATIVE_EXPLORATION
+  Received: 3348 chars
+  ✓ Completed (CP: 1, Agents: 0)
+
+[Turn 5] PRACTICAL_CONSTRAINT
+  Received: 2966 chars
+  ✓ Completed (CP: 1, Agents: 0)
+
+[Turn 6] PARADIGM_QUESTIONING
+  Received: 3315 chars
+  ✓ Completed (CP: 1, Agents: 0)
+
+[Turn 7] SELECTION
+  Received: 5327 chars
+  ✓ Completed (CP: 1, Agents: 0)
+
+[Turn 8] APPROVAL
+  Received: 889 chars
+  ✓ Completed (CP: 1, Agents: 0)
+
+============================================================
+Test Completed: QUAL-002
+Turns: 8
+Checkpoints: 8
+============================================================
+```
+
+### 메트릭 요약
+
+| 메트릭 | 값 |
+|--------|-----|
+| Total Turns | 8 |
+| Checkpoints Found | 8 |
+| Total Response Chars | ~21,000 |
+| Test Duration | ~4 minutes |
+
+---
 
 ## User Input Types
 
-The protocol tests these complex user interaction patterns:
-
 | Type | Description | Example |
 |------|-------------|---------|
-| `TECHNICAL_FOLLOW_UP` | Deep statistical/methodological questions | "Why Hedges' g over Cohen's d?" |
-| `METHODOLOGICAL_CHALLENGE` | Critical questioning of approach | "But random-effects assumes normality..." |
-| `AGENT_TRANSITION_REQUEST` | Request to switch focus | "Wait, can we do theory first?" |
-| `SCOPE_CHANGE` | Modify research scope | "Should I include gray literature?" |
-| `ALTERNATIVE_EXPLORATION` | Ask about unlisted options | "What about Bayesian meta-analysis?" |
-| `PRACTICAL_CONSTRAINT` | Real-world limitations | "I only have 12 studies..." |
-| `SELECTION` | Option choice | "[B] Subject-specific effects" |
-| `APPROVAL` | Confirm and proceed | "Approved. Proceed." |
+| `INITIAL_REQUEST` | 연구 주제 제시 | "교사들이 AI 도구를 경험하는 현상을 탐구하고 싶습니다" |
+| `TECHNICAL_FOLLOW_UP` | 기술적 질문 | "Husserl의 bracket과 Heidegger의 hermeneutic circle 차이는?" |
+| `METHODOLOGICAL_CHALLENGE` | 방법론적 도전 | "왜 IPA 대신 van Manen인가요?" |
+| `SELECTION` | 옵션 선택 | "[B] 해석학적 현상학 (van Manen)" |
+| `PRACTICAL_CONSTRAINT` | 현실적 제약 | "참여자가 5명밖에 안 되는데 충분할까요?" |
+| `PARADIGM_QUESTIONING` | 패러다임 재고 | "혼합 방법으로 가는 게 더 나을까요?" |
+| `APPROVAL` | 승인 | "승인합니다. 이 방법론으로 진행하겠습니다." |
+
+---
 
 ## Checkpoint Levels
 
-| Level | Symbol | Behavior | Examples |
-|-------|--------|----------|----------|
-| RED | 🔴 | MUST HALT, wait for approval | Research direction, methodology approval |
-| ORANGE | 🟠 | SHOULD HALT, but can proceed with warning | Scope decisions, theory selection |
-| YELLOW | 🟡 | MAY proceed, log decision | Minor adjustments |
+| Level | Symbol | Behavior |
+|-------|--------|----------|
+| RED | 🔴 | MUST HALT, wait for approval |
+| ORANGE | 🟠 | SHOULD HALT |
+| YELLOW | 🟡 | MAY proceed |
 
-## Validation Metrics
+---
 
-| Metric | Target | Description |
-|--------|--------|-------------|
-| Checkpoint Compliance | 100% | All RED checkpoints trigger HALT |
-| Technical Depth | ≥90% | Accurate answers to follow-up questions |
-| Methodological Accuracy | ≥90% | Valid responses to challenges |
-| Context Retention | ≥95% | Remembers prior decisions after agent switch |
-| Language Consistency | 100% | Response matches input language |
-| Agent Transition | ≥90% | Smooth handoff with context preservation |
+## 문제 해결
 
-## Session Log Location
-
-Claude Code session logs are stored at:
-
-```
-~/.claude/projects/{project-id}/{session-id}.jsonl
-```
-
-Each line is a JSON object containing:
-- `type`: "user", "assistant", or "tool_result"
-- `content`: Message content
-- `tool_calls`: Array of tool invocations (for assistant)
-- `timestamp`: ISO timestamp
-
-## Extraction Script Usage
+### CLI 도구를 찾을 수 없음
 
 ```bash
-# Basic extraction
-python qa/runners/extract_conversation.py \
-  --session ~/.claude/projects/abc123/session.jsonl \
-  --output qa/reports/real-transcripts/
+# Claude Code 설치 확인
+which claude
 
-# With scenario ID
-python qa/runners/extract_conversation.py \
-  --session ~/.claude/projects/abc123/session.jsonl \
-  --scenario-id META-002 \
-  --output qa/reports/real-transcripts/
-
-# With evaluation
-python qa/runners/extract_conversation.py \
-  --session ~/.claude/projects/abc123/session.jsonl \
-  --expected qa/protocol/test_meta_002.yaml \
-  --output qa/reports/real-transcripts/
+# 설치되지 않은 경우
+npm install -g @anthropic-ai/claude-code
 ```
 
-## Test Runner Usage
+### 타임아웃 오류
 
 ```bash
-# Run all protocol tests
-python qa/run_tests.py --all
-
-# Run specific scenario evaluation
-python qa/run_tests.py --evaluate-extracted \
-  --input qa/reports/real-transcripts/META-002.yaml \
-  --expected qa/protocol/test_meta_002.yaml
-
-# Generate HTML report
-python qa/run_tests.py --all --report-format html \
-  --output qa/reports/2026-01-29/
+# 타임아웃 증가 (10분)
+python3 qa/runners/cli_test_runner.py --scenario QUAL-002 --timeout 600
 ```
 
-## Contributing
-
-When adding new test scenarios:
-
-1. Create YAML file in `qa/protocol/` following existing format
-2. Define conversation flow with expected behaviors
-3. Specify checkpoints, agent invocations, and validation rules
-4. Run actual conversation in Claude Code
-5. Extract and evaluate against expected
+---
 
 ## Changelog
 
+### v3.0 (2026-01-29)
+- **True automated testing via CLI** - 실제 AI 응답 캡처
+- **CLITestRunner 클래스** - subprocess 기반 CLI 실행
+- **Multi-turn 세션 지원** - `--continue` 플래그로 대화 지속
+- **Dry run 모드** - API 호출 없이 테스트 구조 확인
+- **run_all_scenarios.sh** - 배치 테스트 스크립트
+
 ### v2.2 (2026-01-29)
-- **Automated test simulation** - Run tests without any manual input
-- **Pre-defined response templates** - Realistic AI responses for each scenario/turn
-- **CLI-based execution** - `python3 qa/runners/automated_test.py --scenario QUAL-002`
-- **Multi-scenario support** - QUAL-002 (Korean) and META-002 (English) ready
+- **Automated test simulation** - `RESPONSE_TEMPLATES` 기반 시뮬레이션
+- **CLI-based execution** - `python3 qa/runners/automated_test.py`
 
 ### v2.1 (2026-01-29)
-- **Session-based folder management** - Each test session in `reports/sessions/{SCENARIO-ID}/`
-- **RAW conversation extraction** - `conversation_raw.json` + `conversation_transcript.md`
-- **GitHub deployment support** - Large JSONL files excluded, extracted files included
-- **Session README** - Each session folder has overview and test results
+- **Session-based folder management** - `reports/sessions/{SCENARIO-ID}/`
+- **RAW conversation extraction** - `conversation_raw.json`
 
 ### v2.0 (2026-01-29)
-- Migrated from mock Python scripts to real Claude Code conversations
-- Added complex user input types (technical follow-up, methodological challenge)
+- Migrated to real Claude Code conversations
+- Added complex user input types
 - Implemented JSONL session log extraction
-- Added language consistency validation
-- Created four advanced test scenarios (META-002, QUAL-002, MIXED-002, HUMAN-002)
