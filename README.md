@@ -525,17 +525,25 @@ Diverga/
 
 ### Codex CLI Quick Start
 
+> ⚠️ **Important**: Unlike Claude Code, Codex CLI installation runs in a **regular terminal**, not inside Codex CLI.
+
 ```bash
-# Method 1: Interactive TUI Installer (Recommended)
+# Step 1: Install from regular terminal (NOT inside Codex CLI)
 npx @diverga/codex-setup
 
-# Method 2: One-line script
-curl -sSL https://raw.githubusercontent.com/HosungYou/Diverga/main/scripts/install-codex.sh | bash
+# Step 2: Start Codex CLI
+codex
 
-# Verify installation
-diverga-codex list          # List all 40 agents
-diverga-codex agent A1      # Show agent details
+# Step 3: Use naturally - agents activate automatically
+> "I want to conduct a meta-analysis on AI in education"
+# → C5-MetaAnalysisMaster activates automatically
 ```
+
+**Installation Difference:**
+| Platform | Where to Install | Command |
+|----------|------------------|---------|
+| Claude Code | Inside Claude Code | `/plugin install diverga` |
+| Codex CLI | Regular terminal | `npx @diverga/codex-setup` |
 
 ### OpenCode Quick Start
 
