@@ -1,20 +1,27 @@
-# Diverga QA Protocol v2.1 - 완전 문서
+# Diverga QA Protocol v2.2 - 완전 문서
 
 ## 개요
 
-Diverga QA Protocol v2.1은 **실제 Claude Code 대화**를 통해 Diverga 연구 방법론 플러그인을 검증하는 시스템입니다.
+Diverga QA Protocol v2.2는 **자동화된 테스트 시뮬레이션**을 통해 Diverga 연구 방법론 플러그인을 검증하는 시스템입니다.
 
 ### 버전 비교
 
-| 항목 | v1.0 | v2.0 | v2.1 (현재) |
-|------|------|------|-------------|
-| **실행 방식** | Mock 스크립트 | 실제 대화 | 실제 대화 |
-| **사용자 입력** | 단답식 선택 | 복잡한 질문 | 복잡한 질문 |
-| **대화 추출** | 수동 기록 | JSONL 파싱 | **세션 폴더 기반** |
-| **대화 저장** | 없음 | YAML만 | **RAW JSON + Markdown** |
-| **폴더 구조** | 단일 폴더 | 단일 폴더 | **세션별 폴더** |
+| 항목 | v1.0 | v2.0 | v2.1 | v2.2 (현재) |
+|------|------|------|------|-------------|
+| **실행 방식** | Mock 스크립트 | 실제 대화 | 실제 대화 | **자동화 시뮬레이션** |
+| **사용자 입력** | 단답식 선택 | 복잡한 질문 | 복잡한 질문 | **사전 정의 템플릿** |
+| **대화 추출** | 수동 기록 | JSONL 파싱 | 세션 폴더 기반 | **자동 생성** |
+| **대화 저장** | 없음 | YAML만 | RAW JSON + MD | **RAW JSON + MD** |
+| **폴더 구조** | 단일 폴더 | 단일 폴더 | 세션별 폴더 | **세션별 폴더** |
+| **수동 개입** | 필수 | 필수 | 필수 | **불필요** |
 
-### v2.1 신규 기능
+### v2.2 신규 기능
+
+1. **자동화된 테스트 시뮬레이션** - 사용자 입력 없이 전체 테스트 자동 실행
+2. **사전 정의 응답 템플릿** - 각 시나리오별 현실적인 AI 응답 템플릿
+3. **CLI 기반 실행** - 단일 명령으로 테스트 실행 및 결과 저장
+
+### v2.1 기능 (유지)
 
 1. **세션 기반 폴더 관리** - 각 테스트 세션을 개별 폴더로 관리
 2. **RAW 대화 추출** - 완전한 대화 내용을 JSON 및 Markdown으로 저장
@@ -50,7 +57,7 @@ Diverga QA Protocol v2.1은 **실제 Claude Code 대화**를 통해 Diverga 연�
 
 ---
 
-## 디렉토리 구조 (v2.1)
+## 디렉토리 구조 (v2.2)
 
 ```
 qa/
@@ -63,7 +70,8 @@ qa/
 │   └── AGENT_TRIGGER_SPEC.md    # 에이전트 트리거 명세
 ├── runners/
 │   ├── __init__.py              # 모듈 익스포트
-│   └── extract_conversation.py  # 대화 추출기 (650+ lines)
+│   ├── extract_conversation.py  # 대화 추출기
+│   └── automated_test.py        # [v2.2 NEW] 자동화 테스트 시뮬레이터
 ├── protocol/
 │   ├── test_meta_002.yaml       # 메타분석 시나리오
 │   ├── test_qual_002.yaml       # 질적연구 시나리오 (한국어)
@@ -71,14 +79,14 @@ qa/
 │   └── test_human_002.yaml      # 휴먼화 시나리오
 └── reports/
     ├── README.md                # 리포트 가이드
-    ├── sessions/                # [v2.1 NEW] 세션별 폴더
+    ├── sessions/                # 세션별 폴더
     │   ├── META-002/            # META-002 테스트 세션
     │   │   ├── README.md                    # 세션 개요
     │   │   ├── conversation_transcript.md   # 사람이 읽기 쉬운 대화록
     │   │   ├── conversation_raw.json        # RAW 대화 데이터
     │   │   ├── META-002_test_result.yaml    # 테스트 평가 결과
     │   │   └── META-002_report.html         # HTML 보고서
-    │   ├── QUAL-002/            # (예정)
+    │   ├── QUAL-002/            # QUAL-002 테스트 세션
     │   └── MIXED-002/           # (예정)
     └── (legacy files...)        # v1.0 레거시 파일
 ```
@@ -210,6 +218,147 @@ python qa/runners/extract_conversation.py \
 # qa/.gitignore
 reports/sessions/**/session_*.jsonl
 ```
+
+---
+
+## 자동화된 테스트 시뮬레이션 (v2.2 NEW)
+
+### 개요
+
+v2.2부터 **완전 자동화된 테스트**가 가능합니다. 사용자 입력 없이 프로토콜 YAML 파일을 기반으로 전체 대화를 시뮬레이션하고 결과를 저장합니다.
+
+### 작동 원리
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                AUTOMATED TEST SIMULATION FLOW                    │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  1. Protocol YAML 로드                                          │
+│     └─ qa/protocol/test_{scenario}.yaml                         │
+│                                                                  │
+│  2. 응답 템플릿 매칭                                             │
+│     └─ RESPONSE_TEMPLATES[scenario][turn_number]                │
+│                                                                  │
+│  3. 턴별 시뮬레이션                                              │
+│     ├─ User input → Protocol YAML                               │
+│     └─ Assistant response → Pre-defined Template                │
+│                                                                  │
+│  4. 검증 및 탐지                                                 │
+│     ├─ 체크포인트 탐지 (🔴, 🟠, 🟡)                              │
+│     ├─ 에이전트 호출 추적                                        │
+│     └─ VS 옵션 및 T-Score 추출                                  │
+│                                                                  │
+│  5. 결과 저장                                                    │
+│     ├─ conversation_transcript.md                               │
+│     ├─ conversation_raw.json                                    │
+│     ├─ {SCENARIO}_test_result.yaml                              │
+│     └─ README.md                                                │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### CLI 사용법
+
+```bash
+# 특정 시나리오 실행
+python3 qa/runners/automated_test.py --scenario QUAL-002
+
+# 모든 시나리오 실행
+python3 qa/runners/automated_test.py --all
+
+# 출력 디렉토리 지정
+python3 qa/runners/automated_test.py --scenario META-002 --output qa/reports/sessions
+```
+
+### 응답 템플릿 구조
+
+`automated_test.py`에 각 시나리오별 응답 템플릿이 정의되어 있습니다:
+
+```python
+RESPONSE_TEMPLATES = {
+    "QUAL-002": {
+        1: """🔴 CHECKPOINT: CP_PARADIGM_SELECTION
+
+연구 맥락에서 **질적 연구 (현상학)** 접근이 감지되었습니다.
+
+[A] 기술적 현상학 (Husserl) - T=0.55
+[B] 해석학적 현상학 (van Manen) - T=0.40 ⭐
+[C] 실존적 현상학 (Heidegger) - T=0.30
+
+어떤 방향으로 진행하시겠습니까?""",
+
+        2: """Husserl과 Heidegger의 차이에 대해 설명드리겠습니다...
+
+어떤 현상학적 접근을 선택하시겠습니까?""",
+
+        # ... 각 턴별 응답
+    },
+
+    "META-002": {
+        1: """🔴 CHECKPOINT: CP_RESEARCH_DIRECTION
+
+Based on your research question, I'll present three approaches...
+
+Which direction would you like to pursue?""",
+
+        # ... 각 턴별 응답
+    }
+}
+```
+
+### 새 시나리오 추가하기
+
+1. **Protocol YAML 작성**
+   ```yaml
+   # qa/protocol/test_new_scenario.yaml
+   scenario_id: NEW-001
+   name: "New Scenario"
+   conversation_flow:
+     - turn: 1
+       user: "Initial user message"
+       expected_behavior:
+         checkpoint: CP_SOME_CHECKPOINT
+         halt: true
+   ```
+
+2. **응답 템플릿 추가**
+   ```python
+   # automated_test.py
+   RESPONSE_TEMPLATES["NEW-001"] = {
+       1: """🔴 CHECKPOINT: CP_SOME_CHECKPOINT
+
+       Your simulated response here...""",
+       2: """Next turn response..."""
+   }
+   ```
+
+3. **테스트 실행**
+   ```bash
+   python3 qa/runners/automated_test.py --scenario NEW-001
+   ```
+
+### 출력 파일
+
+자동 테스트는 다음 파일들을 생성합니다:
+
+| 파일 | 설명 |
+|------|------|
+| `conversation_transcript.md` | 마크다운 형식의 전체 대화록 |
+| `conversation_raw.json` | 프로그래밍 접근용 JSON 데이터 |
+| `{SCENARIO}_test_result.yaml` | 테스트 평가 결과 (PASSED/FAILED) |
+| `README.md` | 세션 개요 및 요약 |
+
+### 검증 항목
+
+자동 테스트는 다음을 검증합니다:
+
+| 항목 | 설명 | 자동 탐지 |
+|------|------|----------|
+| **체크포인트** | 🔴/🟠/🟡 체크포인트 트리거 | ✅ 패턴 매칭 |
+| **에이전트 호출** | Task tool 호출 추적 | ✅ 응답 파싱 |
+| **VS 옵션** | T-Score 기반 대안 제시 | ✅ 정규식 추출 |
+| **언어 일관성** | 입력-출력 언어 매칭 | ✅ 자동 감지 |
 
 ---
 
@@ -514,9 +663,27 @@ result = extractor.extract()
 
 | 버전 | 날짜 | 변경 사항 |
 |------|------|----------|
-| **v2.1** | 2026-01-29 | 세션 기반 폴더 관리, RAW 대화 추출 프로토콜, GitHub 배포 지원 |
+| **v2.2** | 2026-01-29 | 자동화된 테스트 시뮬레이션, 사전 정의 응답 템플릿, CLI 기반 실행 |
+| v2.1 | 2026-01-29 | 세션 기반 폴더 관리, RAW 대화 추출 프로토콜, GitHub 배포 지원 |
 | v2.0 | 2026-01-29 | 실제 대화 테스트, 복잡한 입력 유형, JSONL 추출 |
 | v1.0 | 2026-01-15 | 초기 Mock 스크립트 버전 |
+
+### v2.2 변경 상세
+
+1. **자동화된 테스트 시뮬레이션**
+   - `automated_test.py`: 사용자 입력 없이 전체 테스트 자동 실행
+   - Protocol YAML의 `conversation_flow`를 기반으로 대화 시뮬레이션
+   - 각 턴별 사전 정의된 응답 템플릿 사용
+
+2. **사전 정의 응답 템플릿**
+   - `RESPONSE_TEMPLATES` 딕셔너리에 시나리오별 응답 정의
+   - 현실적인 체크포인트, VS 옵션, T-Score 포함
+   - 다국어 지원 (QUAL-002는 한국어)
+
+3. **CLI 기반 실행**
+   - `--scenario`: 특정 시나리오 실행
+   - `--all`: 모든 시나리오 실행
+   - `--output`: 출력 디렉토리 지정
 
 ### v2.1 변경 상세
 

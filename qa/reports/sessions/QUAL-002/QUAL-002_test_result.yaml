@@ -1,0 +1,73 @@
+agents_invoked:
+- agent: C2-QualitativeDesignConsultant
+- agent: E2-QualitativeCodingSpecialist
+- agent: A3-DevilsAdvocate
+checkpoints:
+- id: CP_PARADIGM_SELECTION
+  status: PASSED
+- id: CP_METHODOLOGY_APPROVAL
+  status: PASSED
+- id: CP_PARADIGM_RECONSIDERATION
+  status: PASSED
+- id: CP_ANALYSIS_APPROACH
+  status: PASSED
+language: Korean (user input) -> Korean (response)
+name: Advanced Phenomenology with Paradigm Debates
+scenario_id: QUAL-002
+summary:
+  agents_invoked: 3
+  checkpoints_passed: 4
+  checkpoints_triggered: 4
+  language_consistency: Korean
+  overall_status: PASSED
+  total_turns: 8
+test_date: '2026-01-29'
+test_mode: automated_simulation
+turns:
+- agents: []
+  checkpoints:
+  - CP_PARADIGM_SELECTION
+  passed: true
+  turn: 1
+  user_type: INITIAL_REQUEST
+- agents: []
+  checkpoints: []
+  passed: true
+  turn: 2
+  user_type: METHODOLOGICAL_CHALLENGE
+- agents:
+  - C2-QualitativeDesignConsultant
+  checkpoints:
+  - CP_METHODOLOGY_APPROVAL
+  passed: true
+  turn: 3
+  user_type: SELECTION
+- agents:
+  - A3-DevilsAdvocate
+  checkpoints: []
+  passed: true
+  turn: 4
+  user_type: ALTERNATIVE_EXPLORATION
+- agents: []
+  checkpoints: []
+  passed: true
+  turn: 5
+  user_type: PRACTICAL_CONSTRAINT
+- agents: []
+  checkpoints:
+  - CP_PARADIGM_RECONSIDERATION
+  passed: true
+  turn: 6
+  user_type: PARADIGM_QUESTIONING
+- agents:
+  - E2-QualitativeCodingSpecialist
+  checkpoints:
+  - CP_ANALYSIS_APPROACH
+  passed: true
+  turn: 7
+  user_type: SELECTION
+- agents: []
+  checkpoints: []
+  passed: true
+  turn: 8
+  user_type: APPROVAL

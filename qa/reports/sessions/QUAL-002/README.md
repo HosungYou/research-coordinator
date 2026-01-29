@@ -1,6 +1,6 @@
-# META-002 Test Session
+# QUAL-002 Test Session
 
-**Scenario**: Advanced Meta-Analysis with Technical Challenges
+**Scenario**: Advanced Phenomenology with Paradigm Debates
 **Test Date**: 2026-01-29
 **Status**: ✅ PASSED
 
@@ -12,13 +12,13 @@
 |------|-------------|
 | `conversation_transcript.md` | Human-readable conversation |
 | `conversation_raw.json` | Raw JSON data |
-| `META-002_test_result.yaml` | Test evaluation |
+| `QUAL-002_test_result.yaml` | Test evaluation |
 
 ## Summary
 
 | Metric | Value |
 |--------|-------|
-| Total Turns | 10 |
-| Checkpoints | 5 |
-| Agents | 1 |
-| Language | English |
+| Total Turns | 8 |
+| Checkpoints | 4 |
+| Agents | 3 |
+| Language | Korean |

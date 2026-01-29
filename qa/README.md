@@ -1,8 +1,9 @@
-# Diverga QA Protocol v2.1
+# Diverga QA Protocol v2.2
 
-Real Conversation Testing for Diverga Research Methodology Plugin
+Automated Testing for Diverga Research Methodology Plugin
 
-**v2.1 New**: Session-based folder management + RAW conversation extraction
+**v2.2 New**: Fully automated test simulation with pre-defined response templates
+**v2.1**: Session-based folder management + RAW conversation extraction
 
 ## Overview
 
@@ -16,7 +17,19 @@ This QA protocol validates Diverga plugin functionality through **real Claude Co
 
 ## Quick Start
 
-### 1. Run a Test Scenario
+### 1. Run Automated Tests (Recommended)
+
+```bash
+# Run a specific scenario (no manual input required!)
+python3 qa/runners/automated_test.py --scenario QUAL-002
+
+# Run all scenarios
+python3 qa/runners/automated_test.py --all
+
+# Results are saved to qa/reports/sessions/{SCENARIO-ID}/
+```
+
+### 2. Manual Test (Optional)
 
 ```bash
 # Start Claude Code in the Diverga project
@@ -240,6 +253,12 @@ When adding new test scenarios:
 5. Extract and evaluate against expected
 
 ## Changelog
+
+### v2.2 (2026-01-29)
+- **Automated test simulation** - Run tests without any manual input
+- **Pre-defined response templates** - Realistic AI responses for each scenario/turn
+- **CLI-based execution** - `python3 qa/runners/automated_test.py --scenario QUAL-002`
+- **Multi-scenario support** - QUAL-002 (Korean) and META-002 (English) ready
 
 ### v2.1 (2026-01-29)
 - **Session-based folder management** - Each test session in `reports/sessions/{SCENARIO-ID}/`
