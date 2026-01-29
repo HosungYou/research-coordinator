@@ -368,6 +368,9 @@ To run with real AI responses, remove --dry-run flag.
 
         expected_agents = self.protocol.get('agents_involved', [])
 
+        # Run verification huddle if enabled in protocol
+        verification_huddle = self._run_verification_huddle()
+
         return {
             'checkpoints': {
                 'expected': expected_checkpoints,
@@ -383,8 +386,155 @@ To run with real AI responses, remove --dry-run flag.
             'turns': {
                 'expected_min': int(self.protocol.get('expected_turns', '1').split('-')[0]) if isinstance(self.protocol.get('expected_turns'), str) else self.protocol.get('expected_turns', 1),
                 'actual': len([t for t in self.session.turns if t.role == 'user']),
-            }
+            },
+            'verification_huddle': verification_huddle
         }
+
+    def _run_verification_huddle(self) -> Dict[str, Any]:
+        """
+        VERIFICATION HUDDLE: Confirm responses are from real AI, not simulation.
+
+        Checks:
+        1. NO_SIMULATION_MARKERS: No [DRY RUN], [SIMULATED] markers
+        2. RESPONSE_LENGTH_VARIANCE: Response lengths vary naturally
+        3. TIMESTAMP_VARIANCE: Response times vary naturally
+        4. CONTEXT_AWARENESS: AI references specific user input
+        5. UNIQUE_SESSION_ID: Valid UUID session ID
+        6. DYNAMIC_CONTENT: Content shows reasoning, not templates
+        """
+        results = {
+            'enabled': True,
+            'passed': True,
+            'checks': {},
+            'summary': ''
+        }
+
+        assistant_turns = [t for t in self.session.turns if t.role == 'assistant']
+
+        if not assistant_turns:
+            results['passed'] = False
+            results['summary'] = 'No assistant responses to verify'
+            return results
+
+        # Check 1: NO_SIMULATION_MARKERS
+        simulation_markers = ['[DRY RUN]', '[SIMULATED]', 'DRY RUN MODE:',
+                              'simulated response', 'This is a simulated']
+        marker_found = False
+        for turn in assistant_turns:
+            for marker in simulation_markers:
+                if marker.lower() in turn.content.lower():
+                    marker_found = True
+                    break
+
+        results['checks']['NO_SIMULATION_MARKERS'] = {
+            'passed': not marker_found,
+            'detail': 'No simulation markers found' if not marker_found else 'SIMULATION MARKERS DETECTED!'
+        }
+
+        # Check 2: RESPONSE_LENGTH_VARIANCE
+        lengths = [len(t.content) for t in assistant_turns]
+        if len(lengths) >= 2:
+            length_variance = max(lengths) - min(lengths)
+            # Real AI should have at least 200 char variance across responses
+            variance_ok = length_variance > 200
+        else:
+            variance_ok = True
+            length_variance = 0
+
+        results['checks']['RESPONSE_LENGTH_VARIANCE'] = {
+            'passed': variance_ok,
+            'detail': f'Length variance: {length_variance} chars (min: {min(lengths) if lengths else 0}, max: {max(lengths) if lengths else 0})'
+        }
+
+        # Check 3: TIMESTAMP_VARIANCE
+        timestamps = []
+        for turn in assistant_turns:
+            try:
+                ts = datetime.fromisoformat(turn.timestamp)
+                timestamps.append(ts)
+            except:
+                pass
+
+        if len(timestamps) >= 2:
+            intervals = []
+            for i in range(1, len(timestamps)):
+                interval = (timestamps[i] - timestamps[i-1]).total_seconds()
+                intervals.append(interval)
+
+            # Check if intervals vary (not all identical)
+            if len(set(intervals)) > 1 or len(intervals) == 1:
+                timestamp_ok = True
+            else:
+                timestamp_ok = False
+        else:
+            timestamp_ok = True
+            intervals = []
+
+        results['checks']['TIMESTAMP_VARIANCE'] = {
+            'passed': timestamp_ok,
+            'detail': f'Response intervals: {[f"{i:.1f}s" for i in intervals]}' if intervals else 'Single response'
+        }
+
+        # Check 4: CONTEXT_AWARENESS
+        user_turns = [t for t in self.session.turns if t.role == 'user']
+        context_references = 0
+
+        for user_turn in user_turns[:3]:  # Check first 3 user messages
+            user_keywords = [w for w in user_turn.content.split() if len(w) > 4][:5]
+            for assistant_turn in assistant_turns:
+                for keyword in user_keywords:
+                    if keyword.lower() in assistant_turn.content.lower():
+                        context_references += 1
+                        break
+
+        context_ok = context_references >= min(len(user_turns), 2)
+
+        results['checks']['CONTEXT_AWARENESS'] = {
+            'passed': context_ok,
+            'detail': f'{context_references} context references found'
+        }
+
+        # Check 5: UNIQUE_SESSION_ID
+        try:
+            uuid.UUID(self.session.session_id)
+            uuid_ok = True
+        except:
+            uuid_ok = False
+
+        results['checks']['UNIQUE_SESSION_ID'] = {
+            'passed': uuid_ok,
+            'detail': f'Session ID: {self.session.session_id[:8]}...'
+        }
+
+        # Check 6: DYNAMIC_CONTENT
+        # Real AI responses should have varied sentence structures
+        dynamic_ok = True
+        for turn in assistant_turns:
+            # Check for template-like repetitive patterns
+            if turn.content.count('This is a simulated') > 0:
+                dynamic_ok = False
+            if turn.content.count('Paradigm Detection:') > 3:
+                dynamic_ok = False
+
+        results['checks']['DYNAMIC_CONTENT'] = {
+            'passed': dynamic_ok,
+            'detail': 'Content appears dynamic' if dynamic_ok else 'Template patterns detected'
+        }
+
+        # Calculate overall pass/fail
+        all_passed = all(check['passed'] for check in results['checks'].values())
+        results['passed'] = all_passed
+
+        passed_count = sum(1 for check in results['checks'].values() if check['passed'])
+        total_count = len(results['checks'])
+
+        if all_passed:
+            results['summary'] = f'✅ VERIFICATION PASSED ({passed_count}/{total_count} checks)'
+        else:
+            failed_checks = [name for name, check in results['checks'].items() if not check['passed']]
+            results['summary'] = f'❌ VERIFICATION FAILED ({passed_count}/{total_count}): {", ".join(failed_checks)}'
+
+        return results
 
     def save_results(self, output_dir: str) -> Path:
         """Save test results to session folder."""
@@ -538,6 +688,29 @@ To run with real AI responses, remove --dry-run flag.
                     f.write(f"- {agent}\n")
             else:
                 f.write("No agents detected in this session.\n")
+
+            # Add Verification Huddle section
+            verification = validation.get('verification_huddle', {})
+            if verification.get('enabled'):
+                f.write("\n## 🔍 VERIFICATION HUDDLE\n\n")
+                f.write(f"**Result**: {verification.get('summary', 'N/A')}\n\n")
+
+                if verification.get('checks'):
+                    f.write("| Check | Status | Detail |\n")
+                    f.write("|-------|--------|--------|\n")
+                    for check_name, check_result in verification['checks'].items():
+                        status = "✅ PASS" if check_result['passed'] else "❌ FAIL"
+                        detail = check_result.get('detail', '')[:50]
+                        f.write(f"| {check_name} | {status} | {detail} |\n")
+
+                f.write("\n### Verification Huddle Purpose\n\n")
+                f.write("This huddle confirms the test used **real AI API calls**, not simulation:\n\n")
+                f.write("- **NO_SIMULATION_MARKERS**: No `[DRY RUN]` or template markers\n")
+                f.write("- **RESPONSE_LENGTH_VARIANCE**: Natural response length variation\n")
+                f.write("- **TIMESTAMP_VARIANCE**: Natural response timing\n")
+                f.write("- **CONTEXT_AWARENESS**: AI references user-specific input\n")
+                f.write("- **UNIQUE_SESSION_ID**: Valid unique session identifier\n")
+                f.write("- **DYNAMIC_CONTENT**: Non-templated, reasoning-based content\n")
 
 
 def main():
