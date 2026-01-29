@@ -126,6 +126,81 @@ Result: ✅ VERIFICATION PASSED (6/6 checks)
 
 ---
 
+## Multi-CLI Architecture (v3.0.3)
+
+### Overview
+
+Diverga now supports three CLI tools with different invocation patterns:
+
+```
+                          ┌─────────────────────────────────────────┐
+                          │         Diverga Research Coordinator    │
+                          │         40 Agents | 8 Categories        │
+                          └─────────────────────┬───────────────────┘
+                                                │
+                    ┌───────────────────────────┼───────────────────────────┐
+                    │                           │                           │
+            ┌───────┴───────┐           ┌───────┴───────┐           ┌───────┴───────┐
+            │  Claude Code  │           │   Codex CLI   │           │   OpenCode    │
+            │    (Native)   │           │   (Adapted)   │           │ (oh-my-oc)    │
+            └───────┬───────┘           └───────┬───────┘           └───────┬───────┘
+                    │                           │                           │
+    ┌───────────────┴───────────────┐   ┌───────┴───────┐   ┌───────────────┴───────────────┐
+    │ Task(subagent="diverga:a1")  │   │ Read SKILL.md │   │ Task(subagent="diverga:a1")  │
+    │ Full parallel execution       │   │ Follow instns │   │ oh-my-opencode compatible    │
+    └───────────────────────────────┘   └───────────────┘   └───────────────────────────────┘
+```
+
+### Installation Paths
+
+| CLI Tool | Installation Path | Adapter Template |
+|----------|-------------------|------------------|
+| Claude Code | `~/.claude/plugins/diverga/` | `claude-settings.template.json` |
+| Codex CLI | `~/.codex/diverga/` + `~/.codex/skills/diverga/` | `AGENTS.md.template` |
+| OpenCode | `~/.config/opencode/plugins/diverga/` | `oh-my-opencode.template.json` |
+
+### Unified Installation
+
+```bash
+# Install for all CLI tools
+curl -sSL https://raw.githubusercontent.com/HosungYou/Diverga/main/scripts/install-multi-cli.sh | bash
+
+# Install for specific CLI only
+curl -sSL https://raw.githubusercontent.com/HosungYou/Diverga/main/scripts/install-multi-cli.sh | bash -s -- --claude
+curl -sSL https://raw.githubusercontent.com/HosungYou/Diverga/main/scripts/install-multi-cli.sh | bash -s -- --codex
+curl -sSL https://raw.githubusercontent.com/HosungYou/Diverga/main/scripts/install-multi-cli.sh | bash -s -- --opencode
+```
+
+### Agent Invocation Patterns
+
+**Claude Code** (Native Task Tool):
+```python
+Task(
+    subagent_type="diverga:a1",
+    model="opus",
+    prompt="Refine this research question: [user input]"
+)
+```
+
+**Codex CLI** (Skill File):
+```bash
+# Agent behavior is loaded from skill file
+cat ~/.codex/skills/diverga/A1-research-question-refiner/SKILL.md
+# Then AI follows the instructions in the file
+```
+
+**OpenCode** (oh-my-opencode):
+```python
+# Same as Claude Code if oh-my-opencode is installed
+Task(
+    subagent_type="diverga:a1",
+    model="opus",
+    prompt="Refine this research question: [user input]"
+)
+```
+
+---
+
 ## v2.x vs v3.0 Comparison
 
 | Aspect | v2.x (Simulation) | v3.0 (True Automation) |
@@ -340,7 +415,8 @@ python3 qa/runners/cli_test_runner.py --scenario QUAL-002 -v
 ## Future Enhancements
 
 - [x] ~~OpenCode and Codex CLI integration testing~~ (v3.0.2: Codex tested with QUANT-001)
-- [ ] OpenCode CLI testing
+- [x] ~~Multi-CLI Architecture Design~~ (v3.0.3: adapters/ directory with templates)
+- [ ] OpenCode CLI testing with oh-my-opencode
 - [ ] Parallel scenario execution
 - [ ] Automated CI/CD integration
 - [ ] Performance regression tracking
@@ -349,6 +425,33 @@ python3 qa/runners/cli_test_runner.py --scenario QUAL-002 -v
 ---
 
 ## Changelog
+
+### v3.0.3 (2026-01-29)
+
+**Multi-CLI Compatibility Edition**
+
+- **ADDED**: `adapters/` directory with CLI-specific templates
+  - `AGENTS.md.template` - Codex CLI bootstrap template
+  - `oh-my-opencode.template.json` - OpenCode configuration
+  - `claude-settings.template.json` - Claude Code settings
+- **ADDED**: `scripts/install-multi-cli.sh` - Unified installer for all CLI tools
+  - Supports `--claude`, `--codex`, `--opencode`, `--all` flags
+  - Single command installation: `curl ... | bash`
+- **DOCUMENTED**: CLI compatibility matrix
+  - Claude Code: Full Task tool subagent support
+  - Codex CLI: Skill file invocation (no native subagents)
+  - OpenCode: oh-my-opencode compatible with Task tool support
+- **VERIFIED**: QUANT-001 Claude Code retest passed (6/6 verification hurdles)
+
+**CLI Compatibility Matrix**:
+
+| Feature | Claude Code | Codex CLI | OpenCode |
+|---------|-------------|-----------|----------|
+| Plugin System | Native | 2025.12 Skills | oh-my-opencode |
+| Task Tool (Subagents) | Native | Not supported | Supported |
+| SKILL.md Format | Native | 2025.12 Added | Compatible |
+| Agent Invocation | `diverga:a1` | Read skill file | `diverga:a1` |
+| Installation Path | `~/.claude/plugins/` | `~/.codex/skills/` | `~/.config/opencode/` |
 
 ### v3.0.2 (2026-01-29)
 
