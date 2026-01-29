@@ -526,16 +526,15 @@ Diverga/
 ### Codex CLI Quick Start
 
 ```bash
-# One-line install
+# Method 1: Interactive TUI Installer (Recommended)
+npx @diverga/codex-setup
+
+# Method 2: One-line script
 curl -sSL https://raw.githubusercontent.com/HosungYou/Diverga/main/scripts/install-codex.sh | bash
 
-# Or manual setup
-git clone https://github.com/HosungYou/Diverga.git ~/.codex/diverga
-node ~/.codex/diverga/.codex/diverga-codex.cjs setup
-
-# Commands
-node ~/.codex/diverga/.codex/diverga-codex.cjs list
-node ~/.codex/diverga/.codex/diverga-codex.cjs agent a1
+# Verify installation
+diverga-codex list          # List all 40 agents
+diverga-codex agent A1      # Show agent details
 ```
 
 ### OpenCode Quick Start

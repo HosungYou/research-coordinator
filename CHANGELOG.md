@@ -4,6 +4,26 @@ All notable changes to Diverga (formerly Research Coordinator) will be documente
 
 ---
 
+## [6.6.2] - 2026-01-29 (npm Package Release)
+
+### Overview
+
+Published `@diverga/codex-setup` to npm registry. Now available via `npx`!
+
+### Installation
+
+```bash
+npx @diverga/codex-setup
+```
+
+### npm Package
+
+- **Package**: [@diverga/codex-setup](https://www.npmjs.com/package/@diverga/codex-setup)
+- **Version**: 6.6.2
+- **Organization**: [@diverga](https://www.npmjs.com/org/diverga)
+
+---
+
 ## [6.6.1] - 2026-01-28 (Codex CLI Enhancement)
 
 ### Overview
