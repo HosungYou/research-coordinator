@@ -86,6 +86,44 @@ Each test generates four files:
 | `conversation_raw.json` | RAW data with full metadata |
 | `{SCENARIO}_test_result.yaml` | Test results and validation |
 
+### 5. VERIFICATION HUDDLE (v3.0.1)
+
+**Purpose**: Confirm responses are from real AI API calls, not simulation or dry-run.
+
+The Verification Huddle runs 6 automated checks on every test:
+
+| Check | Description | Pass Criteria |
+|-------|-------------|---------------|
+| **NO_SIMULATION_MARKERS** | Detect `[DRY RUN]`, `[SIMULATED]` markers | No markers found |
+| **RESPONSE_LENGTH_VARIANCE** | Natural response length variation | >200 chars variance |
+| **TIMESTAMP_VARIANCE** | Natural response timing intervals | Non-identical intervals |
+| **CONTEXT_AWARENESS** | AI references specific user input | ≥2 context references |
+| **UNIQUE_SESSION_ID** | Valid UUID session identifier | Valid UUID format |
+| **DYNAMIC_CONTENT** | Non-templated, reasoning-based content | No template patterns |
+
+#### Example Output
+
+```
+🔍 VERIFICATION HUDDLE
+
+Result: ✅ VERIFICATION PASSED (6/6 checks)
+
+| Check                    | Status  | Detail                              |
+|--------------------------|---------|-------------------------------------|
+| NO_SIMULATION_MARKERS    | ✅ PASS | No simulation markers found         |
+| RESPONSE_LENGTH_VARIANCE | ✅ PASS | Length variance: 3241 chars         |
+| TIMESTAMP_VARIANCE       | ✅ PASS | Response intervals: 19.7s, 168.5s   |
+| CONTEXT_AWARENESS        | ✅ PASS | 12 context references found         |
+| UNIQUE_SESSION_ID        | ✅ PASS | Session ID: 3f2de307...             |
+| DYNAMIC_CONTENT          | ✅ PASS | Content appears dynamic             |
+```
+
+#### Why Verification Huddle?
+
+- **Trust**: Confirm test results are from actual AI, not cached/simulated data
+- **Debugging**: Quickly identify if dry-run mode was accidentally enabled
+- **Audit Trail**: Each test session includes verification evidence in `README.md`
+
 ---
 
 ## v2.x vs v3.0 Comparison
@@ -147,6 +185,58 @@ Turns: 8 | Checkpoints: 8 | Duration: ~4 min
 
 ---
 
+## Test Results: QUAL-003 (with Verification Huddle)
+
+Second test run demonstrating the new VERIFICATION HUDDLE feature:
+
+```
+============================================================
+Diverga QA Protocol v3.0 - True Automated Testing
+Scenario: QUAL-003
+CLI Tool: claude
+Mode: LIVE
+============================================================
+
+[Turn 1] INITIAL_REQUEST
+  Received: 988 chars
+  ✓ Completed (CP: 1, Agents: 3)
+
+[Turn 2] METHODOLOGICAL_CHALLENGE
+  Received: 2979 chars
+  ✓ Completed (CP: 1, Agents: 0)
+
+[Turn 3] SELECTION
+  Received: 2905 chars
+  ✓ Completed (CP: 1, Agents: 0)
+
+[Turn 4] PRACTICAL_CONSTRAINT
+  Received: 4229 chars
+  ✓ Completed (CP: 1, Agents: 0)
+
+[Turn 5] APPROVAL
+  Received: 3986 chars
+  ✓ Completed (CP: 1, Agents: 3)
+
+============================================================
+Test Completed: QUAL-003
+Turns: 5 | Checkpoints: 5 | Agents: 6
+VERIFICATION HUDDLE: ✅ PASSED (6/6 checks)
+============================================================
+```
+
+### QUAL-003 Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total Turns | 5 |
+| Checkpoints Found | 5 |
+| Agents Detected | 6 (A1, A5, C2, D1, D2, A4) |
+| Response Length Range | 988 - 4,229 chars |
+| Test Duration | ~4 minutes |
+| Verification Huddle | ✅ PASSED (6/6) |
+
+---
+
 ## Breaking Changes
 
 ### Removed
@@ -178,6 +268,7 @@ qa/
 ├── protocol/                    # Test scenario definitions
 │   ├── test_qual_001.yaml
 │   ├── test_qual_002.yaml       # QUAL-002 tested
+│   ├── test_qual_003.yaml       # QUAL-003 with Verification Huddle (NEW)
 │   ├── test_meta_001.yaml
 │   ├── test_meta_002.yaml
 │   ├── test_mixed_001.yaml
@@ -195,11 +286,16 @@ qa/
 │
 └── reports/                     # Test results
     ├── sessions/
-    │   └── QUAL-002/            # Real AI test results
-    │       ├── README.md
+    │   ├── QUAL-002/            # Real AI test results
+    │   │   ├── README.md
+    │   │   ├── conversation_transcript.md
+    │   │   ├── conversation_raw.json
+    │   │   └── QUAL-002_test_result.yaml
+    │   └── QUAL-003/            # With Verification Huddle (NEW)
+    │       ├── README.md        # Includes VERIFICATION HUDDLE section
     │       ├── conversation_transcript.md
     │       ├── conversation_raw.json
-    │       └── QUAL-002_test_result.yaml
+    │       └── QUAL-003_test_result.yaml
     └── real-transcripts/
 ```
 
@@ -252,6 +348,19 @@ python3 qa/runners/cli_test_runner.py --scenario QUAL-002 -v
 ---
 
 ## Changelog
+
+### v3.0.1 (2026-01-29)
+
+- **ADDED**: VERIFICATION HUDDLE system with 6 automated checks
+  - NO_SIMULATION_MARKERS: Detect `[DRY RUN]` markers
+  - RESPONSE_LENGTH_VARIANCE: Natural length variation
+  - TIMESTAMP_VARIANCE: Natural response timing
+  - CONTEXT_AWARENESS: User input references
+  - UNIQUE_SESSION_ID: Valid UUID verification
+  - DYNAMIC_CONTENT: Non-templated content detection
+- **ADDED**: `test_qual_003.yaml` - Grounded Theory scenario (English)
+- **ADDED**: Verification Huddle section in session README.md
+- **TESTED**: QUAL-003 with real AI + Verification Huddle (6/6 checks passed)
 
 ### v3.0.0 (2026-01-29)
 
