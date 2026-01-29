@@ -526,10 +526,11 @@ Diverga/
 
 ### Codex CLI Quick Start
 
-> ⚠️ **Important**: Unlike Claude Code, Codex CLI installation runs in a **regular terminal**, not inside Codex CLI.
+> [!CAUTION]
+> **DO NOT run inside Codex CLI!** Unlike Claude Code, Codex CLI installation must run in a **regular terminal** (Terminal.app, iTerm, VS Code terminal, etc.). Running inside Codex CLI will cause interactive prompt failures.
 
 ```bash
-# Step 1: Install from regular terminal (NOT inside Codex CLI)
+# Step 1: Open a regular terminal (NOT Codex CLI!) and run:
 npx @diverga/codex-setup
 
 # Step 2: Start Codex CLI
@@ -543,9 +544,9 @@ codex
 **Installation Difference:**
 | Platform | Where to Install | Command |
 |----------|------------------|---------|
-| Claude Code | Inside Claude Code | `/plugin install diverga` |
-| Codex CLI | Regular terminal | `npx @diverga/codex-setup` |
-| OpenCode | Regular terminal | `curl ... \| bash` (see below) |
+| Claude Code | ✅ Inside Claude Code | `/plugin install diverga` |
+| Codex CLI | ⚠️ Regular terminal (**NOT** inside Codex!) | `npx @diverga/codex-setup` |
+| OpenCode | ⚠️ Regular terminal (**NOT** inside OpenCode!) | `curl ... \| bash` (see below) |
 
 ### OpenCode Quick Start
 
