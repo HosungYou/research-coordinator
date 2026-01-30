@@ -4,6 +4,63 @@ All notable changes to Diverga (formerly Research Coordinator) will be documente
 
 ---
 
+## [6.6.3] - 2026-01-30 (Codex CLI SKILL.md Implementation)
+
+### Overview
+
+**SKILL.md files now enable actual skill loading in Codex CLI.** Previously, AGENTS.md provided only passive documentation. Now `.codex/skills/` directory contains proper SKILL.md files that Codex CLI discovers and activates.
+
+### Key Discovery
+
+**AGENTS.md ≠ SKILL.md**
+
+| Feature | AGENTS.md | SKILL.md |
+|---------|-----------|----------|
+| Purpose | Passive documentation | Active skill definition |
+| Loading | Context injection only | Skill system activation |
+| Structure | Free-form Markdown | YAML frontmatter required |
+
+### New Files
+
+```
+.codex/skills/
+├── research-coordinator/
+│   └── SKILL.md         # Main coordinator (40 agents)
+├── meta-analysis/
+│   └── SKILL.md         # C5-MetaAnalysisMaster
+└── checkpoint-system/
+    └── SKILL.md         # Human checkpoint enforcement
+```
+
+### QUANT-005 Test Verification
+
+| Verification Point | Before (QUANT-004) | After (QUANT-005) |
+|--------------------|---------------------|-------------------|
+| Skill activation | ❌ Not present | ✅ "✅ meta-analysis 스킬 사용" |
+| Checkpoint marker | ❌ Not present | ✅ "🔴 CHECKPOINT: CP_EFFECT_SIZE_SELECTION" |
+| VS T-Score options | ❌ Not present | ✅ [A] T=0.65, [B] T=0.40 ⭐, [C] T=0.25 |
+| Behavioral halt | ❌ Continued | ✅ "어떤 지표로 통일하시겠습니까?" |
+
+### Documentation
+
+- `docs/CODEX-SKILL-SYSTEM.md` - Full technical documentation
+- Claude Code vs Codex CLI comparison
+- Installation recommendations
+
+### Claude Code Recommendation
+
+Claude Code is **recommended** for full Diverga functionality:
+- ✅ Task tool support (40 specialized agents)
+- ✅ AskUserQuestion tool (clickable UI)
+- ✅ Tool-level checkpoint enforcement
+- ✅ Parallel agent execution
+
+Codex CLI now **supported** with SKILL.md files:
+- ⚠️ Behavioral checkpoints only (model-voluntary)
+- ⚠️ Main model handles all work (no dedicated agents)
+
+---
+
 ## [6.6.2] - 2026-01-29 (npm Package Release)
 
 ### Overview

@@ -1,10 +1,11 @@
 # CLAUDE.md
 
-# Diverga v6.5.2 (Task Tool Structure Fix)
+# Diverga v6.6.3 (Codex CLI SKILL.md Implementation)
 
 **Beyond Modal: AI Research Assistant That Thinks Creatively**
 
-**v6.5.2**: Structure fix for Task tool agent recognition - `/skills/` moved to root level
+**v6.6.3**: Codex CLI SKILL.md implementation - actual skill loading via `.codex/skills/`
+**v6.6.2**: Multi-CLI Compatibility - unified install script, NPM package (@diverga/codex-setup)
 **v6.5.0**: Parallel execution via Task tool - `Task(subagent_type="diverga:a1", ...)`
 **v6.4**: Plugin Marketplace Registration - Install via `/plugin marketplace add`
 **v6.3**: Meta-Analysis Agent System (C5/C6/C7) - Multi-gate validation, Hedges' g calculation
@@ -517,7 +518,8 @@ Execution Plan:
 
 ## Version History
 
-- **v6.5.2**: Structure Fix - Moved `/skills/` to root level for Task tool agent recognition
+- **v6.6.3**: Codex CLI SKILL.md Implementation - actual skill loading via `.codex/skills/`, QUANT-005 verified
+- **v6.6.2**: Multi-CLI Compatibility Edition - unified install script, NPM package (@diverga/codex-setup)
 - **v6.5.0**: Parallel Execution Edition - Task tool support via `/agents/` directory
 - **v6.4.0**: Plugin Marketplace Edition - `/plugin marketplace add`, auto-trigger dispatch, /diverga:setup wizard
 - **v6.3.0**: Meta-Analysis Agent System - C5-MetaAnalysisMaster, C6-DataIntegrityGuard, C7-ErrorPreventionEngine (40 agents total)
