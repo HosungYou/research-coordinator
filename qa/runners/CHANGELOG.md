@@ -1,5 +1,43 @@
 # CLI Test Runner Changelog
 
+## v3.2.2 (2026-01-30) - Dual CLI Transcript Support
+
+### New Feature: Multi-CLI Session Storage
+
+Test results now support multiple CLI tools in the same session folder without overwriting.
+
+#### File Naming Convention
+
+| File Type | Old Name | New Name (v3.2.2) |
+|-----------|----------|-------------------|
+| Transcript | `conversation_transcript.md` | `conversation_transcript_claude.md` / `conversation_transcript_codex.md` |
+| Raw JSON | `conversation_raw.json` | `conversation_raw_claude.json` / `conversation_raw_codex.json` |
+| Result YAML | `QUANT-004_test_result.yaml` | `QUANT-004_test_result_claude.yaml` / `QUANT-004_test_result_codex.yaml` |
+
+#### Benefits
+
+- Run both Claude Code and Codex CLI tests for the same scenario
+- Compare results side-by-side
+- No data loss from overwriting
+
+#### Usage
+
+```bash
+# Run Claude Code test
+python qa/runners/cli_test_runner.py --scenario QUANT-004 --cli claude
+
+# Run Codex CLI test (same folder, different files)
+python qa/runners/cli_test_runner.py --scenario QUANT-004 --cli codex
+
+# Both results saved in qa/reports/sessions/QUANT-004/
+# - conversation_transcript_claude.md
+# - conversation_transcript_codex.md
+# - QUANT-004_test_result_claude.yaml
+# - QUANT-004_test_result_codex.yaml
+```
+
+---
+
 ## v3.2.0 (2026-01-30) - Hybrid Checkpoint Detection
 
 ### New Feature: Hybrid Detection System

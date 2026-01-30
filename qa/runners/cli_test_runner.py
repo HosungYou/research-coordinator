@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Diverga QA Protocol v3.0 - True Automated Testing via CLI
+Diverga QA Protocol v3.2.2 - True Automated Testing via CLI
 
 Executes real AI conversations using CLI tools (Claude Code, OpenCode, Codex)
 to capture actual AI responses instead of simulated templates.
@@ -60,7 +60,7 @@ class TestSession:
 
 class CLITestRunner:
     """
-    CLI-based automated test runner for Diverga QA Protocol v3.0.
+    CLI-based automated test runner for Diverga QA Protocol v3.2.2.
 
     Executes actual CLI commands to get real AI responses, unlike the
     v2.x simulator which uses hardcoded response templates.
@@ -757,7 +757,7 @@ To run with real AI responses, remove --dry-run flag.
     def run(self) -> TestSession:
         """Execute the complete test scenario."""
         print(f"\n{'='*60}")
-        print(f"Diverga QA Protocol v3.0 - True Automated Testing")
+        print(f"Diverga QA Protocol v3.2.2 - True Automated Testing")
         print(f"Scenario: {self.scenario_id}")
         print(f"CLI Tool: {self.cli_tool}")
         print(f"Mode: {'DRY RUN' if self.dry_run else 'LIVE'}")
@@ -1208,8 +1208,10 @@ To run with real AI responses, remove --dry-run flag.
         return output_path
 
     def _save_transcript(self, output_path: Path):
-        """Save human-readable conversation transcript."""
-        transcript_file = output_path / 'conversation_transcript.md'
+        """Save human-readable conversation transcript with CLI tool suffix."""
+        # v3.2.2: Include CLI tool in filename to support dual transcripts
+        cli_suffix = f"_{self.session.cli_tool}" if self.session.cli_tool else ""
+        transcript_file = output_path / f'conversation_transcript{cli_suffix}.md'
 
         with open(transcript_file, 'w', encoding='utf-8') as f:
             f.write(f"# {self.session.scenario_id} Test Session Transcript\n\n")
@@ -1259,8 +1261,10 @@ To run with real AI responses, remove --dry-run flag.
                 f.write("---\n\n")
 
     def _save_raw_json(self, output_path: Path):
-        """Save raw session data as JSON."""
-        raw_file = output_path / 'conversation_raw.json'
+        """Save raw session data as JSON with CLI tool suffix."""
+        # v3.2.2: Include CLI tool in filename to support dual transcripts
+        cli_suffix = f"_{self.session.cli_tool}" if self.session.cli_tool else ""
+        raw_file = output_path / f'conversation_raw{cli_suffix}.json'
 
         raw_data = {
             'scenario_id': self.session.scenario_id,
@@ -1281,8 +1285,10 @@ To run with real AI responses, remove --dry-run flag.
             json.dump(raw_data, f, indent=2, ensure_ascii=False)
 
     def _save_result_yaml(self, output_path: Path):
-        """Save test result summary as YAML."""
-        result_file = output_path / f'{self.session.scenario_id}_test_result.yaml'
+        """Save test result summary as YAML with CLI tool suffix."""
+        # v3.2.2: Include CLI tool in filename to support dual results
+        cli_suffix = f"_{self.session.cli_tool}" if self.session.cli_tool else ""
+        result_file = output_path / f'{self.session.scenario_id}_test_result{cli_suffix}.yaml'
 
         validation = self.session.validation_results
         skill_loading = validation.get('skill_loading', {})
@@ -1423,7 +1429,7 @@ To run with real AI responses, remove --dry-run flag.
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Diverga QA v3.0 - True Automated Testing via CLI',
+        description='Diverga QA v3.2.2 - True Automated Testing via CLI',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
