@@ -1,0 +1,69 @@
+agents:
+- agent: M2
+- agent: M1
+checkpoints: []
+cli_tool: codex
+error: null
+metrics:
+  agents_invoked: 2
+  checkpoint_compliance: 0.0%
+  checkpoints_found: 0
+  total_turns: 6
+name: Meta-Analysis Effect Size Extraction
+scenario_id: QUANT-003
+status: FAILED
+test_date: '2026-01-30'
+test_mode: cli_automated
+validation:
+  agents:
+    expected:
+    - A1-ResearchQuestionRefiner
+    - B1-SystematicLiteratureScout
+    - B3-EffectSizeExtractor
+    - C5-MetaAnalysisMaster
+    - C6-DataIntegrityGuard
+    - C7-ErrorPreventionEngine
+    - E1-QuantitativeAnalysisGuide
+    found:
+    - M2
+    - M1
+    match_rate: 0.0
+  checkpoints:
+    compliance: 0.0
+    expected:
+    - CP_RESEARCH_DIRECTION
+    - CP_EFFECT_SIZE_SELECTION
+    - CP_HETEROGENEITY_ANALYSIS
+    - CP_METHODOLOGY_APPROVAL
+    found: []
+    missing:
+    - CP_RESEARCH_DIRECTION
+    - CP_EFFECT_SIZE_SELECTION
+    - CP_HETEROGENEITY_ANALYSIS
+    - CP_METHODOLOGY_APPROVAL
+  turns:
+    actual: 6
+    expected_min: 6
+  verification_huddle:
+    checks:
+      CONTEXT_AWARENESS:
+        detail: 12 context references found
+        passed: true
+      DYNAMIC_CONTENT:
+        detail: Content appears dynamic
+        passed: true
+      NO_SIMULATION_MARKERS:
+        detail: No simulation markers found
+        passed: true
+      RESPONSE_LENGTH_VARIANCE:
+        detail: 'Length variance: 933 chars (min: 731, max: 1664)'
+        passed: true
+      TIMESTAMP_VARIANCE:
+        detail: 'Response intervals: [''17.1s'', ''7.9s'', ''6.7s'', ''9.6s'', ''6.0s'']'
+        passed: true
+      UNIQUE_SESSION_ID:
+        detail: 'Session ID: b9d84064...'
+        passed: true
+    enabled: true
+    passed: true
+    summary: ✅ VERIFICATION PASSED (6/6 checks)
