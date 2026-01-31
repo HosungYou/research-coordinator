@@ -1,7 +1,8 @@
 # QUANT-006: Systematic Review Automation (Category I Agents)
 
 **Test Date**: 2026-01-30
-**Status**: ✅ PASSED (Claude Code) / ⚠️ PARTIAL (Codex CLI)
+**Status**: ✅ RESOLVED (Plugin cache updated)
+**Retest Sessions**: 2 (Session 1: Initial, Session 2: Cache fix)
 
 ## Overview
 
@@ -31,9 +32,24 @@ This QA session validates the new Category I agents (I0-I3) for PRISMA 2020 syst
 | File | Description |
 |------|-------------|
 | `QUANT-006_REPORT.md` | Full test report with analysis |
+| `claude_code_retest_2026-01-30.md` | Session 1 retest: Caching behavior identified |
+| `claude_code_retest_2026-01-30_session2.md` | **Session 2 retest: Cache fix applied** |
 | `conversation_transcript_claude.md` | Claude Code conversation (8 turns) |
 | `conversation_transcript_codex.md` | Codex CLI conversation (5 turns) |
+| `claude_code_test_result.md` | Claude Code actual test output |
+| `codex_cli_test_result.md` | Codex CLI actual test output |
 | `README.md` | This file |
+
+## Resolution (Session 2)
+
+**Root Cause**: Diverga plugin cache was outdated (installed Jan 27) and missing Category I agents (added Jan 30 in v6.7.0).
+
+**Fix Applied**: Manually copied i0-i3.md files to plugin cache:
+```
+~/.claude/plugins/cache/diverga/diverga/b0aebcdb66f9/agents/
+```
+
+**Next Step**: Start a new Claude Code session to load updated agent list.
 
 ## Key Findings
 
