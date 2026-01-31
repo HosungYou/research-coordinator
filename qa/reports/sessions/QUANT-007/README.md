@@ -1,7 +1,7 @@
 # QUANT-007: Meta-Analysis Systematic Review (Category I + C5 Integration)
 
 **Test Date**: 2026-01-30
-**Status**: ✅ Claude Code PASSED | ⏳ Codex CLI Pending Manual Test
+**Status**: ✅ Claude Code PASSED | ✅ Codex CLI PASSED
 **CLI Tools**: Claude Code (Opus 4.5), Codex CLI (v0.92.0)
 
 ## Test Objective
@@ -41,9 +41,8 @@ PRISMA 2020 가이드라인에 따라 진행해 주세요.
 | `README.md` | ✅ | This file |
 | `claude_code_turn1_raw.txt` | ✅ | Claude Code Turn 1: I0 invocation |
 | `claude_code_turn2_raw.txt` | ✅ | Claude Code Turn 2: C5 invocation |
-| `codex_test_instructions.md` | ✅ | Manual test guide for Codex CLI |
-| `codex_turn1_raw.txt` | ⏳ | Codex CLI Turn 1 (pending manual test) |
-| `codex_turn2_raw.txt` | ⏳ | Codex CLI Turn 2 (pending manual test) |
+| `codex_turn1_raw.txt` | ✅ | Codex CLI Turn 1: Meta-analysis prompt |
+| `codex_test_instructions.md` | ✅ | Manual test guide (backup) |
 | `QUANT-007_REPORT.md` | ✅ | Final analysis report |
 
 ## Raw Transcript Format

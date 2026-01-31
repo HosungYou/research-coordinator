@@ -329,6 +329,107 @@ python3 qa/runners/cli_test_runner.py --scenario QUAL-002 --timeout 600
 
 ---
 
+## Raw Transcript Requirements (v3.2.3)
+
+**모든 QA 테스트는 실제 raw transcript 파일을 생성해야 합니다.** 시뮬레이션 데이터는 허용되지 않습니다.
+
+### 필수 파일 형식
+
+#### Claude Code Raw Transcript (`claude_code_turn{N}_raw.txt`)
+
+```
+=== SESSION METADATA ===
+CLI: Claude Code
+Model: claude-opus-4-5-20251101
+Working Directory: /path/to/project
+Timestamp: 2026-01-30T21:15:00+09:00
+Test ID: QUANT-007
+
+=== USER INPUT ===
+[실제 테스트 프롬프트]
+
+=== TOOL CALL ===
+Tool: Task
+Parameters:
+  subagent_type: "diverga:i0"
+  model: "opus"
+  prompt: "[프롬프트 내용]"
+
+=== TOOL RESULT ===
+Agent ID: a1e8ab0
+[실제 에이전트 응답 - 시뮬레이션 아님]
+
+=== VERIFICATION CHECKLIST ===
+[✓] 체크포인트 표시됨
+[✓] VS T-Score 옵션 제시됨
+...
+```
+
+#### Codex CLI Raw Transcript (`codex_turn{N}_raw.txt`)
+
+```
+OpenAI Codex v0.92.0 (research preview)
+--------
+workdir: /path/to/project
+model: gpt-5.2-codex
+provider: openai
+session id: [자동 생성]
+--------
+user
+[테스트 프롬프트]
+
+mcp: [MCP 연결 상태]
+
+exec
+[실행된 명령]
+
+thinking
+[Codex 내부 추론]
+
+codex
+[최종 응답]
+
+tokens used
+[토큰 수]
+```
+
+### CLI 호출 방법
+
+| CLI | 호출 명령 | 세션 지속 |
+|-----|----------|----------|
+| **Claude Code** | `Task(subagent_type="diverga:xxx", ...)` | Agent ID로 resume |
+| **Codex CLI** | `codex exec "message"` | `--resume` |
+| **OpenCode** | `opencode run "message"` | - |
+
+### Codex CLI 호출 예시 (Claude Code 내에서)
+
+```bash
+# Bash tool을 사용하여 Codex CLI 호출
+cd /project/path && codex exec "테스트 프롬프트" 2>&1
+```
+
+**중요**: Claude Code 내에서 Codex CLI를 호출할 때는 반드시 `2>&1`로 stderr를 포함해야 합니다.
+
+### Cross-CLI 테스트 의무
+
+모든 QUANT 시나리오는 **최소 2개 CLI**에서 테스트해야 합니다:
+
+| 시나리오 | Claude Code | Codex CLI | 필수 |
+|---------|-------------|-----------|------|
+| QUANT-007 | ✅ Required | ✅ Required | 둘 다 |
+| QUANT-006 | ✅ Required | ✅ Required | 둘 다 |
+| QUANT-005 | ✅ Required | ✅ Required | 둘 다 |
+
+### Raw Transcript 검증 규칙
+
+1. **시뮬레이션 금지**: 응답이 실제 AI에서 생성되어야 함
+2. **메타데이터 필수**: Session ID, Timestamp, Model 포함
+3. **Tool Call 기록**: 실제 호출된 도구/파라미터 기록
+4. **Verification Checklist**: 각 turn에서 검증된 항목 명시
+5. **Token Usage**: 토큰 사용량 기록 (가능한 경우)
+
+---
+
 ## Changelog
 
 ### v3.0 (2026-01-29)
