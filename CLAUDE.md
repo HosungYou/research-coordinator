@@ -194,6 +194,7 @@ PRISMA 2020 compliant systematic literature review pipeline with automated paper
 - 🔴 **SCH_DATABASE_SELECTION**: User must approve database selection before retrieval
 - 🔴 **SCH_SCREENING_CRITERIA**: User must approve inclusion/exclusion criteria
 - 🟠 **SCH_RAG_READINESS**: Recommended checkpoint before RAG queries
+- 🟡 **SCH_PRISMA_GENERATION**: Optional checkpoint before PRISMA flow diagram generation
 
 ---
 

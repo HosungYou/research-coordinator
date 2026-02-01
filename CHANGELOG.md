@@ -4,6 +4,60 @@ All notable changes to Diverga (formerly Research Coordinator) will be documente
 
 ---
 
+## [6.7.1] - 2026-01-31 (Documentation Synchronization)
+
+### Overview
+
+**Documentation sync release** aligning AGENTS.md, SKILL.md, and CLAUDE.md to v6.7.0 architecture. Ensures consistent agent counts (44), version strings, and checkpoint definitions across all core files.
+
+### Version Alignment
+
+| Document | Before | After |
+|----------|--------|-------|
+| `AGENTS.md` | v6.5 (37 agents) | **v6.7.0** (44 agents) |
+| `skills/research-coordinator/SKILL.md` | v6.0.0 (27 agents) | **v6.7.0** (44 agents) |
+| `skills/research-orchestrator/SKILL.md` | v2.0.0 (27 agents) | **v2.7.0** (44 agents) |
+| `CLAUDE.md` | v6.7.0 | v6.7.0 + SCH_PRISMA_GENERATION |
+
+### Agents Added to Documentation
+
+| Agent | Name | Category | Model |
+|-------|------|----------|-------|
+| B5 | ParallelDocumentProcessor | Evidence | Opus |
+| F5 | HumanizationVerifier | Quality | Haiku |
+| G5 | AcademicStyleAuditor | Communication | Sonnet |
+| G6 | AcademicStyleHumanizer | Communication | Opus |
+
+### Checkpoints Synchronized
+
+- CP_META_GATE (🔴) - Meta-analysis gate failure
+- SCH_DATABASE_SELECTION (🔴) - Database selection for retrieval
+- SCH_SCREENING_CRITERIA (🔴) - PRISMA criteria approval
+- SCH_RAG_READINESS (🟠) - RAG system ready
+- SCH_PRISMA_GENERATION (🟡) - PRISMA diagram generation
+
+### Files Modified
+
+| File | Changes |
+|------|---------|
+| `AGENTS.md` | v6.5→v6.7.0, 37→44 agents, B5/F5/G5/G6 |
+| `skills/research-coordinator/SKILL.md` | v6.0.0→v6.7.0, Category I, SCH_* |
+| `skills/research-orchestrator/SKILL.md` | v2.0.0→v2.7.0, 44 agents |
+| `CLAUDE.md` | SCH_PRISMA_GENERATION checkpoint |
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `qa/reports/verification_report_v6.7.0.md` | Architecture verification |
+| `docs/releases/RELEASE_v6.7.1.md` | Detailed release notes |
+
+### No Breaking Changes
+
+Documentation-only release with no code or behavioral changes.
+
+---
+
 ## [6.7.0] - 2026-01-30 (Systematic Review Automation)
 
 ### Overview
