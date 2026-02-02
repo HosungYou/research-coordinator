@@ -1,9 +1,10 @@
 # CLAUDE.md
 
-# Diverga v6.8.0 (Memory System)
+# Diverga v6.9.1 (Plugin Discovery Fix)
 
 **Beyond Modal: AI Research Assistant That Thinks Creatively**
 
+**v6.9.1**: Plugin Discovery Fix - Added version field to SKILL.md, removed orphaned directories, local symlinks
 **v6.8.0**: Memory System - Persistent context preservation with semantic search and lifecycle hooks
 **v6.7.0**: Systematic Review Automation - Category I agents (I0-I3) for PRISMA 2020 pipeline
 **v6.6.3**: Codex CLI SKILL.md implementation - actual skill loading via `.codex/skills/`
@@ -20,6 +21,27 @@ AI Research Assistant for the Complete Research Lifecycle - from question formul
 
 ## Installation
 
+### Recommended Method (Local Skills - Most Reliable)
+
+```bash
+# Step 1: Clone repository
+git clone https://github.com/HosungYou/Diverga.git
+cd Diverga
+
+# Step 2: Create local skill symlinks
+for skill_dir in skills/*/; do
+  skill_name=$(basename "$skill_dir")
+  ln -sf "$(pwd)/$skill_dir" ~/.claude/skills/diverga-${skill_name}
+done
+
+# Step 3: Restart Claude Code
+
+# Step 4: Verify
+/diverga-help       # Should display help guide
+```
+
+### Alternative Method (Plugin Marketplace)
+
 ```bash
 # Step 1: Add to marketplace
 /plugin marketplace add https://github.com/HosungYou/Diverga
@@ -28,8 +50,17 @@ AI Research Assistant for the Complete Research Lifecycle - from question formul
 /plugin install diverga
 
 # Step 3: Configure
-/diverga:setup
+/diverga-setup
 ```
+
+### Skill Access
+
+| Method | Command | Reliability |
+|--------|---------|-------------|
+| **Hyphen prefix** | `/diverga-help` | ✅ Always works |
+| Colon prefix | `/diverga:help` | ⚠️ Requires plugin load |
+
+**Recommendation**: Use hyphen prefix (`/diverga-xxx`) for reliable skill invocation.
 
 ---
 

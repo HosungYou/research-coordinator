@@ -4,6 +4,112 @@ All notable changes to Diverga (formerly Research Coordinator) will be documente
 
 ---
 
+## [6.9.1] - 2026-02-03 (Plugin Discovery Fix)
+
+### Overview
+
+**Critical bug fix release** resolving "Unknown skill" errors that prevented Claude Code from discovering Diverga skills. After comprehensive debugging, three root causes were identified and fixed.
+
+### The Problem
+
+```
+❯ /diverga:help
+Unknown skill: diverga:help
+```
+
+### Root Causes Identified
+
+| Issue | Severity | Status |
+|-------|----------|--------|
+| Missing `version` field in SKILL.md | 🔴 CRITICAL | ✅ Fixed |
+| Orphaned skill directories (`.claude/skills/`, `.codex/skills/`) | 🟡 MEDIUM | ✅ Fixed |
+| Plugin cache vs local skills loading | 🟠 HIGH | ✅ Workaround |
+
+### Changes Made
+
+#### 1. SKILL.md Version Field
+
+Added `version: "6.9.0"` to all 51 SKILL.md files:
+
+**Before:**
+```yaml
+---
+name: a1
+description: |
+  VS-Enhanced Research Question Refiner...
+---
+```
+
+**After:**
+```yaml
+---
+name: a1
+description: |
+  VS-Enhanced Research Question Refiner...
+version: "6.9.0"
+---
+```
+
+#### 2. Orphaned Directory Cleanup
+
+| Directory | Action | Impact |
+|-----------|--------|--------|
+| `.claude/skills/` | 🗑️ Deleted | -48,000 lines |
+| `.codex/skills/` | 🗑️ Deleted | -400 lines |
+| `skills/` | ✅ Kept | Canonical location |
+
+**Total**: 150 files changed, 48 insertions(+), 50,430 deletions(-)
+
+#### 3. Local Skills Symlink Installation
+
+Created 51 symlinks in `~/.claude/skills/` for reliable skill discovery:
+
+```bash
+~/.claude/skills/diverga-help → ~/.claude/plugins/cache/diverga/.../skills/help/
+~/.claude/skills/diverga-memory → ~/.claude/plugins/cache/diverga/.../skills/memory/
+# ... (51 total)
+```
+
+### Skill Access Methods
+
+| Method | Command | Status |
+|--------|---------|--------|
+| **Hyphen prefix** (Recommended) | `/diverga-help` | ✅ Works reliably |
+| Colon prefix (Plugin) | `/diverga:help` | ⚠️ Requires plugin load |
+
+### Installation
+
+```bash
+# Create local skill symlinks
+cd /path/to/Diverga
+for skill_dir in skills/*/; do
+  skill_name=$(basename "$skill_dir")
+  ln -sf "$(pwd)/$skill_dir" ~/.claude/skills/diverga-${skill_name}
+done
+
+# Restart Claude Code
+```
+
+### Verification
+
+```
+/diverga-help       ✅ Should display help guide
+/diverga-memory     ✅ Should show memory system
+/diverga-a1         ✅ Should show Research Question Refiner
+```
+
+### Git Commit
+
+```
+efc024a fix(plugin): add required version field and remove orphaned skill directories
+```
+
+### Full Release Notes
+
+See: `docs/releases/RELEASE_v6.9.1.md`
+
+---
+
 ## [6.7.1] - 2026-01-31 (Documentation Synchronization)
 
 ### Overview
