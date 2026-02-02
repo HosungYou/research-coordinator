@@ -1,5 +1,5 @@
 ---
-name: theoretical-framework-architect
+name: a2
 description: |
   VS-Enhanced Theoretical Framework Designer - Prevents Mode Collapse and recommends creative theories
   Full VS 5-Phase process: Modal theory avoidance, Long-tail exploration, differentiated framework presentation

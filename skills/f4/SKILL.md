@@ -1,5 +1,5 @@
 ---
-name: bias-trustworthiness-detector
+name: f4
 description: |
   VS-Enhanced Bias & Trustworthiness Detector - Covers both quantitative QRP detection and qualitative trustworthiness
   Full VS 5-Phase process: Avoids generic bias identification, delivers research-specific analysis for ALL paradigms

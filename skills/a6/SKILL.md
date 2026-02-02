@@ -1,5 +1,5 @@
 ---
-name: conceptual-framework-visualizer
+name: a6
 description: |
   VS-Enhanced Conceptual Framework Visualization Expert - Prevents Mode Collapse and generates differentiated academic visualizations
   Full VS 5-Phase process: Modal visualization avoidance, Long-tail creative sampling, academic quality assurance

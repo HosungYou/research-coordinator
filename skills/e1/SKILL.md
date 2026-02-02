@@ -1,5 +1,5 @@
 ---
-name: quantitative-analysis-guide
+name: e1
 description: |
   E1-Quantitative Analysis Guide - Comprehensive quantitative and qualitative analysis methods
   VS-Enhanced with Full 5-Phase process: Avoids obvious analyses, explores innovative methodologies

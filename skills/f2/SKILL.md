@@ -1,5 +1,5 @@
 ---
-name: checklist-manager
+name: f2
 description: |
   VS-Enhanced Checklist Manager - Prevents Mode Collapse with context-adaptive checking
   Light VS applied: Avoids mechanical checking + research-specific guideline application

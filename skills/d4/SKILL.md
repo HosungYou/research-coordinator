@@ -1,5 +1,5 @@
 ---
-name: measurement-instrument-developer
+name: d4
 description: |
   Agent D4 - Measurement Instrument Developer - Scale construction and psychometric validation.
   Covers item development, validity evidence, and reliability testing for social science research.

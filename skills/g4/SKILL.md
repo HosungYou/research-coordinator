@@ -1,5 +1,5 @@
 ---
-name: preregistration-composer
+name: g4
 description: |
   VS-Enhanced Preregistration Composer - Prevents Mode Collapse with comprehensive pre-planning
   Light VS applied: Avoids formal registration + ensures practical research transparency

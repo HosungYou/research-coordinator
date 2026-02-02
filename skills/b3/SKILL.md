@@ -1,5 +1,5 @@
 ---
-name: effect-size-extractor
+name: b3
 description: |
   VS-Enhanced Effect Size Extractor - Prevents Mode Collapse with optimal effect size strategy
   Enhanced VS 3-Phase process: Avoids simple conversions, delivers context-appropriate effect size selection

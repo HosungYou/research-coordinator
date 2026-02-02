@@ -1,5 +1,5 @@
 ---
-name: reproducibility-auditor
+name: f3
 description: |
   VS-Enhanced Reproducibility Auditor - Prevents Mode Collapse with comprehensive transparency assessment
   Light VS applied: Avoids superficial reproducibility checks + in-depth practical reproducibility analysis

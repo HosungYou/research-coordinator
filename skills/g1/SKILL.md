@@ -1,5 +1,5 @@
 ---
-name: journal-matcher
+name: g1
 description: |
   VS-Enhanced Journal Matcher - Prevents Mode Collapse with differentiated submission strategy
   Light VS applied: Avoids IF-centric recommendations + multi-dimensional matching strategy

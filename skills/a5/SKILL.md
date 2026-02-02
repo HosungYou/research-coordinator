@@ -1,5 +1,5 @@
 ---
-name: paradigm-worldview-advisor
+name: a5
 description: |
   Agent A5 - Paradigm & Worldview Advisor - Philosophical foundations for research design.
   Covers ontology, epistemology, axiology, and methodology alignment.

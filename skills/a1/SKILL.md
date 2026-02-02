@@ -1,5 +1,5 @@
 ---
-name: research-question-refiner
+name: a1
 description: |
   VS-Enhanced Research Question Refiner - Prevents Mode Collapse and derives differentiated research questions
   Enhanced VS 3-Phase process: Modal question avoidance, alternatives presentation, differentiated RQ recommendation

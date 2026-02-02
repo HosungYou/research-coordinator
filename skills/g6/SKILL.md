@@ -1,5 +1,5 @@
 ---
-name: academic-style-humanizer
+name: g6
 description: |
   VS-Enhanced Academic Style Humanizer - Transforms AI patterns while preserving scholarly integrity
   Applies transformations from G5 analysis to create natural academic prose

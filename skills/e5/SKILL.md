@@ -1,5 +1,5 @@
 ---
-name: sensitivity-analysis-designer
+name: e5
 description: |
   VS-Enhanced Sensitivity Analysis Designer - Prevents Mode Collapse with comprehensive robustness testing
   Light VS applied: Modal sensitivity approach awareness + extended analysis strategy presentation

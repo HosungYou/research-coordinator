@@ -1,5 +1,5 @@
 ---
-name: qualitative-design-consultant
+name: c2
 description: |
   VS-Enhanced Qualitative Design Consultant - Comprehensive qualitative research design support
   Enhanced VS 3-Phase process: Avoids overused phenomenology, proposes context-optimal qualitative strategies

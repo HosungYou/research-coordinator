@@ -1,5 +1,5 @@
 ---
-name: mixed-methods-design-consultant
+name: c3
 description: |
   Agent C3 - Mixed Methods Design Consultant
   Comprehensive mixed methods research design specialist covering sequential,

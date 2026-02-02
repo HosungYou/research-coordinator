@@ -1,5 +1,5 @@
 ---
-name: academic-style-auditor
+name: g5
 description: |
   VS-Enhanced Academic Style Auditor - AI Writing Pattern Detection for Academic Texts
   Detects 24+ AI writing patterns adapted from Wikipedia AI Cleanup guidelines

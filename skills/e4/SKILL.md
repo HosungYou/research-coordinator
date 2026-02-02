@@ -1,5 +1,5 @@
 ---
-name: analysis-code-generator
+name: e4
 description: |
   E4-Enhanced Analysis Code Generator - Prevents Mode Collapse with diverse implementation options
   Light VS applied: Modal code pattern awareness + alternative implementation presentation

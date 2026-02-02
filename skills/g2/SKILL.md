@@ -1,5 +1,5 @@
 ---
-name: academic-communicator
+name: g2
 description: |
   VS-Enhanced Academic Communicator - Prevents Mode Collapse with audience-tailored communication
   Light VS applied: Avoids template-based writing + audience-specific message design

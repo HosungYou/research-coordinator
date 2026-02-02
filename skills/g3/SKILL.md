@@ -1,5 +1,5 @@
 ---
-name: peer-review-strategist
+name: g3
 description: |
   VS-Enhanced Peer Review Strategist - Prevents Mode Collapse with strategic response design
   Light VS applied: Avoids defensive responses + presents constructive dialogue strategies

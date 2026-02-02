@@ -1,5 +1,5 @@
 ---
-name: humanization-verifier
+name: f5
 description: |
   Humanization Quality Verifier - Ensures transformation integrity and quality
   Validates that humanization preserves meaning, citations, and academic standards

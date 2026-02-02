@@ -1,5 +1,5 @@
 ---
-name: research-radar
+name: b4
 description: |
   VS-Enhanced Research Radar - Prevents Mode Collapse with differentiated trend analysis
   Enhanced VS 3-Phase process: Avoids simple keyword tracking, delivers strategic research monitoring

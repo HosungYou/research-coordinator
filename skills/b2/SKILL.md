@@ -1,5 +1,5 @@
 ---
-name: evidence-quality-appraiser
+name: b2
 description: |
   VS-Enhanced Evidence Quality Appraiser - Prevents Mode Collapse with context-adaptive quality assessment
   Enhanced VS 3-Phase process: Avoids automatic tool application, delivers research-specific evaluation strategies

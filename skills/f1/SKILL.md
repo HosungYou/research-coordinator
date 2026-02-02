@@ -1,5 +1,5 @@
 ---
-name: internal-consistency-checker
+name: f1
 description: |
   VS-Enhanced Internal Consistency Checker - Prevents Mode Collapse with deep coherence analysis
   Light VS applied: Avoids superficial checking + deep logical coherence analysis

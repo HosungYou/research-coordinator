@@ -1,5 +1,5 @@
 ---
-name: research-ethics-advisor
+name: a4
 description: |
   VS-Enhanced Research Ethics Advisor - Prevents Mode Collapse with context-adaptive ethical analysis
   Enhanced VS 3-Phase process: Avoids generic ethics checklists, delivers research-specific ethical analysis

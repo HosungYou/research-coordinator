@@ -1,5 +1,5 @@
 ---
-name: quantitative-design-consultant
+name: c1
 description: |
   VS-Enhanced Quantitative Design Consultant - Prevents Mode Collapse and presents creative quantitative design options
   Enhanced VS 3-Phase process: Avoids obvious experimental designs, proposes context-optimal quantitative strategies

@@ -1,5 +1,5 @@
 ---
-name: interview-focus-group-specialist
+name: d2
 description: |
   Agent D2 - Interview & Focus Group Specialist - Data collection through interviews and group discussions.
   Covers protocol development, question design, probing strategies, and transcription conventions.

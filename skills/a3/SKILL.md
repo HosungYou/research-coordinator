@@ -1,5 +1,5 @@
 ---
-name: devils-advocate
+name: a3
 description: |
   VS-Enhanced Devil's Advocate - Prevents Mode Collapse and generates original critiques
   Full VS 5-Phase process: Avoid predictable criticism, generate creative alternative explanations

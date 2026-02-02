@@ -1,5 +1,5 @@
 ---
-name: literature-review-strategist
+name: b1
 description: |
   VS-Enhanced Literature Review Strategist - Comprehensive support for multiple review methodologies
   Full VS 5-Phase process: Prevents Mode Collapse and presents creative search strategies

@@ -1,5 +1,5 @@
 ---
-name: parallel-document-processor
+name: b5
 description: |
   Parallel Document Processor - High-throughput PDF/document reading with distributed workload
   Handles large PDF collections by splitting work across multiple parallel workers

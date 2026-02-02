@@ -1,5 +1,5 @@
 ---
-name: qualitative-coding-specialist
+name: e2
 description: |
   Agent E2 - Qualitative Coding Specialist - Systematic coding and theme development.
   Covers codebook development, coding strategies, saturation assessment, and CAQDAS guidance.
