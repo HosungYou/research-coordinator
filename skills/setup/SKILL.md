@@ -1,3 +1,10 @@
+---
+name: setup
+description: |
+  Diverga initial configuration wizard. Sets up LLM API, checkpoints, paradigm, language.
+  Triggers: setup, configure, 설정
+---
+
 # /diverga:setup
 
 **Version**: 1.0.0

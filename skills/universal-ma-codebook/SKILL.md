@@ -1,3 +1,12 @@
+---
+name: universal-ma-codebook
+description: |
+  Universal Meta-Analysis Codebook v2.2 - AI-Human collaboration for meta-analysis data extraction.
+  4-layer design: Identifiers, Statistics, AI Provenance, Human Verification.
+  Integrates with C5/C6/C7 agents and ScholaRAG.
+  Triggers: meta-analysis, codebook, data extraction, Hedges g, effect size
+---
+
 # Universal Meta-Analysis Codebook
 
 **Version**: 2.2
