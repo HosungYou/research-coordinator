@@ -1,9 +1,10 @@
 # CLAUDE.md
 
-# Diverga v6.7.0 (Systematic Review Automation)
+# Diverga v6.8.0 (Memory System)
 
 **Beyond Modal: AI Research Assistant That Thinks Creatively**
 
+**v6.8.0**: Memory System - Persistent context preservation with semantic search and lifecycle hooks
 **v6.7.0**: Systematic Review Automation - Category I agents (I0-I3) for PRISMA 2020 pipeline
 **v6.6.3**: Codex CLI SKILL.md implementation - actual skill loading via `.codex/skills/`
 **v6.6.2**: Multi-CLI Compatibility - unified install script, NPM package (@diverga/codex-setup)
@@ -548,8 +549,42 @@ Execution Plan:
 
 ---
 
+## Memory System Commands (v6.8)
+
+The DIVERGA Memory System provides persistent context preservation for research lifecycle continuity.
+
+| Command | Description |
+|---------|-------------|
+| `/diverga:memory search "query"` | Semantic memory search |
+| `/diverga:memory status` | Memory system status |
+| `/diverga:memory context` | Current project context |
+| `/diverga:memory history` | Recent session history |
+| `/diverga:memory stats` | Memory statistics |
+| `/diverga:memory export --format md` | Export to Markdown |
+| `/diverga:memory export --format json` | Export to JSON |
+
+### Auto-Behavior (Lifecycle Hooks)
+
+The Memory System automatically captures context at critical lifecycle events:
+
+| Hook | Trigger | Auto-Capture |
+|------|---------|--------------|
+| `session_start` | Conversation begins | Loads project context, recent decisions |
+| `checkpoint_reached` | Human checkpoint passed | Saves decision with rationale, T-Score |
+| `session_end` | Conversation ends | Generates summary, saves session record |
+| `agent_completed` | Agent finishes task | Agent output, time taken, success/failure |
+
+### Trigger Keywords
+
+**English**: "remember", "memory", "context", "recall", "session", "checkpoint", "decision", "persist"
+
+**Korean**: "기억", "맥락", "세션", "체크포인트"
+
+---
+
 ## Version History
 
+- **v6.8.0**: Memory System - Persistent context preservation with semantic search and lifecycle hooks
 - **v6.7.0**: Systematic Review Automation - Category I agents (I0-I3) for PRISMA 2020 pipeline (44 agents total)
 - **v6.6.3**: Codex CLI SKILL.md Implementation - actual skill loading via `.codex/skills/`, QUANT-005 verified
 - **v6.6.2**: Multi-CLI Compatibility Edition - unified install script, NPM package (@diverga/codex-setup)
