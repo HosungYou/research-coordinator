@@ -164,6 +164,48 @@ This will:
 
 ---
 
+## Deep Investigation Results (v6.9.1)
+
+After extensive debugging, we compared Diverga with oh-my-claudecode (which works):
+
+### What's Identical
+
+| Component | OMC | Diverga | Status |
+|-----------|-----|---------|--------|
+| `plugin.json` structure | ✅ | ✅ | Same |
+| `marketplace.json` structure | ✅ | ✅ | Same |
+| `skills/` directory | 35 skills | 51 skills | Valid |
+| `installed_plugins.json` entry | ✅ | ✅ | Valid |
+| SKILL.md frontmatter | name, description | name, description, version | Valid |
+
+### Suspected Root Cause
+
+The colon prefix issue appears to be related to **how plugins are registered**, not their structure:
+
+1. **OMC**: Installed via proper Claude Code plugin commands
+2. **Diverga**: Registered via manual JSON editing during debugging
+
+Manual registration may skip internal indexing steps that Claude Code uses to discover plugin skills at startup.
+
+### Recommended Solution
+
+For users experiencing the colon prefix issue:
+
+1. **Use hyphen prefix** (recommended): `/diverga-help` via local skill symlinks
+2. **Try proper reinstall**: Use Claude Code's plugin commands:
+   ```
+   # Remove existing registration
+   /plugin uninstall diverga
+
+   # Reinstall from marketplace
+   /plugin marketplace add https://github.com/HosungYou/Diverga
+   /plugin install diverga
+
+   # Restart Claude Code
+   ```
+
+---
+
 ## Still Not Working?
 
 If skills still don't work after following this guide:
