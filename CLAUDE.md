@@ -1,13 +1,13 @@
 # CLAUDE.md
 
-# Diverga v6.5.2 (Task Tool Structure Fix)
+# Diverga v7.0.0 (Memory System Global Deployment)
 
 **Beyond Modal: AI Research Assistant That Thinks Creatively**
 
+**v7.0.0**: Memory System - 3-layer context, checkpoint auto-trigger, cross-session persistence
 **v6.5.2**: Structure fix for Task tool agent recognition - `/skills/` moved to root level
 **v6.5.0**: Parallel execution via Task tool - `Task(subagent_type="diverga:a1", ...)`
 **v6.4**: Plugin Marketplace Registration - Install via `/plugin marketplace add`
-**v6.3**: Meta-Analysis Agent System (C5/C6/C7) - Multi-gate validation, Hedges' g calculation
 
 AI Research Assistant for the Complete Research Lifecycle - from question formulation to publication.
 
@@ -77,6 +77,61 @@ The system will:
 3. Present VS alternatives with T-Scores
 4. **WAIT for your selection**
 5. Guide you through the pipeline with checkpoints
+
+---
+
+## Memory System (v7.0 Core Feature)
+
+### Overview
+
+Diverga Memory System provides **context-persistent research support** with:
+- **3-Layer Context System**: Keyword-triggered, Task interceptor, CLI-based loading
+- **Checkpoint Auto-Trigger**: Automatic enforcement at critical decision points
+- **Cross-Session Persistence**: Decisions and progress survive session restarts
+- **Decision Audit Trail**: Immutable, versioned history of all research decisions
+
+### 3-Layer Context System
+
+| Layer | Trigger | Description |
+|-------|---------|-------------|
+| **Layer 1** | Keywords | "my research", "연구 진행", "where was I" auto-load context |
+| **Layer 2** | Task tool | `Task(subagent_type="diverga:*")` auto-injects context to agents |
+| **Layer 3** | CLI | `/diverga:memory context` for explicit full context |
+
+### Memory Commands
+
+| Command | Description |
+|---------|-------------|
+| `/diverga:memory status` | Show project status |
+| `/diverga:memory context` | Display full context |
+| `/diverga:memory init` | Initialize new project |
+| `/diverga:memory decision list` | List decisions |
+| `/diverga:memory decision add` | Add decision |
+| `/diverga:memory archive [STAGE]` | Archive completed stage |
+| `/diverga:memory migrate` | Run v6.8 → v7.0 migration |
+
+### Project Structure
+
+```
+.research/
+├── baselines/           # Stable research foundations
+│   ├── literature/
+│   ├── methodology/
+│   └── framework/
+├── changes/
+│   ├── current/         # Active work
+│   └── archive/         # Completed stages
+├── sessions/            # Session records
+├── project-state.yaml   # Project metadata
+├── decision-log.yaml    # All decisions
+└── checkpoints.yaml     # Checkpoint states
+```
+
+### Context Keywords (English + Korean)
+
+**English**: "my research", "research status", "research progress", "where was I", "continue research"
+
+**Korean**: "내 연구", "연구 진행", "연구 상태", "어디까지", "지금 단계"
 
 ---
 

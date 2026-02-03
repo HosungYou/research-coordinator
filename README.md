@@ -20,7 +20,7 @@
               └─────────────────────────────────────────────────┘
 ```
 
-[![Version](https://img.shields.io/badge/version-6.6.1-7c3aed?style=for-the-badge&logo=semantic-release&logoColor=white)](https://github.com/HosungYou/Diverga)
+[![Version](https://img.shields.io/badge/version-7.0.0-7c3aed?style=for-the-badge&logo=semantic-release&logoColor=white)](https://github.com/HosungYou/Diverga)
 [![Claude Code](https://img.shields.io/badge/Claude_Code-Plugin-FF6B00?style=for-the-badge&logo=anthropic&logoColor=white)](https://claude.ai/code)
 [![Codex CLI](https://img.shields.io/badge/Codex_CLI-Support-412991?style=for-the-badge&logo=openai&logoColor=white)](docs/DESIGN_SYSTEM.md)
 [![OpenCode](https://img.shields.io/badge/OpenCode-Plugin-0969da?style=for-the-badge&logo=github&logoColor=white)](docs/DESIGN_SYSTEM.md)
@@ -140,24 +140,49 @@ Diverga:
 
 ---
 
-## ✨ v6.5 (Parallel Execution Edition)
+## ✨ v7.0 (Memory System Global Deployment)
 
 ### Core Principle
 
 > **"Human decisions remain with humans. AI handles what's beyond human scope."**
 > **"인간이 할 일은 인간이, AI는 인간의 범주를 벗어난 것을 수행"**
 
-### 🆕 What's New in v6.5
+### 🆕 What's New in v7.0
 
 | Feature | Description |
 |---------|-------------|
-| **🚀 Parallel Agent Execution** | Run multiple agents simultaneously via Task tool |
-| **📁 /agents/ Directory** | Direct agent files for Task tool registration |
-| **⚡ oh-my-claudecode Compatible** | Same invocation pattern: `Task(subagent_type="diverga:a1")` |
-| **🔧 TypeScript Runtime** | Programmatic agent access via `getAgentDefinitions()` |
-| **🔄 Dual Invocation** | Both Skill (`/diverga:A1-...`) and Task (`diverga:a1`) supported |
+| **🧠 Memory System** | Context-persistent research support with cross-session continuity |
+| **🔴 Checkpoint Auto-Trigger** | Automatic human-in-the-loop decisions at critical points |
+| **📁 3-Layer Context System** | Keyword-triggered, Task interceptor, CLI-based context loading |
+| **📋 Decision Audit Trail** | Immutable, versioned decision history |
+| **📄 Research Documentation** | Auto-generate artifacts from schemas and templates |
+| **🔄 Migration Support** | Automatic v6.8 → v7.0 upgrade with rollback |
 
-### Parallel Execution Quick Start
+### Memory System Quick Start
+
+```bash
+# Initialize project
+/diverga:memory init --name "AI Education" --question "How does AI improve learning?" --paradigm quantitative
+
+# Check context (or just ask "What's my research status?")
+/diverga:memory status
+
+# Add decision at checkpoint
+/diverga:memory decision add --checkpoint CP_RESEARCH_DIRECTION --selected "Meta-analysis" --rationale "Need quantitative synthesis"
+
+# Archive completed stage
+/diverga:memory archive foundation
+```
+
+### 3-Layer Context System
+
+| Layer | Trigger | When to Use |
+|-------|---------|-------------|
+| **Layer 1** | "my research", "연구 진행" | Ask naturally about research status |
+| **Layer 2** | `Task(subagent_type="diverga:*")` | Context auto-injected to agents |
+| **Layer 3** | `/diverga:memory context` | Full detailed context |
+
+### Parallel Execution (from v6.5)
 
 ```python
 # Single agent

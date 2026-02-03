@@ -4,6 +4,196 @@ All notable changes to Diverga (formerly Research Coordinator) will be documente
 
 ---
 
+## [7.0.0] - 2026-02-03 (Memory System Global Deployment)
+
+### Overview
+
+**Diverga Memory System v7.0** - Complete research context persistence system with 3-layer context loading, checkpoint auto-trigger, cross-session continuity, and research documentation automation.
+
+This release introduces a comprehensive Python library (`lib/memory/`) that enables researchers to maintain context across sessions, enforce human-in-the-loop decisions at critical checkpoints, and auto-generate research documentation.
+
+### New Features
+
+#### 1. 3-Layer Context System
+
+| Layer | Trigger | Purpose |
+|-------|---------|---------|
+| **Layer 1: Keyword-Triggered** | "my research", "연구 진행" | Auto-load context when researcher asks |
+| **Layer 2: Task Interceptor** | `Task(subagent_type="diverga:*")` | Inject full context into agent prompts |
+| **Layer 3: CLI** | `/diverga:memory context` | Explicit context access |
+
+**Bilingual Support**: 15 English + 15 Korean trigger keywords
+
+#### 2. Checkpoint Auto-Trigger System
+
+```yaml
+Checkpoint Levels:
+  🔴 REQUIRED:    Must complete before proceeding
+  🟠 RECOMMENDED: Strongly suggested
+  🟡 OPTIONAL:    Can skip with defaults
+```
+
+17 standard checkpoints across research workflow:
+- `CP_RESEARCH_DIRECTION`, `CP_PARADIGM_SELECTION`, `CP_THEORY_SELECTION`
+- `CP_METHODOLOGY_APPROVAL`, `CP_DATABASE_SELECTION`, `CP_SCREENING_CRITERIA`
+- ScholaRAG-specific: `SCH_DATABASE_SELECTION`, `SCH_SCREENING_CRITERIA`, etc.
+
+#### 3. Cross-Session Persistence
+
+- **Session Tracking**: UUID-based session management
+- **Decision Audit Trail**: Append-only, immutable decision log with versioning
+- **Stage Archiving**: Timestamped archives with auto-generated summaries
+
+#### 4. Dual-Tree Filesystem Structure
+
+```
+.research/
+├── baselines/           # STABLE TREE (verified foundations)
+│   ├── literature/
+│   ├── methodology/
+│   └── framework/
+├── changes/
+│   ├── current/         # WORKING TREE (in-progress)
+│   └── archive/         # Completed stages
+├── sessions/
+├── project-state.yaml
+├── decision-log.yaml
+└── checkpoints.yaml
+```
+
+#### 5. Research Documentation System
+
+- **Schema-driven artifacts**: YAML schemas define artifact dependencies
+- **Jinja2-like templates**: Protocol, PRISMA diagram, manuscript templates
+- **Auto-generation**: Generate artifacts based on research context
+
+#### 6. Migration Support (v6.8 → v7.0)
+
+```bash
+# Preview changes
+/diverga:memory migrate --dry-run
+
+# Execute migration
+/diverga:memory migrate
+```
+
+### New Files
+
+#### Core Library (`lib/memory/src/`)
+
+| File | Purpose | Lines |
+|------|---------|-------|
+| `models.py` | Data models (ResearchContext, Checkpoint, Decision) | ~250 |
+| `context_trigger.py` | Layer 1: Keyword-triggered context | ~460 |
+| `task_interceptor.py` | Layer 2: Agent context injection | ~290 |
+| `checkpoint_trigger.py` | Checkpoint auto-trigger | ~300 |
+| `fs_state.py` | Filesystem state management | ~200 |
+| `dual_tree.py` | Dual-tree structure | ~250 |
+| `archive.py` | Stage archiving | ~200 |
+| `decision_log.py` | Decision audit trail | ~280 |
+| `session_hooks.py` | Session lifecycle | ~250 |
+| `schema.py` | Research schema definitions | ~300 |
+| `templates.py` | Template engine | ~280 |
+| `artifact_generator.py` | Artifact generation | ~300 |
+| `cli.py` | CLI commands | ~760 |
+| `migration.py` | v6.8 → v7.0 migration | ~350 |
+| `memory_api.py` | Unified facade API (23 methods) | ~400 |
+
+#### Templates (`templates/`)
+
+| Directory | Files | Purpose |
+|-----------|-------|---------|
+| `systematic-review/` | 8 files | PRISMA 2020 templates |
+| `meta-analysis/` | 4 files | Meta-analysis templates |
+| `checkpoints/` | 1 file | 17 checkpoint definitions |
+
+#### Documentation
+
+| File | Purpose |
+|------|---------|
+| `lib/memory/README.md` | Comprehensive library documentation |
+| `skills/memory/SKILL.md` | Skill definition for Claude Code |
+
+### API Reference
+
+**MemoryAPI** - 23 methods:
+
+```python
+from lib.memory import MemoryAPI
+
+memory = MemoryAPI(project_root=Path("."))
+
+# Context
+memory.should_load_context("What's my research status?")  # True
+memory.display_context()  # Formatted context string
+memory.intercept_task("diverga:a1", prompt)  # Enriched prompt
+
+# Session
+memory.start_session()  # Returns session_id
+memory.end_session()  # Saves session data
+
+# Checkpoint
+memory.check_checkpoint("a1", "task_start")  # Returns injection if triggered
+memory.record_checkpoint("CP_RESEARCH_DIRECTION", "approved")
+
+# Decision
+memory.add_decision(checkpoint="CP_RESEARCH_DIRECTION",
+                   selected="Meta-analysis",
+                   rationale="Need quantitative synthesis")
+memory.amend_decision("dec-001", new_selected="...", new_rationale="...")
+
+# Project
+memory.initialize_project(name, question, paradigm)
+memory.get_project_state()
+memory.archive_stage("foundation", summary="Research direction finalized")
+```
+
+### CLI Commands
+
+| Command | Description |
+|---------|-------------|
+| `/diverga:memory status` | Show project status |
+| `/diverga:memory context` | Display full context |
+| `/diverga:memory init --name NAME --question Q --paradigm P` | Initialize project |
+| `/diverga:memory decision list` | List decisions |
+| `/diverga:memory decision add` | Add decision |
+| `/diverga:memory archive [STAGE]` | Archive stage |
+| `/diverga:memory migrate` | Run migration |
+
+### Breaking Changes
+
+- **New directory structure**: `.research/` replaces `.diverga/memory/` for project state
+- **Checkpoint format**: Updated YAML schema for checkpoint definitions
+- **Decision log schema**: Added `context` and `metadata` fields
+
+### Migration Guide
+
+1. **Automatic Migration**: Run `/diverga:memory migrate` on existing projects
+2. **Backup Created**: `.research-backup-v68-{timestamp}/` before migration
+3. **Rollback Available**: `migrate --rollback` if issues occur
+
+### Technical Details
+
+**Python 3.8+ Compatible**: Uses `from __future__ import annotations`
+
+**Dependencies**: Only stdlib (no external packages required)
+- `pathlib`, `dataclasses`, `uuid`, `json`, `datetime`
+- Optional: `yaml` (PyYAML) for enhanced YAML handling
+
+**Korean Text Support**: UTF-8 encoding throughout, `ensure_ascii=False`
+
+### Verification
+
+```
+✅ All 15 modules import successfully
+✅ MemoryAPI instantiated - version 7.0.0
+✅ 23 API methods available
+✅ Templates render correctly
+✅ Checkpoint triggers function
+```
+
+---
+
 ## [6.6.2] - 2026-01-29 (npm Package Release)
 
 ### Overview
