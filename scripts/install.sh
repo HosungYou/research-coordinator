@@ -61,7 +61,7 @@ detect_platforms() {
 ensure_repo() {
     local tmp_dir="/tmp/diverga-install-$$"
 
-    log_info "Fetching Diverga repository..."
+    log_info "Fetching Diverga repository..." >&2
 
     if [ -d "$tmp_dir" ]; then
         rm -rf "$tmp_dir"
