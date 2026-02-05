@@ -208,20 +208,23 @@ SETTINGS_EOF
         log_success "Created settings.json with HUD statusLine"
     fi
 
-    # 3. Create local skill symlinks
-    log_info "Creating skill symlinks..."
+    # 3. Copy skills to local directory (not symlinks - they break after /tmp cleanup)
+    log_info "Installing skills..."
     mkdir -p "$HOME/.claude/skills"
     local count=0
     for skill_dir in "$src_dir/skills/"*/; do
         if [ -d "$skill_dir" ]; then
             skill_name=$(basename "$skill_dir")
             target="$HOME/.claude/skills/diverga-${skill_name}"
+            # Remove existing (symlink or directory)
             [ -L "$target" ] && rm "$target"
-            ln -sf "$skill_dir" "$target"
+            [ -d "$target" ] && rm -rf "$target"
+            # Copy skill directory
+            cp -r "$skill_dir" "$target"
             ((count++))
         fi
     done
-    log_success "Created $count skill symlinks"
+    log_success "Installed $count skills to ~/.claude/skills/"
 
     log_success "Claude Code installation complete: $dest_dir"
     echo ""
