@@ -4,7 +4,7 @@ description: |
   Diverga v8.0 initial configuration wizard. Simplified 3-step setup.
   Sets up checkpoints, HUD, and language preferences.
   Triggers: setup, configure, 설정, install
-version: "8.0.0"
+version: "8.0.1"
 ---
 
 # /diverga-setup

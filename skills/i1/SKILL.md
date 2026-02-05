@@ -5,7 +5,7 @@ description: |
   Handles rate limiting, deduplication, and PDF URL extraction
   Use when: fetching papers, searching databases, paper retrieval
   Triggers: fetch papers, retrieve papers, database search, Semantic Scholar, OpenAlex, arXiv
-version: "8.0.0"
+version: "8.0.1"
 ---
 
 # I1-PaperRetrievalAgent

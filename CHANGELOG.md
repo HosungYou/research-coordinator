@@ -4,6 +4,31 @@ All notable changes to Diverga (formerly Research Coordinator) will be documente
 
 ---
 
+## [8.0.1] - 2026-02-05 (Installation Bug Fixes)
+
+### Bug Fixes
+
+- **fix(install)**: Fixed `ensure_repo()` stdout capture bug where log messages were mixed with path output
+- **fix(install)**: Changed skill installation from symlinks to file copies - symlinks to `/tmp/` broke after temporary directory cleanup
+
+### Technical Details
+
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| Install script path corruption | `log_info` stdout captured in `$(ensure_repo)` | Redirect log to stderr with `>&2` |
+| Skills broken after reboot | Symlinks pointed to `/tmp/diverga-install-*/` | Use `cp -r` instead of `ln -sf` |
+
+### Installation Verification
+
+After installing v8.0.1:
+```bash
+# Skills should be directories, not symlinks
+ls -la ~/.claude/skills/diverga-a1
+# Should show: drwxr-xr-x (directory), NOT lrwxr-xr-x -> /tmp/...
+```
+
+---
+
 ## [8.0.0] - 2026-02-04 (Project Visibility & HUD Enhancement)
 
 ### Overview
