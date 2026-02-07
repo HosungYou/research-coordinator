@@ -4,6 +4,24 @@ All notable changes to Diverga (formerly Research Coordinator) will be documente
 
 ---
 
+## [8.0.2] - 2026-02-07 (Doctor Diagnostics Skill)
+
+### New Features
+
+- **feat(skill)**: Added `/diverga:doctor` system diagnostics skill
+  - 5-layer diagnostic checks: Plugin Health, Skill Sync, Config Validity, API Keys, Project State
+  - OpenClaw-style Check-Report-Fix pattern: every issue includes actionable fix command
+  - Read-only diagnostics — no file modifications
+  - Referenced from `/diverga` dashboard Quick Actions
+
+### Files Added
+
+| File | Description |
+|------|-------------|
+| `skills/doctor/SKILL.md` | Doctor diagnostics skill definition |
+
+---
+
 ## [8.0.1-patch3] - 2026-02-07 (8-Dimension Diagnostic Sweep & Deep Fix)
 
 ### Overview

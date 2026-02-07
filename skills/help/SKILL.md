@@ -40,6 +40,7 @@ When user invokes `/diverga:help`, display:
 │                         COMMANDS                                 │
 ├─────────────────────────────────────────────────────────────────┤
 │ /diverga:setup          Initial configuration wizard            │
+│ /diverga:doctor         System diagnostics & health check       │
 │ /diverga:help           This help guide                         │
 │ /diverga:meta-analysis  Meta-analysis workflow (C5+C6+C7)       │
 │ /diverga:pdf-extract    Extract data from PDFs (C6)             │
