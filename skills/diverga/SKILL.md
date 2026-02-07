@@ -21,16 +21,18 @@ Display the following dashboard by reading live configuration and environment st
 Output this exact logo block:
 
 ```
-╔═══════════════════════════════════════════════════════════════╗
-║                                                               ║
-║     DDDDDD  IIIII V     V EEEEE RRRRR   GGGG   AAA          ║
-║     D     D   I   V     V E     R    R  G      A   A         ║
-║     D     D   I   V     V EEEE  RRRRR  G  GGG AAAAA          ║
-║     D     D   I    V   V  E     R  R   G    G A     A         ║
-║     DDDDDD  IIIII   VVV   EEEEE R   RR  GGGG  A     A        ║
-║                                                               ║
-║              DIVERGA - Diverge from the Modal  v8.0.1        ║
-╚═══════════════════════════════════════════════════════════════╝
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                                                                               ║
+║     ██████╗ ██╗██╗   ██╗███████╗██████╗  ██████╗  █████╗                    ║
+║     ██╔══██╗██║██║   ██║██╔════╝██╔══██╗██╔════╝ ██╔══██╗                   ║
+║     ██║  ██║██║██║   ██║█████╗  ██████╔╝██║  ███╗███████║                   ║
+║     ██║  ██║██║╚██╗ ██╔╝██╔══╝  ██╔══██╗██║   ██║██╔══██║                   ║
+║     ██████╔╝██║ ╚████╔╝ ███████╗██║  ██║╚██████╔╝██║  ██║                   ║
+║     ╚═════╝ ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝                   ║
+║                                                                               ║
+║              * Diverge from the Modal · Discover the Exceptional             ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
 ```
 
 ### Step 2: Read Configuration
