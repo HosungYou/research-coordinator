@@ -4,17 +4,17 @@ description: |
   Human-Centered Orchestrator for Research Coordinator v6.7.0
   Manages 44 research agents across 9 categories (A-I) with MANDATORY human checkpoints
   No autonomous modes - all critical decisions require explicit human approval
-  Features: ScholaRAG Integration, Meta-Analysis System, Humanization Pipeline
+  Features: Systematic Review Automation, Meta-Analysis System, Humanization Pipeline
 version: "8.0.1"
 ---
 
 # Research Orchestrator v2.7.0 (Human-Centered)
 
-**Core Principle**: 인간이 할 일은 인간이, AI는 인간 범위를 벗어난 작업 수행
+**Core Principle**: Human decisions remain with humans. AI handles what's beyond human scope.
 
 ## Purpose
 
-Research Coordinator의 **44개 에이전트 (9개 카테고리)**를 **체크포인트 중심**으로 관리합니다.
+Manages Research Coordinator's **44 agents (9 categories)** with **checkpoint-centered** orchestration.
 
 ## v2.0 Changes (Clean Slate)
 
@@ -68,7 +68,7 @@ REQUIRED_CHECKPOINTS = [
     "CP_METHODOLOGY_APPROVAL",  # Design complete
     "CP_META_GATE",             # Meta-analysis gate failure (C5)
 
-    # ScholaRAG Checkpoints (Category I)
+    # Systematic Review Checkpoints (Category I)
     "SCH_DATABASE_SELECTION",   # Database choice before retrieval (I1)
     "SCH_SCREENING_CRITERIA",   # PRISMA criteria before screening (I2)
 ]
@@ -95,7 +95,7 @@ RECOMMENDED_CHECKPOINTS = [
     "META_TIER3_REVIEW",        # Data completeness < 40% (C5)
     "META_ANOMALY_REVIEW",      # |g| > 3.0 detected (C7)
 
-    # ScholaRAG Checkpoints (Category I)
+    # Systematic Review Checkpoints (Category I)
     "SCH_RAG_READINESS",        # RAG system ready for queries (I3)
 ]
 
@@ -203,7 +203,7 @@ Task(
 | | **G6** | **Academic Style Humanizer** | HIGH | opus |
 | **H: Specialized (2)** | H1 | Ethnographic Research Advisor | HIGH | opus |
 | | H2 | Action Research Facilitator | HIGH | opus |
-| **I: ScholaRAG (4)** | **I0** | **Scholar Agent Orchestrator** | HIGH | opus |
+| **I: Systematic Review (4)** | **I0** | **Review Pipeline Orchestrator** | HIGH | opus |
 | | **I1** | **Paper Retrieval Agent** | MEDIUM | sonnet |
 | | **I2** | **Screening Assistant** | MEDIUM | sonnet |
 | | **I3** | **RAG Builder** | LOW | haiku |
@@ -212,22 +212,22 @@ Task(
 
 ## Example Orchestration (v2.0 Style)
 
-### User: "AI 튜터 효과 연구 시작하고 싶어"
+### User: "I want to start research on AI tutor effects"
 
 ```
 Step 1: Pattern Match
-   └─ "연구" detected → Research initiation
+   └─ "research" detected → Research initiation
    └─ Paradigm signal: likely quantitative
 
 Step 2: 🔴 CP_PARADIGM_SELECTION (HALT)
 
-   AI: "연구 맥락에서 양적 연구 접근이 감지되었습니다.
-        다음 중 어떤 패러다임으로 진행하시겠습니까?
+   AI: "A quantitative research approach has been detected from your context.
+        Which paradigm would you like to proceed with?
 
-        [Q] 양적 연구 (Quantitative)
-        [L] 질적 연구 (Qualitative)
-        [M] 혼합 방법 (Mixed Methods)
-        [?] 도움이 필요해요"
+        [Q] Quantitative
+        [L] Qualitative
+        [M] Mixed Methods
+        [?] I need help deciding"
 
    ⏸️ WAIT FOR USER RESPONSE ⏸️
 
@@ -238,13 +238,13 @@ Step 4: Route to A1 (HIGH/opus)
 
 Step 5: 🔴 CP_RESEARCH_DIRECTION (HALT)
 
-   AI: "연구 질문 방향 옵션입니다:
+   AI: "Here are your research direction options:
 
-        [A] 전체 효과 분석 (T=0.65) - 일반적
-        [B] 하위요인별 효과 (T=0.40) - 차별화 ⭐
-        [C] 개인차 조절효과 (T=0.25) - 혁신적
+        [A] Overall effect analysis (T=0.65) - Common
+        [B] Subfactor effects (T=0.40) - Differentiated ⭐
+        [C] Individual difference moderators (T=0.25) - Innovative
 
-        어떤 방향으로 진행하시겠습니까?"
+        Which direction would you like to proceed?"
 
    ⏸️ WAIT FOR USER RESPONSE ⏸️
 
@@ -255,13 +255,13 @@ Step 7: Route to A2 + A3 (HIGH/opus)
 
 Step 8: 🔴 CP_THEORY_SELECTION (HALT)
 
-   AI: "이론적 프레임워크 옵션입니다:
+   AI: "Here are your theoretical framework options:
 
         [A] Guilford's 4-factor (T=0.55)
         [B] Kaufman's 4C Model (T=0.35)
         [C] Amabile's Component (T=0.40)
 
-        어떤 프레임워크를 사용하시겠습니까?"
+        Which framework would you like to use?"
 
    ⏸️ WAIT FOR USER RESPONSE ⏸️
 
@@ -300,7 +300,7 @@ agent_specialization: enabled             # 44 agents across 9 categories
 parallel_execution: enabled_between_checkpoints_only
 context_persistence: enabled
 vs_methodology: enabled
-scholarag_integration: enabled            # Category I agents (I0-I3)
+systematic_review_automation: enabled     # Category I agents (I0-I3)
 meta_analysis_system: enabled             # C5/C6/C7 multi-gate validation
 humanization_pipeline: enabled            # G5/G6/F5 AI pattern detection
 ```
@@ -322,10 +322,10 @@ humanization_pipeline: enabled            # G5/G6/F5 AI pattern detection
 ```
 ┌────────────────────────────────────────────────────────────┐
 │                                                            │
-│   ❌ WRONG: "다음 단계로 진행하겠습니다."                  │
+│   [X] WRONG: "Proceeding to next stage."                   │
 │                                                            │
-│   ✅ RIGHT: "다음 단계로 진행해도 될까요?                  │
-│              [Y] 네 / [N] 아니요 / [?] 다른 옵션"          │
+│   [OK] RIGHT: "Shall we proceed to the next stage?        │
+│                [Y] Yes / [N] No / [?] Other options"       │
 │                                                            │
 └────────────────────────────────────────────────────────────┘
 ```

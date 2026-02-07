@@ -324,9 +324,9 @@ checkpoints:
     next_checkpoint: null
     typical_duration: "Variable"
 
-  # ScholaRAG-Specific Checkpoints
+  # Systematic Review Automation Checkpoints
   - id: SCH_DATABASE_SELECTION
-    name: "ScholaRAG Database Selection"
+    name: "Database Selection"
     level: RED
     description: "API-accessible databases selected (Semantic Scholar, OpenAlex, arXiv)"
     trigger:
@@ -347,7 +347,7 @@ checkpoints:
     agent: I1-paper-retrieval-agent
 
   - id: SCH_SCREENING_CRITERIA
-    name: "ScholaRAG Screening Criteria Loaded"
+    name: "Screening Criteria Loaded"
     level: RED
     description: "Inclusion/exclusion criteria configured for LLM screening"
     trigger:

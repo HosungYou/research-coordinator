@@ -38,7 +38,7 @@ const BANNER = `${colors.cyan}
     ██████╔╝██║ ╚████╔╝ ███████╗██║  ██║╚██████╔╝██║  ██║
     ╚═════╝ ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝
 ${colors.reset}
-${colors.yellow}    🎯 Diverge from the Modal · Discover the Exceptional${colors.reset}
+${colors.yellow}    * Diverge from the Modal · Discover the Exceptional${colors.reset}
 ${colors.dim}    ─────────────────────────────────────────────────────${colors.reset}
 `;
 
@@ -100,6 +100,30 @@ const AGENT_REGISTRY = {
   'H1': { name: 'Ethnographic Research Advisor', tier: 'HIGH', icon: '🌐', category: 'H - Specialized' },
   'H2': { name: 'Action Research Facilitator', tier: 'HIGH', icon: '🎬', category: 'H - Specialized' },
 };
+
+// Visual width helper - accounts for emoji being 2 columns wide in terminals
+function visualWidth(str) {
+  let width = 0;
+  for (const ch of str) {
+    const code = ch.codePointAt(0);
+    // Emoji and CJK characters are typically 2 columns wide
+    if (code > 0x1F000 || (code >= 0x2600 && code <= 0x27BF) ||
+        (code >= 0x1F300 && code <= 0x1FAD6) ||
+        (code >= 0x4E00 && code <= 0x9FFF) ||
+        (code >= 0xAC00 && code <= 0xD7AF)) {
+      width += 2;
+    } else {
+      width += 1;
+    }
+  }
+  return width;
+}
+
+function visualPadEnd(str, targetWidth) {
+  const currentWidth = visualWidth(str);
+  const padding = Math.max(0, targetWidth - currentWidth);
+  return str + ' '.repeat(padding);
+}
 
 // Commands
 const commands = {
@@ -214,7 +238,7 @@ ${colors.dim}Documentation: https://github.com/HosungYou/Diverga${colors.reset}
 
     console.log(`
 ╔═══════════════════════════════════════════════════════════════╗
-║  ${agent.icon} ${upperId}: ${agent.name.padEnd(45)}║
+║  ${visualPadEnd(`${agent.icon} ${upperId}: ${agent.name}`, 60)}║
 ╚═══════════════════════════════════════════════════════════════╝
 
 Category:   ${agent.category}
@@ -285,12 +309,12 @@ T-Score measures "typicality" - how common a research approach is.
 ┌────────────┬─────────────┬────────────────────────────────────┐
 │ T-Score    │ Label       │ Meaning                            │
 ├────────────┼─────────────┼────────────────────────────────────┤
-│ ≥ 0.7      │ 🟢 Common   │ Highly typical, limited novelty    │
-│ 0.5-0.7    │ 🟢 Estab.   │ Standard, needs specificity        │
-│ 0.4-0.5    │ 🟡 Moderate │ Balanced risk-novelty              │
-│ 0.3-0.4    │ 🟡 Emerging │ Novel, needs justification         │
-│ 0.2-0.3    │ 🟠 Innovate │ High contribution potential        │
-│ < 0.2      │ 🔴 Experim. │ Paradigm-challenging               │
+│ >= 0.7     │ [+] Common  │ Highly typical, limited novelty    │
+│ 0.5-0.7    │ [+] Estab.  │ Standard, needs specificity        │
+│ 0.4-0.5    │ [~] Moderate│ Balanced risk-novelty              │
+│ 0.3-0.4    │ [~] Emerging│ Novel, needs justification         │
+│ 0.2-0.3    │ [!] Innovate│ High contribution potential        │
+│ < 0.2      │ [!] Experim.│ Paradigm-challenging               │
 └────────────┴─────────────┴────────────────────────────────────┘
 
 Creativity Levels:

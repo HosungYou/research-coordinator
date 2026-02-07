@@ -396,12 +396,12 @@ def calculate_hedges_g_with_provenance(m1, sd1, n1, m2, sd2, n2, sources=None):
     }
 ```
 
-### ScholaRAG Integration
+### Systematic Review Pipeline Integration
 
 ```python
-def extract_from_scholarag_rag(rag_instance, study_id, fields):
+def extract_from_rag(rag_instance, study_id, fields):
     """
-    Extract values from ScholaRAG RAG system with provenance.
+    Extract values from RAG system with provenance.
 
     Used in Phase 1 of Universal Codebook workflow.
     """

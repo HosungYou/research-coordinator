@@ -92,13 +92,13 @@ Files now in cache:
 
 ## Workaround Test Results
 
-### I0-ScholarAgentOrchestrator Simulation
+### I0-ReviewPipelineOrchestrator Simulation
 
 Using `general-purpose` agent to simulate I0:
 
 | Feature | Expected | Actual | Status |
 |---------|----------|--------|--------|
-| Agent identification | I0-ScholarAgentOrchestrator | I0-ScholarAgentOrchestrator | ✅ |
+| Agent identification | I0-ReviewPipelineOrchestrator | I0-ReviewPipelineOrchestrator | ✅ |
 | Checkpoint display | 🔴 SCH_DATABASE_SELECTION | 🔴 SCH_DATABASE_SELECTION | ✅ |
 | VS T-Score: High Coverage | T=0.70 | T=0.70 | ✅ |
 | VS T-Score: Education-Focused | T=0.45 ⭐ | T=0.45 ⭐ | ✅ |
@@ -121,7 +121,7 @@ Using `general-purpose` agent to simulate I0:
 
 ## 어떤 방향으로 진행하시겠습니까?
 
-**I0-ScholarAgentOrchestrator Status**: `BEHAVIORAL_HALT`
+**I0-ReviewPipelineOrchestrator Status**: `BEHAVIORAL_HALT`
 ```
 
 ---

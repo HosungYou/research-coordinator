@@ -47,7 +47,7 @@ This test validates the successful registration of Category I agents (I0-I3) for
 
 | Agent | Path | Status |
 |-------|------|--------|
-| I0-ScholarAgentOrchestrator | `I0-scholar-agent-orchestrator/SKILL.md` | ✅ 6.8 KB |
+| I0-ReviewPipelineOrchestrator | `I0-review-pipeline-orchestrator/SKILL.md` | ✅ 6.8 KB |
 | I1-PaperRetrievalAgent | `I1-paper-retrieval-agent/SKILL.md` | ✅ 5.3 KB |
 | I2-ScreeningAssistant | `I2-screening-assistant/SKILL.md` | ✅ 6.3 KB |
 | I3-RAGBuilder | `I3-rag-builder/SKILL.md` | ✅ 6.3 KB |
@@ -60,7 +60,7 @@ total_agents: 44
 categories: 9
 
 category_I:
-  - I0-scholar-agent-orchestrator (opus)
+  - I0-review-pipeline-orchestrator (opus)
   - I1-paper-retrieval-agent (sonnet)
   - I2-screening-assistant (sonnet)
   - I3-rag-builder (haiku)
@@ -138,7 +138,7 @@ Using skill: research-coordinator (systematic review + PRISMA triggers).
 ```
 ✅ Access confirmed. Category I agents I0–I3 are present in
 `/Volumes/External SSD/Projects/Diverga/.claude/skills/research-agents/`:
-- I0-scholar-agent-orchestrator
+- I0-review-pipeline-orchestrator
 - I1-paper-retrieval-agent
 - I2-screening-assistant
 - I3-rag-builder

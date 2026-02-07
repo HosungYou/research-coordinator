@@ -58,7 +58,7 @@ Using skill: research-coordinator (systematic review + PRISMA triggers).
 ```
 ✅ Access confirmed. Category I agents I0–I3 are present in
 `/Volumes/External SSD/Projects/Diverga/.claude/skills/research-agents/`:
-- I0-scholar-agent-orchestrator
+- I0-review-pipeline-orchestrator
 - I1-paper-retrieval-agent
 - I2-screening-assistant
 - I3-rag-builder

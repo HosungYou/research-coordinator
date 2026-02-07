@@ -145,7 +145,7 @@ Checkpoints are quality gates that validate research progress. Defined in `check
 8. 🔵 `CP_PUBLICATION_BIAS_CHECKED` - Publication bias assessed
 9. 🔵 `CP_PUBLICATION_READY` - Manuscript ready for submission
 
-#### ScholaRAG-Specific Checkpoints
+#### Systematic Review Checkpoints
 1. 🔴 `SCH_DATABASE_SELECTION` - API-accessible databases validated
 2. 🔴 `SCH_SCREENING_CRITERIA` - LLM screening configured
 3. 🟡 `SCH_RAG_READINESS` - PDFs downloaded, RAG ready
@@ -173,7 +173,7 @@ Checkpoint validation supports these rule types:
 Templates are invoked automatically by Diverga agents during research workflows. No manual template usage required.
 
 **Example**: When you reach the "Database Selection" stage:
-1. I0-ScholarAgentOrchestrator detects stage completion
+1. I0-ReviewPipelineOrchestrator detects stage completion
 2. Validates against `CP_DATABASE_SELECTION` checkpoint
 3. Auto-generates `search-strategy.md` from `search-strategy.md.j2`
 4. Populates template with your conversation data
@@ -311,7 +311,7 @@ Add to `checkpoints/default-checkpoints.yaml`:
 
 ### Step 4: Update Agent Detection
 
-Add trigger keywords to I0-ScholarAgentOrchestrator or relevant agent in `AGENTS.md`.
+Add trigger keywords to I0-ReviewPipelineOrchestrator or relevant agent in `AGENTS.md`.
 
 ## Maintenance
 

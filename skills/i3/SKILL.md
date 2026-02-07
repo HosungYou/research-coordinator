@@ -104,9 +104,8 @@ Before completing RAG build, I3 SHOULD:
 ## Execution Commands
 
 ```bash
-# ScholaRAG path
-SCHOLARAG_PATH="/Volumes/External SSD/Projects/ScholaRAG"
-cd "$SCHOLARAG_PATH"
+# Project path (set to your working directory)
+cd "$(pwd)"
 
 # Stage 4: PDF Download
 python scripts/04_download_pdfs.py \
@@ -253,6 +252,6 @@ parallel_compatible: ["B5-parallel-document-processor"]
 
 ## Related Agents
 
-- **I0-scholar-agent-orchestrator**: Pipeline coordination
+- **I0-review-pipeline-orchestrator**: Pipeline coordination
 - **I2-screening-assistant**: PRISMA screening
 - **B5-parallel-document-processor**: Large PDF batch processing

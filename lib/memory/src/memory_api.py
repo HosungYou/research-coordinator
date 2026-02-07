@@ -596,7 +596,6 @@ class MemoryAPI:
         old_markers = [
             self.project_root / ".diverga",
             self.project_root / "research_state.yaml",
-            self.project_root / ".scholarag",
         ]
         return any(marker.exists() for marker in old_markers)
 

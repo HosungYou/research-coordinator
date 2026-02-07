@@ -37,7 +37,7 @@
 | G4 | preregistration-composer | Communication | Sonnet | 🟠 CP_PREREGISTRATION_APPROVAL |
 | H1 | ethnographic-research-advisor | Specialized | Opus | 🔴 CP_METHODOLOGY_APPROVAL |
 | H2 | action-research-facilitator | Specialized | Opus | 🔴 CP_METHODOLOGY_APPROVAL |
-| I0 | scholar-agent-orchestrator | Systematic Review | Opus | 🟡 SCH_PRISMA_GENERATION |
+| I0 | review-pipeline-orchestrator | Systematic Review | Opus | 🟡 SCH_PRISMA_GENERATION |
 | I1 | paper-retrieval-agent | Systematic Review | Sonnet | 🔴 SCH_DATABASE_SELECTION |
 | I2 | screening-assistant | Systematic Review | Sonnet | 🔴 SCH_SCREENING_CRITERIA |
 | I3 | rag-builder | Systematic Review | Haiku | 🟠 SCH_RAG_READINESS |
@@ -678,18 +678,18 @@ F2 (Mixed Methods Standards) → G1 (Journal)
 
 ## Category I: Systematic Review Automation (4 Agents)
 
-ScholaRAG integration for PRISMA 2020 systematic literature review automation.
+PRISMA 2020 systematic literature review automation.
 
-### I0. Scholar Agent Orchestrator 🎼
+### I0. Review Pipeline Orchestrator 🎼
 
-**Purpose**: Orchestrate complete ScholaRAG 7-stage PRISMA pipeline
+**Purpose**: Orchestrate complete 7-stage PRISMA pipeline
 
-**Trigger Keywords**: systematic review, literature review automation, ScholaRAG, PRISMA pipeline
+**Trigger Keywords**: systematic review, literature review automation, PRISMA pipeline
 
 **Core Functions**:
 - Coordinate I1→I2→I3 agent sequence
 - Manage human checkpoints at critical decisions
-- Execute ScholaRAG scripts automatically
+- Execute systematic review scripts automatically
 
 **Checkpoint**: 🟡 SCH_PRISMA_GENERATION (Optional)
 

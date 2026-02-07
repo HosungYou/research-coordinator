@@ -1,4 +1,4 @@
-# ScholaRAG Checkpoints Configuration
+# Systematic Review Checkpoints Configuration
 # Category I: Systematic Review Automation
 # Version: 1.0.0
 
@@ -214,7 +214,7 @@ checkpoints:
 # =============================================================================
 
 state_storage:
-  location: ".claude/state/scholarag-checkpoints.json"
+  location: ".claude/state/review-checkpoints.json"
   format: |
     {
       "project_path": "/path/to/project",

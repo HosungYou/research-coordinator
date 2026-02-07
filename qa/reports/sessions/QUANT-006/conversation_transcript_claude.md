@@ -152,7 +152,7 @@ Excellent choice for meta-analysis publication! Let me initialize your ScholaRAG
 ### Executing ScholaRAG Initialization
 
 ```bash
-# I0-ScholarAgentOrchestrator executing...
+# I0-ReviewPipelineOrchestrator executing...
 python scholarag_cli.py init \
   --name "AI-Chatbots-L2-Speaking" \
   --question "How do AI-powered conversational agents affect speaking proficiency in L2 learners?" \
@@ -416,7 +416,7 @@ Yes, generate the PRISMA diagram.
 
 ### Generating PRISMA 2020 Flow Diagram
 
-**I0-ScholarAgentOrchestrator executing final stage...**
+**I0-ReviewPipelineOrchestrator executing final stage...**
 
 ```python
 python scripts/07_generate_prisma.py --project AI-Chatbots-L2-Speaking

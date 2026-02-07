@@ -3,7 +3,7 @@ name: universal-ma-codebook
 description: |
   Universal Meta-Analysis Codebook v2.2 - AI-Human collaboration for meta-analysis data extraction.
   4-layer design: Identifiers, Statistics, AI Provenance, Human Verification.
-  Integrates with C5/C6/C7 agents and ScholaRAG.
+  Integrates with C5/C6/C7 agents and Category I systematic review pipeline.
   Triggers: meta-analysis, codebook, data extraction, Hedges g, effect size
 version: "8.0.1"
 ---
@@ -21,7 +21,7 @@ A **universal, AI-Human collaboration codebook** for meta-analysis that enables:
 1. AI extraction from PDFs (RAG/OCR) with confidence tracking
 2. Human verification of AI-extracted values
 3. 100% human-verified data through structured workflow
-4. Integration with Diverga C5/C6/C7 agents and ScholaRAG
+4. Integration with Diverga C5/C6/C7 agents and Category I pipeline
 5. **Context-specific extensions** for domain-specific moderator variables
 
 ## Context-Specific Extensions
@@ -117,7 +117,7 @@ See: `GenAI-HE-Review-AIMC/docs/GENAI_HE_CODEBOOK.md` for full specification
 
 ### Phase 1: AI Extraction (Automated)
 
-**Triggered by**: ScholaRAG Stage 5 completion or manual PDF upload
+**Triggered by**: I3 RAG building completion or manual PDF upload
 
 **Agent**: C6-DataIntegrityGuard
 
@@ -132,7 +132,7 @@ extraction_result = c6.extract_with_provenance(
 ```
 
 **Actions**:
-1. ScholaRAG builds RAG from PDFs
+1. I3 builds RAG from PDFs
 2. C6 queries for statistical values (M, SD, n)
 3. Multiple extraction methods run in parallel
 4. Conflict resolution applied (hierarchy + tolerance)
@@ -356,11 +356,11 @@ For calculated values (hedges_g, se_g), human verification means:
 
 ## Integration Points
 
-### ScholaRAG Integration
+### Systematic Review Pipeline Integration
 
 ```python
-# After ScholaRAG Stage 5 (RAG building)
-from scholarag import RAGQuery
+# After Stage 5 (RAG building)
+# RAG query integration
 
 rag = RAGQuery(project_path)
 values = c6.extract_from_rag(
@@ -421,7 +421,7 @@ Audit trail of all AI extractions
 diverga codebook init --project genai-he
 
 # Import AI extractions
-diverga codebook import --source scholarag --project genai-he
+diverga codebook import --source rag --project genai-he
 
 # Generate review queue
 diverga codebook queue --project genai-he

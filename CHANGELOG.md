@@ -874,7 +874,7 @@ Diverga v6.7.0 introduces **Category I: Systematic Review Automation** with 4 ne
 
 | Agent | Name | Model | Purpose |
 |-------|------|-------|---------|
-| **I0** | ScholarAgentOrchestrator | Opus | Pipeline coordination, stage management |
+| **I0** | ReviewPipelineOrchestrator | Opus | Pipeline coordination, stage management |
 | **I1** | PaperRetrievalAgent | Sonnet | Multi-database fetching (Semantic Scholar, OpenAlex, arXiv) |
 | **I2** | ScreeningAssistant | Sonnet | AI-PRISMA 6-dimension screening |
 | **I3** | RAGBuilder | Haiku | Vector database construction (zero cost) |
@@ -908,7 +908,7 @@ Diverga v6.7.0 introduces **Category I: Systematic Review Automation** with 4 ne
 
 | Path | Purpose |
 |------|---------|
-| `.claude/skills/research-agents/I0-scholar-agent-orchestrator/SKILL.md` | Orchestrator skill |
+| `.claude/skills/research-agents/I0-review-pipeline-orchestrator/SKILL.md` | Orchestrator skill |
 | `.claude/skills/research-agents/I1-paper-retrieval-agent/SKILL.md` | Paper retrieval skill |
 | `.claude/skills/research-agents/I2-screening-assistant/SKILL.md` | Screening skill |
 | `.claude/skills/research-agents/I3-rag-builder/SKILL.md` | RAG builder skill |

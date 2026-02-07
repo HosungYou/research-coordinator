@@ -1,15 +1,15 @@
 ---
 name: i0
 description: |
-  ScholaRAG Pipeline Orchestrator - Coordinates systematic literature review automation
+  Systematic Review Pipeline Orchestrator - Coordinates systematic literature review automation
   Manages the complete 7-stage PRISMA 2020 pipeline from research question to RAG system
   Delegates to specialized agents (I1, I2, I3) while enforcing human checkpoints
   Use when: conducting systematic reviews, building knowledge repositories, PRISMA automation
-  Triggers: systematic review, PRISMA, ScholaRAG, literature review automation
+  Triggers: systematic review, PRISMA, literature review automation
 version: "8.0.1"
 ---
 
-# I0-ScholarAgentOrchestrator
+# I0-ReviewPipelineOrchestrator
 
 **Agent ID**: I0
 **Category**: I - Systematic Review Automation
@@ -18,7 +18,7 @@ version: "8.0.1"
 
 ## Overview
 
-Orchestrates the complete ScholaRAG 7-stage PRISMA 2020 systematic literature review pipeline. Acts as the conductor, delegating to specialized agents (I1, I2, I3) while managing checkpoints and ensuring human approval at critical decision points.
+Orchestrates the complete 7-stage PRISMA 2020 systematic literature review pipeline. Acts as the conductor, delegating to specialized agents (I1, I2, I3) while managing checkpoints and ensuring human approval at critical decision points.
 
 ## Role
 
@@ -26,7 +26,7 @@ Orchestrates the complete ScholaRAG 7-stage PRISMA 2020 systematic literature re
 - **Secondary**: Checkpoint enforcement and human decision tracking
 - **Authority**: Decision authority for pipeline flow; delegates execution to I1, I2, I3
 
-## ScholaRAG Pipeline Stages
+## Pipeline Stages
 
 ```
 Stage 1: Research Domain Setup      → config.yaml, project initialization
@@ -103,7 +103,7 @@ Task(
     subagent_type="diverga:i1",
     model="sonnet",
     prompt="""
-    [ScholaRAG: Paper Retrieval]
+    [Paper Retrieval]
 
     Project: {project_path}
     Query: {boolean_query}
@@ -121,7 +121,7 @@ Task(
     subagent_type="diverga:i2",
     model="sonnet",
     prompt="""
-    [ScholaRAG: PRISMA Screening]
+    [PRISMA Screening]
 
     Project: {project_path}
     Project Type: {project_type}
@@ -140,7 +140,7 @@ Task(
     subagent_type="diverga:i3",
     model="haiku",
     prompt="""
-    [ScholaRAG: RAG Building]
+    [RAG Building]
 
     Project: {project_path}
 
@@ -170,7 +170,7 @@ Total cost for 500-paper systematic review: **~$0.07** (vs $7.50 with Claude onl
 |---------------|---------------|--------|
 | systematic review, PRISMA | 체계적 문헌고찰, 프리즈마 | Activate I0 orchestrator |
 | literature review automation | 문헌고찰 자동화 | Activate I0 orchestrator |
-| ScholaRAG, scholarag | 스콜라래그 | Activate I0 orchestrator |
+| systematic review automation | 문헌고찰 자동화 | Activate I0 orchestrator |
 | build knowledge repository | 지식 저장소 구축 | Activate I0 (knowledge_repository mode) |
 
 ## Integration with Diverga

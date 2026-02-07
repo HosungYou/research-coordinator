@@ -24,7 +24,7 @@
 
 ## Test Results
 
-### 1. diverga:i0 (ScholarAgentOrchestrator) ✅
+### 1. diverga:i0 (ReviewPipelineOrchestrator) ✅
 
 **Invocation**: `Task(subagent_type="diverga:i0", model="opus")`
 
@@ -151,7 +151,7 @@ T-Score options displayed correctly:
 
 | Agent | Expected Model | Actual Model | Status |
 |-------|----------------|--------------|--------|
-| I0-ScholarAgentOrchestrator | Opus | Opus | ✅ |
+| I0-ReviewPipelineOrchestrator | Opus | Opus | ✅ |
 | I1-PaperRetrievalAgent | Sonnet | Sonnet | ✅ |
 | I2-ScreeningAssistant | Sonnet | Sonnet | ✅ |
 | I3-RAGBuilder | Haiku | Haiku | ✅ |

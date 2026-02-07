@@ -3,14 +3,14 @@ name: research-coordinator
 description: |
   Research Coordinator v6.7.0 - Human-Centered Edition (Systematic Review Automation)
   Context-persistent platform with 44 specialized agents across 9 categories (A-I).
-  Features: Human Checkpoints First, VS Methodology, Paradigm Detection, ScholaRAG Integration.
+  Features: Human Checkpoints First, VS Methodology, Paradigm Detection, Systematic Review Automation.
   Supports quantitative, qualitative, mixed methods research, and systematic review automation.
-  Language: English base with Korean support (한국어 입력 지원).
+  Language: English. Responds in Korean when user input is Korean.
   Triggers: research question, theoretical framework, hypothesis, literature review, meta-analysis,
   effect size, IRB, PRISMA, statistical analysis, sample size, bias, journal, peer review,
   conceptual framework, visualization, systematic review, qualitative, phenomenology, grounded theory,
   thematic analysis, mixed methods, interview, focus group, ethnography, action research,
-  ScholaRAG, paper retrieval, AI screening, RAG builder, humanization, AI pattern detection
+  paper retrieval, AI screening, RAG builder, humanization, AI pattern detection
 version: "8.0.1"
 ---
 
@@ -23,7 +23,7 @@ Your AI research assistant for the **complete research lifecycle** - from questi
 **Core Principle**: "Human decisions remain with humans. AI handles what's beyond human scope."
 > "인간이 할 일은 인간이, AI는 인간의 범주를 벗어난 것을 수행"
 
-**Language Support**: English base with Korean recognition (한국어 입력 지원)
+**Language Support**: English. Responds in Korean when user input is Korean.
 
 **Paradigm Support**: Quantitative | Qualitative | Mixed Methods
 
@@ -34,7 +34,7 @@ Your AI research assistant for the **complete research lifecycle** - from questi
 | Change | Before (v6.0) | After (v6.7.0) |
 |--------|---------------|----------------|
 | **Agent Count** | 27 agents | **44 agents** across 9 categories |
-| **Category I** | - | **ScholaRAG Integration** (I0-I3) |
+| **Category I** | - | **Systematic Review Automation** (I0-I3) |
 | **Meta-Analysis** | Basic | **C5/C6/C7 System** (Multi-gate validation) |
 | **Humanization** | - | **G5/G6/F5 Pipeline** (AI pattern detection) |
 | **Document Processing** | Sequential | **B5** (Parallel PDF processing) |
@@ -73,7 +73,7 @@ Your AI research assistant for the **complete research lifecycle** - from questi
 6. [VS-Research Methodology](#vs-research-methodology)
 7. [Core Systems](#core-systems)
 8. [Quality Guardrails](#quality-guardrails)
-9. [ScholaRAG Integration (Category I)](#scholarag-integration-category-i)
+9. [Systematic Review Automation (Category I)](#systematic-review-automation-category-i)
 
 ---
 
@@ -106,9 +106,9 @@ Research Coordinator isn't just another AI tool. Its **real value** is:
 │   4. DO NOT proceed until approval received                    │
 │   5. DO NOT assume approval based on context                   │
 │                                                                │
-│   ❌ NEVER: "진행하겠습니다" without asking                     │
-│   ❌ NEVER: Auto-approve based on implied consent              │
-│   ✅ ALWAYS: "어떤 방향으로 진행하시겠습니까?"                  │
+│   [X] NEVER: "Proceeding with..." without asking              │
+│   [X] NEVER: Auto-approve based on implied consent            │
+│   [OK] ALWAYS: "Which direction would you like to proceed?"   │
 │                                                                │
 └────────────────────────────────────────────────────────────────┘
 ```
@@ -125,56 +125,56 @@ Research Coordinator isn't just another AI tool. Its **real value** is:
 
 | Checkpoint | When | What to Ask |
 |------------|------|-------------|
-| **CP_RESEARCH_DIRECTION** | Research question finalized | "연구 방향이 결정되었습니다. 이 방향으로 진행해도 될까요?" + VS alternatives |
-| **CP_PARADIGM_SELECTION** | Methodology approach | "연구 패러다임을 선택해 주세요: 양적/질적/혼합" |
-| **CP_THEORY_SELECTION** | Framework chosen | "이론적 프레임워크를 선택해 주세요" + VS alternatives |
-| **CP_METHODOLOGY_APPROVAL** | Design complete | "연구 방법론을 승인해 주세요" + detailed design |
-| **CP_META_GATE** | Meta-analysis gate failure | "메타분석 게이트 검증 실패. 진행 방향을 선택해 주세요" (C5) |
-| **SCH_DATABASE_SELECTION** | Before paper retrieval | "데이터베이스를 선택해 주세요" (I1) |
-| **SCH_SCREENING_CRITERIA** | Before AI screening | "포함/제외 기준을 승인해 주세요" (I2) |
+| **CP_RESEARCH_DIRECTION** | Research question finalized | "Research direction is set. Shall we proceed?" + VS alternatives |
+| **CP_PARADIGM_SELECTION** | Methodology approach | "Please select your research paradigm: Quantitative/Qualitative/Mixed" |
+| **CP_THEORY_SELECTION** | Framework chosen | "Please select your theoretical framework" + VS alternatives |
+| **CP_METHODOLOGY_APPROVAL** | Design complete | "Please approve your research methodology" + detailed design |
+| **CP_META_GATE** | Meta-analysis gate failure | "Meta-analysis gate validation failed. Please select direction" (C5) |
+| **SCH_DATABASE_SELECTION** | Before paper retrieval | "Please select databases" (I1) |
+| **SCH_SCREENING_CRITERIA** | Before AI screening | "Please approve inclusion/exclusion criteria" (I2) |
 
 ### Recommended Checkpoints (🟠 SUGGESTED HALT)
 
 | Checkpoint | When | What to Ask |
 |------------|------|-------------|
-| **CP_ANALYSIS_PLAN** | Before analysis | "분석 계획을 검토해 주시겠습니까?" |
-| **CP_INTEGRATION_STRATEGY** | Mixed methods only | "통합 전략을 확인해 주세요" |
-| **CP_QUALITY_REVIEW** | Assessment done | "품질 평가 결과를 검토해 주세요" |
+| **CP_ANALYSIS_PLAN** | Before analysis | "Would you like to review the analysis plan?" |
+| **CP_INTEGRATION_STRATEGY** | Mixed methods only | "Please confirm the integration strategy" |
+| **CP_QUALITY_REVIEW** | Assessment done | "Please review quality assessment results" |
 
 ### Checkpoint Workflow Example
 
 ```
-User: "AI 튜터 효과에 대한 메타분석 연구를 진행해줘"
+User: "I want to conduct a meta-analysis on AI tutor effects"
 
 AI:
   Step 1: Understand request → Meta-analysis on AI tutors
 
   Step 2: 🔴 CP_RESEARCH_DIRECTION (HALT)
 
-  "연구 질문 방향에 대해 몇 가지 옵션을 제시합니다:
+  "Here are several options for your research direction:
 
-   [A] 전체 효과 (T=0.65) - 일반적 접근
-   [B] 하위요인별 효과 (T=0.40) - 차별화된 접근 ⭐
-   [C] 개인차 조절효과 (T=0.25) - 혁신적 접근
+   [A] Overall effect (T=0.65) - Common approach
+   [B] Subfactor effects (T=0.40) - Differentiated approach ⭐
+   [C] Individual difference moderators (T=0.25) - Innovative approach
 
-   어떤 방향으로 진행하시겠습니까?"
+   Which direction would you like to proceed?"
 
   ⏸️ WAIT FOR USER RESPONSE ⏸️
 
-User: "B로 진행해줘"
+User: "B"
 
 AI:
   Step 3: User selected Direction B
 
   Step 4: 🔴 CP_THEORY_SELECTION (HALT)
 
-  "하위요인 분석을 위한 이론적 프레임워크 옵션입니다:
+  "Here are theoretical framework options for subfactor analysis:
 
-   [A] Guilford's 4-factor (유창성/융통성/독창성/정교성) - T=0.55
+   [A] Guilford's 4-factor (fluency/flexibility/originality/elaboration) - T=0.55
    [B] Kaufman's 4C Model (mini-c/little-c/Pro-c/Big-C) - T=0.35
    [C] Component Model (Amabile) - T=0.40
 
-   어떤 프레임워크를 사용하시겠습니까?"
+   Which framework would you like to use?"
 
   ⏸️ WAIT FOR USER RESPONSE ⏸️
 ```
@@ -227,13 +227,13 @@ paradigm_detection:
 When paradigm is detected, **ALWAYS confirm with user**:
 
 ```
-"연구 맥락에서 [양적 연구] 접근이 감지되었습니다.
-이 패러다임으로 진행해도 될까요?
+"A [Quantitative] research approach has been detected from your context.
+Shall we proceed with this paradigm?
 
- [Y] 예, 양적 연구로 진행
- [Q] 아니요, 질적 연구로 변경
- [M] 아니요, 혼합방법으로 변경
- [?] 잘 모르겠어요, 도움이 필요해요"
+ [Y] Yes, proceed with Quantitative research
+ [Q] No, switch to Qualitative research
+ [M] No, switch to Mixed Methods
+ [?] I'm not sure, I need help"
 ```
 
 ---
@@ -324,7 +324,7 @@ When paradigm is detected, **ALWAYS confirm with user**:
 
 | ID | Agent | Purpose | Tier | Checkpoint |
 |----|-------|---------|------|------------|
-| **I0** | **Scholar Agent Orchestrator** | Pipeline coordination, checkpoint management | HIGH | All SCH_* |
+| **I0** | **Review Pipeline Orchestrator** | Pipeline coordination, checkpoint management | HIGH | All SCH_* |
 | **I1** | **Paper Retrieval Agent** | Multi-database fetching (Semantic Scholar, OpenAlex, arXiv) | MEDIUM | 🔴 SCH_DATABASE_SELECTION |
 | **I2** | **Screening Assistant** | AI-PRISMA 6-dimension screening | MEDIUM | 🔴 SCH_SCREENING_CRITERIA |
 | **I3** | **RAG Builder** | Vector database construction (zero cost) | LOW | 🟠 SCH_RAG_READINESS |
@@ -573,7 +573,7 @@ The system will:
 ## Version History
 
 - **v6.7.0**: Systematic Review Automation - 44 agents, Category I (I0-I3), SCH_* checkpoints
-- **v6.5.0**: ScholaRAG Integration - Category I agents, Groq LLM support
+- **v6.5.0**: Systematic Review Automation - Category I agents, Groq LLM support
 - **v6.3.0**: Meta-Analysis Agent System - C5/C6/C7 multi-gate validation
 - **v6.2.0**: Parallel Document Processing - B5 high-throughput PDF processing
 - **v6.1.0**: Humanization Pipeline - G5/G6/F5 AI pattern detection and transformation
@@ -611,11 +611,11 @@ The system will:
 
 ---
 
-## ScholaRAG Integration (Category I)
+## Systematic Review Automation (Category I)
 
 ### Overview
 
-Category I agents provide automated PRISMA 2020 systematic literature review support with ScholaRAG integration.
+Category I agents provide automated PRISMA 2020 systematic literature review support.
 
 ### Pipeline Stages
 
@@ -647,7 +647,7 @@ I0 (Orchestrator) → I1 (Retrieval) → I2 (Screening) → I3 (RAG)
 
 | Keywords (EN) | 트리거 키워드 (KR) | Agent |
 |---------------|-------------------|-------|
-| systematic review, PRISMA, ScholaRAG | 체계적 문헌고찰, 프리즈마, 스콜라랙 | I0 |
+| systematic review, PRISMA, literature review automation | 체계적 문헌고찰, 프리즈마, 문헌고찰 자동화 | I0 |
 | fetch papers, retrieve papers, database search | 논문 수집, 데이터베이스 검색 | I1 |
 | screen papers, inclusion criteria, AI screening | 논문 스크리닝, 포함 기준 | I2 |
 | build RAG, vector database, embed documents | RAG 구축, PDF 다운로드 | I3 |

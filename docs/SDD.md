@@ -1,10 +1,10 @@
 # Diverga v8.0.1 - Software Design Document (SDD)
 
-**Document Version**: 1.0
+**Document Version**: 1.1
 **System Version**: 8.0.1
 **Date**: 2026-02-07
 **Author**: Diverga Project Team
-**Status**: Released
+**Status**: Released (patch4)
 
 ---
 
@@ -92,7 +92,7 @@ graph TB
     subgraph "Plugin Layer"
         COORD[Research Coordinator<br/>Master Skill]
         ORCH[Research Orchestrator<br/>Agent Dispatch]
-        SETUP[Setup Wizard<br/>3-Step Config]
+        SETUP[Setup Wizard<br/>2-Step Config]
         HELP[Help System]
     end
 
@@ -597,37 +597,33 @@ The HUD installs by adding a `statusLine` entry to `~/.claude/settings.json`:
 }
 ```
 
-This is handled automatically by `/diverga-hud setup` or during the 3-step setup wizard.
+This is handled automatically by `/diverga-hud setup` or during the 2-step setup wizard.
 
 ### 3.5 Setup System (v8.0+)
 
-#### 3.5.1 Three-Step Wizard
+#### 3.5.1 Two-Step Wizard
 
-The setup process was reduced from 9 steps (v7.0) to 3 steps:
+The setup process was reduced from 9 steps (v7.0) to 2 steps (v8.0.1-patch4):
 
 ```mermaid
 flowchart LR
-    S1["Step 1<br/>Welcome +<br/>Project Detection"] --> S2["Step 2<br/>Settings<br/>(Single Screen)"]
-    S2 --> S3["Step 3<br/>Apply &<br/>Complete"]
+    S1["Step 1<br/>Welcome +<br/>Checkpoint Level"] --> S2["Step 2<br/>HUD +<br/>Apply & Complete"]
 ```
 
-**Step 1 -- Welcome + Project Detection**:
+**Step 1 -- Welcome + Checkpoint Level**:
 - Detects existing `.research/` directory
 - Shows project status if project exists
 - Displays version and changelog highlights
-
-**Step 2 -- Settings (Single Screen)**:
 - Checkpoint Level: Full (all 17) / Minimal (REQUIRED only) / Off
-- HUD Display: Enable / Disable
-- Language: Auto / English / Korean
 
-**Step 3 -- Apply & Complete**:
+**Step 2 -- HUD + Apply & Complete**:
+- HUD Display: Enable / Disable
 - Creates `diverga-config.json`
 - Sets up HUD statusline in `~/.claude/settings.json`
 - Creates initial `.research/` structure if new project
 - Shows next steps and available commands
 
-**Removed options** (vs v7.0): LLM Provider selection (Claude Code already authenticated), API Key configuration (not needed), Default Paradigm (auto-detected during research).
+**Removed options** (vs v7.0): LLM Provider selection (Claude Code already authenticated), API Key configuration (not needed), Default Paradigm (auto-detected during research), Language selection (Claude Code naturally responds in user's input language).
 
 #### 3.5.2 Auto-Project Detection
 
@@ -651,6 +647,20 @@ The `intent_detector` module uses regex-based pattern matching to extract:
 - Inferred paradigm (quantitative/qualitative/mixed)
 
 After detection, the system presents a confirmation prompt before auto-initializing `.research/` and `docs/` directories.
+
+### 3.9 Dashboard System (v8.0.1-patch4)
+
+The `/diverga` command displays a live configuration dashboard showing:
+- ASCII art logo with version
+- System status (version, agent count, readiness)
+- Configuration overview (checkpoint level, HUD preset, VS method status)
+- Active project status (name, stage, memory health, decision count)
+- API status for paper retrieval (Semantic Scholar, OpenAlex, Scopus, WoS)
+- LLM provider status for batch screening (Groq, Anthropic, OpenAI, Ollama)
+- MCP integration status (Zotero, Claude Code Browser, Gemini)
+- Quick action shortcuts
+
+The dashboard reads from `config/diverga-config.json`, `.research/project-state.yaml`, and environment variables to display live status.
 
 ### 3.6 VS Methodology Engine
 
@@ -759,7 +769,7 @@ flowchart TD
     S2["Stage 2: Query Strategy<br/>Boolean search strings"]
     S3["Stage 3: Paper Retrieval<br/>I1-PaperRetrievalAgent"]
     S4["Stage 4: Deduplication<br/>02_deduplicate.py"]
-    S5["Stage 5: PRISMA Screening<br/>I2-ScreeningAssistant"]
+    S5["Stage 5: Systematic Review Screening<br/>I2-ScreeningAssistant"]
     S6["Stage 6: PDF Download + RAG<br/>I3-RAGBuilder"]
     S7["Stage 7: Documentation<br/>PRISMA diagram"]
 
@@ -773,7 +783,7 @@ flowchart TD
 
 #### 3.8.2 PRISMA 2020 Compliance
 
-The pipeline generates PRISMA 2020-compliant flow diagrams and documentation. I2-ScreeningAssistant performs AI-PRISMA 6-dimension screening using Groq (llama-3.3-70b) for cost-efficient processing.
+The pipeline generates PRISMA 2020-compliant flow diagrams and documentation. I2-ScreeningAssistant performs 6-dimension screening using Groq (llama-3.3-70b) for cost-efficient processing.
 
 #### 3.8.3 Project Types
 
@@ -812,7 +822,7 @@ All four checkpoints ensure human oversight at database selection, screening cri
     "enabled": true,
     "preset": "research | checkpoint | memory | minimal"
   },
-  "language": "auto | en | ko",
+  "language": "en",  // Language: defaults to "en"; Claude Code auto-detects from user input
   "paradigm": "auto | quantitative | qualitative | mixed",
   "integrations": {
     "semantic_scholar_api_key": "",
@@ -1154,7 +1164,7 @@ Complete mapping of 44 agents to their trigger keywords:
 │   ├── g6/SKILL.md                    # G6-AcademicStyleHumanizer
 │   ├── h1/SKILL.md                    # H1-EthnographicResearchAdvisor
 │   ├── h2/SKILL.md                    # H2-ActionResearchFacilitator
-│   ├── i0/SKILL.md                    # I0-ScholarAgentOrchestrator
+│   ├── i0/SKILL.md                    # I0-ReviewPipelineOrchestrator
 │   ├── i1/SKILL.md                    # I1-PaperRetrievalAgent
 │   ├── i2/SKILL.md                    # I2-ScreeningAssistant
 │   ├── i3/SKILL.md                    # I3-RAGBuilder
@@ -1287,7 +1297,7 @@ These files are auto-synchronized from `.research/` state whenever decisions are
 | G6 | AcademicStyleHumanizer | Communication |
 | H1 | EthnographicResearchAdvisor | Specialized |
 | H2 | ActionResearchFacilitator | Specialized |
-| I0 | ScholarAgentOrchestrator | Systematic Review |
+| I0 | ReviewPipelineOrchestrator | Systematic Review |
 
 #### MEDIUM Tier -- Sonnet (16 agents)
 
@@ -1332,7 +1342,7 @@ These files are auto-synchronized from `.research/` state whenever decisions are
 | research-coordinator | Master | Main orchestration and dispatch |
 | research-orchestrator | System | Agent management and routing |
 | memory | System | Memory system CLI |
-| setup | System | 3-step setup wizard |
+| setup | System | 2-step setup wizard |
 | help | System | Help and documentation |
 | hud | System | HUD configuration |
 | universal-ma-codebook | Template | Meta-analysis codebook |
@@ -1355,8 +1365,9 @@ These files are auto-synchronized from `.research/` state whenever decisions are
 
 | Version | Date | Codename | Key Changes |
 |---------|------|----------|-------------|
+| **v8.0.1-patch4** | 2026-02-07 | "English-First" | English-first UI, 2-step setup, dashboard, box-drawing fixes, branding cleanup |
 | **v8.0.1** | 2026-02-07 | -- | Plugin discovery fixes, troubleshooting guide |
-| **v8.0.0** | 2026-02-04 | "Visible Research" | Independent HUD, 3-step setup, natural language project start, docs/ auto-generation |
+| **v8.0.0** | 2026-02-04 | "Visible Research" | Independent HUD, 2-step setup, natural language project start, docs/ auto-generation |
 | **v7.0.0** | 2026-02-04 | "Persistent Intelligence" | Memory System, 3-layer context, 17 checkpoints, decision audit trail, dual-tree filesystem |
 | v6.9.2 | 2026-02-02 | -- | Marketplace cache synchronization fix |
 | v6.9.1 | 2026-02-01 | -- | Version field in SKILL.md, plugin discovery fix, local symlinks |
@@ -1390,7 +1401,7 @@ These files are auto-synchronized from `.research/` state whenever decisions are
 
 **v7.0 (Memory System)**: Introduced cross-session persistence with 3-layer context loading, immutable decision audit trails, and dual-tree filesystem architecture.
 
-**v8.0 (Project Visibility)**: Added independent HUD statusline, simplified 3-step setup, natural language project initialization, and auto-generated researcher-facing documentation.
+**v8.0 (Project Visibility)**: Added independent HUD statusline, simplified 2-step setup, natural language project initialization, and auto-generated researcher-facing documentation.
 
 ---
 

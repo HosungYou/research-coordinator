@@ -834,15 +834,15 @@ const AGENT_CONFIGS: Record<string, AgentStaticConfig> = {
   // ============================================================
 
   'i0': {
-    displayName: 'ScholaRAG Pipeline Orchestrator',
-    description: 'ScholaRAG Pipeline Orchestrator - Coordinates systematic literature review automation.',
+    displayName: 'Systematic Review Orchestrator',
+    description: 'Systematic Review Orchestrator - Coordinates systematic literature review automation.',
     model: 'opus',
     tier: 'HIGH',
     tools: ['Read', 'Glob', 'Grep', 'Bash', 'Task'],
     icon: '🔬',
     vsLevel: 'Enhanced',
     vsPhases: [0, 1, 2, 4],
-    triggers: ['systematic review', 'PRISMA', 'ScholaRAG', '체계적 문헌고찰', '프리즈마', '스콜라랙'],
+    triggers: ['systematic review', 'PRISMA', '체계적 문헌고찰', '프리즈마'],
     paradigmAffinity: ['quantitative', 'qualitative', 'mixed'],
     checkpoints: ['SCH_DATABASE_SELECTION', 'SCH_SCREENING_CRITERIA', 'SCH_RAG_READINESS', 'SCH_PRISMA_GENERATION'],
     creativityModules: ['forced-analogy', 'semantic-distance'],

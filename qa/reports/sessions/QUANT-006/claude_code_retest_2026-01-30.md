@@ -44,7 +44,7 @@
 Task(
     subagent_type="diverga:i0",
     model="opus",
-    description="Test I0 ScholarAgentOrchestrator",
+    description="Test I0 ReviewPipelineOrchestrator",
     prompt="I want to conduct a PRISMA 2020 systematic literature review..."
 )
 ```

@@ -28,9 +28,9 @@
 - Shows project name, stage, checkpoint progress, memory health
 - Multiple presets: research, checkpoint, memory, minimal
 
-### 3. Simplified Setup (3 Steps)
+### 3. Simplified Setup (2 Steps)
 - Removed LLM selection (Claude Code already authenticated)
-- Checkpoint level + HUD + Language in single screen
+- Checkpoint level + HUD in single screen
 - Auto-project detection
 
 ### 4. Natural Language Project Start
@@ -39,7 +39,7 @@
 
 AI Research Assistant for the Complete Research Lifecycle - from question formulation to publication.
 
-**Language**: English base with Korean support (한국어 입력 지원)
+**Language**: English. Responds in Korean when user input is Korean.
 
 ---
 
@@ -226,8 +226,8 @@ Diverga Memory System provides **context-persistent research support** with:
 │   4. DO NOT proceed until approval received                    │
 │   5. DO NOT assume approval based on context                   │
 │                                                                │
-│   ❌ NEVER: "진행하겠습니다" without asking                     │
-│   ✅ ALWAYS: "어떤 방향으로 진행하시겠습니까?"                  │
+│   [X] NEVER: "Proceeding with..." without asking              │
+│   [OK] ALWAYS: "Which direction would you like to proceed?"   │
 │                                                                │
 └────────────────────────────────────────────────────────────────┘
 ```
@@ -257,7 +257,7 @@ Diverga Memory System provides **context-persistent research support** with:
 | **F: Quality** | 5 | F1-InternalConsistencyChecker, F2-ChecklistManager, F3-ReproducibilityAuditor, F4-BiasTrustworthinessDetector, **F5-HumanizationVerifier** | All |
 | **G: Communication** | 6 | G1-JournalMatcher, G2-AcademicCommunicator, G3-PeerReviewStrategist, G4-PreregistrationComposer, **G5-AcademicStyleAuditor**, **G6-AcademicStyleHumanizer** | All |
 | **H: Specialized** | 2 | H1-EthnographicResearchAdvisor, H2-ActionResearchFacilitator | Qual |
-| **I: Systematic Review Automation** | 4 | **I0-ScholarAgentOrchestrator**, **I1-PaperRetrievalAgent**, **I2-ScreeningAssistant**, **I3-RAGBuilder** | All |
+| **I: Systematic Review Automation** | 4 | **I0-ReviewPipelineOrchestrator**, **I1-PaperRetrievalAgent**, **I2-ScreeningAssistant**, **I3-RAGBuilder** | All |
 
 **Total: 6 + 5 + 7 + 4 + 5 + 5 + 6 + 2 + 4 = 44 agents**
 
@@ -296,7 +296,7 @@ PRISMA 2020 compliant systematic literature review pipeline with automated paper
 
 | Agent | Purpose | Model | Checkpoint |
 |-------|---------|-------|------------|
-| **I0-ScholarAgentOrchestrator** | Pipeline coordination, stage management | Opus | - |
+| **I0-ReviewPipelineOrchestrator** | Pipeline coordination, stage management | Opus | - |
 | **I1-PaperRetrievalAgent** | Multi-database fetching (Semantic Scholar, OpenAlex, arXiv) | Sonnet | 🔴 SCH_DATABASE_SELECTION |
 | **I2-ScreeningAssistant** | AI-PRISMA 6-dimension screening | Sonnet | 🔴 SCH_SCREENING_CRITERIA |
 | **I3-RAGBuilder** | Vector database construction (zero cost) | Haiku | 🟠 SCH_RAG_READINESS |
@@ -407,13 +407,13 @@ Stage 3: Human Selection (🔴 CHECKPOINT)
 When paradigm is detected, **ALWAYS ask for confirmation**:
 
 ```
-"연구 맥락에서 [양적 연구] 접근이 감지되었습니다.
-이 패러다임으로 진행해도 될까요?
+"A [Quantitative] research approach has been detected from your context.
+Shall we proceed with this paradigm?
 
- [Q] 예, 양적 연구로 진행
- [L] 아니요, 질적 연구로 변경
- [M] 아니요, 혼합방법으로 변경
- [?] 잘 모르겠어요, 도움이 필요해요"
+ [Q] Yes, proceed with Quantitative research
+ [L] No, switch to Qualitative research
+ [M] No, switch to Mixed Methods
+ [?] I'm not sure, I need help"
 ```
 
 ---

@@ -1,8 +1,8 @@
 ---
 name: setup
 description: |
-  Diverga v8.0 initial configuration wizard. Simplified 3-step setup.
-  Sets up checkpoints, HUD, and language preferences.
+  Diverga v8.0 initial configuration wizard. Simplified 2-step setup.
+  Sets up checkpoints and HUD preferences.
   Triggers: setup, configure, 설정, install
 version: "8.0.1"
 ---
@@ -14,7 +14,7 @@ version: "8.0.1"
 
 ## Description
 
-Diverga v8.0 simplified setup wizard. 3 steps: Checkpoint Level + HUD + Language.
+Diverga v8.0 simplified setup wizard. 2 steps: Checkpoint Level + HUD.
 LLM selection removed (Claude Code is already authenticated).
 
 ## Workflow
@@ -65,21 +65,7 @@ options:
     description: "No HUD display."
 ```
 
-### Step 3: Language Preference
-
-```
-question: "Preferred language for Diverga responses?"
-header: "Language"
-options:
-  - label: "Auto (match user input)"
-    description: "Responds in the same language as your input."
-  - label: "English"
-    description: "Always respond in English."
-  - label: "Korean (한국어)"
-    description: "Always respond in Korean."
-```
-
-### Step 4: Generate Configuration & Complete
+### Step 3: Generate Configuration & Complete
 
 After collecting all preferences, generate `config/diverga-config.json`:
 
@@ -96,7 +82,7 @@ After collecting all preferences, generate `config/diverga-config.json`:
     "enabled": true,
     "preset": "<research|minimal|off>"
   },
-  "language": "<auto|en|ko>",
+  "language": "en",
   "model_routing": {
     "high": "opus",
     "medium": "sonnet",

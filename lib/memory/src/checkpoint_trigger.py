@@ -1,6 +1,6 @@
 """Checkpoint trigger detection and management for Diverga Memory System v7.0.
 
-This module implements auto-trigger detection for PRISMA checkpoints in the ScholaRAG pipeline.
+This module implements auto-trigger detection for PRISMA checkpoints in the systematic review pipeline.
 Checkpoints enforce human decision gates at critical research stages.
 """
 
@@ -73,7 +73,7 @@ class CheckpointTrigger:
         """
         self.project_root = Path(project_root)
         self.checkpoints: List[Checkpoint] = []
-        self.state_file = self.project_root / ".claude" / "state" / "scholarag-checkpoints.json"
+        self.state_file = self.project_root / ".claude" / "state" / "review-checkpoints.json"
         self._load_checkpoints()
         self._load_state()
 
@@ -82,8 +82,8 @@ class CheckpointTrigger:
         # Try multiple possible locations for checkpoints.yaml
         possible_paths = [
             self.project_root / ".research" / "checkpoints.yaml",
-            self.project_root / ".claude" / "checkpoints" / "scholarag-checkpoints.yaml",
-            Path("/Volumes/External SSD/Projects/Diverga/.claude/checkpoints/scholarag-checkpoints.yaml"),
+            self.project_root / ".claude" / "checkpoints" / "review-checkpoints.yaml",
+            Path("/Volumes/External SSD/Projects/Diverga/.claude/checkpoints/review-checkpoints.yaml"),
         ]
 
         checkpoint_data = None

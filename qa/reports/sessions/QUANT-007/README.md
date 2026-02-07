@@ -29,7 +29,7 @@ PRISMA 2020 가이드라인에 따라 진행해 주세요.
 
 | Agent | Trigger | Expected Checkpoint |
 |-------|---------|---------------------|
-| **I0-ScholarAgentOrchestrator** | "체계적 문헌고찰", "PRISMA" | Pipeline coordination |
+| **I0-ReviewPipelineOrchestrator** | "체계적 문헌고찰", "PRISMA" | Pipeline coordination |
 | **I1-PaperRetrievalAgent** | Database selection | 🔴 SCH_DATABASE_SELECTION |
 | **I2-ScreeningAssistant** | "PRISMA 2020" | 🔴 SCH_SCREENING_CRITERIA |
 | **C5-MetaAnalysisMaster** | "메타분석", "효과크기" | 🔴 CP_EFFECT_SIZE_SELECTION |

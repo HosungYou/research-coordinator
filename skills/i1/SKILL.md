@@ -92,9 +92,8 @@ Before executing queries, I1 MUST:
 ## Execution Commands
 
 ```bash
-# ScholaRAG path
-SCHOLARAG_PATH="/Volumes/External SSD/Projects/ScholaRAG"
-cd "$SCHOLARAG_PATH"
+# Project path (set to your working directory)
+cd "$(pwd)"
 
 # Paper retrieval (Stage 1)
 python scripts/01_fetch_papers.py \
@@ -179,14 +178,14 @@ Task(
 ## Dependencies
 
 ```yaml
-requires: ["I0-scholar-agent-orchestrator"]
+requires: ["I0-review-pipeline-orchestrator"]
 sequential_next: ["I2-screening-assistant"]
 parallel_compatible: ["B1-literature-review-strategist", "B4-research-radar"]
 ```
 
 ## Related Agents
 
-- **I0-scholar-agent-orchestrator**: Pipeline coordination
+- **I0-review-pipeline-orchestrator**: Pipeline coordination
 - **I2-screening-assistant**: PRISMA screening
 - **B1-literature-review-strategist**: Search strategy design
 - **B4-research-radar**: Research trend monitoring

@@ -44,7 +44,7 @@ PRISMA 2020 가이드라인에 따라 진행해 주세요.
 
 ## Claude Code Test Results
 
-### Turn 1: I0-ScholarAgentOrchestrator
+### Turn 1: I0-ReviewPipelineOrchestrator
 
 **Tool Call**:
 ```python
@@ -201,7 +201,7 @@ session id: 019c11b1-3cf0-77a3-83a6-b46df4281af9
 ```
 Research Question
        ↓
-I0-ScholarAgentOrchestrator ← 🔴 SCH_DATABASE_SELECTION
+I0-ReviewPipelineOrchestrator ← 🔴 SCH_DATABASE_SELECTION
        ↓
 I1-PaperRetrievalAgent
        ↓

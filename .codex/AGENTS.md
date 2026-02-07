@@ -169,7 +169,7 @@ ALWAYS: "Which direction would you like? (A/B/C)"
 
 | ID | Name | Model | Purpose |
 |----|------|-------|---------|
-| I0 | ScholaRAG Pipeline Orchestrator | o1 | Pipeline coordination, stage management |
+| I0 | Systematic Review Orchestrator | o1 | Pipeline coordination, stage management |
 | I1 | Paper Retrieval Agent | gpt-4 | Multi-database fetching (Semantic Scholar, OpenAlex, arXiv) |
 | I2 | Screening Assistant | gpt-4 | AI-PRISMA 6-dimension screening |
 | I3 | RAG Builder | gpt-3.5 | Vector database construction (zero cost) |

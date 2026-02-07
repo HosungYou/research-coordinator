@@ -236,7 +236,7 @@ project-root/
 │
 ├── .claude/
 │   └── state/
-│       └── scholarag-checkpoints.json  # Checkpoint state
+│       └── review-checkpoints.json  # Checkpoint state
 │
 └── [your project files...]
 ```
@@ -1433,7 +1433,6 @@ See `LICENSE` file for full details.
 - **Diverga Main Docs**: `/Volumes/External SSD/Projects/Research/Diverga/CLAUDE.md`
 - **Agent Definitions**: `/Volumes/External SSD/Projects/Research/Diverga/AGENTS.md`
 - **Checkpoint System**: `/Volumes/External SSD/Projects/Research/Diverga/.claude/checkpoints/`
-- **ScholaRAG Integration**: `/Volumes/External SSD/Projects/Research/ScholaRAG/`
 
 ---
 

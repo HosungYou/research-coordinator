@@ -121,9 +121,8 @@ Before executing screening, I2 MUST:
 ## Execution Commands
 
 ```bash
-# ScholaRAG path
-SCHOLARAG_PATH="/Volumes/External SSD/Projects/ScholaRAG"
-cd "$SCHOLARAG_PATH"
+# Project path (set to your working directory)
+cd "$(pwd)"
 
 # Set LLM provider (v1.2.6: Groq default)
 export LLM_PROVIDER=groq
@@ -229,7 +228,7 @@ parallel_compatible: ["B2-evidence-quality-appraiser"]
 
 ## Related Agents
 
-- **I0-scholar-agent-orchestrator**: Pipeline coordination
+- **I0-review-pipeline-orchestrator**: Pipeline coordination
 - **I1-paper-retrieval-agent**: Paper fetching
 - **I3-rag-builder**: RAG system building
 - **B2-evidence-quality-appraiser**: Quality assessment

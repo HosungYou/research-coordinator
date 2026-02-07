@@ -115,7 +115,7 @@
 
 | Agent | Purpose | Model | Checkpoint | Status |
 |-------|---------|-------|------------|--------|
-| I0 | Scholar Agent Orchestrator | Opus | All SCH_* | ✅ |
+| I0 | Review Pipeline Orchestrator | Opus | All SCH_* | ✅ |
 | I1 | Paper Retrieval Agent | Sonnet | SCH_DATABASE_SELECTION | ✅ |
 | I2 | Screening Assistant | Sonnet | SCH_SCREENING_CRITERIA | ✅ |
 | I3 | RAG Builder | Haiku | SCH_RAG_READINESS | ✅ |

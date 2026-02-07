@@ -156,7 +156,7 @@ Do NOT add explicit `skills` key in marketplace.json.
 
 | Agent | Command | Description | Model |
 |-------|---------|-------------|-------|
-| I0-ScholarAgentOrchestrator | `diverga:i0` | Pipeline coordination and stage management | opus |
+| I0-ReviewPipelineOrchestrator | `diverga:i0` | Pipeline coordination and stage management | opus |
 | I1-PaperRetrievalAgent | `diverga:i1` | Multi-database fetching (Semantic Scholar, OpenAlex, arXiv) | sonnet |
 | I2-ScreeningAssistant | `diverga:i2` | AI-PRISMA 6-dimension screening | sonnet |
 | I3-RAGBuilder | `diverga:i3` | Vector database construction (zero cost) | haiku |

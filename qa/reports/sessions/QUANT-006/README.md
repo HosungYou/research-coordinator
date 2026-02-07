@@ -13,7 +13,7 @@ This QA session validates the new Category I agents (I0-I3) for PRISMA 2020 syst
 **User Request**: Conduct a systematic literature review on AI chatbots in language learning using ScholaRAG automation.
 
 **Key Features Tested**:
-1. I0-ScholarAgentOrchestrator (pipeline coordination)
+1. I0-ReviewPipelineOrchestrator (pipeline coordination)
 2. I1-PaperRetrievalAgent (multi-database search)
 3. I2-ScreeningAssistant (AI-assisted PRISMA screening)
 4. I3-RAGBuilder (vector database construction)

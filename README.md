@@ -10,7 +10,7 @@
 ║     ██████╔╝██║ ╚████╔╝ ███████╗██║  ██║╚██████╔╝██║  ██║                   ║
 ║     ╚═════╝ ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝                   ║
 ║                                                                               ║
-║              🎯 Diverge from the Modal · Discover the Exceptional            ║
+║              * Diverge from the Modal · Discover the Exceptional             ║
 ║                                                                               ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
 
@@ -158,7 +158,7 @@ Diverga:
 | **📄 Research Documentation** | Auto-generate artifacts from schemas and templates |
 | **🔄 Migration Support** | Automatic v6.8 → v7.0 upgrade with rollback |
 | **🚀 Parallel Agent Execution** | Run multiple agents simultaneously via Task tool |
-| **🔬 Category I Agents** | ScholaRAG integration with I0-I3 for systematic reviews |
+| **🔬 Category I Agents** | Systematic review automation with I0-I3 |
 
 ### Memory System Quick Start
 
@@ -311,10 +311,10 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 
 ```
 ╔═══════════════════════════════════════════════════════════════════════════════╗
-║                         🎯 AGENT ECOSYSTEM (44 AGENTS)                        ║
+║                         AGENT ECOSYSTEM (44 AGENTS)                           ║
 ╠═══════════════════════════════════════════════════════════════════════════════╣
 ║                                                                               ║
-║   📐 Category A: Foundation (6)         🔍 Category B: Evidence (5)          ║
+║   [A] Category A: Foundation (6)        [B] Category B: Evidence (5)         ║
 ║   ─────────────────────────────         ────────────────────────             ║
 ║   ◆ A1-research-question-refiner        ◆ B1-systematic-literature-scout    ║
 ║   ◆ A2-theoretical-framework-architect  ◆ B2-evidence-quality-appraiser     ║
@@ -323,7 +323,7 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 ║   ◆ A5-paradigm-worldview-advisor       ◆ B5-parallel-document-processor    ║
 ║   ◆ A6-conceptual-framework-visualizer                                       ║
 ║                                                                               ║
-║   📊 Category C: Design (7)             📋 Category D: Data Collection (4)   ║
+║   [C] Category C: Design (7)            [D] Category D: Data Collection (4)  ║
 ║   ─────────────────────────             ─────────────────────────────────    ║
 ║   ◆ C1-quantitative-design-consultant   ◆ D1-sampling-strategy-advisor      ║
 ║   ◆ C2-qualitative-design-consultant    ◆ D2-interview-focus-group-specialist║
@@ -333,7 +333,7 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 ║   ◆ C6-data-integrity-guard                                                  ║
 ║   ◆ C7-error-prevention-engine                                               ║
 ║                                                                               ║
-║   📈 Category E: Analysis (5)           ✅ Category F: Quality (5)           ║
+║   [E] Category E: Analysis (5)          [F] Category F: Quality (5)          ║
 ║   ───────────────────────               ─────────────────────                ║
 ║   ◆ E1-quantitative-analysis-guide      ◆ F1-internal-consistency-checker   ║
 ║   ◆ E2-qualitative-coding-specialist    ◆ F2-checklist-manager              ║
@@ -341,7 +341,7 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 ║   ◆ E4-analysis-code-generator          ◆ F4-bias-trustworthiness-detector  ║
 ║   ◆ E5-sensitivity-analysis-designer    ◆ F5-humanization-verifier          ║
 ║                                                                               ║
-║   📝 Category G: Communication (6)      🎓 Category H: Specialized (2)       ║
+║   [G] Category G: Communication (6)     [H] Category H: Specialized (2)      ║
 ║   ─────────────────────────────         ──────────────────────────           ║
 ║   ◆ G1-journal-matcher                  ◆ H1-ethnographic-research-advisor  ║
 ║   ◆ G2-academic-communicator            ◆ H2-action-research-facilitator    ║
@@ -350,9 +350,9 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 ║   ◆ G5-academic-style-auditor                                                ║
 ║   ◆ G6-academic-style-humanizer 🆕 HAVS                                      ║
 ║                                                                               ║
-║   🔬 Category I: Systematic Review (4)   [NEW - ScholaRAG Integration]       ║
+║   [I] Category I: Systematic Review (4)                                      ║
 ║   ────────────────────────────────────                                        ║
-║   ◆ I0-scholar-agent-orchestrator        ◆ I1-paper-retrieval-agent         ║
+║   ◆ I0-review-pipeline-orchestrator        ◆ I1-paper-retrieval-agent         ║
 ║   ◆ I2-screening-assistant               ◆ I3-rag-builder                    ║
 ║                                                                               ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
@@ -437,7 +437,7 @@ Diverga assigns **Typicality Scores (T-Score)** to all recommendations:
 #### Category I: Systematic Review Automation (4 Agents) [NEW v6.5]
 | Agent | Model | Purpose |
 |-------|-------|---------|
-| I0-scholar-agent-orchestrator | Opus | ScholaRAG 7-stage pipeline orchestration |
+| I0-review-pipeline-orchestrator | Opus | 7-stage PRISMA pipeline orchestration |
 | I1-paper-retrieval-agent | Sonnet | Multi-database paper fetching |
 | I2-screening-assistant | Sonnet | AI-PRISMA screening with Groq |
 | I3-rag-builder | Haiku | Vector database construction |

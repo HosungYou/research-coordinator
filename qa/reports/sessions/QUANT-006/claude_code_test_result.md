@@ -12,7 +12,7 @@ I want to conduct a PRISMA 2020 systematic literature review on AI chatbots in l
 Research question: "How do AI chatbots improve speaking skills in foreign language education?"
 ```
 
-**Expected Result**: `Task(subagent_type="diverga:i0", ...)` should successfully invoke I0-ScholarAgentOrchestrator
+**Expected Result**: `Task(subagent_type="diverga:i0", ...)` should successfully invoke I0-ReviewPipelineOrchestrator
 
 ## Actual Result
 
@@ -50,7 +50,7 @@ statusline-setup, Explore, Plan, claude-code-guide, oh-my-claudecode:code-review
 
 | File | Status |
 |------|--------|
-| `.claude/skills/research-agents/I0-scholar-agent-orchestrator/SKILL.md` | ✅ Exists (6.8 KB) |
+| `.claude/skills/research-agents/I0-review-pipeline-orchestrator/SKILL.md` | ✅ Exists (6.8 KB) |
 | `.claude/skills/research-agents/I1-paper-retrieval-agent/SKILL.md` | ✅ Exists (5.3 KB) |
 | `.claude/skills/research-agents/I2-screening-assistant/SKILL.md` | ✅ Exists (6.3 KB) |
 | `.claude/skills/research-agents/I3-rag-builder/SKILL.md` | ✅ Exists (6.3 KB) |

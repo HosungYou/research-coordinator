@@ -28,13 +28,13 @@
 
 | Feature | v5.0 (Sisyphus) | v6.0 (Human-Centered) |
 |---------|-----------------|----------------------|
-| **Sisyphus Protocol** | "Work never stops" | ❌ REMOVED |
-| **Iron Law** | "agent OR checkpoint" | ❌ REMOVED |
-| **OMC Autonomous Modes** | ralph/ultrawork/ecomode | ❌ REMOVED |
-| **Human Checkpoints** | Could be bypassed | ✅ MANDATORY |
-| **Agent Naming** | Numbered (01-21) | ✅ Category-based (A1-I3) |
-| **Agent Count** | 27 agents | ✅ 44 agents (v8.0.1) |
-| **State Location** | `.omc/` | ✅ `.claude/` |
+| **Sisyphus Protocol** | "Work never stops" | REMOVED |
+| **Iron Law** | "agent OR checkpoint" | REMOVED |
+| **OMC Autonomous Modes** | ralph/ultrawork/ecomode | REMOVED |
+| **Human Checkpoints** | Could be bypassed | MANDATORY |
+| **Agent Naming** | Numbered (01-21) | Category-based (A1-I3) |
+| **Agent Count** | 27 agents | 44 agents (v8.0.1) |
+| **State Location** | `.omc/` | `.claude/` |
 
 ---
 
@@ -55,7 +55,7 @@ Diverga/
 │   │       ├── A2-theoretical-framework-architect/
 │   │       ├── ...
 │   │       ├── H2-action-research-facilitator/
-│   │       ├── I0-scholar-agent-orchestrator/
+│   │       ├── I0-review-pipeline-orchestrator/
 │   │       ├── I1-paper-retrieval-agent/
 │   │       ├── I2-screening-assistant/
 │   │       └── I3-rag-builder/
@@ -110,8 +110,8 @@ Diverga/
 │   4. DO NOT proceed until approval received                    │
 │   5. DO NOT assume approval based on context                   │
 │                                                                │
-│   ❌ NEVER: "진행하겠습니다" without asking                     │
-│   ✅ ALWAYS: "어떤 방향으로 진행하시겠습니까?"                  │
+│   [X] NEVER: "Proceeding with..." without asking              │
+│   [OK] ALWAYS: "Which direction would you like to proceed?"   │
 │                                                                │
 └────────────────────────────────────────────────────────────────┘
 ```
@@ -314,26 +314,26 @@ Advanced qualitative and participatory research methodologies.
 
 ### Category I: Systematic Review Automation (4 agents) - NEW v6.5
 
-ScholaRAG integration for automated PRISMA 2020 systematic literature reviews.
+Automated PRISMA 2020 systematic literature review pipeline.
 
 | ID | Agent | Purpose | Tier | Model | Checkpoint |
 |----|-------|---------|------|-------|------------|
-| **I0** | **scholar-agent-orchestrator** | **Pipeline coordination, checkpoint management** | **HIGH** | **opus** | **🔴 All SCH_* checkpoints** |
+| **I0** | **review-pipeline-orchestrator** | **Pipeline coordination, checkpoint management** | **HIGH** | **opus** | **🔴 All SCH_* checkpoints** |
 | I1 | paper-retrieval-agent | Multi-database paper fetching (SS, OA, arXiv) | MEDIUM | sonnet | 🔴 SCH_DATABASE_SELECTION |
 | I2 | screening-assistant | AI-PRISMA 6-dimension screening (Groq LLM) | MEDIUM | sonnet | 🔴 SCH_SCREENING_CRITERIA |
 | I3 | rag-builder | Vector database construction (local, $0 cost) | LOW | haiku | 🟠 SCH_RAG_READINESS |
 
 **Paradigm Coverage**: Systematic Review, Meta-Analysis
 
-#### Category I ScholaRAG System (v6.5 New)
+#### Category I Systematic Review System (v6.5 New)
 
-Integrates ScholaRAG systematic review automation into Diverga:
+Systematic review automation pipeline:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│           CATEGORY I: SCHOLARAG INTEGRATION                  │
+│           CATEGORY I: SYSTEMATIC REVIEW AUTOMATION            │
 ├─────────────────────────────────────────────────────────────┤
-│ I0-ScholarAgentOrchestrator (Conductor - DECISION AUTHORITY)│
+│ I0-ReviewPipelineOrchestrator (Conductor - DECISION AUTHORITY)│
 │   └─ Pipeline coordination (7 stages)                       │
 │   └─ Checkpoint enforcement (4 checkpoints)                 │
 │   └─ Cost optimization (Groq → 100x cheaper)               │
@@ -687,7 +687,7 @@ project:
 
 | Keywords | Korean | Agent |
 |----------|--------|-------|
-| systematic review, PRISMA, ScholaRAG | 체계적 문헌고찰, 프리즈마, 스콜라랙 | I0 |
+| systematic review, PRISMA, literature review automation | 체계적 문헌고찰, 프리즈마, 문헌고찰 자동화 | I0 |
 | fetch papers, retrieve papers, database search | 논문 수집, 데이터베이스 검색 | I1 |
 | screen papers, inclusion criteria, AI screening | 논문 스크리닝, 포함 기준 | I2 |
 | build RAG, vector database, PDF download | RAG 구축, PDF 다운로드 | I3 |
@@ -710,7 +710,7 @@ project:
 ## Version History
 
 - **v6.7.0**: Systematic Review Automation - Category I enhanced, 44 total agents, all documentation synced
-- **v6.5.0**: ScholaRAG Integration - Category I agents (I0-I3), Groq LLM support
+- **v6.5.0**: Systematic Review Automation - Category I agents (I0-I3), Groq LLM support
 - **v6.3.0**: Meta-Analysis Agent System (C5/C6/C7) - Multi-gate validation, Hedges' g calculation
 - **v6.2.0**: Parallel Document Processing (B5) - High-throughput PDF processing
 - **v6.1.0**: Humanization Pipeline (G5/G6/F5) - AI pattern detection and transformation
