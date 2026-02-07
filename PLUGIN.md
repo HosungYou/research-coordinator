@@ -1,6 +1,6 @@
 # Diverga
 
-**Version**: 6.8.0
+**Version**: 8.0.1
 **Author**: Hosung You
 **Repository**: https://github.com/HosungYou/Diverga
 **License**: MIT
@@ -22,11 +22,11 @@ Diverga is an AI Research Assistant for the complete research lifecycle. 44 spec
 
 ---
 
-## Directory Structure (v6.5.2+)
+## Directory Structure (v8.0.1)
 
 ```
 diverga/
-├── agents/              # 40 agent definitions (Task tool)
+├── agents/              # 44 agent definitions (Task tool)
 │   ├── a1.md           # → Task(subagent_type="diverga:a1", ...)
 │   ├── a2.md
 │   └── ...
@@ -227,9 +227,7 @@ Configuration file: `~/.claude/plugins/diverga/config/diverga-config.json`
 
 ```json
 {
-  "version": "6.4.0",
-  "llm_provider": "anthropic",
-  "llm_api_key_env": "ANTHROPIC_API_KEY",
+  "version": "8.0.1",
   "human_checkpoints": {
     "enabled": true,
     "required": ["CP_PARADIGM", "CP_METHODOLOGY"]
@@ -255,7 +253,6 @@ Configuration file: `~/.claude/plugins/diverga/config/diverga-config.json`
 ## Requirements
 
 - Claude Code CLI
-- LLM API Key (one of: Anthropic, OpenAI, Groq)
 
 ---
 
@@ -266,4 +263,4 @@ Configuration file: `~/.claude/plugins/diverga/config/diverga-config.json`
 
 ---
 
-*Version 6.8.0 - Memory System Edition*
+*Version 8.0.1 - Project Visibility & HUD Enhancement*

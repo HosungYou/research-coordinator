@@ -3,19 +3,9 @@ name: diverga-memory
 description: |
   Diverga Memory System v7.0 - Context-persistent research support
   with checkpoint auto-trigger and cross-session continuity.
+  Triggers: memory, remember, context, recall, checkpoint, decision, persist,
+  기억, 맥락, 세션, 체크포인트
 version: "8.0.1"
-triggers:
-  - memory
-  - remember
-  - context
-  - recall
-  - checkpoint
-  - decision
-  - persist
-  - 기억
-  - 맥락
-  - 세션
-  - 체크포인트
 ---
 
 # Diverga Memory System v7.0

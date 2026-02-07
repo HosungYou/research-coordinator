@@ -84,4 +84,4 @@ These templates can be customized for specific deployment scenarios:
 
 ## Version
 
-Adapter templates version: 6.6.2 (2026-01-29)
+Adapter templates version: 8.0.1 (2026-02-07)

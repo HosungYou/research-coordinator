@@ -1,11 +1,11 @@
 /**
- * Diverga Agent Runtime v6.5.0
+ * Diverga Agent Runtime v8.0.1
  *
  * Independent Agent Runtime for Diverga Research Agents.
  * Enables parallel execution via Task(subagent_type="diverga:a1") etc.
  *
  * This package provides:
- * - 40 specialized research agents across 8 categories (A-H)
+ * - 44 specialized research agents across 9 categories (A-I)
  * - VS (Verbalized Sampling) methodology integration
  * - Human checkpoint protocol
  * - Dynamic prompt loading from SKILL.md files

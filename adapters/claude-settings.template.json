@@ -1,8 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/main/settings.schema.json",
   "name": "diverga",
-  "version": "6.6.2",
-  "description": "Diverga Research Coordinator - Multi-agent system for social science research with 40 specialized agents",
+  "version": "8.0.1",
+  "description": "Diverga - AI Research Assistant with 44 specialized agents, VS methodology, and human checkpoints",
   "author": "Hosung You",
   "repository": "https://github.com/HosungYou/Diverga",
 

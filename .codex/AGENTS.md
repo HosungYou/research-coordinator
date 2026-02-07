@@ -1,8 +1,8 @@
 # Diverga Research Coordinator - Codex CLI Integration
 
-**Version**: 6.6.1
+**Version**: 8.0.1
 **Platform**: OpenAI Codex CLI
-**Total Agents**: 40
+**Total Agents**: 44
 
 ---
 

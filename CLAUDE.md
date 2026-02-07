@@ -1,9 +1,10 @@
 # CLAUDE.md
 
-# Diverga v8.0.0 (Project Visibility & HUD Enhancement)
+# Diverga v8.0.1 (Project Visibility & HUD Enhancement)
 
 **Beyond Modal: AI Research Assistant That Thinks Creatively**
 
+**v8.0.1**: Installation Bug Fixes - Fixed install script path corruption, skills copy instead of symlink
 **v8.0.0**: Project Visibility Enhancement - Independent HUD, simplified setup, natural language project start, docs/ auto-generation
 **v7.0.0**: Memory System - 3-layer context, checkpoint auto-trigger, cross-session persistence
 **v6.9.2**: Marketplace Cache Fix - Fixed cache sync issue, comprehensive troubleshooting guide
@@ -53,7 +54,7 @@ cd Diverga
 # Step 2: Create local skill symlinks
 for skill_dir in skills/*/; do
   skill_name=$(basename "$skill_dir")
-  ln -sf "$(pwd)/$skill_dir" ~/.claude/skills/diverga-${skill_name}
+  cp -r "$skill_dir" ~/.claude/skills/diverga-${skill_name}
 done
 
 # Step 3: Restart Claude Code
@@ -307,7 +308,7 @@ PRISMA 2020 compliant systematic literature review pipeline with automated paper
 
 ---
 
-## Model Routing (v6.7)
+## Model Routing (v8.0)
 
 | Tier | Model | Agents (44 total) |
 |------|-------|-------------------|
@@ -657,7 +658,7 @@ Execution Plan:
 
 ---
 
-## Memory System Commands (v6.8)
+## Memory System Commands (v8.0)
 
 The DIVERGA Memory System provides persistent context preservation for research lifecycle continuity.
 
@@ -692,6 +693,11 @@ The Memory System automatically captures context at critical lifecycle events:
 
 ## Version History
 
+- **v8.0.1**: Installation Bug Fixes - Fixed install script path corruption, skills copy instead of symlink
+- **v8.0.0**: Project Visibility Enhancement - Independent HUD statusline, simplified 3-step setup, natural language project start, docs/ auto-generation
+- **v7.0.0**: Memory System v2 - 3-layer context system, checkpoint auto-trigger, cross-session persistence, decision audit trail
+- **v6.9.2**: Marketplace Cache Fix - Fixed cache sync issue, comprehensive troubleshooting guide
+- **v6.9.1**: Plugin Discovery Fix - Added version field to SKILL.md, removed orphaned directories, local symlinks
 - **v6.8.0**: Memory System - Persistent context preservation with semantic search and lifecycle hooks
 - **v6.7.0**: Systematic Review Automation - Category I agents (I0-I3) for PRISMA 2020 pipeline (44 agents total)
 - **v6.6.3**: Codex CLI SKILL.md Implementation - actual skill loading via `.codex/skills/`, QUANT-005 verified

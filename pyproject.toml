@@ -1,7 +1,7 @@
 [project]
-name = "research-coordinator"
-version = "3.1.0"
-description = "VS-Enhanced AI Agents for Social Science Research"
+name = "diverga"
+version = "8.0.1"
+description = "AI Research Assistant - 44 specialized agents with VS methodology, human checkpoints, and parallel execution"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.8"
@@ -30,10 +30,10 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/HosungYou/research-coordinator"
-Documentation = "https://github.com/HosungYou/research-coordinator#readme"
-Repository = "https://github.com/HosungYou/research-coordinator.git"
-Issues = "https://github.com/HosungYou/research-coordinator/issues"
+Homepage = "https://github.com/HosungYou/Diverga"
+Documentation = "https://github.com/HosungYou/Diverga#readme"
+Repository = "https://github.com/HosungYou/Diverga.git"
+Issues = "https://github.com/HosungYou/Diverga/issues"
 
 [project.optional-dependencies]
 dev = [
@@ -97,7 +97,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.isort]
-known-first-party = ["research_coordinator"]
+known-first-party = ["diverga"]
 
 [tool.mypy]
 python_version = "3.8"

@@ -109,7 +109,7 @@ Before creating an issue:
 **Bug Report:**
 ```markdown
 **Agent**: 02-theoretical-framework-architect
-**Version**: 3.1.0
+**Version**: 8.0.1
 **Description**: [What happened?]
 **Expected**: [What should happen?]
 **Steps to Reproduce**: [How to reproduce?]
