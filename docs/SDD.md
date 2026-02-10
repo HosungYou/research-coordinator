@@ -1,10 +1,10 @@
-# Diverga v8.0.1 - Software Design Document (SDD)
+# Diverga v8.1.0 - Software Design Document (SDD)
 
-**Document Version**: 1.1
-**System Version**: 8.0.1
-**Date**: 2026-02-07
+**Document Version**: 1.2
+**System Version**: 8.1.0
+**Date**: 2026-02-09
 **Author**: Diverga Project Team
-**Status**: Released (patch4)
+**Status**: Released
 
 ---
 
@@ -25,7 +25,7 @@
 
 ### 1.1 Purpose
 
-This Software Design Document describes the architecture, components, data structures, and interfaces of **Diverga v8.0.1**, a research methodology AI assistant built as a Claude Code plugin. Diverga orchestrates 44 specialized agents across the complete academic research lifecycle -- from question formulation to publication -- while preventing AI mode collapse through Verbalized Sampling (VS) and HAVS methodologies.
+This Software Design Document describes the architecture, components, data structures, and interfaces of **Diverga v8.1.0**, a research methodology AI assistant built as a Claude Code plugin. Diverga orchestrates 44 specialized agents across the complete academic research lifecycle -- from question formulation to publication -- while preventing AI mode collapse through Verbalized Sampling (VS) and HAVS methodologies.
 
 ### 1.2 Scope
 
@@ -816,7 +816,7 @@ All four checkpoints ensure human oversight at database selection, screening cri
 ```yaml
 # diverga-config.json
 {
-  "version": "8.0.1",
+  "version": "8.1.0",
   "checkpoint_level": "full | minimal | off",
   "hud": {
     "enabled": true,
@@ -836,7 +836,7 @@ All four checkpoints ensure human oversight at database selection, screening cri
 
 ```yaml
 # .research/project-state.yaml
-version: "8.0.1"
+version: "8.1.0"
 project:
   name: "AI-Ethics-HR"
   research_question: "How does AI affect ethical decision-making in HR?"
@@ -952,7 +952,7 @@ summary:
 
 ```json
 {
-  "version": "8.0.1",
+  "version": "8.1.0",
   "preset": "research",
   "project_name": "AI-Ethics-HR",
   "stage": "foundation",
@@ -1365,6 +1365,7 @@ These files are auto-synchronized from `.research/` state whenever decisions are
 
 | Version | Date | Codename | Key Changes |
 |---------|------|----------|-------------|
+| **v8.1.0** | 2026-02-09 | "Checkpoint Enforcement" | Mandatory AskUserQuestion at all checkpoints, Agent Prerequisite Map, multi-agent coordination, 120 tests |
 | **v8.0.1-patch4** | 2026-02-07 | "English-First" | English-first UI, 2-step setup, dashboard, box-drawing fixes, branding cleanup |
 | **v8.0.1** | 2026-02-07 | -- | Plugin discovery fixes, troubleshooting guide |
 | **v8.0.0** | 2026-02-04 | "Visible Research" | Independent HUD, 2-step setup, natural language project start, docs/ auto-generation |
@@ -1406,5 +1407,5 @@ These files are auto-synchronized from `.research/` state whenever decisions are
 ---
 
 *Document generated: 2026-02-07*
-*Diverga Version: 8.0.1*
+*Diverga Version: 8.1.0*
 *Total Agents: 44 | Total Skills: 51 | Total Categories: 9*

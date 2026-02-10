@@ -207,29 +207,17 @@ export const AGENT_PREREQUISITES: Record<string, string[]> = {
   'B2': ['CP_RESEARCH_DIRECTION'],
   'B3': [],
   'B4': [],
-  'B5': [],
   'C1': ['CP_PARADIGM_SELECTION', 'CP_RESEARCH_DIRECTION'],
   'C2': ['CP_PARADIGM_SELECTION', 'CP_RESEARCH_DIRECTION'],
   'C3': ['CP_PARADIGM_SELECTION', 'CP_RESEARCH_DIRECTION'],
   'C5': ['CP_RESEARCH_DIRECTION', 'CP_METHODOLOGY_APPROVAL'],
-  'C6': ['CP_METHODOLOGY_APPROVAL'],
-  'C7': ['CP_METHODOLOGY_APPROVAL'],
-  'D1': ['CP_METHODOLOGY_APPROVAL'],
-  'D2': ['CP_METHODOLOGY_APPROVAL'],
-  'D4': ['CP_METHODOLOGY_APPROVAL'],
   'E1': ['CP_METHODOLOGY_APPROVAL'],
   'E2': ['CP_METHODOLOGY_APPROVAL'],
   'E3': ['CP_METHODOLOGY_APPROVAL'],
-  'E5': ['CP_METHODOLOGY_APPROVAL'],
+  'E4': [],
   'G3': [],
-  'G5': [],
-  'G6': ['CP_HUMANIZATION_REVIEW'],
   'H1': ['CP_PARADIGM_SELECTION'],
   'H2': ['CP_PARADIGM_SELECTION'],
-  'I0': [],
-  'I1': [],
-  'I2': ['SCH_DATABASE_SELECTION'],
-  'I3': ['SCH_SCREENING_CRITERIA'],
 };
 
 /**
@@ -273,7 +261,11 @@ function sortByDependencyOrder(checkpointIds: string[]): string[] {
  * Collect union of prerequisites for multiple agents
  * Used when multiple agents are triggered simultaneously
  */
-export function collectPrerequisites(agentIds: string[]): string[] {
+export function collectPrerequisites(agentIds: string[] | null | undefined): string[] {
+  if (!agentIds || !Array.isArray(agentIds)) {
+    return [];
+  }
+
   const union = new Set<string>();
   for (const id of agentIds) {
     const prereqs = AGENT_PREREQUISITES[id] || [];
