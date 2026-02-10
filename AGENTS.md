@@ -1,12 +1,12 @@
 # AGENTS.md
 
-> AI-readable documentation for Diverga v8.0.1 (Project Visibility & HUD Enhancement)
+> AI-readable documentation for Diverga v8.1.0 (Checkpoint Enforcement Strengthening)
 
 ## Project Overview
 
 **Diverga** is a Claude Code Skills-based AI research assistant system that breaks free from mode collapse through **Verbalized Sampling (VS) methodology**. It provides context-persistent support for the complete research lifecycle with a focus on **creative, defensible research choices** while ensuring **human decisions remain with humans**.
 
-**Version**: 8.0.1 (Project Visibility & HUD Enhancement)
+**Version**: 8.1.0 (Checkpoint Enforcement Strengthening)
 **Generated**: 2026-01-31
 **Repository**: https://github.com/HosungYou/Diverga
 
@@ -33,7 +33,7 @@
 | **OMC Autonomous Modes** | ralph/ultrawork/ecomode | REMOVED |
 | **Human Checkpoints** | Could be bypassed | MANDATORY |
 | **Agent Naming** | Numbered (01-21) | Category-based (A1-I3) |
-| **Agent Count** | 27 agents | 44 agents (v8.0.1) |
+| **Agent Count** | 27 agents | 44 agents (v8.1.0) |
 | **State Location** | `.omc/` | `.claude/` |
 
 ---
@@ -137,11 +137,11 @@ Location: `.claude/state/checkpoints.json`
 
 ---
 
-## Agent Registry (v8.0.1)
+## Agent Registry (v8.1.0)
 
 ### 44 Specialized Research Agents in 9 Categories
 
-Diverga v8.0.1 uses **category-based naming** (A1-I3) for all agents, organized into 9 functional categories.
+Diverga v8.1.0 uses **category-based naming** (A1-I3) for all agents, organized into 9 functional categories.
 
 ---
 
@@ -373,7 +373,7 @@ Systematic review automation pipeline:
 
 ---
 
-## Model Routing (v8.0.1)
+## Model Routing (v8.1.0)
 
 | Tier | Model | Count | Agents |
 |------|-------|-------|--------|
@@ -721,4 +721,4 @@ project:
 
 ---
 
-*This file enables AI assistants to understand Diverga v8.0.1's architecture and operate effectively within its human-centered design.*
+*This file enables AI assistants to understand Diverga v8.1.0's architecture and operate effectively within its human-centered design.*

@@ -95,7 +95,7 @@ export async function initializeDiverga() {
 /**
  * Get library version
  */
-export const VERSION = '8.0.1';
+export const VERSION = '8.1.0';
 
 /**
  * Platform adapters configuration

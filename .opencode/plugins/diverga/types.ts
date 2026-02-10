@@ -139,6 +139,7 @@ export interface AgentInfo {
     context?: string[];
   };
   checkpoints?: string[];
+  prerequisites?: string[];  // Required checkpoints before agent can start
 }
 
 /**

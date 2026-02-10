@@ -5,7 +5,7 @@ description: |
   with checkpoint auto-trigger and cross-session continuity.
   Triggers: memory, remember, context, recall, checkpoint, decision, persist,
   기억, 맥락, 세션, 체크포인트
-version: "8.0.1"
+version: "8.1.0"
 ---
 
 # Diverga Memory System v7.0

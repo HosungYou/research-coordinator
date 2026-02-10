@@ -16,7 +16,7 @@ import * as os from 'os';
 import yaml from 'js-yaml';
 
 // Version
-const VERSION = '8.0.1';
+const VERSION = '8.1.0';
 
 // ASCII Banner (ASCII-only for maximum compatibility)
 const BANNER = `

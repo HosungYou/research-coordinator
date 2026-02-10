@@ -5,7 +5,34 @@ description: |
   Enhanced VS 3-Phase process: Modal question avoidance, alternatives presentation, differentiated RQ recommendation
   Use when: refining research ideas, formulating research questions, clarifying scope
   Triggers: research question, 연구 질문, PICO, SPIDER, research idea
-version: "8.0.1"
+version: "8.1.0"
+---
+
+## ⛔ Checkpoint Protocol (EXECUTE BEFORE CORE TASK)
+
+### Prerequisites (반드시 완료 후 진행 - 스킵 불가)
+이 에이전트를 실행하기 전에 다음 체크포인트가 대화 내에서 명시적으로 승인되었는지 확인하세요:
+
+이 에이전트는 진입점(entry point)이므로 전제조건이 없습니다.
+
+대화 이력에서 위 체크포인트의 승인이 확인되지 않으면:
+→ AskUserQuestion 도구로 해당 체크포인트부터 순서대로 질문
+→ 모든 전제조건이 승인될 때까지 본 에이전트의 핵심 작업을 시작하지 마세요
+
+### 동시 호출 시 주의사항
+이 에이전트가 다른 에이전트와 동시에 트리거되었다면:
+→ 모든 에이전트의 전제조건 합집합이 먼저 해결되어야 합니다
+→ research-coordinator가 전제조건 순서를 조율합니다
+
+### 실행 중 체크포인트 (반드시 AskUserQuestion 도구 호출)
+이 에이전트 실행 중 다음 시점에서 반드시 AskUserQuestion 도구를 호출하세요:
+
+- 🔴 CP_RESEARCH_DIRECTION - 연구 질문 확정 시
+- 🔴 CP_VS_001 - VS 대안 제시 후 선택 시
+- 🔴 CP_VS_003 - 선택 방향 최종 확인 시
+
+참조: `.claude/references/checkpoint-templates.md`에서 각 체크포인트의 정확한 AskUserQuestion 파라미터를 확인하세요.
+
 ---
 
 # Research Question Refiner

@@ -4,6 +4,60 @@ All notable changes to Diverga (formerly Research Coordinator) will be documente
 
 ---
 
+## [8.1.0] - 2026-02-09 (Checkpoint Enforcement Strengthening)
+
+### Overview
+
+**Diverga v8.1.0** - Checkpoint enforcement overhaul ensuring AskUserQuestion tool
+is called at every human decision point. Fixes ad-hoc and multi-agent invocation
+scenarios where checkpoints were silently skipped.
+
+### Critical Changes
+
+- **feat(enforcement)**: Mandatory AskUserQuestion tool usage at all checkpoints
+  - Text-based questions no longer count as checkpoint compliance
+  - Structured options with bilingual labels (EN/KR)
+
+- **feat(prerequisites)**: Agent Prerequisite Map with dependency ordering
+  - No-skip policy: REQUIRED checkpoints cannot be bypassed
+  - Ad-hoc agent calls now verify prerequisites before execution
+
+- **feat(multi-agent)**: Parallel agent checkpoint coordination
+  - Union of prerequisites collected across simultaneously triggered agents
+  - Dependency-ordered sequential AskUserQuestion calls
+  - Parallel execution only after all prerequisites cleared
+
+### Files Added
+
+| File | Description |
+|------|-------------|
+| `.claude/references/checkpoint-templates.md` | AskUserQuestion parameter templates for 22 checkpoints |
+
+### Files Modified (Key)
+
+| File | Changes |
+|------|---------|
+| `CLAUDE.md` | Enforcement Protocol, Agent Prerequisite Map, Dependency Order, Multi-Agent rules |
+| `skills/research-coordinator/SKILL.md` | Enforcement rules overhaul, Multi-Agent Dispatch Protocol |
+| `skills/{25 agents}/SKILL.md` | Checkpoint Execution Block inserted after frontmatter |
+| `.opencode/plugins/diverga/types.ts` | `prerequisites` field added to AgentInfo |
+| `.opencode/plugins/diverga/agents.ts` | Prerequisites data for all agents |
+| `.opencode/plugins/diverga/checkpoints.ts` | Missing checkpoint definitions added |
+| `.opencode/plugins/diverga/hooks/checkpoint-enforcer.ts` | AGENT_PREREQUISITES mapping + multi-agent union logic |
+| `scripts/install.sh` | Version bump to 8.1.0 |
+| `README.md` | Version badge update |
+
+### Migration Guide
+
+v8.0.x → v8.1.0 migration:
+- **Existing installations**: Re-run `scripts/install.sh` to get updated skills
+- **No breaking changes**: All existing workflows continue to work
+- **New behavior**: AskUserQuestion tool will now fire at checkpoints
+  that previously only showed text questions
+- **Researcher impact**: More structured decision prompts with clickable options
+
+---
+
 ## [8.0.2] - 2026-02-07 (Doctor Diagnostics Skill)
 
 ### New Features

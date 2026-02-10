@@ -152,6 +152,16 @@ export const CHECKPOINTS: CheckpointDefinition[] = [
     category: 'VS Methodology',
     agentsUsing: ['A2', 'A3', 'B1'],
   },
+  {
+    id: 'CP_HUMANIZATION_REVIEW',
+    name: 'Humanization Review',
+    level: 'RECOMMENDED',
+    when: 'After AI pattern analysis complete',
+    whatToAsk: 'AI 패턴 분석 결과를 검토하시겠습니까?\nReview AI pattern analysis results?',
+    icon: '🟠',
+    category: 'Publication & Communication',
+    agentsUsing: ['G5', 'G6'],
+  },
 
   // OPTIONAL (🟡)
   {
@@ -193,6 +203,46 @@ export const CHECKPOINTS: CheckpointDefinition[] = [
     icon: '🟡',
     category: 'Data Collection',
     agentsUsing: ['D2', 'D3'],
+  },
+  {
+    id: 'CP_HUMANIZATION_VERIFY',
+    name: 'Humanization Verification',
+    level: 'OPTIONAL',
+    when: 'Before final export after humanization',
+    whatToAsk: '휴먼화 결과를 최종 확인하시겠습니까?\nVerify humanization results?',
+    icon: '🟡',
+    category: 'Publication & Communication',
+    agentsUsing: ['G6', 'F5'],
+  },
+  {
+    id: 'SCH_DATABASE_SELECTION',
+    name: 'Database Selection',
+    level: 'REQUIRED',
+    when: 'Before paper retrieval begins',
+    whatToAsk: '논문 검색에 어떤 데이터베이스를 사용할까요?\nWhich databases should be searched for paper retrieval?',
+    icon: '🔴',
+    category: 'Systematic Review',
+    agentsUsing: ['I1'],
+  },
+  {
+    id: 'SCH_SCREENING_CRITERIA',
+    name: 'Screening Criteria',
+    level: 'REQUIRED',
+    when: 'Before PRISMA screening begins',
+    whatToAsk: '포함/배제 기준을 승인하시겠습니까?\nDo you approve the inclusion/exclusion criteria for PRISMA screening?',
+    icon: '🔴',
+    category: 'Systematic Review',
+    agentsUsing: ['I2'],
+  },
+  {
+    id: 'SCH_RAG_READINESS',
+    name: 'RAG System Readiness',
+    level: 'RECOMMENDED',
+    when: 'Before building RAG from collected PDFs',
+    whatToAsk: 'RAG 시스템 구축을 시작하시겠습니까?\nReady to build the RAG system?',
+    icon: '🟠',
+    category: 'Systematic Review',
+    agentsUsing: ['I3'],
   },
 ];
 

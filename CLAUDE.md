@@ -1,9 +1,10 @@
 # CLAUDE.md
 
-# Diverga v8.0.1 (Project Visibility & HUD Enhancement)
+# Diverga v8.1.0 (Checkpoint Enforcement Strengthening)
 
 **Beyond Modal: AI Research Assistant That Thinks Creatively**
 
+**v8.1.0**: Checkpoint Enforcement Strengthening - Mandatory AskUserQuestion at all checkpoints, Agent Prerequisite Map, multi-agent coordination
 **v8.0.1-patch3**: 8-Dimension Diagnostic Sweep - Category I registration fix, version sync, lib/ fixes
 **v8.0.1**: Installation Bug Fixes - Fixed install script path corruption, skills copy instead of symlink
 **v8.0.0**: Project Visibility Enhancement - Independent HUD, simplified setup, natural language project start, docs/ auto-generation
@@ -230,6 +231,98 @@ Diverga Memory System provides **context-persistent research support** with:
 │   [OK] ALWAYS: "Which direction would you like to proceed?"   │
 │                                                                │
 └────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Checkpoint Enforcement Protocol (MANDATORY)
+
+### Rule 1: AskUserQuestion 도구 사용 의무
+체크포인트 도달 시 반드시 `AskUserQuestion` 도구를 호출합니다.
+텍스트로 묻는 것은 체크포인트 충족으로 인정되지 않습니다.
+
+❌ 금지: "어떻게 하시겠습니까?" (텍스트 질문)
+✅ 필수: AskUserQuestion 도구 호출 (구조화된 선택지)
+
+### Rule 2: 전제조건 Gate (스킵 불가)
+에이전트 호출 시, 해당 에이전트의 prerequisite 체크포인트가
+이전에 사용자의 명시적 승인을 받았는지 확인합니다.
+승인 이력이 없으면 해당 체크포인트부터 순서대로 진행합니다.
+REQUIRED 체크포인트는 사용자 요청으로도 건너뛸 수 없습니다.
+
+### Rule 3: Ad-hoc 호출 처리
+에이전트를 직접 호출했을 때 (예: /diverga:c5):
+1. Agent Prerequisite Map에서 전제조건 확인
+2. 미완료 전제조건이 있으면 AskUserQuestion으로 해당 결정 요청
+3. 모든 전제조건 통과 후 에이전트 본연의 작업 시작
+
+### Rule 4: 동시 다중 에이전트 호출 처리
+자연어로 다수 에이전트가 동시 트리거될 때:
+1. 모든 트리거된 에이전트의 전제조건을 합집합(Union)으로 수집
+2. 중복 제거 후 의존성 순서(dependency order)로 정렬
+3. 각 전제조건을 순서대로 AskUserQuestion으로 질문 (한 번에 최대 4개)
+4. 모든 전제조건 통과 후 에이전트들을 병렬 실행
+5. 각 에이전트 실행 중 자체 체크포인트도 반드시 AskUserQuestion 호출
+
+예시: "메타분석 설계하고 효과크기 추출도 같이" → C5 + B3 트리거
+  → Union prerequisites: {CP_RESEARCH_DIRECTION, CP_METHODOLOGY_APPROVAL}
+  → AskUserQuestion: CP_RESEARCH_DIRECTION 먼저
+  → AskUserQuestion: CP_METHODOLOGY_APPROVAL 다음
+  → 모든 통과 후 C5 + B3 병렬 실행
+
+### Why Prompt-Level Enforcement
+Claude Code shell hooks cannot invoke AskUserQuestion tool directly (shell commands only).
+Therefore, CLAUDE.md and SKILL.md prompt-level instructions are the primary enforcement mechanism.
+
+### Agent Prerequisite Map
+
+| Agent | Prerequisites (반드시 완료) | Own Checkpoints (실행 중 트리거) |
+|-------|---------------------------|-------------------------------|
+| A1 | (진입점) | 🔴 CP_RESEARCH_DIRECTION, 🔴 CP_VS_001, 🔴 CP_VS_003 |
+| A2 | CP_RESEARCH_DIRECTION | 🔴 CP_THEORY_SELECTION, 🔴 CP_VS_001, 🟠 CP_VS_002, 🔴 CP_VS_003 |
+| A3 | CP_RESEARCH_DIRECTION | 🔴 CP_VS_001, 🔴 CP_VS_003 |
+| A4 | (없음) | (없음) |
+| A5 | (진입점) | 🔴 CP_PARADIGM_SELECTION |
+| A6 | CP_RESEARCH_DIRECTION | 🟡 CP_VISUALIZATION_PREFERENCE |
+| B1 | CP_RESEARCH_DIRECTION | 🟠 CP_SCREENING_CRITERIA, 🟡 CP_SEARCH_STRATEGY, 🔴 CP_VS_001 |
+| B2 | CP_RESEARCH_DIRECTION | 🟠 CP_QUALITY_REVIEW |
+| B3 | (없음) | (없음) |
+| B4 | (없음) | (없음) |
+| B5 | (없음) | (없음) |
+| C1 | CP_PARADIGM_SELECTION, CP_RESEARCH_DIRECTION | 🔴 CP_METHODOLOGY_APPROVAL, 🔴 CP_VS_001, 🔴 CP_VS_003 |
+| C2 | CP_PARADIGM_SELECTION, CP_RESEARCH_DIRECTION | 🔴 CP_METHODOLOGY_APPROVAL, 🔴 CP_VS_001 |
+| C3 | CP_PARADIGM_SELECTION, CP_RESEARCH_DIRECTION | 🔴 CP_METHODOLOGY_APPROVAL, 🟠 CP_INTEGRATION_STRATEGY |
+| C5 | CP_RESEARCH_DIRECTION, CP_METHODOLOGY_APPROVAL | 🟠 CP_ANALYSIS_PLAN |
+| C6 | CP_METHODOLOGY_APPROVAL | (없음) |
+| C7 | CP_METHODOLOGY_APPROVAL | (없음) |
+| D1 | CP_METHODOLOGY_APPROVAL | 🟠 CP_SAMPLING_STRATEGY |
+| D2 | CP_METHODOLOGY_APPROVAL | 🟠 CP_SAMPLING_STRATEGY |
+| D4 | CP_METHODOLOGY_APPROVAL | 🔴 CP_METHODOLOGY_APPROVAL |
+| E1 | CP_METHODOLOGY_APPROVAL | 🟠 CP_ANALYSIS_PLAN |
+| E2 | CP_METHODOLOGY_APPROVAL | 🟠 CP_CODING_APPROACH, 🟠 CP_THEME_VALIDATION |
+| E3 | CP_METHODOLOGY_APPROVAL | 🟠 CP_INTEGRATION_STRATEGY |
+| E5 | CP_METHODOLOGY_APPROVAL | (없음) |
+| G3 | (없음) | (없음) |
+| G5 | (없음) | 🟠 CP_HUMANIZATION_REVIEW |
+| G6 | CP_HUMANIZATION_REVIEW | 🟡 CP_HUMANIZATION_VERIFY |
+| H1 | CP_PARADIGM_SELECTION | 🔴 CP_METHODOLOGY_APPROVAL |
+| H2 | CP_PARADIGM_SELECTION | 🔴 CP_METHODOLOGY_APPROVAL |
+| I0 | (없음) | All SCH_* |
+| I1 | (없음) | 🔴 SCH_DATABASE_SELECTION |
+| I2 | SCH_DATABASE_SELECTION | 🔴 SCH_SCREENING_CRITERIA |
+| I3 | SCH_SCREENING_CRITERIA | 🟠 SCH_RAG_READINESS |
+
+### Checkpoint Dependency Order
+
+전제조건 해결 순서 (낮은 Level부터):
+
+```
+Level 0 (진입점): CP_RESEARCH_DIRECTION, CP_PARADIGM_SELECTION
+Level 1: CP_THEORY_SELECTION, CP_METHODOLOGY_APPROVAL
+Level 2: CP_ANALYSIS_PLAN, CP_SCREENING_CRITERIA, CP_SAMPLING_STRATEGY, CP_CODING_APPROACH, CP_THEME_VALIDATION, CP_INTEGRATION_STRATEGY, CP_QUALITY_REVIEW
+Level 3: SCH_DATABASE_SELECTION, CP_HUMANIZATION_REVIEW, CP_VS_001, CP_VS_002, CP_VS_003
+Level 4: SCH_SCREENING_CRITERIA, CP_HUMANIZATION_VERIFY
+Level 5: SCH_RAG_READINESS
 ```
 
 ---
@@ -640,6 +733,19 @@ Humanization Pipeline:
     → diverga:g6 (humanize)
     → diverga:f5 (verify)
 ```
+
+### ⚠️ Parallel Execution Prerequisite Gate
+
+병렬 그룹 실행 전 반드시:
+1. 그룹 내 모든 에이전트의 prerequisites 합집합 확인
+2. 미완료 전제조건은 AskUserQuestion으로 먼저 해결
+3. 모든 전제조건 통과 후에만 병렬 실행 시작
+
+예시: Group 2 (B1 + B2 + B3) 실행 시
+  → B1 requires CP_RESEARCH_DIRECTION
+  → B2 requires CP_RESEARCH_DIRECTION
+  → Union: {CP_RESEARCH_DIRECTION}
+  → AskUserQuestion으로 확인 후 병렬 실행
 
 ### Example Auto-Trigger
 

@@ -52,7 +52,7 @@ ${colors.dim}    ─────────────────────
  */
 export const PLUGIN_CONFIG = {
   name: 'diverga',
-  version: '8.0.1',
+  version: '8.1.0',
   description: 'Research Coordinator - Multi-agent system for social science research',
 };
 

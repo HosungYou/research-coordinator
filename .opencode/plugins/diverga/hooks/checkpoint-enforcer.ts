@@ -191,3 +191,95 @@ export function resetCheckpoint(checkpointId: string, context: PluginContext): v
     cp => cp !== checkpointId
   );
 }
+
+/**
+ * Agent prerequisites mapping
+ * Maps agent IDs to checkpoint IDs that must be completed before the agent can start
+ */
+export const AGENT_PREREQUISITES: Record<string, string[]> = {
+  'A1': [],
+  'A2': ['CP_RESEARCH_DIRECTION'],
+  'A3': ['CP_RESEARCH_DIRECTION'],
+  'A4': [],
+  'A5': [],
+  'A6': ['CP_RESEARCH_DIRECTION'],
+  'B1': ['CP_RESEARCH_DIRECTION'],
+  'B2': ['CP_RESEARCH_DIRECTION'],
+  'B3': [],
+  'B4': [],
+  'B5': [],
+  'C1': ['CP_PARADIGM_SELECTION', 'CP_RESEARCH_DIRECTION'],
+  'C2': ['CP_PARADIGM_SELECTION', 'CP_RESEARCH_DIRECTION'],
+  'C3': ['CP_PARADIGM_SELECTION', 'CP_RESEARCH_DIRECTION'],
+  'C5': ['CP_RESEARCH_DIRECTION', 'CP_METHODOLOGY_APPROVAL'],
+  'C6': ['CP_METHODOLOGY_APPROVAL'],
+  'C7': ['CP_METHODOLOGY_APPROVAL'],
+  'D1': ['CP_METHODOLOGY_APPROVAL'],
+  'D2': ['CP_METHODOLOGY_APPROVAL'],
+  'D4': ['CP_METHODOLOGY_APPROVAL'],
+  'E1': ['CP_METHODOLOGY_APPROVAL'],
+  'E2': ['CP_METHODOLOGY_APPROVAL'],
+  'E3': ['CP_METHODOLOGY_APPROVAL'],
+  'E5': ['CP_METHODOLOGY_APPROVAL'],
+  'G3': [],
+  'G5': [],
+  'G6': ['CP_HUMANIZATION_REVIEW'],
+  'H1': ['CP_PARADIGM_SELECTION'],
+  'H2': ['CP_PARADIGM_SELECTION'],
+  'I0': [],
+  'I1': [],
+  'I2': ['SCH_DATABASE_SELECTION'],
+  'I3': ['SCH_SCREENING_CRITERIA'],
+};
+
+/**
+ * Checkpoint dependency order for sorting prerequisites
+ */
+const CHECKPOINT_DEPENDENCY_ORDER: string[][] = [
+  // Level 0 (entry points)
+  ['CP_RESEARCH_DIRECTION', 'CP_PARADIGM_SELECTION'],
+  // Level 1
+  ['CP_THEORY_SELECTION', 'CP_METHODOLOGY_APPROVAL'],
+  // Level 2
+  ['CP_ANALYSIS_PLAN', 'CP_SCREENING_CRITERIA', 'CP_SAMPLING_STRATEGY', 'CP_CODING_APPROACH', 'CP_THEME_VALIDATION', 'CP_INTEGRATION_STRATEGY', 'CP_QUALITY_REVIEW'],
+  // Level 3
+  ['SCH_DATABASE_SELECTION', 'CP_HUMANIZATION_REVIEW', 'CP_VS_001', 'CP_VS_002', 'CP_VS_003'],
+  // Level 4
+  ['SCH_SCREENING_CRITERIA', 'CP_HUMANIZATION_VERIFY'],
+  // Level 5
+  ['SCH_RAG_READINESS'],
+];
+
+/**
+ * Get dependency level for a checkpoint
+ */
+function getCheckpointLevel(checkpointId: string): number {
+  for (let level = 0; level < CHECKPOINT_DEPENDENCY_ORDER.length; level++) {
+    if (CHECKPOINT_DEPENDENCY_ORDER[level].includes(checkpointId)) {
+      return level;
+    }
+  }
+  return 999; // Unknown checkpoint, sort last
+}
+
+/**
+ * Sort checkpoints by dependency order
+ */
+function sortByDependencyOrder(checkpointIds: string[]): string[] {
+  return [...checkpointIds].sort((a, b) => getCheckpointLevel(a) - getCheckpointLevel(b));
+}
+
+/**
+ * Collect union of prerequisites for multiple agents
+ * Used when multiple agents are triggered simultaneously
+ */
+export function collectPrerequisites(agentIds: string[]): string[] {
+  const union = new Set<string>();
+  for (const id of agentIds) {
+    const prereqs = AGENT_PREREQUISITES[id] || [];
+    for (const prereq of prereqs) {
+      union.add(prereq);
+    }
+  }
+  return sortByDependencyOrder([...union]);
+}

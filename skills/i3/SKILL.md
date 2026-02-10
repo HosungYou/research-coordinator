@@ -5,7 +5,7 @@ description: |
   Handles PDF download, text extraction, chunking, and vector database creation
   Use when: building RAG, creating vector database, downloading PDFs, embedding documents
   Triggers: build RAG, create vector database, download PDFs, embed documents
-version: "8.0.1"
+version: "8.1.0"
 ---
 
 # I3-RAGBuilder

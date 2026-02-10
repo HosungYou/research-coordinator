@@ -24,6 +24,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['research planning', 'proposal writing'],
     },
     checkpoints: ['CP_RESEARCH_DIRECTION', 'CP_VS_001', 'CP_VS_003'],
+    prerequisites: [],
   },
   A2: {
     id: 'A2',
@@ -39,6 +40,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['theory development', 'framework design'],
     },
     checkpoints: ['CP_THEORY_SELECTION', 'CP_VS_001', 'CP_VS_002', 'CP_VS_003'],
+    prerequisites: ['CP_RESEARCH_DIRECTION'],
   },
   A3: {
     id: 'A3',
@@ -54,6 +56,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['research review', 'stress testing'],
     },
     checkpoints: ['CP_VS_001', 'CP_VS_003'],
+    prerequisites: ['CP_RESEARCH_DIRECTION'],
   },
   A4: {
     id: 'A4',
@@ -69,6 +72,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['ethics review', 'IRB preparation'],
     },
     checkpoints: [],
+    prerequisites: [],
   },
   A5: {
     id: 'A5',
@@ -84,6 +88,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['research philosophy', 'paradigm selection'],
     },
     checkpoints: ['CP_PARADIGM_SELECTION'],
+    prerequisites: [],
   },
   A6: {
     id: 'A6',
@@ -99,6 +104,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['visualization', 'model design'],
     },
     checkpoints: ['CP_VISUALIZATION_PREFERENCE'],
+    prerequisites: ['CP_RESEARCH_DIRECTION'],
   },
 
   // Category B: Literature & Evidence
@@ -116,6 +122,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['literature search', 'review methodology'],
     },
     checkpoints: ['CP_SCREENING_CRITERIA', 'CP_SEARCH_STRATEGY', 'CP_VS_001'],
+    prerequisites: ['CP_RESEARCH_DIRECTION'],
   },
   B2: {
     id: 'B2',
@@ -131,6 +138,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['quality assessment', 'evidence grading'],
     },
     checkpoints: ['CP_QUALITY_REVIEW'],
+    prerequisites: ['CP_RESEARCH_DIRECTION'],
   },
   B3: {
     id: 'B3',
@@ -146,6 +154,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['effect size calculation', 'data extraction'],
     },
     checkpoints: [],
+    prerequisites: [],
   },
   B4: {
     id: 'B4',
@@ -161,6 +170,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['trend tracking', 'current literature'],
     },
     checkpoints: [],
+    prerequisites: [],
   },
 
   // Category C: Study Design
@@ -178,6 +188,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['quantitative research', 'experimental design'],
     },
     checkpoints: ['CP_METHODOLOGY_APPROVAL', 'CP_VS_001', 'CP_VS_003'],
+    prerequisites: ['CP_PARADIGM_SELECTION', 'CP_RESEARCH_DIRECTION'],
   },
   C2: {
     id: 'C2',
@@ -193,6 +204,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['qualitative research', 'methodology selection'],
     },
     checkpoints: ['CP_PARADIGM_SELECTION', 'CP_METHODOLOGY_APPROVAL', 'CP_VS_001'],
+    prerequisites: ['CP_PARADIGM_SELECTION', 'CP_RESEARCH_DIRECTION'],
   },
   C3: {
     id: 'C3',
@@ -208,6 +220,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['mixed methods', 'integration design'],
     },
     checkpoints: ['CP_PARADIGM_SELECTION', 'CP_METHODOLOGY_APPROVAL', 'CP_INTEGRATION_STRATEGY'],
+    prerequisites: ['CP_PARADIGM_SELECTION', 'CP_RESEARCH_DIRECTION'],
   },
   C5: {
     id: 'C5',
@@ -223,6 +236,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['meta-analysis', 'effect pooling'],
     },
     checkpoints: ['CP_METHODOLOGY_APPROVAL', 'CP_ANALYSIS_PLAN'],
+    prerequisites: ['CP_RESEARCH_DIRECTION', 'CP_METHODOLOGY_APPROVAL'],
   },
 
   // Category E: Analysis
@@ -240,6 +254,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['quantitative analysis', 'statistical methods'],
     },
     checkpoints: ['CP_ANALYSIS_PLAN'],
+    prerequisites: ['CP_METHODOLOGY_APPROVAL'],
   },
   E2: {
     id: 'E2',
@@ -255,6 +270,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['qualitative analysis', 'coding process'],
     },
     checkpoints: ['CP_CODING_APPROACH', 'CP_THEME_VALIDATION'],
+    prerequisites: ['CP_METHODOLOGY_APPROVAL'],
   },
   E3: {
     id: 'E3',
@@ -270,6 +286,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['mixed methods integration', 'data merging'],
     },
     checkpoints: ['CP_INTEGRATION_STRATEGY'],
+    prerequisites: ['CP_METHODOLOGY_APPROVAL'],
   },
   E4: {
     id: 'E4',
@@ -285,6 +302,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['code generation', 'analysis scripts'],
     },
     checkpoints: [],
+    prerequisites: [],
   },
 
   // Category G: Publication
@@ -302,6 +320,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['peer review', 'revision response'],
     },
     checkpoints: [],
+    prerequisites: [],
   },
 
   // Category H: Specialized
@@ -319,6 +338,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['ethnographic research', 'cultural studies'],
     },
     checkpoints: ['CP_METHODOLOGY_APPROVAL'],
+    prerequisites: ['CP_PARADIGM_SELECTION'],
   },
   H2: {
     id: 'H2',
@@ -334,6 +354,7 @@ export const AGENT_REGISTRY: Record<string, AgentInfo> = {
       context: ['action research', 'participatory research'],
     },
     checkpoints: ['CP_METHODOLOGY_APPROVAL'],
+    prerequisites: ['CP_PARADIGM_SELECTION'],
   },
 };
 

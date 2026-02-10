@@ -11,7 +11,64 @@ description: |
   conceptual framework, visualization, systematic review, qualitative, phenomenology, grounded theory,
   thematic analysis, mixed methods, interview, focus group, ethnography, action research,
   paper retrieval, AI screening, RAG builder, humanization, AI pattern detection
-version: "8.0.1"
+version: "8.1.0"
+---
+
+## MANDATORY: Checkpoint Enforcement Rules
+
+### 단일 에이전트 호출 시:
+1. Agent Prerequisite Map 확인 (CLAUDE.md 참조)
+2. 대화 이력에서 prerequisite 완료 여부 확인
+3. 미완료 → AskUserQuestion 도구로 해당 결정 먼저 요청
+4. REQUIRED 전제조건은 절대 스킵 불가 (사용자가 "건너뛰자"해도 거부)
+5. 모든 전제조건 통과 후 에이전트 작업 시작
+
+### 다중 에이전트 동시 호출 시 (핵심 추가사항):
+1. 모든 트리거된 에이전트의 prerequisites를 합집합으로 수집
+2. Checkpoint Dependency Order에 따라 정렬 (Level 0 → Level 5)
+3. 각 전제조건을 AskUserQuestion 도구로 순서대로 질문
+4. 중복 체크포인트는 한 번만 질문
+5. 모든 전제조건 해결 후 에이전트들을 병렬 실행
+6. 각 에이전트 실행 중 자체 체크포인트도 AskUserQuestion 필수
+
+### 모든 체크포인트에서 (🔴🟠🟡):
+1. 반드시 AskUserQuestion 도구 사용 (텍스트 질문 금지)
+2. `.claude/references/checkpoint-templates.md`의 파라미터 사용
+3. 응답 받을 때까지 STOP and WAIT
+4. 결정 내용을 대화 컨텍스트에 기록
+
+### 자기 검증 (에이전트 작업 완료 전):
+- "Own Checkpoints"를 모두 트리거했는지 자가 확인
+- 미트리거 체크포인트가 있으면 작업 마무리 전 반드시 호출
+
+## Multi-Agent Dispatch Protocol
+
+자연어가 다수 에이전트를 동시 트리거할 때의 처리 절차:
+
+### Step 1: 에이전트 식별
+auto-trigger 키워드 매칭으로 모든 관련 에이전트 식별
+
+### Step 2: 전제조건 합집합 수집
+모든 에이전트의 prerequisites를 합집합으로 모음. 중복 제거.
+
+### Step 3: 의존성 순서 정렬
+```
+Level 0: CP_RESEARCH_DIRECTION, CP_PARADIGM_SELECTION
+Level 1: CP_THEORY_SELECTION, CP_METHODOLOGY_APPROVAL
+Level 2: CP_ANALYSIS_PLAN, CP_SCREENING_CRITERIA, CP_SAMPLING_STRATEGY, ...
+Level 3: SCH_DATABASE_SELECTION, CP_HUMANIZATION_REVIEW, CP_VS_001, ...
+Level 4: SCH_SCREENING_CRITERIA, CP_HUMANIZATION_VERIFY
+Level 5: SCH_RAG_READINESS
+```
+
+### Step 4: 순차 AskUserQuestion 호출
+정렬된 순서대로 각 전제조건에 대해 AskUserQuestion 도구 호출.
+한 번에 최대 4개 질문 가능 (AskUserQuestion의 questions 배열 활용).
+
+### Step 5: 에이전트 병렬 실행
+모든 전제조건 통과 후 Task 도구로 에이전트들 병렬 실행.
+각 에이전트는 자체 Own Checkpoints를 실행 중 트리거.
+
 ---
 
 # Research Coordinator v6.7.0 - Human-Centered Edition
