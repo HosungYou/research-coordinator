@@ -5,7 +5,7 @@ description: |
   44 specialized agents for social science research.
   VS methodology prevents mode collapse. Human checkpoints enforce human-in-the-loop decisions.
   Triggers: /diverga, diverga dashboard, diverga status
-version: "8.1.0"
+version: "8.2.0"
 ---
 
 # Diverga Dashboard

@@ -5,7 +5,7 @@ description: |
   with checkpoint auto-trigger and cross-session continuity.
   Triggers: memory, remember, context, recall, checkpoint, decision, persist,
   기억, 맥락, 세션, 체크포인트
-version: "8.1.0"
+version: "8.2.0"
 ---
 
 # Diverga Memory System v7.0
@@ -39,6 +39,32 @@ Human-centered research context persistence with:
 | `/diverga:memory decision list` | List decisions |
 | `/diverga:memory archive [STAGE]` | Archive stage |
 | `/diverga:memory migrate` | Run migration |
+
+## Priority Context (v8.2 — Compression Resilience)
+
+### MCP Tools for Priority Context
+
+| Command | MCP Tool | Description |
+|---------|----------|-------------|
+| Read priority | `diverga_priority_read()` | Read 500-char context summary |
+| Write priority | `diverga_priority_write(context)` | Update context summary |
+| Full status | `diverga_project_status()` | Project state + checkpoints + decisions |
+| Check prereqs | `diverga_check_prerequisites(agent_id)` | Verify agent can proceed |
+| Record decision | `diverga_mark_checkpoint(cp_id, decision, rationale)` | Record and auto-update priority |
+
+### Auto-Update Behavior
+
+Priority context is automatically updated when:
+- A checkpoint is marked via `diverga_mark_checkpoint()`
+- Format: `Project: {name} | Paradigm: {paradigm} | RQ: {question} | ✅/❌ checkpoints | Last: {decision}`
+- Maximum 500 characters, stored at `.research/priority-context.md`
+
+### Compression Recovery
+
+When context window is compressed:
+1. Call `diverga_priority_read()` to recover essential project context
+2. Call `diverga_checkpoint_status()` to see checkpoint state
+3. Call `diverga_project_status()` for full project details
 
 ## 3-Layer Context System
 

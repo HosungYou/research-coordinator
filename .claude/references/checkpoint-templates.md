@@ -381,10 +381,34 @@ When a checkpoint is reached, use the corresponding template below.
 
 ---
 
+## Override Refusal Template (v8.2)
+
+When a user requests to skip a REQUIRED (🔴) checkpoint, use this template:
+
+```json
+{
+  "questions": [{
+    "question": "이 체크포인트는 REQUIRED 등급입니다. 건너뛸 수 없습니다. / This checkpoint is REQUIRED and cannot be skipped. Please make a decision to proceed.",
+    "header": "Required",
+    "options": [
+      {"label": "Continue / 계속", "description": "Provide the required decision now"},
+      {"label": "Help / 도움", "description": "Get more information to make this decision"},
+      {"label": "Pause / 일시중지", "description": "Take a break and return to this later"}
+    ],
+    "multiSelect": false
+  }]
+}
+```
+
+**Rule**: REQUIRED checkpoints can NEVER be skipped, even if the user explicitly asks. Always present this template when a skip is requested.
+
+---
+
 ## Usage Notes
 
-1. **REQUIRED checkpoints**: MUST call AskUserQuestion. Cannot be skipped even if user asks.
+1. **REQUIRED checkpoints**: MUST call AskUserQuestion. Cannot be skipped even if user asks. Use Override Refusal Template if skip requested.
 2. **RECOMMENDED checkpoints**: SHOULD call AskUserQuestion. Can be skipped only if user explicitly declines.
 3. **OPTIONAL checkpoints**: MAY call AskUserQuestion. Defaults are acceptable.
 4. **Dynamic options**: For CP_THEORY_SELECTION and CP_VS_001, replace Direction A/B/C labels with actual VS alternatives generated during the agent's work.
 5. **Language**: Templates are bilingual (EN/KR). The agent should present in the user's preferred language.
+6. **MCP Integration (v8.2)**: After AskUserQuestion approval, call `diverga_mark_checkpoint(checkpoint_id, decision, rationale)` to record the decision.

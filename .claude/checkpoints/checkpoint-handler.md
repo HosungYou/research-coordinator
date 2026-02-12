@@ -32,23 +32,23 @@ When reaching a checkpoint:
 5. Proceed only after approval (for required)
 
 ## Checkpoint State Storage
-Location: `.claude/state/checkpoints.json`
+Location: `.research/checkpoints.yaml`
+
+**v8.2**: State is stored in `.research/` (project-level), not `.claude/state/` (plugin-level).
 
 Format:
-```json
-{
-  "session_id": "...",
-  "checkpoints": [
-    {
-      "id": "CP_RESEARCH_DIRECTION",
-      "timestamp": "2026-01-25T...",
-      "status": "approved",
-      "human_decision": "Approved research question B",
-      "agent": "A1-research-question-refiner"
-    }
-  ]
-}
+```yaml
+checkpoints:
+  active:
+    - checkpoint_id: CP_RESEARCH_DIRECTION
+      level: REQUIRED
+      status: completed
+      completed_at: "2026-01-25T..."
+      decision: "Approved research question B"
+      rationale: "Aligns with team expertise"
 ```
+
+**MCP Access**: Use `diverga_checkpoint_status()` to query programmatically.
 
 ## Checkpoint Presentation Format
 
@@ -87,7 +87,7 @@ Please respond with:
 
 ## Checkpoint Recording
 
-All checkpoint decisions are recorded in `.claude/state/checkpoints.json` with:
+All checkpoint decisions are recorded in `.research/checkpoints.yaml` and `.research/decision-log.yaml` with:
 - Timestamp of decision
 - Human's exact response
 - Checkpoint ID and associated agent
@@ -117,9 +117,9 @@ Users can override checkpoint behavior:
 
 ## v6.0 Changes
 
-| Before (v5.0) | After (v6.0) |
-|---------------|--------------|
-| Sisyphus could bypass checkpoints | All checkpoints enforced |
-| "agent OR checkpoint" (Iron Law) | "checkpoint THEN agent" |
-| State in `.omc/` | State in `.claude/` |
-| Numbered agents (01-21) | Category agents (A1-H2) |
+| Before (v5.0) | After (v6.0) | After (v8.2) |
+|---------------|--------------|--------------|
+| Sisyphus could bypass checkpoints | All checkpoints enforced | MCP runtime enforcement |
+| "agent OR checkpoint" (Iron Law) | "checkpoint THEN agent" | `diverga_check_prerequisites()` |
+| State in `.omc/` | State in `.claude/` | State in `.research/` |
+| Numbered agents (01-21) | Category agents (A1-H2) | Category agents (A1-I3, 44 total) |

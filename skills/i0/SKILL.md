@@ -6,28 +6,20 @@ description: |
   Delegates to specialized agents (I1, I2, I3) while enforcing human checkpoints
   Use when: conducting systematic reviews, building knowledge repositories, PRISMA automation
   Triggers: systematic review, PRISMA, literature review automation
-version: "8.1.0"
+version: "8.2.0"
 ---
 
-## ⛔ Checkpoint Protocol (EXECUTE BEFORE CORE TASK)
+## ⛔ Prerequisites (v8.2 — MCP Enforcement)
 
-### Prerequisites (반드시 완료 후 진행 - 스킵 불가)
-이 에이전트는 전제조건이 없습니다.
+No prerequisites required for this agent.
 
-### 동시 호출 시 주의사항
-이 에이전트가 다른 에이전트와 동시에 트리거되었다면:
-→ 모든 에이전트의 전제조건 합집합이 먼저 해결되어야 합니다
-→ research-coordinator가 전제조건 순서를 조율합니다
+### Checkpoints During Execution
+- 🔴 SCH_DATABASE_SELECTION → `diverga_mark_checkpoint("SCH_DATABASE_SELECTION", decision, rationale)`
+- 🔴 SCH_SCREENING_CRITERIA → `diverga_mark_checkpoint("SCH_SCREENING_CRITERIA", decision, rationale)`
+- 🟠 SCH_RAG_READINESS → `diverga_mark_checkpoint("SCH_RAG_READINESS", decision, rationale)`
 
-### 실행 중 체크포인트 (반드시 AskUserQuestion 도구 호출)
-이 에이전트 실행 중 다음 시점에서 반드시 AskUserQuestion 도구를 호출하세요:
-
-- 🔴 **SCH_DATABASE_SELECTION** - 데이터베이스 선택 시
-- 🔴 **SCH_SCREENING_CRITERIA** - 스크리닝 기준 승인 시
-- 🟠 **SCH_RAG_READINESS** - RAG 구축 준비 시
-- 🟡 **SCH_PRISMA_GENERATION** - PRISMA 다이어그램 생성 시
-
-참조: `.claude/references/checkpoint-templates.md`에서 각 체크포인트의 정확한 AskUserQuestion 파라미터를 확인하세요.
+### Fallback (MCP unavailable)
+Read `.research/decision-log.yaml` directly to verify prerequisites. Conversation history is last resort.
 
 ---
 

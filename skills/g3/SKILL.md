@@ -5,7 +5,7 @@ description: |
   Light VS applied: Avoids defensive responses + presents constructive dialogue strategies
   Use when: responding to reviewers, revising manuscripts, handling rejections
   Triggers: reviewer, review comments, revision request, response letter, revision
-version: "8.1.0"
+version: "8.2.0"
 ---
 
 # Peer Review Strategist

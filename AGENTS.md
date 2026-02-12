@@ -118,7 +118,7 @@ Diverga/
 
 ### Checkpoint State Storage
 
-Location: `.claude/state/checkpoints.json`
+Location: `.research/checkpoints.yaml` (v8.2+), `.research/decision-log.yaml`
 
 ```json
 {

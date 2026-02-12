@@ -5,7 +5,20 @@ description: |
   Handles PDF download, text extraction, chunking, and vector database creation
   Use when: building RAG, creating vector database, downloading PDFs, embedding documents
   Triggers: build RAG, create vector database, download PDFs, embed documents
-version: "8.1.0"
+version: "8.2.0"
+---
+
+## ⛔ Prerequisites (v8.2 — MCP Enforcement)
+
+`diverga_check_prerequisites("i3")` → must return `approved: true`
+If not approved → AskUserQuestion for each missing checkpoint (see `.claude/references/checkpoint-templates.md`)
+
+### Checkpoints During Execution
+- 🟠 SCH_RAG_READINESS → `diverga_mark_checkpoint("SCH_RAG_READINESS", decision, rationale)`
+
+### Fallback (MCP unavailable)
+Read `.research/decision-log.yaml` directly to verify prerequisites. Conversation history is last resort.
+
 ---
 
 # I3-RAGBuilder

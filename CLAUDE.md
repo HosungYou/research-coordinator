@@ -1,9 +1,10 @@
 # CLAUDE.md
 
-# Diverga v8.1.0 (Checkpoint Enforcement Strengthening)
+# Diverga v8.2.0 (Checkpoint Enforcement Strengthening)
 
 **Beyond Modal: AI Research Assistant That Thinks Creatively**
 
+**v8.2.0**: MCP Runtime Checkpoint Enforcement - MCP server (7 tools), SKILL.md simplification (675 lines saved), state path unification, Priority Context
 **v8.1.0**: Checkpoint Enforcement Strengthening - Mandatory AskUserQuestion at all checkpoints, Agent Prerequisite Map, multi-agent coordination
 **v8.0.1-patch3**: 8-Dimension Diagnostic Sweep - Category I registration fix, version sync, lib/ fixes
 **v8.0.1**: Installation Bug Fixes - Fixed install script path corruption, skills copy instead of symlink
@@ -270,9 +271,27 @@ REQUIRED 체크포인트는 사용자 요청으로도 건너뛸 수 없습니다
   → AskUserQuestion: CP_METHODOLOGY_APPROVAL 다음
   → 모든 통과 후 C5 + B3 병렬 실행
 
-### Why Prompt-Level Enforcement
+### Why Prompt-Level Enforcement (v8.1) + MCP Enforcement (v8.2)
 Claude Code shell hooks cannot invoke AskUserQuestion tool directly (shell commands only).
-Therefore, CLAUDE.md and SKILL.md prompt-level instructions are the primary enforcement mechanism.
+CLAUDE.md and SKILL.md prompt-level instructions remain the primary enforcement mechanism.
+
+**v8.2 Enhancement**: MCP server (`diverga`) provides runtime verification tools.
+Agents call `diverga_check_prerequisites(agent_id)` before execution and
+`diverga_mark_checkpoint(cp_id, decision, rationale)` to record decisions.
+State is stored in `.research/` (not `.claude/state/`).
+
+### Rule 5: Override Refusal
+사용자가 REQUIRED 체크포인트 스킵 요청 시:
+→ AskUserQuestion으로 Override Refusal Template 제시 (텍스트 거부 아님)
+→ REQUIRED는 어떤 상황에서도 스킵 불가
+→ 참조: `.claude/references/checkpoint-templates.md` → Override Refusal Template
+
+### Rule 6: MCP-First Verification (v8.2)
+에이전트 실행 전: `diverga_check_prerequisites(agent_id)` 호출
+→ `approved: true` → 에이전트 실행 진행
+→ `approved: false` → `missing` 배열의 각 체크포인트에 대해 AskUserQuestion 호출
+→ MCP 미가용 시: `.research/decision-log.yaml` 직접 읽기
+→ 대화 이력은 최후 수단 (세션 간 유지 안 됨)
 
 ### Agent Prerequisite Map
 
@@ -800,6 +819,8 @@ The Memory System automatically captures context at critical lifecycle events:
 
 ## Version History
 
+- **v8.2.0**: MCP Runtime Checkpoint Enforcement - MCP server (7 tools), SKILL.md simplification (675 lines saved), state path unification (.research/), Priority Context, lib/memory removed
+- **v8.1.0**: Checkpoint Enforcement Strengthening - Mandatory AskUserQuestion, Agent Prerequisite Map, multi-agent coordination
 - **v8.0.1**: Installation Bug Fixes - Fixed install script path corruption, skills copy instead of symlink
 - **v8.0.0**: Project Visibility Enhancement - Independent HUD statusline, simplified 3-step setup, natural language project start, docs/ auto-generation
 - **v7.0.0**: Memory System v2 - 3-layer context system, checkpoint auto-trigger, cross-session persistence, decision audit trail

@@ -5,31 +5,19 @@ description: |
   Enhanced VS 3-Phase process: Avoids automatic tool application, delivers research-specific evaluation strategies
   Use when: appraising study quality, assessing risk of bias, grading evidence
   Triggers: quality appraisal, RoB, GRADE, Newcastle-Ottawa, risk of bias, methodological quality
-version: "8.1.0"
+version: "8.2.0"
 ---
 
-## ⛔ Checkpoint Protocol (EXECUTE BEFORE CORE TASK)
+## ⛔ Prerequisites (v8.2 — MCP Enforcement)
 
-### Prerequisites (반드시 완료 후 진행 - 스킵 불가)
-이 에이전트를 실행하기 전에 다음 체크포인트가 대화 내에서 명시적으로 승인되었는지 확인하세요:
+`diverga_check_prerequisites("b2")` → must return `approved: true`
+If not approved → AskUserQuestion for each missing checkpoint (see `.claude/references/checkpoint-templates.md`)
 
-- 🔴 CP_RESEARCH_DIRECTION
+### Checkpoints During Execution
+- 🟠 CP_QUALITY_REVIEW → `diverga_mark_checkpoint("CP_QUALITY_REVIEW", decision, rationale)`
 
-대화 이력에서 위 체크포인트의 승인이 확인되지 않으면:
-→ AskUserQuestion 도구로 해당 체크포인트부터 순서대로 질문
-→ 모든 전제조건이 승인될 때까지 본 에이전트의 핵심 작업을 시작하지 마세요
-
-### 동시 호출 시 주의사항
-이 에이전트가 다른 에이전트와 동시에 트리거되었다면:
-→ 모든 에이전트의 전제조건 합집합이 먼저 해결되어야 합니다
-→ research-coordinator가 전제조건 순서를 조율합니다
-
-### 실행 중 체크포인트 (반드시 AskUserQuestion 도구 호출)
-이 에이전트 실행 중 다음 시점에서 반드시 AskUserQuestion 도구를 호출하세요:
-
-- 🟠 CP_QUALITY_REVIEW - 품질 평가 완료 시
-
-참조: `.claude/references/checkpoint-templates.md`에서 각 체크포인트의 정확한 AskUserQuestion 파라미터를 확인하세요.
+### Fallback (MCP unavailable)
+Read `.research/decision-log.yaml` directly to verify prerequisites. Conversation history is last resort.
 
 ---
 

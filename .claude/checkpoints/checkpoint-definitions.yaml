@@ -107,6 +107,57 @@ checkpoints:
     human_action: "Choose Code-First, Nanobanana, or Hybrid"
     default_if_skipped: "Hybrid"
 
+  # ============================================
+  # ADDED in v8.2 - Previously missing definitions
+  # ============================================
+  CP_SAMPLING_STRATEGY:
+    level: recommended
+    icon: "🟠"
+    description: "Sampling strategy approval"
+    applies_to: [D1-sampling-strategy-advisor, D2-interview-focus-group-specialist]
+    human_action: "Review and approve sampling strategy"
+    can_auto_proceed: false
+
+  CP_CODING_APPROACH:
+    level: recommended
+    icon: "🟠"
+    description: "Qualitative coding approach selection"
+    applies_to: [E2-qualitative-coding-specialist]
+    human_action: "Select coding approach (deductive/inductive/hybrid)"
+    can_auto_proceed: false
+
+  CP_THEME_VALIDATION:
+    level: recommended
+    icon: "🟠"
+    description: "Theme validation and approval"
+    applies_to: [E2-qualitative-coding-specialist]
+    human_action: "Validate identified themes"
+    can_auto_proceed: false
+
+  CP_HUMANIZATION_REVIEW:
+    level: recommended
+    icon: "🟠"
+    description: "AI pattern analysis review"
+    applies_to: [G5-academic-style-auditor]
+    human_action: "Review AI pattern detection results"
+    can_auto_proceed: false
+
+  CP_HUMANIZATION_VERIFY:
+    level: optional
+    icon: "🟡"
+    description: "Humanization result verification"
+    applies_to: [G6-academic-style-humanizer]
+    human_action: "Verify humanized text quality"
+    default_if_skipped: "Accept"
+
+  CP_SEARCH_STRATEGY:
+    level: optional
+    icon: "🟡"
+    description: "Search strategy confirmation"
+    applies_to: [B1-systematic-literature-scout]
+    human_action: "Confirm search strategy"
+    default_if_skipped: "Approve"
+
 # Checkpoint validation rules
 validation:
   required_checkpoints_must_pass: true

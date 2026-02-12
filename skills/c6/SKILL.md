@@ -4,7 +4,19 @@ description: |
   Data Integrity Guard - Data completeness validation, Hedges g calculation, SD recovery.
   Service provider to C5, handles extraction from PDFs and data validation.
   Triggers: data extraction, PDF extract, data completeness, SD recovery, Hedges g calculation
-version: "8.1.0"
+version: "8.2.0"
+---
+
+## ⛔ Prerequisites (v8.2 — MCP Enforcement)
+
+`diverga_check_prerequisites("c6")` → must return `approved: true`
+If not approved → AskUserQuestion for each missing checkpoint (see `.claude/references/checkpoint-templates.md`)
+
+No checkpoints during execution.
+
+### Fallback (MCP unavailable)
+Read `.research/decision-log.yaml` directly to verify prerequisites. Conversation history is last resort.
+
 ---
 
 # C6-DataIntegrityGuard

@@ -4,7 +4,19 @@ description: |
   Error Prevention Engine - Pattern detection, anomaly alerts, error prevention for meta-analysis.
   Advisory role to C5, provides warnings and recommendations.
   Triggers: error prevention, validation, data check, anomaly detection, pattern detection
-version: "8.1.0"
+version: "8.2.0"
+---
+
+## ⛔ Prerequisites (v8.2 — MCP Enforcement)
+
+`diverga_check_prerequisites("c7")` → must return `approved: true`
+If not approved → AskUserQuestion for each missing checkpoint (see `.claude/references/checkpoint-templates.md`)
+
+No checkpoints during execution.
+
+### Fallback (MCP unavailable)
+Read `.research/decision-log.yaml` directly to verify prerequisites. Conversation history is last resort.
+
 ---
 
 # C7-ErrorPreventionEngine

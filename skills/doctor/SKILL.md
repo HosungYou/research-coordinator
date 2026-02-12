@@ -4,7 +4,7 @@ description: |
   System diagnostics and health checks for Diverga plugin.
   OpenClaw-style Check-Report-Fix pattern with 5-layer diagnostics.
   Triggers: /diverga:doctor, diverga doctor, system check, diagnose, 진단
-version: "8.1.0"
+version: "8.2.0"
 ---
 
 # Diverga Doctor
@@ -75,7 +75,7 @@ SKILL SYNC
 
 **Deep validation of diverga-config.json:**
 - Read `/Users/hosung/.claude/plugins/diverga/config/diverga-config.json`
-- Check `version` field matches "8.1.0"
+- Check `version` field matches "8.2.0"
 - Check `human_checkpoints` object exists and has `enabled` (boolean) and `required` (array)
 - Check `language` is one of: "en", "ko", "auto"
 - Check `model_routing` has `high`, `medium`, `low` keys if present
@@ -90,7 +90,7 @@ CONFIG VALIDITY
 ```
 
 **Fix if issues found:**
-- Version mismatch: "Config version X.Y.Z doesn't match plugin 8.1.0. Run: /diverga:setup to update"
+- Version mismatch: "Config version X.Y.Z doesn't match plugin 8.2.0. Run: /diverga:setup to update"
 - Checkpoints malformed: "Run: /diverga:setup to reconfigure checkpoints"
 
 ### Layer 4: API Keys

@@ -7,6 +7,82 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [8.2.0] - 2026-02-12
+
+### 🔧 Checkpoint Enforcement Strengthening Release
+
+> MCP runtime verification, SKILL.md simplification, memory system optimization
+
+### Added
+
+#### MCP Checkpoint Server
+- **`mcp/checkpoint-server.js`**: Node.js MCP server with 7 tools for runtime checkpoint verification
+- **`mcp/agent-prerequisite-map.json`**: 44-agent prerequisite map in JSON format
+- **`mcp/package.json`**: Dependencies (@modelcontextprotocol/sdk, js-yaml)
+- **`.mcp.json`**: MCP server registration (auto-loaded via plugin.json)
+
+#### MCP Tools
+| Tool | Description |
+|------|-------------|
+| `diverga_check_prerequisites` | Verify agent prerequisites before execution |
+| `diverga_mark_checkpoint` | Record checkpoint decision with rationale |
+| `diverga_checkpoint_status` | Full checkpoint overview (passed/pending/blocked) |
+| `diverga_priority_read` | Read compression-resilient priority context |
+| `diverga_priority_write` | Update priority context (max 500 chars) |
+| `diverga_project_status` | Full project status with research context |
+| `diverga_decision_add` | Record research decisions to audit trail |
+
+#### New Enforcement Rules
+- **Rule 5: Override Refusal** — REQUIRED checkpoints cannot be skipped; AskUserQuestion template presented instead of text refusal
+- **Rule 6: MCP-First Verification** — `diverga_check_prerequisites(agent_id)` before execution, fallback to `.research/decision-log.yaml`
+
+#### New Checkpoint Definitions (6)
+- `CP_SAMPLING_STRATEGY` (🟠 Recommended)
+- `CP_CODING_APPROACH` (🟠 Recommended)
+- `CP_THEME_VALIDATION` (🟠 Recommended)
+- `CP_HUMANIZATION_REVIEW` (🟠 Recommended)
+- `CP_HUMANIZATION_VERIFY` (🟡 Optional)
+- `CP_SEARCH_STRATEGY` (🟡 Optional)
+
+#### Priority Context (Compression Resilience)
+- Auto-maintained 500-char summary at `.research/priority-context.md`
+- Survives context window compression
+- Auto-updated on checkpoint mark
+
+### Changed
+
+#### SKILL.md Checkpoint Simplification (28 agents)
+- Replaced ~35-line checkpoint sections with ~8-line MCP-based sections
+- **675 lines saved** across 28 SKILL.md files
+- New format uses `diverga_check_prerequisites()` and `diverga_mark_checkpoint()` calls
+- Fallback to `.research/decision-log.yaml` when MCP unavailable
+
+#### State Path Unification
+- **Before**: `.claude/state/checkpoints.json`
+- **After**: `.research/checkpoints.yaml`
+- All checkpoint state unified under `.research/` directory
+
+#### Plugin Configuration
+- `plugin.json`: Added `mcpServers` field, version bumped to 8.2.0
+- `checkpoint-handler.md`: State path updated, v8.2 column added
+- `checkpoint-definitions.yaml`: 6 missing definitions added
+- `checkpoint-templates.md`: Override Refusal template added
+
+### Removed
+
+#### lib/memory/ (104 files)
+- Python memory system was design reference only (never executed at runtime)
+- Replaced by MCP server implementation (3 files, ~200 lines Node.js)
+- No external imports existed — safe removal confirmed
+
+### Migration Notes
+
+- `.claude/state/checkpoints.json` → `.research/checkpoints.yaml` (auto-migrated)
+- MCP server auto-loads via `plugin.json` → `.mcp.json` — no user action required
+- Run `cd mcp && npm install` if installing from source
+
+---
+
 ## [6.0.1] - 2026-01-25
 
 ### 🏗️ Agent Restructuring Release
@@ -76,7 +152,7 @@ Three checkpoint levels with mandatory enforcement:
 - `CP_METHODOLOGY_APPROVAL`: Design complete with detailed review
 
 #### Checkpoint State Storage
-- Location: `.claude/state/checkpoints.json`
+- Location: `.research/checkpoints.yaml` (migrated from `.claude/state/checkpoints.json` in v8.2)
 - Tracks all human decisions with timestamps
 - Creates audit trail for research process
 
@@ -315,6 +391,8 @@ All 20 agents upgraded to v3.0:
 
 | Version | Date | Key Changes |
 |---------|------|-------------|
+| **8.2.0** | 2026-02-12 | MCP runtime checkpoint enforcement, SKILL.md simplification, state unification |
+| 8.1.0 | 2026-02-10 | Checkpoint enforcement strengthening, Agent Prerequisite Map |
 | **6.0.1** | 2026-01-25 | Agent restructuring to category-based naming (A1-H2), 33 agents |
 | **6.0.0** | 2026-01-25 | **Human-Centered Edition**: Removed Sisyphus/OMC modes, mandatory checkpoints |
 | 5.0.0 | 2025-01-25 | Sisyphus protocol, paradigm detection, 27 agents |

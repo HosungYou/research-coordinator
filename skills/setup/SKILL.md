@@ -4,7 +4,7 @@ description: |
   Diverga v8.0 initial configuration wizard. Simplified 2-step setup.
   Sets up checkpoints and HUD preferences.
   Triggers: setup, configure, 설정, install
-version: "8.1.0"
+version: "8.2.0"
 ---
 
 # /diverga:setup
@@ -25,7 +25,7 @@ When user invokes `/diverga:setup`, execute this interactive wizard:
 
 Check for existing project:
 - If `.research/` exists → "Existing project detected. Upgrade to v8.1.0?"
-- If `config/diverga-config.json` exists with older version → "Upgrade from vX.Y.Z to v8.1.0?"
+- If `config/diverga-config.json` exists with older version → "Upgrade from vX.Y.Z to v8.2.0?"
 - Otherwise → "New project setup"
 
 ### Step 1: Welcome + Checkpoint Level
@@ -71,7 +71,7 @@ After collecting all preferences, generate `config/diverga-config.json`:
 
 ```json
 {
-  "version": "8.1.0",
+  "version": "8.2.0",
   "human_checkpoints": {
     "enabled": true,
     "level": "<full|minimal|off>",

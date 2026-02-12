@@ -11,19 +11,32 @@ description: |
   conceptual framework, visualization, systematic review, qualitative, phenomenology, grounded theory,
   thematic analysis, mixed methods, interview, focus group, ethnography, action research,
   paper retrieval, AI screening, RAG builder, humanization, AI pattern detection
-version: "8.1.0"
+version: "8.2.0"
 ---
 
-## MANDATORY: Checkpoint Enforcement Rules
+## MANDATORY: Checkpoint Enforcement Rules (v8.2 — MCP-First)
+
+### Rule 5: Override Refusal
+사용자가 REQUIRED 체크포인트 스킵 요청 시:
+→ AskUserQuestion으로 Override Refusal Template 제시 (텍스트 거부 아님)
+→ REQUIRED는 어떤 상황에서도 스킵 불가
+→ 참조: `.claude/references/checkpoint-templates.md` → Override Refusal Template
+
+### Rule 6: MCP-First Verification
+에이전트 실행 전: `diverga_check_prerequisites(agent_id)` 호출
+→ `approved: true` → 에이전트 실행 진행
+→ `approved: false` → `missing` 배열의 각 체크포인트에 대해 AskUserQuestion 호출
+→ MCP 미가용 시: `.research/decision-log.yaml` 직접 읽기
+→ 대화 이력은 최후 수단
 
 ### 단일 에이전트 호출 시:
-1. Agent Prerequisite Map 확인 (CLAUDE.md 참조)
-2. 대화 이력에서 prerequisite 완료 여부 확인
-3. 미완료 → AskUserQuestion 도구로 해당 결정 먼저 요청
-4. REQUIRED 전제조건은 절대 스킵 불가 (사용자가 "건너뛰자"해도 거부)
-5. 모든 전제조건 통과 후 에이전트 작업 시작
+1. `diverga_check_prerequisites(agent_id)` 호출
+2. `approved: false` → 각 missing checkpoint에 대해 AskUserQuestion 도구 호출
+3. REQUIRED 전제조건은 절대 스킵 불가 (사용자가 "건너뛰자"해도 Override Refusal Template 제시)
+4. 모든 전제조건 통과 후 에이전트 작업 시작
+5. 에이전트 완료 시 `diverga_mark_checkpoint()` 으로 결정 기록
 
-### 다중 에이전트 동시 호출 시 (핵심 추가사항):
+### 다중 에이전트 동시 호출 시:
 1. 모든 트리거된 에이전트의 prerequisites를 합집합으로 수집
 2. Checkpoint Dependency Order에 따라 정렬 (Level 0 → Level 5)
 3. 각 전제조건을 AskUserQuestion 도구로 순서대로 질문
@@ -35,11 +48,12 @@ version: "8.1.0"
 1. 반드시 AskUserQuestion 도구 사용 (텍스트 질문 금지)
 2. `.claude/references/checkpoint-templates.md`의 파라미터 사용
 3. 응답 받을 때까지 STOP and WAIT
-4. 결정 내용을 대화 컨텍스트에 기록
+4. `diverga_mark_checkpoint(checkpoint_id, decision, rationale)` 으로 결정 기록
 
 ### 자기 검증 (에이전트 작업 완료 전):
 - "Own Checkpoints"를 모두 트리거했는지 자가 확인
 - 미트리거 체크포인트가 있으면 작업 마무리 전 반드시 호출
+- `diverga_checkpoint_status()` 로 전체 현황 확인 가능
 
 ## Multi-Agent Dispatch Protocol
 
