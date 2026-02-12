@@ -26,6 +26,31 @@ This runs in Codex CLI's single-model mode. Key differences from Claude Code:
 - No Layer 2 Task interceptor - context loaded manually
 - Layer 3 CLI commands work via text prompts
 
+## Prerequisites
+
+Requires `diverga-setup` to have been run first (`.research/` directory must exist).
+If `.research/` does not exist, prompt: "Run diverga-setup first to initialize your project."
+
+## Checkpoint Protocol
+
+Memory commands that modify state should log to decision-log:
+1. After `decision add`: write to `.research/decision-log.yaml` using write_file
+2. After `archive`: log stage completion to `.research/decision-log.yaml`
+3. After `init`: log project initialization
+
+When any agent calls memory for context loading:
+1. read_file(".research/project-state.yaml") — load current state
+2. read_file(".research/decision-log.yaml") — load all prior decisions
+3. Return context to the calling agent workflow
+
+## Pipeline Position
+
+```
+diverga-setup → diverga-memory (YOU ARE HERE) → Agent execution
+                     ↑                              ↓
+                     └── context reload ←── decision logging
+```
+
 ## Context Loading Keywords
 
 When user mentions these keywords, load project context automatically:

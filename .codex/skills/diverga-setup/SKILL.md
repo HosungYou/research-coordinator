@@ -24,6 +24,27 @@ This runs in Codex CLI's single-model mode. Key differences from Claude Code:
 - No MCP tools - uses file-based configuration
 - No HUD statusline - status via text output only
 
+## Prerequisites
+
+None. This is the pipeline entry point. Run before any agent.
+
+## Checkpoint Protocol
+
+Setup itself acts as a checkpoint gate. When asking the user for checkpoint level:
+1. STOP and clearly mark: "CHECKPOINT: SETUP_CHECKPOINT_LEVEL"
+2. Present options: [A] Full / [B] Minimal / [C] Off
+3. WAIT for user response before continuing
+4. Log decision: write to `.research/decision-log.yaml` using write_file
+
+## Pipeline Position
+
+```
+diverga-setup (YOU ARE HERE)
+  → diverga-memory init (if new project)
+  → User describes research
+  → Agent auto-trigger (A1, B1, C5, I0, etc.)
+```
+
 ## Workflow
 
 ### Step 0: Project Detection
@@ -79,12 +100,17 @@ After checkpoint selection:
    - write_file(".research/decision-log.yaml") with empty decisions list
    - write_file(".research/checkpoints.yaml") with checkpoint configuration
 
-3. Display completion:
+3. Log the checkpoint decision:
+   - read_file(".research/decision-log.yaml")
+   - Append: `{ checkpoint: "SETUP_CHECKPOINT_LEVEL", decision: "[selected]", timestamp: "..." }`
+   - write_file(".research/decision-log.yaml")
+
+4. Display completion:
    ```
    Setup complete!
    - Checkpoint level: [selected level]
    - Project structure: .research/ created
-   - Ready to use: describe your research to get started
+   - Next: describe your research to get started, or run diverga-memory init
    ```
 
 ## Configuration Files

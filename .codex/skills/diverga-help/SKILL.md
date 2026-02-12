@@ -20,6 +20,21 @@ Displays comprehensive guide for Diverga on Codex CLI, including all 44 agents, 
 ## Codex CLI Degraded Mode
 On Codex CLI, agents run sequentially (no parallel execution). Use skill files in `.codex/skills/diverga-{id}/SKILL.md` to load agent instructions.
 
+## Prerequisites
+
+None. This is a read-only display skill.
+
+## Pipeline Workflow
+
+```
+1. diverga-setup       → Initialize project, set checkpoint level
+2. diverga-memory init → Set research question, create context
+3. Describe research   → Agents auto-trigger based on keywords
+4. Agent execution     → Each agent reads its SKILL.md, follows instructions
+5. Checkpoints         → STOP, present options, WAIT for user, log decision
+6. diverga-memory      → Reload context between sessions
+```
+
 ## Quick Start
 
 Describe your research and the system will guide you:
