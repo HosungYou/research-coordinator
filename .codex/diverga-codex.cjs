@@ -45,7 +45,7 @@ ${colors.dim}    ─────────────────────
 
 // Configuration
 const CONFIG = {
-  version: '8.3.0',
+  version: '8.4.0',
   registryPath: path.join(__dirname, 'agents', 'index.json'),
   contextPath: path.join(process.cwd(), '.research', 'project-state.yaml'),
   skillsPath: path.join(process.env.HOME || '~', '.claude', 'skills', 'research-agents'),

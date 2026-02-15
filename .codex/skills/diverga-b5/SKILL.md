@@ -7,7 +7,7 @@ description: |
   Triggers: batch PDF, parallel reading, multiple documents, PDF 일괄 처리, 병렬 처리, document extraction
 metadata:
   short-description: B5-ParallelDocumentProcessor
-  version: 8.3.0
+  version: 8.5.0
 ---
 
 # B5 - Parallel Document Processor

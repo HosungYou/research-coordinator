@@ -1,9 +1,11 @@
 # CLAUDE.md
 
-# Diverga v8.3.0 (Cross-Platform Migration)
+# Diverga v8.4.0 (Researcher Visibility & Pipeline Safety)
 
 **Beyond Modal: AI Research Assistant That Thinks Creatively**
 
+**v8.5.0** (pilot): Agent Teams - Parallel agent execution via TeamCreate/TaskCreate/SendMessage, I0 Team Lead mode, 3x parallel database fetching
+**v8.4.0**: Researcher Visibility & Pipeline Safety - Dual directory structure (`.research/` system + `research/` public), auto-migration, SCH_API_KEY_VALIDATION checkpoint, validateApiKeys() utility
 **v8.3.0**: Cross-Platform Migration - GPT-5.3-Codex model routing, 47 individual Codex CLI SKILL.md files, updated install script, cross-platform documentation
 **v8.2.0**: MCP Runtime Checkpoint Enforcement - MCP server (7 tools), SKILL.md simplification (675 lines saved), state path unification, Priority Context
 **v8.1.0**: Checkpoint Enforcement Strengthening - Mandatory AskUserQuestion at all checkpoints, Agent Prerequisite Map, multi-agent coordination
@@ -23,7 +25,8 @@
 ## v8.0 Key Features
 
 ### 1. File Structure Redesign
-- `.research/` = System files (hidden)
+- `.research/` = System-only files (hidden: HUD cache, priority context, sessions)
+- `research/` = Researcher-visible state files (project-state, decisions, checkpoints, baselines)
 - `docs/` = Researcher-visible documentation (auto-generated)
 
 ### 2. Independent HUD Statusline
@@ -174,19 +177,28 @@ Diverga Memory System provides **context-persistent research support** with:
 ### Project Structure
 
 ```
-.research/
-├── baselines/           # Stable research foundations
-│   ├── literature/
-│   ├── methodology/
-│   └── framework/
-├── changes/
-│   ├── current/         # Active work
-│   └── archive/         # Completed stages
-├── sessions/            # Session records
-├── project-state.yaml   # Project metadata
-├── decision-log.yaml    # All decisions
-└── checkpoints.yaml     # Checkpoint states
+project-root/
+├── .research/                  # System files (hidden - internal use only)
+│   ├── hud-state.json          # HUD cache
+│   ├── priority-context.md     # Compressed context (500 chars)
+│   └── sessions/               # Session records
+│
+├── research/                   # Researcher-visible files (public)
+│   ├── project-state.yaml      # Project metadata
+│   ├── decision-log.yaml       # All research decisions
+│   ├── checkpoints.yaml        # Checkpoint states
+│   ├── baselines/              # Stable research foundations
+│   │   ├── literature/
+│   │   ├── methodology/
+│   │   └── framework/
+│   └── changes/
+│       ├── current/            # Active work
+│       └── archive/            # Completed stages
+│
+└── docs/                       # Auto-generated documentation
 ```
+
+**Migration Note (v8.3.1)**: Existing projects with files in `.research/` are automatically migrated to `research/` on first access. System-only files (hud-state.json, priority-context.md, sessions/) remain in `.research/`.
 
 ### Context Keywords (English + Korean)
 
@@ -279,7 +291,7 @@ CLAUDE.md and SKILL.md prompt-level instructions remain the primary enforcement 
 **v8.2 Enhancement**: MCP server (`diverga`) provides runtime verification tools.
 Agents call `diverga_check_prerequisites(agent_id)` before execution and
 `diverga_mark_checkpoint(cp_id, decision, rationale)` to record decisions.
-State is stored in `.research/` (not `.claude/state/`).
+State is stored in `research/` (public files) and `.research/` (system files).
 
 ### Rule 5: Override Refusal
 사용자가 REQUIRED 체크포인트 스킵 요청 시:
@@ -291,7 +303,7 @@ State is stored in `.research/` (not `.claude/state/`).
 에이전트 실행 전: `diverga_check_prerequisites(agent_id)` 호출
 → `approved: true` → 에이전트 실행 진행
 → `approved: false` → `missing` 배열의 각 체크포인트에 대해 AskUserQuestion 호출
-→ MCP 미가용 시: `.research/decision-log.yaml` 직접 읽기
+→ MCP 미가용 시: `research/decision-log.yaml` (또는 레거시 `.research/decision-log.yaml`) 직접 읽기
 → 대화 이력은 최후 수단 (세션 간 유지 안 됨)
 
 ### Agent Prerequisite Map
@@ -328,7 +340,7 @@ State is stored in `.research/` (not `.claude/state/`).
 | H1 | CP_PARADIGM_SELECTION | 🔴 CP_METHODOLOGY_APPROVAL |
 | H2 | CP_PARADIGM_SELECTION | 🔴 CP_METHODOLOGY_APPROVAL |
 | I0 | (없음) | All SCH_* |
-| I1 | (없음) | 🔴 SCH_DATABASE_SELECTION |
+| I1 | (없음) | 🔴 SCH_DATABASE_SELECTION, 🔴 SCH_API_KEY_VALIDATION |
 | I2 | SCH_DATABASE_SELECTION | 🔴 SCH_SCREENING_CRITERIA |
 | I3 | SCH_SCREENING_CRITERIA | 🟠 SCH_RAG_READINESS |
 
@@ -340,7 +352,7 @@ State is stored in `.research/` (not `.claude/state/`).
 Level 0 (진입점): CP_RESEARCH_DIRECTION, CP_PARADIGM_SELECTION
 Level 1: CP_THEORY_SELECTION, CP_METHODOLOGY_APPROVAL
 Level 2: CP_ANALYSIS_PLAN, CP_SCREENING_CRITERIA, CP_SAMPLING_STRATEGY, CP_CODING_APPROACH, CP_THEME_VALIDATION, CP_INTEGRATION_STRATEGY, CP_QUALITY_REVIEW
-Level 3: SCH_DATABASE_SELECTION, CP_HUMANIZATION_REVIEW, CP_VS_001, CP_VS_002, CP_VS_003
+Level 3: SCH_DATABASE_SELECTION, SCH_API_KEY_VALIDATION, CP_HUMANIZATION_REVIEW, CP_VS_001, CP_VS_002, CP_VS_003
 Level 4: SCH_SCREENING_CRITERIA, CP_HUMANIZATION_VERIFY
 Level 5: SCH_RAG_READINESS
 ```
@@ -351,8 +363,8 @@ Level 5: SCH_RAG_READINESS
 
 | System | Purpose | Location |
 |--------|---------|----------|
-| Project State | Context persistence | `.research/project-state.yaml` |
-| Decision Log | Human decisions | `.research/decision-log.yaml` |
+| Project State | Context persistence | `research/project-state.yaml` |
+| Decision Log | Human decisions | `research/decision-log.yaml` |
 | Research Coordinator | Main skill definition | `.claude/skills/research-coordinator/SKILL.md` |
 | Orchestrator | Agent management | `.claude/skills/research-orchestrator/SKILL.md` |
 
@@ -410,12 +422,13 @@ PRISMA 2020 compliant systematic literature review pipeline with automated paper
 | Agent | Purpose | Model | Checkpoint |
 |-------|---------|-------|------------|
 | **I0-ReviewPipelineOrchestrator** | Pipeline coordination, stage management | Opus | - |
-| **I1-PaperRetrievalAgent** | Multi-database fetching (Semantic Scholar, OpenAlex, arXiv) | Sonnet | 🔴 SCH_DATABASE_SELECTION |
+| **I1-PaperRetrievalAgent** | Multi-database fetching (Semantic Scholar, OpenAlex, arXiv) | Sonnet | 🔴 SCH_DATABASE_SELECTION, 🔴 SCH_API_KEY_VALIDATION |
 | **I2-ScreeningAssistant** | AI-PRISMA 6-dimension screening | Sonnet | 🔴 SCH_SCREENING_CRITERIA |
 | **I3-RAGBuilder** | Vector database construction (zero cost) | Haiku | 🟠 SCH_RAG_READINESS |
 
 **Human Checkpoints**:
 - 🔴 **SCH_DATABASE_SELECTION**: User must approve database selection before retrieval
+- 🔴 **SCH_API_KEY_VALIDATION**: Validates API keys for selected databases; blocks if required keys missing
 - 🔴 **SCH_SCREENING_CRITERIA**: User must approve inclusion/exclusion criteria
 - 🟠 **SCH_RAG_READINESS**: Recommended checkpoint before RAG queries
 - 🟡 **SCH_PRISMA_GENERATION**: Optional checkpoint before PRISMA flow diagram generation
@@ -738,6 +751,38 @@ Diverga can run multiple agents in parallel when tasks are independent:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
+### Agent Teams (v8.5 Pilot)
+
+Diverga v8.5 introduces Agent Teams support for Claude Code, enabling true parallel agent execution via native TeamCreate/TaskCreate/SendMessage primitives.
+
+#### Available Team Patterns
+
+| Pattern | Use Case | Agents | Speedup |
+|---------|----------|--------|---------|
+| **Parallel Specialists** | Literature review | B1+B2+B3 parallel → B4 synthesis | ~60% faster |
+| **Pipeline** | Systematic review | I0→I1(×3)→I2→I3 | ~40% faster |
+| **Competing Hypotheses** | Research design | A1+A2+A5 parallel | 3 perspectives |
+| **QA Swarm** | Quality check | F1+F3+F4+F5 parallel | 4-angle review |
+
+#### I0 Team Lead Mode
+
+When `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` is set:
+1. I0 creates `scholarag-pipeline` team
+2. Spawns 3 parallel I1 instances for database search
+3. Uses TaskCreate with `blockedBy` for automatic dependency management
+4. Relays checkpoint approvals via SendMessage
+
+#### Prerequisites
+
+- `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` environment variable required
+- Claude Code with Agent Teams support
+
+#### Cost Considerations
+
+- Each team member = independent session (3-5x token cost)
+- For budget runs, teams automatically disabled
+- I0 falls back to sequential mode when teams unavailable
+
 ### Sequential Execution Rules
 
 Some agents must run in order:
@@ -820,8 +865,9 @@ The Memory System automatically captures context at critical lifecycle events:
 
 ## Version History
 
+- **v8.4.0**: Researcher Visibility & Pipeline Safety - Dual directory structure (`.research/` system + `research/` public), auto-migration, SCH_API_KEY_VALIDATION checkpoint
 - **v8.3.0**: Cross-Platform Migration - GPT-5.3-Codex model routing, 47 individual Codex CLI SKILL.md files, updated install script, cross-platform documentation
-- **v8.2.0**: MCP Runtime Checkpoint Enforcement - MCP server (7 tools), SKILL.md simplification (675 lines saved), state path unification (.research/), Priority Context, lib/memory removed
+- **v8.2.0**: MCP Runtime Checkpoint Enforcement - MCP server (7 tools), SKILL.md simplification (675 lines saved), state path unification, Priority Context, lib/memory removed
 - **v8.1.0**: Checkpoint Enforcement Strengthening - Mandatory AskUserQuestion, Agent Prerequisite Map, multi-agent coordination
 - **v8.0.1**: Installation Bug Fixes - Fixed install script path corruption, skills copy instead of symlink
 - **v8.0.0**: Project Visibility Enhancement - Independent HUD statusline, simplified 3-step setup, natural language project start, docs/ auto-generation

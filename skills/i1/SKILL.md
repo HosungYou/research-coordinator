@@ -5,7 +5,7 @@ description: |
   Handles rate limiting, deduplication, and PDF URL extraction
   Use when: fetching papers, searching databases, paper retrieval
   Triggers: fetch papers, retrieve papers, database search, Semantic Scholar, OpenAlex, arXiv
-version: "8.3.0"
+version: "8.5.0"
 ---
 
 ## ⛔ Prerequisites (v8.2 — MCP Enforcement)
@@ -14,9 +14,10 @@ No prerequisites required for this agent.
 
 ### Checkpoints During Execution
 - 🔴 SCH_DATABASE_SELECTION → `diverga_mark_checkpoint("SCH_DATABASE_SELECTION", decision, rationale)`
+- 🔴 SCH_API_KEY_VALIDATION → `diverga_mark_checkpoint("SCH_API_KEY_VALIDATION", decision, rationale)`
 
 ### Fallback (MCP unavailable)
-Read `.research/decision-log.yaml` directly to verify prerequisites. Conversation history is last resort.
+Read `research/decision-log.yaml` (or `.research/decision-log.yaml` for legacy projects) directly to verify prerequisites. Conversation history is last resort.
 
 ---
 
@@ -101,6 +102,26 @@ Before executing queries, I1 MUST:
 2. **WAIT** for explicit user selection
 3. **CONFIRM** selection before executing
 
+### 🔴 SCH_API_KEY_VALIDATION (REQUIRED)
+
+After database selection, I1 MUST validate API keys:
+
+1. **CHECK** environment for required keys:
+   - Semantic Scholar: `S2_API_KEY` (optional but recommended for higher rate limits)
+   - OpenAlex: Email for polite pool (optional)
+   - arXiv: No key needed
+   - Scopus: `SCOPUS_API_KEY` (required if selected)
+   - Web of Science: `WOS_API_KEY` (required if selected)
+
+2. **IF** any selected database requires a missing key:
+   → Call AskUserQuestion with SCH_API_KEY_VALIDATION template
+   → WAIT for user response
+   → If "Provide Key": Show setup instructions (`export SCOPUS_API_KEY=your_key`), then re-validate
+   → If "Skip DB": Remove from selection, re-confirm remaining databases
+   → If "Pause": Save state, stop pipeline
+
+3. **RECORD** via MCP: `diverga_mark_checkpoint("SCH_API_KEY_VALIDATION", decision, rationale)`
+
 ## Execution Commands
 
 ```bash
@@ -157,7 +178,7 @@ delay_between_requests = 3  # seconds
 | 429 Rate Limit | Exponential backoff, max 5 retries |
 | 500 Server Error | Retry after 30s |
 | Timeout | Retry with increased timeout |
-| API Key Missing | Skip database, warn user |
+| API Key Missing | **STOP** → trigger 🔴 SCH_API_KEY_VALIDATION checkpoint → AskUserQuestion |
 
 ## Auto-Trigger Keywords
 

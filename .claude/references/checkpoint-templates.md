@@ -118,6 +118,22 @@ When a checkpoint is reached, use the corresponding template below.
 }
 ```
 
+### SCH_API_KEY_VALIDATION
+```json
+{
+  "questions": [{
+    "question": "선택한 데이터베이스에 필요한 API 키가 누락되었습니다. 어떻게 진행하시겠습니까? / API key(s) missing for selected database(s). How would you like to proceed?",
+    "header": "API Keys",
+    "options": [
+      {"label": "Provide Key / 키 제공", "description": "Set the API key in environment variables and retry validation"},
+      {"label": "Skip DB / DB 제외", "description": "Remove databases with missing keys and continue with available ones"},
+      {"label": "Pause / 중단", "description": "Pause the pipeline to configure API keys later"}
+    ],
+    "multiSelect": false
+  }]
+}
+```
+
 ### SCH_SCREENING_CRITERIA
 ```json
 {

@@ -6,7 +6,7 @@ description: |
   Delegates to specialized agents (I1, I2, I3) while enforcing human checkpoints
   Use when: conducting systematic reviews, building knowledge repositories, PRISMA automation
   Triggers: systematic review, PRISMA, literature review automation
-version: "8.3.0"
+version: "8.5.0"
 ---
 
 ## ⛔ Prerequisites (v8.2 — MCP Enforcement)
@@ -223,3 +223,61 @@ parallel_compatible: ["B1-literature-review-strategist"]
 - **I3-rag-builder**: Vector database construction and indexing
 - **B1-literature-review-strategist**: Search strategy enhancement
 - **C5-meta-analysis-master**: Meta-analysis integration
+
+---
+
+## Agent Teams Mode (v8.5 Pilot)
+
+When running in Claude Code with Agent Teams support (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`):
+
+### Team Lead Protocol
+
+I0 acts as Team Lead for the `scholarag-pipeline` team:
+
+1. **Initialize Team**
+   ```
+   TeamCreate(team_name="scholarag-pipeline", description="PRISMA 2020 systematic review pipeline")
+   ```
+
+2. **Create Tasks with Dependencies**
+   ```
+   TaskCreate(subject="I1: Fetch from Semantic Scholar")           → task-1
+   TaskCreate(subject="I1: Fetch from OpenAlex")                   → task-2
+   TaskCreate(subject="I1: Fetch from arXiv")                      → task-3
+   TaskCreate(subject="Deduplicate papers", blockedBy=[1,2,3])     → task-4
+   TaskCreate(subject="I2: AI-PRISMA screening", blockedBy=[4])    → task-5
+   TaskCreate(subject="I3: Build RAG vector DB", blockedBy=[5])    → task-6
+   ```
+
+3. **Spawn Parallel Fetchers**
+   ```
+   Task(team_name="scholarag-pipeline", name="fetcher-ss", subagent_type="diverga:i1",
+        prompt="Fetch papers from Semantic Scholar for query: {query}. Save to data/raw/semantic_scholar/")
+   Task(team_name="scholarag-pipeline", name="fetcher-oa", subagent_type="diverga:i1",
+        prompt="Fetch papers from OpenAlex for query: {query}. Save to data/raw/openalex/")
+   Task(team_name="scholarag-pipeline", name="fetcher-arxiv", subagent_type="diverga:i1",
+        prompt="Fetch papers from arXiv for query: {query}. Save to data/raw/arxiv/")
+   ```
+
+4. **Checkpoint Integration**
+   - At SCH_DATABASE_SELECTION: Use AskUserQuestion, then SendMessage approval to fetchers
+   - At SCH_SCREENING_CRITERIA: Use AskUserQuestion, then SendMessage to screener
+   - At SCH_RAG_READINESS: Use AskUserQuestion, then SendMessage to RAG builder
+
+5. **Cleanup**: `TeamDelete()` after pipeline completion or on error
+
+### Fallback (Non-Teams Mode)
+
+If Agent Teams not available, fall back to sequential `Task()` calls (current behavior).
+
+### Performance
+
+| Mode | DB Fetch Time | Total Pipeline |
+|------|--------------|----------------|
+| Sequential | ~90 min | ~4-6 hours |
+| Teams (3 parallel) | ~30 min | ~2.5-4 hours |
+
+### Cost Warning
+
+Teams mode spawns N independent sessions. Each session consumes separate API tokens.
+For budget-conscious runs, sequential mode is recommended.

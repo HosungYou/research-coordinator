@@ -26,13 +26,13 @@ function writeYaml(filepath, data) {
 }
 
 // ---------------------------------------------------------------------------
-// Path helpers (take researchDir as argument)
+// Path helpers (take directory as argument)
 // ---------------------------------------------------------------------------
 
-function decisionLogPath(researchDir) { return join(researchDir, 'decision-log.yaml'); }
-function checkpointsPath(researchDir) { return join(researchDir, 'checkpoints.yaml'); }
-function projectStatePath(researchDir) { return join(researchDir, 'project-state.yaml'); }
-function priorityContextPath(researchDir) { return join(researchDir, 'priority-context.md'); }
+function decisionLogPath(dir) { return join(dir, 'decision-log.yaml'); }
+function checkpointsPath(dir) { return join(dir, 'checkpoints.yaml'); }
+function projectStatePath(dir) { return join(dir, 'project-state.yaml'); }
+function priorityContextPath(dir) { return join(dir, 'priority-context.md'); }
 
 // ---------------------------------------------------------------------------
 // Exported: createCheckpointLogic(prereqMap, researchDir)
@@ -42,14 +42,34 @@ function priorityContextPath(researchDir) { return join(researchDir, 'priority-c
 // relative to any global state.
 // ---------------------------------------------------------------------------
 
-export function createCheckpointLogic(prereqMap, researchDir) {
+export function createCheckpointLogic(prereqMap, researchDir, publicResearchDir) {
   // Ensure the research directory exists
   if (!existsSync(researchDir)) mkdirSync(researchDir, { recursive: true });
 
+  // Ensure public research directory exists
+  const publicDir = publicResearchDir || researchDir;
+  if (!existsSync(publicDir)) mkdirSync(publicDir, { recursive: true });
+
+  // Migrate public files from system dir to public dir if needed
+  const migrateFiles = ['project-state.yaml', 'decision-log.yaml', 'checkpoints.yaml'];
+  for (const file of migrateFiles) {
+    const oldPath = join(researchDir, file);
+    const newPath = join(publicDir, file);
+    if (existsSync(oldPath) && !existsSync(newPath)) {
+      writeFileSync(newPath, readFileSync(oldPath, 'utf8'), 'utf8');
+    }
+  }
+
+  // Bound path helpers: public files go to publicDir, system files to researchDir
+  const _decisionLogPath = () => decisionLogPath(publicDir);
+  const _checkpointsPath = () => checkpointsPath(publicDir);
+  const _projectStatePath = () => projectStatePath(publicDir);
+  const _priorityContextPath = () => priorityContextPath(researchDir);
+
   // -- internal helper used by markCheckpoint and decisionAdd -------------
   function updatePriorityContext() {
-    const state = readYaml(projectStatePath(researchDir));
-    const decisions = readYaml(decisionLogPath(researchDir));
+    const state = readYaml(_projectStatePath());
+    const decisions = readYaml(_decisionLogPath());
     const cpStatus = checkpointStatus();
 
     const parts = [];
@@ -69,7 +89,7 @@ export function createCheckpointLogic(prereqMap, researchDir) {
     }
 
     const ctx = parts.join(' | ');
-    if (ctx) priorityWrite(ctx);
+    if (ctx) writeFileSync(_priorityContextPath(), ctx.length > 500 ? ctx.substring(0, 500) : ctx, 'utf8');
   }
 
   // -- 1. checkPrerequisites ----------------------------------------------
@@ -81,8 +101,8 @@ export function createCheckpointLogic(prereqMap, researchDir) {
     if (!agent) return { approved: true, missing: [], message: `Agent ${agentId} has no checkpoint requirements.` };
     if (agent.prerequisites.length === 0) return { approved: true, missing: [], message: 'Entry point agent \u2014 no prerequisites.' };
 
-    const checkpoints = readYaml(checkpointsPath(researchDir));
-    const decisions = readYaml(decisionLogPath(researchDir));
+    const checkpoints = readYaml(_checkpointsPath());
+    const decisions = readYaml(_decisionLogPath());
 
     const passedCPs = new Set();
     if (checkpoints?.checkpoints) {
@@ -118,7 +138,7 @@ export function createCheckpointLogic(prereqMap, researchDir) {
     const level = prereqMap.checkpoint_levels[checkpointId] || 'unknown';
 
     // Update checkpoints.yaml
-    const data = readYaml(checkpointsPath(researchDir)) || { checkpoints: {}, current_stage: 'active', completed_stages: [] };
+    const data = readYaml(_checkpointsPath()) || { checkpoints: {}, current_stage: 'active', completed_stages: [] };
     if (!data.checkpoints.active) data.checkpoints.active = [];
     data.checkpoints.active = data.checkpoints.active.filter(cp => cp.checkpoint_id !== checkpointId);
     data.checkpoints.active.push({
@@ -129,10 +149,10 @@ export function createCheckpointLogic(prereqMap, researchDir) {
       decision,
       rationale
     });
-    writeYaml(checkpointsPath(researchDir), data);
+    writeYaml(_checkpointsPath(), data);
 
     // Update decision-log.yaml
-    const log = readYaml(decisionLogPath(researchDir)) || { decisions: [] };
+    const log = readYaml(_decisionLogPath()) || { decisions: [] };
     const decisionId = `DEV_${String(log.decisions.length + 1).padStart(3, '0')}`;
     log.decisions.push({
       decision_id: decisionId,
@@ -142,7 +162,7 @@ export function createCheckpointLogic(prereqMap, researchDir) {
       rationale,
       version: 1
     });
-    writeYaml(decisionLogPath(researchDir), log);
+    writeYaml(_decisionLogPath(), log);
 
     // Update priority context
     updatePriorityContext();
@@ -152,8 +172,8 @@ export function createCheckpointLogic(prereqMap, researchDir) {
 
   // -- 3. checkpointStatus ------------------------------------------------
   function checkpointStatus() {
-    const data = readYaml(checkpointsPath(researchDir));
-    const decisions = readYaml(decisionLogPath(researchDir));
+    const data = readYaml(_checkpointsPath());
+    const decisions = readYaml(_decisionLogPath());
 
     const passed = [];
     const pending = [];
@@ -192,7 +212,7 @@ export function createCheckpointLogic(prereqMap, researchDir) {
 
   // -- 4. priorityRead ----------------------------------------------------
   function priorityRead() {
-    const path = priorityContextPath(researchDir);
+    const path = _priorityContextPath();
     if (!existsSync(path)) return { context: '', message: 'No priority context set yet.' };
     return { context: readFileSync(path, 'utf8') };
   }
@@ -202,14 +222,14 @@ export function createCheckpointLogic(prereqMap, researchDir) {
     if (context.length > 500) {
       context = context.substring(0, 500);
     }
-    writeFileSync(priorityContextPath(researchDir), context, 'utf8');
+    writeFileSync(_priorityContextPath(), context, 'utf8');
     return { written: true, length: context.length };
   }
 
   // -- 6. projectStatus ---------------------------------------------------
   function projectStatus() {
-    const state = readYaml(projectStatePath(researchDir));
-    const decisions = readYaml(decisionLogPath(researchDir));
+    const state = readYaml(_projectStatePath());
+    const decisions = readYaml(_decisionLogPath());
     const cpStatus = checkpointStatus();
 
     return {
@@ -224,7 +244,7 @@ export function createCheckpointLogic(prereqMap, researchDir) {
   // -- 7. decisionAdd -----------------------------------------------------
   function decisionAdd(checkpointId, selected, rationale, alternativesConsidered) {
     const now = new Date().toISOString();
-    const log = readYaml(decisionLogPath(researchDir)) || { decisions: [] };
+    const log = readYaml(_decisionLogPath()) || { decisions: [] };
     const decisionId = `DEV_${String(log.decisions.length + 1).padStart(3, '0')}`;
 
     const entry = {
@@ -238,7 +258,7 @@ export function createCheckpointLogic(prereqMap, researchDir) {
     if (alternativesConsidered) entry.alternatives_considered = alternativesConsidered;
 
     log.decisions.push(entry);
-    writeYaml(decisionLogPath(researchDir), log);
+    writeYaml(_decisionLogPath(), log);
     updatePriorityContext();
 
     return { recorded: true, decision_id: decisionId };
@@ -253,4 +273,32 @@ export function createCheckpointLogic(prereqMap, researchDir) {
     projectStatus,
     decisionAdd,
   };
+}
+
+/**
+ * Validate API keys for selected databases.
+ * Returns missing required keys and optional recommended keys.
+ */
+export function validateApiKeys(selectedDatabases) {
+  const keyMap = {
+    'scopus': { envKey: 'SCOPUS_API_KEY', required: true },
+    'wos': { envKey: 'WOS_API_KEY', required: true },
+    'semantic_scholar': { envKey: 'S2_API_KEY', required: false },
+  };
+
+  const missing = [];
+  const optional = [];
+
+  for (const db of selectedDatabases) {
+    const config = keyMap[db];
+    if (config && !process.env[config.envKey]) {
+      if (config.required) {
+        missing.push({ database: db, envKey: config.envKey, required: true });
+      } else {
+        optional.push({ database: db, envKey: config.envKey, required: false });
+      }
+    }
+  }
+
+  return { missing, optional, allValid: missing.length === 0 };
 }

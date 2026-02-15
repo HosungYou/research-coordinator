@@ -8,7 +8,7 @@ description: |
   민족지학, 현장연구, 참여관찰
 metadata:
   short-description: H1-EthnographicAdvisor
-  version: 8.3.0
+  version: 8.5.0
 ---
 
 # H1-EthnographicResearchAdvisor

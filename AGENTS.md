@@ -1,12 +1,12 @@
 # AGENTS.md
 
-> AI-readable documentation for Diverga v8.3.0 (Cross-Platform Migration)
+> AI-readable documentation for Diverga v8.4.0 (Cross-Platform Migration)
 
 ## Project Overview
 
 **Diverga** is a Claude Code Skills-based AI research assistant system that breaks free from mode collapse through **Verbalized Sampling (VS) methodology**. It provides context-persistent support for the complete research lifecycle with a focus on **creative, defensible research choices** while ensuring **human decisions remain with humans**.
 
-**Version**: 8.3.0 (Cross-Platform Migration)
+**Version**: 8.4.0 (Cross-Platform Migration)
 **Generated**: 2026-02-12
 **Repository**: https://github.com/HosungYou/Diverga
 
@@ -33,7 +33,7 @@
 | **OMC Autonomous Modes** | ralph/ultrawork/ecomode | REMOVED |
 | **Human Checkpoints** | Could be bypassed | MANDATORY |
 | **Agent Naming** | Numbered (01-21) | Category-based (A1-I3) |
-| **Agent Count** | 27 agents | 44 agents (v8.3.0) |
+| **Agent Count** | 27 agents | 44 agents (v8.4.0) |
 | **State Location** | `.omc/` | `.claude/` |
 
 ---
@@ -137,11 +137,61 @@ Location: `.research/checkpoints.yaml` (v8.2+), `.research/decision-log.yaml`
 
 ---
 
-## Agent Registry (v8.3.0)
+## Agent Registry (v8.4.0)
 
 ### 44 Specialized Research Agents in 9 Categories
 
-Diverga v8.3.0 uses **category-based naming** (A1-I3) for all agents, organized into 9 functional categories.
+<!-- GENERATED:START -->
+| ID | Display Name | Category | Tier | Model | VS Level | Key Triggers |
+|----|-------------|----------|------|-------|----------|-------------|
+| A1 | Research Question Refiner | A: Research Foundation | HIGH | opus | Enhanced | research question, PICO, SPIDER |
+| A2 | Theoretical Framework Architect | A: Research Foundation | HIGH | opus | Full | theoretical framework, conceptual model, hypothesis derivation |
+| A3 | Devil's Advocate | A: Research Foundation | HIGH | opus | Full | criticism, weakness, reviewer 2 |
+| A4 | Research Ethics Advisor | A: Research Foundation | MEDIUM | sonnet | Enhanced | ethics, IRB, consent |
+| A5 | Paradigm & Worldview Advisor | A: Research Foundation | HIGH | opus | Full | paradigm, ontology, epistemology |
+| A6 | Conceptual Framework Visualizer | A: Research Foundation | MEDIUM | sonnet | Enhanced | conceptual framework, theoretical model visualization, Discussion figure |
+| B1 | Systematic Literature Scout | B: Literature & Evidence | MEDIUM | sonnet | Full | literature review, PRISMA, systematic review |
+| B2 | Evidence Quality Appraiser | B: Literature & Evidence | MEDIUM | sonnet | Enhanced | quality appraisal, RoB, GRADE |
+| B3 | Effect Size Extractor | B: Literature & Evidence | LOW | haiku | Enhanced | effect size, Cohen's d, Hedges' g |
+| B4 | Research Radar | B: Literature & Evidence | LOW | haiku | Enhanced | latest research, trends, new publications |
+| B5 | Parallel Document Processor | B: Literature & Evidence | HIGH | opus | Enhanced | batch PDF, parallel reading, multiple documents |
+| C1 | Quantitative Design Consultant | C: Study Design | HIGH | opus | Enhanced | RCT, quasi-experimental, experimental design |
+| C2 | Qualitative Design Consultant | C: Study Design | HIGH | opus | Full | phenomenology, grounded theory, case study |
+| C3 | Mixed Methods Design Consultant | C: Study Design | HIGH | opus | Full | mixed methods, sequential design, convergent |
+| C4 | Experimental Materials Developer | C: Study Design | MEDIUM | sonnet | Enhanced | intervention materials, experimental materials, treatment design |
+| C5 | Meta-Analysis Master | C: Study Design | HIGH | opus | Full | meta-analysis, pooled effect, heterogeneity |
+| C6 | Data Integrity Guard | C: Study Design | MEDIUM | sonnet | Enhanced | data extraction, PDF extract, extract data |
+| C7 | Error Prevention Engine | C: Study Design | MEDIUM | sonnet | Enhanced | error prevention, validation, data check |
+| D1 | Sampling Strategy Advisor | D: Data Collection | MEDIUM | sonnet | Enhanced | sampling, sample size, G*Power |
+| D2 | Interview & Focus Group Specialist | D: Data Collection | MEDIUM | sonnet | Enhanced | interview, focus group, interview protocol |
+| D3 | Observation Protocol Designer | D: Data Collection | LOW | haiku | Enhanced | observation, field notes, participant observation |
+| D4 | Measurement Instrument Developer | D: Data Collection | HIGH | opus | Enhanced | instrument, measurement, scale development |
+| E1 | Quantitative Analysis Guide | E: Analysis | HIGH | opus | Full | statistical analysis, ANOVA, regression |
+| E2 | Qualitative Coding Specialist | E: Analysis | HIGH | opus | Full | qualitative coding, thematic analysis, grounded theory coding |
+| E3 | Mixed Methods Integration | E: Analysis | HIGH | opus | Full | integration, joint display, mixed methods analysis |
+| E4 | Analysis Code Generator | E: Analysis | LOW | haiku | Enhanced | R code, Python code, analysis code |
+| E5 | Sensitivity Analysis Designer | E: Analysis | MEDIUM | sonnet | Enhanced | sensitivity analysis, robustness check, leave-one-out |
+| F1 | Internal Consistency Checker | F: Quality & Validation | LOW | haiku | Light | consistency, alignment, logical verification |
+| F2 | Checklist Manager | F: Quality & Validation | LOW | haiku | Light | PRISMA, CONSORT, STROBE |
+| F3 | Reproducibility Auditor | F: Quality & Validation | MEDIUM | sonnet | Light | reproducibility, OSF, open science |
+| F4 | Bias & Trustworthiness Detector | F: Quality & Validation | MEDIUM | sonnet | Full | bias, p-hacking, HARKing |
+| F5 | Humanization Verifier | F: Quality & Validation | LOW | haiku | Light | verify humanization, check transformation, validate changes |
+| G1 | Journal Matcher | G: Publication & Communication | MEDIUM | sonnet | Light | journal, where to publish, target journal |
+| G2 | Academic Communicator | G: Publication & Communication | MEDIUM | sonnet | Light | abstract, plain language, academic writing |
+| G3 | Peer Review Strategist | G: Publication & Communication | MEDIUM | sonnet | Enhanced | peer review, reviewer response, revision |
+| G4 | Pre-registration Composer | G: Publication & Communication | MEDIUM | sonnet | Light | preregistration, OSF, pre-register |
+| G5 | Academic Style Auditor | G: Publication & Communication | MEDIUM | sonnet | Light | AI pattern, check AI writing, style audit |
+| G6 | Academic Style Humanizer | G: Publication & Communication | HIGH | opus | Enhanced | humanize, humanization, natural writing |
+| H1 | Ethnographic Research Advisor | H: Specialized Approaches | HIGH | opus | Full | ethnography, fieldwork, participant observation |
+| H2 | Action Research Facilitator | H: Specialized Approaches | HIGH | opus | Light | action research, PAR, CBPR |
+| I0 | Systematic Review Orchestrator | I: Systematic Review Automation | HIGH | opus | Enhanced | systematic review, PRISMA, 체계적 문헌고찰 |
+| I1 | Paper Retrieval Agent | I: Systematic Review Automation | MEDIUM | sonnet | Light | fetch papers, retrieve papers, database search |
+| I2 | Screening Assistant | I: Systematic Review Automation | MEDIUM | sonnet | Light | screen papers, inclusion criteria, AI screening |
+| I3 | RAG Builder | I: Systematic Review Automation | LOW | haiku | Light | build RAG, vector database, PDF download |
+<!-- GENERATED:END -->
+
+
+Diverga v8.4.0 uses **category-based naming** (A1-I3) for all agents, organized into 9 functional categories.
 
 ---
 
@@ -373,7 +423,7 @@ Systematic review automation pipeline:
 
 ---
 
-## Model Routing (v8.3.0)
+## Model Routing (v8.4.0)
 
 | Tier | Model | Count | Agents |
 |------|-------|-------|--------|
@@ -721,4 +771,4 @@ project:
 
 ---
 
-*This file enables AI assistants to understand Diverga v8.3.0's architecture and operate effectively within its human-centered design.*
+*This file enables AI assistants to understand Diverga v8.4.0's architecture and operate effectively within its human-centered design.*

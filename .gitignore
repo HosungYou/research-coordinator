@@ -42,6 +42,13 @@ logs/
 # Local development
 .local/
 
+# oh-my-claudecode runtime state
+.omc/
+
+# Coverage reports
+coverage/
+.opencode/plugins/diverga/coverage/
+
 # Build artifacts
 dist/
 *.tsbuildinfo

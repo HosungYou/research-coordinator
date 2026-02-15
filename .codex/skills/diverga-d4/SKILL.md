@@ -7,7 +7,7 @@ description: |
   Triggers: instrument, measurement, scale development, 측정 도구, 척도 개발, psychometric, validity, reliability
 metadata:
   short-description: D4-MeasurementInstrumentDeveloper
-  version: 8.3.0
+  version: 8.5.0
 ---
 
 # D4 - Measurement Instrument Developer

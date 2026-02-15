@@ -22,7 +22,7 @@ CYAN='\033[0;36m'
 NC='\033[0m'
 
 REPO_URL="https://github.com/HosungYou/Diverga.git"
-VERSION="8.3.0"
+VERSION="8.4.0"
 
 # Parse arguments
 INSTALL_CLAUDE=false

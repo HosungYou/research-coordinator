@@ -1,4 +1,4 @@
-# Diverga Platform Limitations v8.3.0
+# Diverga Platform Limitations v8.4.0
 
 **Last Updated**: 2026-02-12
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-Diverga v8.3.0 is designed primarily for Claude Code, with adapters for Codex CLI and OpenCode. This document details which features are fully portable, partially portable, or exclusive to Claude Code.
+Diverga v8.4.0 is designed primarily for Claude Code, with adapters for Codex CLI and OpenCode. This document details which features are fully portable, partially portable, or exclusive to Claude Code.
 
 ---
 

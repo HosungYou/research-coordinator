@@ -4,6 +4,184 @@ All notable changes to Diverga (formerly Research Coordinator) will be documente
 
 ---
 
+## [8.5.0] - 2026-02-15 (Developer Experience & Agent Teams Pilot)
+
+### Overview
+
+**Diverga v8.5.0** — Developer Experience release introducing automated code generation, version synchronization, release automation, and Agent Teams pilot for parallel agent execution.
+
+### Key Highlights
+
+- **Single Source of Truth**: `config/agents.json` (44 agents) drives all derived files via `scripts/generate.js`
+- **Version drift eliminated**: `scripts/sync-version.js` propagates version across 100+ files automatically
+- **Release automation**: `scripts/release.js` — one command for version bump, sync, generate, changelog, git tag
+- **Diagnostics**: `scripts/doctor.js` — 9 automated checks in <1 second
+- **Agent Teams pilot**: I0 Team Lead mode with 3x parallel database fetching via native Claude Code TeamCreate/TaskCreate/SendMessage
+- **Pre-commit hooks**: husky enforces version consistency and code generation freshness
+
+### New Features
+
+- **feat(ssot)**: `config/agents.json` — Single Source of Truth for all 44 agents
+  - Full metadata: id, displayName, category, tier, model, triggers (en/ko), prerequisites, checkpoints, VS level
+  - `config/agents.schema.json` for JSON Schema validation
+  - Adding a new agent: edit 3 files (was 9)
+
+- **feat(generate)**: `scripts/generate.js` — Code generation from SSoT
+  - Output 1: `src/agents/definitions.generated.ts` (TypeScript agent configs)
+  - Output 2: `mcp/agent-prerequisite-map.json` (checkpoint prerequisites)
+  - Output 3: `AGENTS.md` (agent table between GENERATED markers)
+  - `--check` mode for CI verification (idempotent)
+
+- **feat(version)**: `scripts/sync-version.js` — Version synchronization
+  - Source: `package.json` version field
+  - Targets: pyproject.toml, src/index.ts, config/diverga-config.json, 53 SKILL.md, 47 Codex SKILL.md
+  - Fixed drift: pyproject.toml 8.0.1→8.4.0, src/index.ts 8.1.0→8.4.0
+
+- **feat(release)**: `scripts/release.js` — Release automation
+  - `node scripts/release.js [patch|minor|major|X.Y.Z] [--dry-run]`
+  - Chains: version bump → sync → generate → changelog → git commit + tag
+
+- **feat(doctor)**: `scripts/doctor.js` — 9 diagnostic checks
+  - Node.js version, git status, version consistency, agent count, SKILL.md presence, Codex SKILL.md, MCP server, TypeScript, package.json scripts
+
+- **feat(teams)**: Agent Teams pilot (I0 Team Lead mode)
+  - I0 creates `scholarag-pipeline` team with TeamCreate
+  - 3 parallel I1 instances for Semantic Scholar, OpenAlex, arXiv
+  - TaskCreate with `blockedBy` for automatic dependency management
+  - Checkpoint approvals relayed via SendMessage
+  - Fallback to sequential mode when teams unavailable
+  - Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`
+
+- **feat(hooks)**: husky pre-commit hook
+  - Runs `npm run precommit` (version:check + generate:check)
+  - Blocks commit if version drift or stale generated files detected
+
+### Files Added (8)
+
+| File | Size | Purpose |
+|------|------|---------|
+| `config/agents.json` | 45KB | SSoT for 44 agents |
+| `config/agents.schema.json` | 4.8KB | JSON Schema validation |
+| `scripts/generate.js` | 18KB | Code generation from SSoT |
+| `scripts/sync-version.js` | 7KB | Version synchronization |
+| `scripts/release.js` | 7.6KB | Release automation |
+| `scripts/doctor.js` | 7.1KB | Diagnostic tool |
+| `src/agents/definitions.generated.ts` | 36KB | Generated TypeScript definitions |
+| `.husky/pre-commit` | 71B | Pre-commit validation hook |
+
+### Files Modified (Key)
+
+| File | Changes |
+|------|---------|
+| `package.json` | 8 new scripts (generate, version:sync/check, release, doctor, precommit, test:all), husky devDependency |
+| `pyproject.toml` | Version 8.0.1 → 8.5.0 (drift fix) |
+| `src/index.ts` | Version 8.1.0 → 8.5.0 (drift fix) |
+| `skills/i0/SKILL.md` | Agent Teams Team Lead Protocol section |
+| `skills/research-orchestrator/SKILL.md` | Agent Teams Dispatch option |
+| `CLAUDE.md` | Agent Teams v8.5 section, 4 team patterns |
+| `AGENTS.md` | Regenerated table from agents.json |
+| `mcp/agent-prerequisite-map.json` | Regenerated from agents.json |
+| 53 `skills/*/SKILL.md` | Version sync to 8.5.0 |
+| 47 `.codex/skills/*/SKILL.md` | Version sync to 8.5.0 |
+
+### Package.json Scripts Added
+
+```json
+"generate": "node scripts/generate.js --write",
+"generate:check": "node scripts/generate.js --check",
+"version:sync": "node scripts/sync-version.js --fix",
+"version:check": "node scripts/sync-version.js --check",
+"release:patch": "node scripts/release.js patch",
+"release:minor": "node scripts/release.js minor",
+"release:major": "node scripts/release.js major",
+"doctor": "node scripts/doctor.js"
+```
+
+### Agent Teams Patterns (4)
+
+| Pattern | Use Case | Agents | Speedup |
+|---------|----------|--------|---------|
+| Parallel Specialists | Literature review | B1+B2+B3 → B4 | ~60% |
+| Pipeline | Systematic review | I0→I1(×3)→I2→I3 | ~40% |
+| Competing Hypotheses | Research design | A1+A2+A5 | 3 perspectives |
+| QA Swarm | Quality check | F1+F3+F4+F5 | 4-angle |
+
+### Breaking Changes
+
+None. Full backward compatibility maintained.
+
+### Migration Guide
+
+v8.4.0 → v8.5.0:
+- **Existing installations**: Re-run `scripts/install.sh` to get updated skills
+- **Developer workflow**: Run `npm run doctor` to verify installation health
+- **New workflow**: Use `npm run generate` after editing `config/agents.json`
+- **Agent Teams**: Set `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` to enable
+
+### Verification
+
+```
+✓ Node.js v25.2.1 (>= 18.0.0)
+✓ Git repository (branch: main)
+✓ Version consistency (8.5.0 across all files)
+✓ Agent count: 44 agents in config/agents.json
+✓ SKILL.md files: 44/44 present
+✓ Codex SKILL.md: 44/44 present
+✓ MCP server: checkpoint-server.js exists
+✓ TypeScript: no errors
+✓ Package.json: 8/8 scripts defined
+Summary: 9/9 checks passed
+```
+
+---
+
+## [8.4.0] - 2026-02-12 (Researcher Visibility & Pipeline Safety)
+
+### Overview
+
+**Diverga v8.4.0** - Addresses two critical usability issues: hidden research files and silent API key failures.
+
+### Key Highlights
+
+- **Dual directory structure**: `.research/` (system) + `research/` (researcher-visible)
+- **Automatic migration**: Existing `.research/` projects auto-migrate public files on first access
+- **New checkpoint**: 🔴 `SCH_API_KEY_VALIDATION` blocks pipeline when required API keys are missing
+- **Full backward compatibility**: No breaking changes for existing projects
+
+### New Features
+
+- **feat(directory)**: Split `.research/` into dual structure
+  - `.research/` → System-only files (HUD cache, priority context, sessions)
+  - `research/` → Researcher-visible files (project state, decisions, checkpoints, baselines)
+  - Auto-migration on first access (copies, preserves originals)
+
+- **feat(checkpoint)**: `SCH_API_KEY_VALIDATION` checkpoint (🔴 REQUIRED)
+  - Blocks I1-PaperRetrievalAgent when Scopus/WoS API keys are missing
+  - AskUserQuestion with 3 options: Provide Key, Skip DB, Pause
+  - `validateApiKeys()` utility function exported from checkpoint-logic.js
+
+- **feat(hud)**: `findProjectRoot()` searches both `research/` and `.research/`
+  - `loadProjectState()`, `loadCheckpoints()` try public path first
+  - `calculateMemoryHealth()` checks both locations
+
+### Files Changed (9)
+
+- `mcp/lib/checkpoint-logic.js` - Dual-path system, migration, validateApiKeys()
+- `mcp/checkpoint-server.js` - getPublicResearchDir() function
+- `lib/hud/state.ts` - Dual-directory search in 4 functions
+- `.opencode/plugins/diverga/hooks/context-manager.ts` - CONTEXT_PATHS updated
+- `mcp/agent-prerequisite-map.json` - SCH_API_KEY_VALIDATION registered
+- `.claude/references/checkpoint-templates.md` - New bilingual template
+- `skills/i1/SKILL.md` - Error handling fix + checkpoint protocol
+- `.claude/checkpoints/checkpoint-definitions.yaml` - New checkpoint definition
+- `CLAUDE.md` - Documentation updates
+
+### Breaking Changes
+
+None. Full backward compatibility maintained.
+
+---
+
 ## [8.3.0] - 2026-02-12 (Cross-Platform Migration)
 
 ### Overview

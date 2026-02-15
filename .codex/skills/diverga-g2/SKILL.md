@@ -8,7 +8,7 @@ description: |
   학술 글쓰기, 논문 작성
 metadata:
   short-description: G2-AcademicCommunicator
-  version: 8.3.0
+  version: 8.5.0
 ---
 
 # G2-AcademicCommunicator

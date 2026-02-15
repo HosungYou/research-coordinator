@@ -7,7 +7,7 @@ description: |
   Triggers: quality appraisal, RoB, GRADE, Newcastle-Ottawa, risk of bias, 품질 평가, 비뚤림 평가
 metadata:
   short-description: B2-EvidenceQualityAppraiser
-  version: 8.3.0
+  version: 8.5.0
 ---
 
 # B2 - Evidence Quality Appraiser

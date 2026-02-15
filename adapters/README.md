@@ -4,7 +4,7 @@ This directory contains adapter templates for multi-CLI compatibility.
 
 ## Overview
 
-Diverga v8.3.0 supports three CLI tools, each with different invocation patterns:
+Diverga v8.4.0 supports three CLI tools, each with different invocation patterns:
 
 | CLI Tool | Native Support | Adapter Template |
 |----------|----------------|------------------|
@@ -121,4 +121,4 @@ These templates can be customized for specific deployment scenarios:
 
 ## Version
 
-Adapter templates version: 8.3.0 (2026-02-12)
+Adapter templates version: 8.4.0 (2026-02-12)

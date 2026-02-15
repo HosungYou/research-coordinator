@@ -1,4 +1,4 @@
-# Diverga Cross-Platform Guide v8.3.0
+# Diverga Cross-Platform Guide v8.4.0
 
 **Last Updated**: 2026-02-12
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-Diverga v8.3.0 supports three CLI platforms for AI-assisted research. This guide covers installation, usage, and platform-specific considerations for each platform.
+Diverga v8.4.0 supports three CLI platforms for AI-assisted research. This guide covers installation, usage, and platform-specific considerations for each platform.
 
 ---
 

@@ -1,6 +1,6 @@
 # Codex CLI Skill System: Technical Documentation
 
-**Version**: 8.3.0
+**Version**: 8.4.0
 **Last Updated**: 2026-02-12
 **Status**: Verified Working
 
@@ -8,7 +8,7 @@
 
 ## Executive Summary
 
-Diverga v8.3.0 provides full **Codex CLI compatibility** through the SKILL.md-based skill loading system. Each of the 44 agents is represented as an individual skill file. This document explains:
+Diverga v8.4.0 provides full **Codex CLI compatibility** through the SKILL.md-based skill loading system. Each of the 44 agents is represented as an individual skill file. This document explains:
 
 1. How Codex CLI discovers and loads skills
 2. Why AGENTS.md alone is insufficient
@@ -151,7 +151,7 @@ description: Research question refinement agent. Helps formulate clear, answerab
              RQ, refine question, 연구 질문, 연구문제
 metadata:
   short-description: A1-ResearchQuestionRefiner
-  version: 8.3.0
+  version: 8.4.0
 ---
 ```
 
@@ -166,7 +166,7 @@ description: Meta-analysis specialist for effect size extraction, heterogeneity
              메타분석, 효과크기
 metadata:
   short-description: C5-MetaAnalysisMaster Agent
-  version: 8.3.0
+  version: 8.4.0
 ---
 ```
 
@@ -181,7 +181,7 @@ description: Systematic review pipeline orchestrator for PRISMA 2020 automation.
              체계적 문헌고찰, 프리즈마, 문헌고찰 자동화
 metadata:
   short-description: I0-ReviewPipelineOrchestrator
-  version: 8.3.0
+  version: 8.4.0
 ---
 ```
 
@@ -195,7 +195,7 @@ description: Paper retrieval agent for multi-database fetching from Semantic Sch
              database search, 논문 수집, 논문 검색, 데이터베이스 검색
 metadata:
   short-description: I1-PaperRetrievalAgent
-  version: 8.3.0
+  version: 8.4.0
 ---
 ```
 
@@ -209,7 +209,7 @@ description: PRISMA 2020 screening assistant with AI-assisted 6-dimension screen
              논문 스크리닝, 선별, 포함 기준
 metadata:
   short-description: I2-ScreeningAssistant
-  version: 8.3.0
+  version: 8.4.0
 ---
 ```
 
@@ -223,7 +223,7 @@ description: RAG builder for vector database construction and document indexing.
              vector database, embed documents, RAG 구축, 벡터 DB, 문서 임베딩
 metadata:
   short-description: I3-RAGBuilder
-  version: 8.3.0
+  version: 8.4.0
 ---
 ```
 
@@ -237,7 +237,7 @@ description: Diverga setup wizard. Configure checkpoint levels, HUD settings,
              and project initialization. Triggers on setup, configure, initialize
 metadata:
   short-description: Diverga Setup Wizard
-  version: 8.3.0
+  version: 8.4.0
 ---
 
 # diverga-memory/SKILL.md
@@ -248,7 +248,7 @@ description: Diverga memory system for persistent research context. Search,
              context, recall, session, 기억, 맥락
 metadata:
   short-description: Diverga Memory System
-  version: 8.3.0
+  version: 8.4.0
 ---
 
 # diverga-help/SKILL.md
@@ -258,7 +258,7 @@ description: Diverga help guide. Shows available agents, commands, and usage
              instructions. Triggers on help, guide, documentation
 metadata:
   short-description: Diverga Help Guide
-  version: 8.3.0
+  version: 8.4.0
 ---
 ```
 
@@ -361,7 +361,7 @@ CHECKPOINT: CP_EFFECT_SIZE_SELECTION
 
 ## Claude Code vs Codex CLI: Feature Comparison
 
-### Capability Matrix (v8.3.0)
+### Capability Matrix (v8.4.0)
 
 | Feature | Claude Code | Codex CLI |
 |---------|-------------|-----------|
@@ -479,7 +479,7 @@ Model: CHECKPOINT displayed in text
 
 | Version | Date | Changes |
 |---------|------|---------|
-| 8.3.0 | 2026-02-12 | Updated to 44 agents (added Category I: I0-I3), individual skill files per agent, prerequisite checking via `.research/decision-log.yaml`, model mapping updated to gpt-5.3-codex/gpt-5.2-codex/gpt-5.1-codex-mini |
+| 8.4.0 | 2026-02-12 | Updated to 44 agents (added Category I: I0-I3), individual skill files per agent, prerequisite checking via `.research/decision-log.yaml`, model mapping updated to gpt-5.3-codex/gpt-5.2-codex/gpt-5.1-codex-mini |
 | 6.6.2 | 2026-01-30 | Initial Codex SKILL.md implementation with 3 bundled skills, QUANT-005 verification complete |
 
 ---

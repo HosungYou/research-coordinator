@@ -1,11 +1,17 @@
 {
-  "version": "8.3.0",
+  "version": "8.5.0",
   "llm_provider": "anthropic",
   "llm_api_key_env": "ANTHROPIC_API_KEY",
   "human_checkpoints": {
     "enabled": true,
-    "required": ["CP_PARADIGM", "CP_METHODOLOGY"],
-    "optional": ["CP_THEORY", "CP_DATA_VALIDATION"]
+    "required": [
+      "CP_PARADIGM",
+      "CP_METHODOLOGY"
+    ],
+    "optional": [
+      "CP_THEORY",
+      "CP_DATA_VALIDATION"
+    ]
   },
   "default_paradigm": "auto",
   "language": "en",

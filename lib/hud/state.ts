@@ -78,7 +78,7 @@ export function findProjectRoot(startDir: string = process.cwd()): string | null
   let current = startDir;
 
   while (current !== path.parse(current).root) {
-    if (fs.existsSync(path.join(current, '.research'))) {
+    if (fs.existsSync(path.join(current, 'research')) || fs.existsSync(path.join(current, '.research'))) {
       return current;
     }
     current = path.dirname(current);
@@ -142,7 +142,10 @@ export function loadProjectState(projectRoot?: string): Record<string, any> | nu
   const root = projectRoot || findProjectRoot();
   if (!root) return null;
 
-  const statePath = path.join(root, '.research', 'project-state.yaml');
+  // Try public path first, then fall back to system path
+  const publicPath = path.join(root, 'research', 'project-state.yaml');
+  const systemPath = path.join(root, '.research', 'project-state.yaml');
+  const statePath = fs.existsSync(publicPath) ? publicPath : systemPath;
 
   try {
     if (fs.existsSync(statePath)) {
@@ -163,11 +166,14 @@ export function loadCheckpoints(projectRoot?: string): Record<string, any> | nul
   const root = projectRoot || findProjectRoot();
   if (!root) return null;
 
-  const checkpointsPath = path.join(root, '.research', 'checkpoints.yaml');
+  // Try public path first, then fall back to system path
+  const publicPath = path.join(root, 'research', 'checkpoints.yaml');
+  const systemPath = path.join(root, '.research', 'checkpoints.yaml');
+  const checkpointsFile = fs.existsSync(publicPath) ? publicPath : systemPath;
 
   try {
-    if (fs.existsSync(checkpointsPath)) {
-      const content = fs.readFileSync(checkpointsPath, 'utf-8');
+    if (fs.existsSync(checkpointsFile)) {
+      const content = fs.readFileSync(checkpointsFile, 'utf-8');
       return yaml.load(content) as Record<string, any>;
     }
   } catch (e) {
@@ -220,7 +226,9 @@ export function refreshCache(projectRoot?: string): HUDCache {
 function calculateMemoryHealth(projectRoot: string): number {
   try {
     const sessionsDir = path.join(projectRoot, '.research', 'sessions');
-    const decisionLogPath = path.join(projectRoot, '.research', 'decision-log.yaml');
+    const publicDecisionLogPath = path.join(projectRoot, 'research', 'decision-log.yaml');
+    const systemDecisionLogPath = path.join(projectRoot, '.research', 'decision-log.yaml');
+    const decisionLogPath = fs.existsSync(publicDecisionLogPath) ? publicDecisionLogPath : systemDecisionLogPath;
 
     let health = 100;
 

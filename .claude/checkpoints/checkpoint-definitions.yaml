@@ -45,6 +45,14 @@ checkpoints:
     human_action: "Approve research design and methodology"
     cannot_proceed_without: true
 
+  SCH_API_KEY_VALIDATION:
+    level: required
+    icon: "🔴"
+    description: "API key validation for selected databases"
+    applies_to: [I1-paper-retrieval-agent]
+    human_action: "Provide missing API keys or adjust database selection"
+    cannot_proceed_without: true
+
   # ============================================
   # RECOMMENDED (🟠 Orange) - Should have human review
   # ============================================

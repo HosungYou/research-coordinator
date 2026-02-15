@@ -21,7 +21,14 @@ function getResearchDir() {
   return dir;
 }
 
-const logic = createCheckpointLogic(PREREQ_MAP, getResearchDir());
+// Resolve research/ (public) path relative to cwd (project root)
+function getPublicResearchDir() {
+  const dir = join(process.cwd(), 'research');
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  return dir;
+}
+
+const logic = createCheckpointLogic(PREREQ_MAP, getResearchDir(), getPublicResearchDir());
 const {
   checkPrerequisites,
   markCheckpoint,

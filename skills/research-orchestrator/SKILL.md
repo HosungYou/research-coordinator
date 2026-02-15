@@ -5,7 +5,7 @@ description: |
   Manages 44 research agents across 9 categories (A-I) with MANDATORY human checkpoints
   No autonomous modes - all critical decisions require explicit human approval
   Features: Systematic Review Automation, Meta-Analysis System, Humanization Pipeline
-version: "8.3.0"
+version: "8.5.0"
 ---
 
 # Research Orchestrator v2.7.0 (Human-Centered)
@@ -298,12 +298,22 @@ checkpoint_skip_on_context: null
 model_routing: enabled                    # HIGH/MEDIUM/LOW tier routing
 agent_specialization: enabled             # 44 agents across 9 categories
 parallel_execution: enabled_between_checkpoints_only
+agent_teams_dispatch: enabled_when_available   # v8.5
 context_persistence: enabled
 vs_methodology: enabled
 systematic_review_automation: enabled     # Category I agents (I0-I3)
 meta_analysis_system: enabled             # C5/C6/C7 multi-gate validation
 humanization_pipeline: enabled            # G5/G6/F5 AI pattern detection
 ```
+
+### Agent Teams Dispatch (v8.5)
+
+For Category I systematic review pipeline, the orchestrator can activate I0 in Team Lead mode:
+- When `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` is set
+- I0 creates a `scholarag-pipeline` team for parallel database fetching
+- 3x I1 instances fetch from Semantic Scholar, OpenAlex, arXiv simultaneously
+- Dependencies auto-managed via TaskCreate blockedBy
+- Falls back to sequential mode when teams unavailable
 
 ---
 

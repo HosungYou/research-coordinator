@@ -7,7 +7,7 @@ description: |
   Triggers: statistical analysis, ANOVA, regression, t-test, SEM, 통계 분석, 회귀, thematic analysis, coding
 metadata:
   short-description: E1-QuantitativeAnalysisGuide
-  version: 8.3.0
+  version: 8.5.0
 ---
 
 # E1 - Quantitative Analysis Guide

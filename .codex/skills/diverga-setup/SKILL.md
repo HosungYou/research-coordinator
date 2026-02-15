@@ -1,18 +1,18 @@
 ---
 name: diverga-setup
 description: |
-  Diverga v8.3.0 initial configuration wizard for Codex CLI.
+  Diverga v8.4.0 initial configuration wizard for Codex CLI.
   Simplified 2-step setup: Checkpoint Level + HUD preferences.
   LLM selection removed (Codex CLI is already authenticated).
   Triggers: setup, configure, install, first-time setup, 설정
 metadata:
   short-description: Setup-Wizard
-  version: 8.3.0
+  version: 8.5.0
 ---
 
 # Diverga Setup Wizard (Codex CLI)
 
-**Version**: 8.3.0
+**Version**: 8.4.0
 
 ## Overview
 
@@ -49,7 +49,7 @@ diverga-setup (YOU ARE HERE)
 
 ### Step 0: Project Detection
 Check for existing project:
-- If `.research/` exists: "Existing project detected. Upgrade to v8.3.0?"
+- If `.research/` exists: "Existing project detected. Upgrade to v8.4.0?"
 - If `config/diverga-config.json` exists with older version: "Upgrade from vX.Y.Z?"
 - Otherwise: "New project setup"
 
@@ -60,7 +60,7 @@ Check: read_file(".research/project-state.yaml") or read_file("config/diverga-co
 Display:
 ```
 ========================================
-   Welcome to Diverga v8.3.0
+   Welcome to Diverga v8.4.0
    AI Research Assistant for Codex CLI
 ========================================
 ```
@@ -117,7 +117,7 @@ After checkpoint selection:
 
 ### project-state.yaml
 ```yaml
-version: "8.3.0"
+version: "8.4.0"
 platform: "codex-cli"
 checkpoint_level: "full"  # full | minimal | off
 created: "YYYY-MM-DD"

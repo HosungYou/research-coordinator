@@ -11,8 +11,8 @@ import type { PluginContext, ResearchContext, Decision } from '../types';
  * Context file paths
  */
 const CONTEXT_PATHS = {
-  projectState: '.research/project-state.yaml',
-  decisionLog: '.research/decision-log.yaml',
+  projectState: 'research/project-state.yaml',
+  decisionLog: 'research/decision-log.yaml',
 };
 
 /**

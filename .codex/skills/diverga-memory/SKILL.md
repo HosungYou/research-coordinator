@@ -8,12 +8,12 @@ description: |
   기억, 맥락, 세션, 체크포인트
 metadata:
   short-description: Memory-System
-  version: 8.3.0
+  version: 8.5.0
 ---
 
 # Diverga Memory System (Codex CLI)
 
-**Version**: 8.3.0
+**Version**: 8.4.0
 
 ## Overview
 
@@ -121,7 +121,7 @@ Run migration from older versions.
 Action:
   1. read_file("config/diverga-config.json") or read_file(".research/project-state.yaml")
   2. Detect version and apply migration steps
-  3. Update to v8.3.0 format
+  3. Update to v8.4.0 format
 ```
 
 ## Priority Context (Compression Resilience)
