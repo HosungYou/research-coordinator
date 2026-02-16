@@ -15,8 +15,8 @@
 
 import Database from 'better-sqlite3';
 import yaml from 'js-yaml';
-import { existsSync, mkdirSync } from 'fs';
-import { dirname } from 'path';
+import { existsSync, mkdirSync, readFileSync } from 'fs';
+import { dirname, join } from 'path';
 import { CHECKPOINT_LEVELS } from './constants.js';
 import { deepMerge } from './utils.js';
 
@@ -618,6 +618,150 @@ export function createSqliteServers(dbPath, prereqMap) {
   };
 
   // =========================================================================
+  // migrateFromYaml(researchDir)
+  // =========================================================================
+
+  function migrateFromYaml(researchDir) {
+    const skipped = [];
+    let migrated = 0;
+
+    function _tryReadYaml(filename) {
+      const paths = [
+        join(researchDir, 'research', filename),
+        join(researchDir, '.research', filename),
+        join(researchDir, filename),
+      ];
+      for (const p of paths) {
+        if (existsSync(p)) {
+          try {
+            return yaml.load(readFileSync(p, 'utf8'));
+          } catch {
+            return null;
+          }
+        }
+      }
+      return null;
+    }
+
+    function _tryReadJson(filepath) {
+      if (!existsSync(filepath)) return null;
+      try {
+        return JSON.parse(readFileSync(filepath, 'utf8'));
+      } catch {
+        return null;
+      }
+    }
+
+    // --- Checkpoints ---
+    const cpData = _tryReadYaml('checkpoints.yaml');
+    if (cpData?.checkpoints) {
+      const entries = cpData.checkpoints.active || cpData.checkpoints;
+      if (Array.isArray(entries)) {
+        for (const cp of entries) {
+          if (!cp.checkpoint_id) continue;
+          const level = cp.level || CHECKPOINT_LEVELS[cp.checkpoint_id] || 'OPTIONAL';
+          stmts.upsertCheckpoint.run({
+            checkpoint_id: cp.checkpoint_id,
+            decision: cp.decision || null,
+            rationale: cp.rationale || null,
+            level: level.toUpperCase(),
+            status: cp.status || 'completed',
+            completed_at: cp.completed_at || new Date().toISOString(),
+          });
+          migrated++;
+        }
+      }
+    } else {
+      skipped.push('checkpoints.yaml');
+    }
+
+    // --- Decisions ---
+    const dlData = _tryReadYaml('decision-log.yaml');
+    if (dlData?.decisions && Array.isArray(dlData.decisions)) {
+      for (const d of dlData.decisions) {
+        if (!d.decision_id) continue;
+        const existing = stmts.getDecision.get(d.decision_id);
+        if (existing) continue;
+
+        let contextStr = null;
+        if (d.context != null) {
+          contextStr = typeof d.context === 'object' ? JSON.stringify(d.context) : String(d.context);
+        }
+
+        stmts.insertDecision.run({
+          decision_id: d.decision_id,
+          checkpoint_id: d.checkpoint_id || null,
+          selected: d.selected || null,
+          rationale: d.rationale || null,
+          context: contextStr,
+          version: d.version || 1,
+          timestamp: d.timestamp || new Date().toISOString(),
+        });
+        migrated++;
+      }
+    } else {
+      skipped.push('decision-log.yaml');
+    }
+
+    // --- Project State ---
+    const psData = _tryReadYaml('project-state.yaml');
+    if (psData && typeof psData === 'object') {
+      memoryServer.updateProjectState(psData);
+      migrated++;
+    } else {
+      skipped.push('project-state.yaml');
+    }
+
+    // --- Priority Context ---
+    const pcPaths = [
+      join(researchDir, '.research', 'priority-context.md'),
+      join(researchDir, 'research', 'priority-context.md'),
+    ];
+    let pcContent = null;
+    for (const p of pcPaths) {
+      if (existsSync(p)) {
+        pcContent = readFileSync(p, 'utf8');
+        break;
+      }
+    }
+    if (pcContent) {
+      memoryServer.writePriorityContext(pcContent);
+      migrated++;
+    } else {
+      skipped.push('priority-context.md');
+    }
+
+    // --- Comm Agents ---
+    const agentsData = _tryReadJson(join(researchDir, '.research', 'comm', 'agents.json'));
+    if (agentsData?.agents && typeof agentsData.agents === 'object') {
+      for (const [id, meta] of Object.entries(agentsData.agents)) {
+        commServer.registerAgent(id, meta);
+        migrated++;
+      }
+    } else {
+      skipped.push('comm/agents.json');
+    }
+
+    // --- Comm Messages ---
+    const msgData = _tryReadJson(join(researchDir, '.research', 'comm', 'messages.json'));
+    if (msgData?.messages && Array.isArray(msgData.messages)) {
+      for (const m of msgData.messages) {
+        if (!m.from || !m.to) continue;
+        try {
+          commServer.send(m.from, m.to, m.content, m.metadata);
+          migrated++;
+        } catch {
+          // skip invalid messages
+        }
+      }
+    } else {
+      skipped.push('comm/messages.json');
+    }
+
+    return { success: true, migrated, skipped };
+  }
+
+  // =========================================================================
   // close
   // =========================================================================
 
@@ -625,5 +769,5 @@ export function createSqliteServers(dbPath, prereqMap) {
     db.close();
   }
 
-  return { checkpointServer, memoryServer, commServer, close };
+  return { checkpointServer, memoryServer, commServer, migrateFromYaml, close };
 }

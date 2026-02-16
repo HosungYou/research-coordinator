@@ -11,7 +11,7 @@
 
 import { describe, it, before, after, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, rmSync, existsSync } from 'fs';
+import { mkdtempSync, rmSync, existsSync, mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
 import yaml from 'js-yaml';
@@ -738,5 +738,312 @@ describe('edge cases', () => {
     // If WAL was not enabled, concurrent writes might fail
     assert.ok(true, 'No errors with concurrent operations implies WAL mode');
     cleanup(ctx);
+  });
+});
+
+// ===========================================================================
+// 16. migrateFromYaml (~10 tests)
+// ===========================================================================
+
+describe('migrateFromYaml', () => {
+  it('migrates checkpoints from YAML', () => {
+    const tmpDir = mkdtempSync(join(tmpdir(), 'diverga-migrate-'));
+    const dbPath = join(tmpDir, '.research', 'diverga.db');
+    mkdirSync(join(tmpDir, 'research'), { recursive: true });
+    mkdirSync(join(tmpDir, '.research'), { recursive: true });
+
+    const checkpointsData = {
+      checkpoints: {
+        active: [
+          { checkpoint_id: 'CP_RESEARCH_DIRECTION', decision: 'AI Education', rationale: 'Core focus', status: 'completed' },
+          { checkpoint_id: 'CP_THEORY_SELECTION', decision: 'Constructivism', status: 'completed' },
+        ],
+      },
+    };
+    writeFileSync(join(tmpDir, 'research', 'checkpoints.yaml'), yaml.dump(checkpointsData));
+
+    const prereqMap = { agents: { a1: { entry_point: true, own_checkpoints: ['CP_RESEARCH_DIRECTION'] } } };
+    const servers = createSqliteServers(dbPath, prereqMap);
+    const result = servers.migrateFromYaml(tmpDir);
+
+    assert.ok(result.success);
+    assert.ok(result.migrated >= 2);
+
+    const status = servers.checkpointServer.checkpointStatus();
+    assert.ok(status.passed.includes('CP_RESEARCH_DIRECTION'));
+    assert.ok(status.passed.includes('CP_THEORY_SELECTION'));
+
+    servers.close();
+    rmSync(tmpDir, { recursive: true, force: true });
+  });
+
+  it('migrates decisions from YAML', () => {
+    const tmpDir = mkdtempSync(join(tmpdir(), 'diverga-migrate-'));
+    const dbPath = join(tmpDir, '.research', 'diverga.db');
+    mkdirSync(join(tmpDir, 'research'), { recursive: true });
+    mkdirSync(join(tmpDir, '.research'), { recursive: true });
+
+    const decisionsData = {
+      decisions: [
+        { decision_id: 'DEV_001', checkpoint_id: 'CP_A', selected: 'Option A', rationale: 'Reason A', timestamp: '2025-01-01T10:00:00Z' },
+        { decision_id: 'DEV_002', checkpoint_id: 'CP_B', selected: 'Option B', rationale: 'Reason B', timestamp: '2025-01-01T11:00:00Z' },
+      ],
+    };
+    writeFileSync(join(tmpDir, 'research', 'decision-log.yaml'), yaml.dump(decisionsData));
+
+    const prereqMap = { agents: {} };
+    const servers = createSqliteServers(dbPath, prereqMap);
+    const result = servers.migrateFromYaml(tmpDir);
+
+    assert.ok(result.success);
+    assert.ok(result.migrated >= 2);
+
+    const decisions = servers.memoryServer.listDecisions();
+    assert.equal(decisions.length, 2);
+    assert.equal(decisions[0].decision_id, 'DEV_001');
+    assert.equal(decisions[1].decision_id, 'DEV_002');
+
+    servers.close();
+    rmSync(tmpDir, { recursive: true, force: true });
+  });
+
+  it('migrates project state from YAML', () => {
+    const tmpDir = mkdtempSync(join(tmpdir(), 'diverga-migrate-'));
+    const dbPath = join(tmpDir, '.research', 'diverga.db');
+    mkdirSync(join(tmpDir, 'research'), { recursive: true });
+    mkdirSync(join(tmpDir, '.research'), { recursive: true });
+
+    const projectState = {
+      project: { name: 'Test Project', domain: 'education' },
+      research: { paradigm: 'quantitative', method: 'RCT' },
+    };
+    writeFileSync(join(tmpDir, 'research', 'project-state.yaml'), yaml.dump(projectState));
+
+    const prereqMap = { agents: {} };
+    const servers = createSqliteServers(dbPath, prereqMap);
+    const result = servers.migrateFromYaml(tmpDir);
+
+    assert.ok(result.success);
+    assert.ok(result.migrated >= 1);
+
+    const state = servers.memoryServer.readProjectState();
+    assert.equal(state.project.name, 'Test Project');
+    assert.equal(state.research.paradigm, 'quantitative');
+
+    servers.close();
+    rmSync(tmpDir, { recursive: true, force: true });
+  });
+
+  it('migrates priority context from file', () => {
+    const tmpDir = mkdtempSync(join(tmpdir(), 'diverga-migrate-'));
+    const dbPath = join(tmpDir, '.research', 'diverga.db');
+    mkdirSync(join(tmpDir, 'research'), { recursive: true });
+    mkdirSync(join(tmpDir, '.research'), { recursive: true });
+
+    const priorityContent = 'Research on AI chatbots in language learning. Focus on speaking skills.';
+    writeFileSync(join(tmpDir, '.research', 'priority-context.md'), priorityContent);
+
+    const prereqMap = { agents: {} };
+    const servers = createSqliteServers(dbPath, prereqMap);
+    const result = servers.migrateFromYaml(tmpDir);
+
+    assert.ok(result.success);
+    assert.ok(result.migrated >= 1);
+
+    const pc = servers.memoryServer.readPriorityContext();
+    assert.equal(pc, priorityContent);
+
+    servers.close();
+    rmSync(tmpDir, { recursive: true, force: true });
+  });
+
+  it('migrates comm agents from JSON', () => {
+    const tmpDir = mkdtempSync(join(tmpdir(), 'diverga-migrate-'));
+    const dbPath = join(tmpDir, '.research', 'diverga.db');
+    mkdirSync(join(tmpDir, '.research', 'comm'), { recursive: true });
+
+    const agentsData = {
+      agents: {
+        i0: { role: 'orchestrator', model: 'opus', status: 'active' },
+        i1: { role: 'retrieval', model: 'sonnet', status: 'idle' },
+      },
+    };
+    writeFileSync(join(tmpDir, '.research', 'comm', 'agents.json'), JSON.stringify(agentsData));
+
+    const prereqMap = { agents: {} };
+    const servers = createSqliteServers(dbPath, prereqMap);
+    const result = servers.migrateFromYaml(tmpDir);
+
+    assert.ok(result.success);
+    assert.ok(result.migrated >= 2);
+
+    const agents = servers.commServer.listAgents();
+    assert.equal(agents.length, 2);
+    const i0 = agents.find(a => a.agent_id === 'i0');
+    const i1 = agents.find(a => a.agent_id === 'i1');
+    assert.ok(i0);
+    assert.ok(i1);
+    assert.equal(i0.role, 'orchestrator');
+    assert.equal(i1.role, 'retrieval');
+
+    servers.close();
+    rmSync(tmpDir, { recursive: true, force: true });
+  });
+
+  it('migrates comm messages from JSON', () => {
+    const tmpDir = mkdtempSync(join(tmpdir(), 'diverga-migrate-'));
+    const dbPath = join(tmpDir, '.research', 'diverga.db');
+    mkdirSync(join(tmpDir, '.research', 'comm'), { recursive: true });
+
+    // First create agents
+    const agentsData = {
+      agents: {
+        i0: { role: 'orchestrator' },
+        i1: { role: 'retrieval' },
+      },
+    };
+    writeFileSync(join(tmpDir, '.research', 'comm', 'agents.json'), JSON.stringify(agentsData));
+
+    const messagesData = {
+      messages: [
+        { from: 'i0', to: 'i1', content: 'Start retrieval', metadata: { priority: 'high' } },
+        { from: 'i1', to: 'i0', content: 'Retrieved 50 papers', metadata: { count: 50 } },
+      ],
+    };
+    writeFileSync(join(tmpDir, '.research', 'comm', 'messages.json'), JSON.stringify(messagesData));
+
+    const prereqMap = { agents: {} };
+    const servers = createSqliteServers(dbPath, prereqMap);
+    const result = servers.migrateFromYaml(tmpDir);
+
+    assert.ok(result.success);
+    assert.ok(result.migrated >= 4); // 2 agents + 2 messages
+
+    const messages = servers.commServer.mailbox('i1', { includeRead: true });
+    assert.equal(messages.length, 1);
+    assert.equal(messages[0].content, 'Start retrieval');
+
+    servers.close();
+    rmSync(tmpDir, { recursive: true, force: true });
+  });
+
+  it('reports skipped when files missing', () => {
+    const tmpDir = mkdtempSync(join(tmpdir(), 'diverga-migrate-'));
+    const dbPath = join(tmpDir, '.research', 'diverga.db');
+    mkdirSync(join(tmpDir, '.research'), { recursive: true });
+
+    const prereqMap = { agents: {} };
+    const servers = createSqliteServers(dbPath, prereqMap);
+    const result = servers.migrateFromYaml(tmpDir);
+
+    assert.ok(result.success);
+    assert.ok(result.skipped.length > 0);
+    assert.ok(result.skipped.includes('checkpoints.yaml'));
+    assert.ok(result.skipped.includes('decision-log.yaml'));
+    assert.ok(result.skipped.includes('project-state.yaml'));
+    assert.ok(result.skipped.includes('priority-context.md'));
+
+    servers.close();
+    rmSync(tmpDir, { recursive: true, force: true });
+  });
+
+  it('idempotent - running twice does not duplicate', () => {
+    const tmpDir = mkdtempSync(join(tmpdir(), 'diverga-migrate-'));
+    const dbPath = join(tmpDir, '.research', 'diverga.db');
+    mkdirSync(join(tmpDir, 'research'), { recursive: true });
+    mkdirSync(join(tmpDir, '.research'), { recursive: true });
+
+    const decisionsData = {
+      decisions: [
+        { decision_id: 'DEV_001', checkpoint_id: 'CP_A', selected: 'Option A', timestamp: '2025-01-01T10:00:00Z' },
+      ],
+    };
+    writeFileSync(join(tmpDir, 'research', 'decision-log.yaml'), yaml.dump(decisionsData));
+
+    const prereqMap = { agents: {} };
+    const servers = createSqliteServers(dbPath, prereqMap);
+
+    // First migration
+    const result1 = servers.migrateFromYaml(tmpDir);
+    assert.ok(result1.success);
+
+    // Second migration
+    const result2 = servers.migrateFromYaml(tmpDir);
+    assert.ok(result2.success);
+
+    // Should still have only one decision (no duplicate)
+    const decisions = servers.memoryServer.listDecisions();
+    assert.equal(decisions.length, 1);
+    assert.equal(decisions[0].decision_id, 'DEV_001');
+
+    servers.close();
+    rmSync(tmpDir, { recursive: true, force: true });
+  });
+
+  it('handles malformed YAML gracefully', () => {
+    const tmpDir = mkdtempSync(join(tmpdir(), 'diverga-migrate-'));
+    const dbPath = join(tmpDir, '.research', 'diverga.db');
+    mkdirSync(join(tmpDir, 'research'), { recursive: true });
+    mkdirSync(join(tmpDir, '.research'), { recursive: true });
+
+    // Write invalid YAML
+    writeFileSync(join(tmpDir, 'research', 'checkpoints.yaml'), 'invalid: yaml: [[[broken');
+
+    const prereqMap = { agents: {} };
+    const servers = createSqliteServers(dbPath, prereqMap);
+
+    // Should not throw, just skip
+    assert.doesNotThrow(() => {
+      const result = servers.migrateFromYaml(tmpDir);
+      assert.ok(result.success);
+      assert.ok(result.skipped.includes('checkpoints.yaml'));
+    });
+
+    servers.close();
+    rmSync(tmpDir, { recursive: true, force: true });
+  });
+
+  it('returns migrated count', () => {
+    const tmpDir = mkdtempSync(join(tmpdir(), 'diverga-migrate-'));
+    const dbPath = join(tmpDir, '.research', 'diverga.db');
+    mkdirSync(join(tmpDir, 'research'), { recursive: true });
+    mkdirSync(join(tmpDir, '.research', 'comm'), { recursive: true });
+
+    // Create checkpoints (2 items)
+    const checkpointsData = {
+      checkpoints: {
+        active: [
+          { checkpoint_id: 'CP_A', decision: 'A' },
+          { checkpoint_id: 'CP_B', decision: 'B' },
+        ],
+      },
+    };
+    writeFileSync(join(tmpDir, 'research', 'checkpoints.yaml'), yaml.dump(checkpointsData));
+
+    // Create decisions (1 item)
+    const decisionsData = {
+      decisions: [
+        { decision_id: 'DEV_001', checkpoint_id: 'CP_C', selected: 'C' },
+      ],
+    };
+    writeFileSync(join(tmpDir, 'research', 'decision-log.yaml'), yaml.dump(decisionsData));
+
+    // Create project state (1 item)
+    const projectState = { project: { name: 'Test' } };
+    writeFileSync(join(tmpDir, 'research', 'project-state.yaml'), yaml.dump(projectState));
+
+    // Create priority context (1 item)
+    writeFileSync(join(tmpDir, '.research', 'priority-context.md'), 'Test context');
+
+    const prereqMap = { agents: {} };
+    const servers = createSqliteServers(dbPath, prereqMap);
+    const result = servers.migrateFromYaml(tmpDir);
+
+    assert.ok(result.success);
+    // 2 checkpoints + 1 decision + 1 project state + 1 priority context = 5
+    assert.equal(result.migrated, 5);
+
+    servers.close();
+    rmSync(tmpDir, { recursive: true, force: true });
   });
 });

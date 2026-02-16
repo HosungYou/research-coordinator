@@ -54,10 +54,21 @@ if (BACKEND === 'sqlite') {
   if (!existsSync(join(researchDir, '.research'))) {
     mkdirSync(join(researchDir, '.research'), { recursive: true });
   }
+  const isNewDb = !existsSync(dbPath);
   const servers = createSqliteServers(dbPath, PREREQ_MAP);
   checkpointServer = servers.checkpointServer;
   memoryServer = servers.memoryServer;
   commServer = servers.commServer;
+
+  // Auto-migrate from YAML/JSON on first run
+  if (isNewDb) {
+    const result = servers.migrateFromYaml(researchDir);
+    if (result.migrated > 0) {
+      process.stderr.write(
+        `[diverga] Migrated ${result.migrated} items from YAML/JSON to SQLite\n`
+      );
+    }
+  }
 
   // Graceful shutdown
   process.on('SIGINT', () => { servers.close(); process.exit(0); });
