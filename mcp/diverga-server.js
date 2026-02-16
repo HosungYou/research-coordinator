@@ -26,37 +26,53 @@ import { fileURLToPath } from 'url';
 import { createCheckpointServer } from './servers/checkpoint-server.js';
 import { createMemoryServer } from './servers/memory-server.js';
 import { createCommServer } from './servers/comm-server.js';
+import { createSqliteServers } from './lib/sqlite-servers.js';
 import { createToolRegistry } from './lib/tool-registry.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // ---------------------------------------------------------------------------
-// Resolve paths
+// Resolve paths and config
 // ---------------------------------------------------------------------------
 
 const PREREQ_MAP = JSON.parse(
   readFileSync(join(__dirname, 'agent-prerequisite-map.json'), 'utf8')
 );
 
-function getResearchDir() {
-  return process.cwd();
+const BACKEND = process.env.DIVERGA_BACKEND || 'yaml';
+const researchDir = process.cwd();
+
+// ---------------------------------------------------------------------------
+// Initialize servers (YAML or SQLite backend)
+// ---------------------------------------------------------------------------
+
+let checkpointServer, memoryServer, commServer;
+
+if (BACKEND === 'sqlite') {
+  // SQLite backend — ACID-safe for parallel agent execution
+  const dbPath = join(researchDir, '.research', 'diverga.db');
+  if (!existsSync(join(researchDir, '.research'))) {
+    mkdirSync(join(researchDir, '.research'), { recursive: true });
+  }
+  const servers = createSqliteServers(dbPath, PREREQ_MAP);
+  checkpointServer = servers.checkpointServer;
+  memoryServer = servers.memoryServer;
+  commServer = servers.commServer;
+
+  // Graceful shutdown
+  process.on('SIGINT', () => { servers.close(); process.exit(0); });
+  process.on('SIGTERM', () => { servers.close(); process.exit(0); });
+} else {
+  // YAML/JSON backend — default, backward-compatible with v8.x
+  const researchPath = join(researchDir, 'research');
+  const systemPath = join(researchDir, '.research');
+  if (!existsSync(researchPath)) mkdirSync(researchPath, { recursive: true });
+  if (!existsSync(systemPath)) mkdirSync(systemPath, { recursive: true });
+
+  checkpointServer = createCheckpointServer(PREREQ_MAP, researchDir);
+  memoryServer = createMemoryServer(researchDir);
+  commServer = createCommServer(researchDir);
 }
-
-// ---------------------------------------------------------------------------
-// Initialize servers
-// ---------------------------------------------------------------------------
-
-const researchDir = getResearchDir();
-
-// Ensure directories exist
-const researchPath = join(researchDir, 'research');
-const systemPath = join(researchDir, '.research');
-if (!existsSync(researchPath)) mkdirSync(researchPath, { recursive: true });
-if (!existsSync(systemPath)) mkdirSync(systemPath, { recursive: true });
-
-const checkpointServer = createCheckpointServer(PREREQ_MAP, researchDir);
-const memoryServer = createMemoryServer(researchDir);
-const commServer = createCommServer(researchDir);
 
 // ---------------------------------------------------------------------------
 // Create tool registry
