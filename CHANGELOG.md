@@ -300,6 +300,65 @@ curl -sSL https://raw.githubusercontent.com/HosungYou/Diverga/main/scripts/insta
 
 ---
 
+## [8.2.0] - 2026-02-12 (MCP Runtime Checkpoint Enforcement)
+
+### Overview
+
+**Diverga v8.2.0** — MCP Runtime Checkpoint Enforcement release introducing a 7-tool MCP server for runtime checkpoint verification, SKILL.md simplification, state path unification, and Priority Context for compression-resilient sessions.
+
+### Key Highlights
+
+- **MCP Checkpoint Server** — 7 runtime verification tools for checkpoint enforcement
+- **SKILL.md Simplification** — 675 lines saved across 28 agents (35-line → 8-line checkpoint sections)
+- **State Path Unification** — All checkpoint state under `.research/` directory
+- **Priority Context** — 500-char compression-resilient summary for long sessions
+- **Memory System Optimization** — Removed 104 unused Python files, replaced by MCP server
+
+### MCP Tools
+
+| Tool | Description |
+|------|-------------|
+| `diverga_check_prerequisites` | Verify agent prerequisites before execution |
+| `diverga_mark_checkpoint` | Record checkpoint decision with rationale |
+| `diverga_checkpoint_status` | Full checkpoint overview (passed/pending/blocked) |
+| `diverga_priority_read` | Read compression-resilient priority context |
+| `diverga_priority_write` | Update priority context |
+| `diverga_project_status` | Full project status with research context |
+| `diverga_decision_add` | Record research decisions to audit trail |
+
+### New Enforcement Rules
+
+- **Rule 5: Override Refusal** — REQUIRED checkpoints cannot be skipped; AskUserQuestion template presented instead of text refusal
+- **Rule 6: MCP-First Verification** — `diverga_check_prerequisites(agent_id)` before execution, fallback to `.research/decision-log.yaml`
+
+### What Changed
+
+- `.claude/state/checkpoints.json` → `.research/checkpoints.yaml` (auto-migrated)
+- 28 SKILL.md checkpoint sections simplified to MCP-based format
+- `lib/memory/` (104 files) removed — replaced by MCP server (3 files, ~200 lines)
+- 6 new checkpoint definitions added
+- Override Refusal template added to checkpoint-templates.md
+
+### Migration
+
+1. `git pull origin main`
+2. `cd mcp && npm install`
+3. Re-sync skills if using local install
+4. Restart Claude Code
+
+### Tests
+
+- 56 unit tests for MCP checkpoint server (100% pass)
+- Zero external test dependencies (Node.js built-in `node:test`)
+
+### Stats
+
+- **145 files changed** | +2,825 / -27,111 lines
+- **53 SKILL.md** files updated to v8.2.0
+- **44 agents** with prerequisite map
+
+---
+
 ## [8.1.0] - 2026-02-09 (Checkpoint Enforcement Strengthening)
 
 ### Overview
