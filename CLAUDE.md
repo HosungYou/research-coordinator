@@ -1,10 +1,11 @@
 # CLAUDE.md
 
-# Diverga v8.4.0 (Researcher Visibility & Pipeline Safety)
+# Diverga v9.0.0 (Architecture — SQLite + MCP Server Split)
 
 **Beyond Modal: AI Research Assistant That Thinks Creatively**
 
-**v8.5.0** (pilot): Agent Teams - Parallel agent execution via TeamCreate/TaskCreate/SendMessage, I0 Team Lead mode, 3x parallel database fetching
+**v9.0.0**: Architecture — MCP 3-server split (checkpoint/memory/comm, 16 tools), SQLite WAL backend, YAML→SQLite auto-migration, agent messaging (register/send/mailbox/broadcast), dual backend via `DIVERGA_BACKEND`
+**v8.5.0**: Agent Teams - Parallel agent execution via TeamCreate/TaskCreate/SendMessage, I0 Team Lead mode, 3x parallel database fetching
 **v8.4.0**: Researcher Visibility & Pipeline Safety - Dual directory structure (`.research/` system + `research/` public), auto-migration, SCH_API_KEY_VALIDATION checkpoint, validateApiKeys() utility
 **v8.3.0**: Cross-Platform Migration - GPT-5.3-Codex model routing, 47 individual Codex CLI SKILL.md files, updated install script, cross-platform documentation
 **v8.2.0**: MCP Runtime Checkpoint Enforcement - MCP server (7 tools), SKILL.md simplification (675 lines saved), state path unification, Priority Context
@@ -288,10 +289,11 @@ REQUIRED 체크포인트는 사용자 요청으로도 건너뛸 수 없습니다
 Claude Code shell hooks cannot invoke AskUserQuestion tool directly (shell commands only).
 CLAUDE.md and SKILL.md prompt-level instructions remain the primary enforcement mechanism.
 
-**v8.2 Enhancement**: MCP server (`diverga`) provides runtime verification tools.
+**v9.0 MCP Server**: `diverga-server.js` provides 16 runtime tools across 3 servers (checkpoint, memory, comm).
 Agents call `diverga_check_prerequisites(agent_id)` before execution and
 `diverga_mark_checkpoint(cp_id, decision, rationale)` to record decisions.
 State is stored in `research/` (public files) and `.research/` (system files).
+With `DIVERGA_BACKEND=sqlite`, state uses SQLite WAL mode for ACID-safe parallel execution.
 
 ### Rule 5: Override Refusal
 사용자가 REQUIRED 체크포인트 스킵 요청 시:
@@ -363,10 +365,62 @@ Level 5: SCH_RAG_READINESS
 
 | System | Purpose | Location |
 |--------|---------|----------|
+| MCP Server | Runtime checkpoint enforcement + state + messaging (16 tools) | `mcp/diverga-server.js` |
 | Project State | Context persistence | `research/project-state.yaml` |
 | Decision Log | Human decisions | `research/decision-log.yaml` |
 | Research Coordinator | Main skill definition | `.claude/skills/research-coordinator/SKILL.md` |
 | Orchestrator | Agent management | `.claude/skills/research-orchestrator/SKILL.md` |
+
+---
+
+## MCP Server Architecture (v9.0)
+
+### Overview
+
+Diverga v9.0 replaced the monolithic `checkpoint-server.js` (7 tools) with a modular 3-server architecture providing 16 tools via `diverga-server.js` and `tool-registry.js`.
+
+```
+diverga-server.js ──→ tool-registry.js (16 tools)
+      │
+      ├── checkpoint-server   memory-server     comm-server
+      │        │                    │                │
+      │   ┌────┴────┐        ┌────┴────┐      ┌────┴────┐
+      │   │  YAML   │        │  YAML   │      │  JSON   │
+      │   │(default)│        │(default)│      │(default)│
+      │   └─────────┘        └─────────┘      └─────────┘
+      │        │                    │                │
+      └── sqlite-servers.js (WAL mode, DIVERGA_BACKEND=sqlite)
+```
+
+### Dual Backend
+
+| Backend | Env Var | Description |
+|---------|---------|-------------|
+| **YAML** (default) | `DIVERGA_BACKEND=yaml` | Backward-compatible with v8.x, human-readable files |
+| **SQLite** (opt-in) | `DIVERGA_BACKEND=sqlite` | WAL-mode ACID transactions for parallel agent execution |
+
+First SQLite startup auto-migrates existing YAML/JSON data (checkpoints, decisions, project state, priority context, agents, messages). Original files preserved.
+
+### 16 MCP Tools
+
+| Category | Tool | Description |
+|----------|------|-------------|
+| **Checkpoint** (3) | `diverga_check_prerequisites` | Verify agent prerequisites before execution |
+| | `diverga_mark_checkpoint` | Record checkpoint decision with rationale |
+| | `diverga_checkpoint_status` | Full checkpoint overview |
+| **Memory** (7) | `diverga_project_status` | Read project state |
+| | `diverga_project_update` | Update project state (deep merge) |
+| | `diverga_decision_add` | Record research decision |
+| | `diverga_decision_list` | List/filter decisions |
+| | `diverga_priority_read` | Read priority context |
+| | `diverga_priority_write` | Write priority context (500 char limit) |
+| | `diverga_export_yaml` | Export all state as YAML |
+| **Comm** (6) | `diverga_agent_register` | Register agent for messaging |
+| | `diverga_agent_list` | List registered agents |
+| | `diverga_message_send` | Send agent-to-agent message |
+| | `diverga_message_mailbox` | Read agent inbox |
+| | `diverga_message_acknowledge` | Acknowledge message receipt |
+| | `diverga_message_broadcast` | Broadcast to all agents |
 
 ---
 
@@ -865,6 +919,8 @@ The Memory System automatically captures context at critical lifecycle events:
 
 ## Version History
 
+- **v9.0.0**: Architecture — MCP 3-server split (checkpoint/memory/comm, 16 tools), SQLite WAL backend, YAML→SQLite auto-migration, agent messaging, dual backend via `DIVERGA_BACKEND`
+- **v8.5.0**: Agent Teams — Parallel agent execution via TeamCreate/TaskCreate/SendMessage, I0 Team Lead mode, DX tooling (generate.js, sync-version.js, release.js, doctor.js), agents.json SSoT
 - **v8.4.0**: Researcher Visibility & Pipeline Safety - Dual directory structure (`.research/` system + `research/` public), auto-migration, SCH_API_KEY_VALIDATION checkpoint
 - **v8.3.0**: Cross-Platform Migration - GPT-5.3-Codex model routing, 47 individual Codex CLI SKILL.md files, updated install script, cross-platform documentation
 - **v8.2.0**: MCP Runtime Checkpoint Enforcement - MCP server (7 tools), SKILL.md simplification (675 lines saved), state path unification, Priority Context, lib/memory removed
